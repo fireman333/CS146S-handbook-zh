@@ -1,0 +1,26 @@
+# Quarto build artefacts
+.quarto/
+_freeze/
+_site/
+
+# Don't commit large rendered assets to main; gh-pages branch carries them
+pdf/*.pdf
+pdf/*.html
+pdf/*.typ
+pdf/site_libs/
+pdf/search.json
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+
+# LaTeX build intermediates (from Quarto pdf rendering)
+*.aux
+*.log
+*.out
+*.toc
+*.tex
+*.synctex.gz

@@ -1,0 +1,9 @@
+---
+title: "前言"
+---
+
+這是一份 Stanford 計算機科學系 Fall 2025 開設的全新課程 **CS146S《The Modern Software Developer》** 的繁中講義。原版課程主軸是 AI-assisted coding（LLM 基礎、coding agents、Model Context Protocol、AI IDE、Claude Code、Warp、AI testing/security、code review、app building、observability、未來趨勢），素材公開在 [themodernsoftware.dev](https://themodernsoftware.dev)。
+
+本講義將 10 週課程內容、50+ 篇 reading、9 個 weekly assignment 全部消化成繁中，並補上對非資工背景讀者的譯解，以及對 vibe coder（業餘 AI-assisted coding 使用者）的應用建議。
+
+詳見 [00_index.md](00_index.md) 與 [01_overview.md](01_overview.md)。

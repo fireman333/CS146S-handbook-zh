@@ -1,0 +1,70 @@
+project:
+  type: book
+  output-dir: pdf
+
+book:
+  title: "CS146S: The Modern Software Developer"
+  subtitle: "Stanford CS Fall 2025 — 繁中講義 + 50 篇 Reading 摘要"
+  author: "繁中譯解：康瑋麟（WLK）"
+  date: "2026-05-02"
+  date-format: "YYYY-MM-DD"
+  language: zh-TW
+  search: true
+  repo-url: ""
+  cover-image: ""
+  chapters:
+    - index.qmd
+    - 01_overview.md
+    - part: "10 週講義"
+      chapters:
+        - weeks/01_intro_to_coding_llms.md
+        - weeks/02_anatomy_of_coding_agents.md
+        - weeks/03_the_ai_ide.md
+        - weeks/04_coding_agent_patterns.md
+        - weeks/05_modern_terminal.md
+        - weeks/06_ai_testing_security.md
+        - weeks/07_modern_software_support.md
+        - weeks/08_automated_ui_app_building.md
+        - weeks/09_agents_post_deployment.md
+        - weeks/10_whats_next.md
+    - part: "Reading 摘要"
+      chapters:
+        - readings/_index.md
+    - assignments/_index.md
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-line-numbers: true
+    mainfont: "PingFang TC, Helvetica Neue, sans-serif"
+    monofont: "JetBrains Mono, Menlo, monospace"
+  pdf:
+    documentclass: scrreprt
+    classoption: ["openany"]
+    papersize: a4
+    geometry:
+      - margin=2cm
+    fontsize: 11pt
+    pdf-engine: xelatex
+    mainfont: "Heiti TC"
+    sansfont: "Heiti TC"
+    monofont: "Menlo"
+    CJKmainfont: "Heiti TC"
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: NavyBlue
+    urlcolor: NavyBlue
+    highlight-style: github
+    include-in-header:
+      text: |
+        \usepackage{xeCJK}
+        \setCJKmainfont{Heiti TC}
+        \usepackage{longtable}
+        \usepackage{booktabs}
+        % Allow tables to break across pages
+        \PassOptionsToPackage{breakable}{longtable}
