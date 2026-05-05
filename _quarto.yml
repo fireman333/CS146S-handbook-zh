@@ -41,30 +41,15 @@ format:
     code-line-numbers: true
     mainfont: "PingFang TC, Helvetica Neue, sans-serif"
     monofont: "JetBrains Mono, Menlo, monospace"
-  pdf:
-    documentclass: scrreprt
-    classoption: ["openany"]
+  typst:
     papersize: a4
-    geometry:
-      - margin=2cm
+    margin:
+      x: 2cm
+      y: 2.5cm
     fontsize: 11pt
-    pdf-engine: xelatex
     mainfont: "Heiti TC"
-    sansfont: "Heiti TC"
     monofont: "Menlo"
-    CJKmainfont: "Heiti TC"
     toc: true
     toc-depth: 3
-    number-sections: true
-    colorlinks: true
-    linkcolor: NavyBlue
-    urlcolor: NavyBlue
-    highlight-style: github
-    include-in-header:
-      text: |
-        \usepackage{xeCJK}
-        \setCJKmainfont{Heiti TC}
-        \usepackage{longtable}
-        \usepackage{booktabs}
-        % Allow tables to break across pages
-        \PassOptionsToPackage{breakable}{longtable}
+    section-numbering: "1.1.a"
+    keep-typ: false

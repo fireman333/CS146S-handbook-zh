@@ -86,42 +86,78 @@ W3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copil
 
 ## Monday Lecture（10/13）：How to be an agent manager
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/19mgkwAnJDc7JuJy0zhhoY0ZC15DiNpxL8kchPDnRkRQ/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/19mgkwAnJDc7JuJy0zhhoY0ZC15DiNpxL8kchPDnRkRQ/edit?usp=sharing)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + reading 主題 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節的核心是 mindset shift — 從「pair programmer 跟 agent 並肩寫 code」變成「agent manager 委派 + 驗收」。預期內容：
+Mihail 用一張軟體團隊演化簡史鋪 mindset shift：solo developer（1960） → 軟體團隊出現、開始專業化（NASA / DoD 推動，1970-1990） → 主流軟體團隊（2000s）→ AI 輔助的開發團隊（2023） → **每個工程師都是 tech lead，管自己的一支 agent 軍團**（2025+）。Lecture 的核心命題是：未來每個 developer 都會像 tech lead 一樣，operate 一支由不同專長 agent 組成的隊伍 — 處理 PR / QA、跨語言（React / FastAPI / Svelte）、跨角色（data engineer / ML engineer / DevOps）。最後甚至中等技術的 PM 都能做這件事。
 
-1. **The mindset shift** — 為什麼用 Claude Code 還用 pair programming 思維會卡？因為你會不停插手，agent 沒機會 iterate。Manager mode 的反直覺：放手讓 agent 跑錯一輪，從 error trace 自己 recover，比你介入更快
-2. **Autonomy spectrum revisit** — 把 5 個 level 套到具體任務上 demo：「補一個 typo」L1、「加一個 React component」L2、「跨檔案 refactor」L3、「實作完整 feature」L4、「fix scoped bug + 跑 CI」L5。Level 不是 agent 屬性是 task 屬性
-3. **Context design for agent manager** — 你給 agent 的 context 不是越多越好，是「**剛好讓它能 self-verify**」。包含三件事：goal（驗收標準）、constraint（不能做什麼）、verification（怎麼知道做完）。少了 verification，agent 就只能丟回給你問
-4. **When to interrupt vs when to let it run** — 紅燈：agent 重複犯同一個錯（context poisoning）、agent 在 loop 卡住（distraction）、agent 開始改不該改的 file（confusion）。綠燈：agent 在 plan 階段、agent 寫 test、agent 跑 long search
-5. **Live demo: managing 3 parallel agents** — 用 git worktree 同時跑 3 個 Claude Code session 解 3 個獨立 task。展示 fan-out 工作流、context isolation、最後合併到 main 的工作流
-6. **Common manager anti-pattern** — micromanagement（每個 tool call 都打斷）、abdication（完全不 review 直接 merge）、context overload（一個 session 做太多事）
+1. **Software task 的責任分配演化** — 把典型工作流標 🟩（人）/ 🟦（agent）：
+   - Provide high-level requirements 🟩
+   - Convert requirements into design doc 🟩 / 🟦
+   - Implement solution from doc 🟦
+   - Add tests 🟦
+   - Ensure CI passes 🟦
+   - Code review 🟦
+   - Update docs 🟦
+   - 人類愈來愈集中在 requirements 與 design alignment，其餘交給 agent
+2. **Directing agent 的四個 primitive**（後面 Boris 會深入講）—
+   - **Agent behavior file**（CLAUDE.md / cursorrules / AGENTS.md）：定義 agent 整體行為的 anchor
+   - **Hooks**：deterministic script 在 PreToolUse / PostToolUse / UserPromptSubmit / PreCompact 等預定事件觸發
+   - **Commands**：常用 prompt 存成檔，agent 可執行（例：跑 test、review code、git commit + push、Claude Code 的 ship-it command）
+   - **Subagents**：runtime delegation，建立不同 persona（frontend / backend）、cleanly 隔離 context、自帶 system prompt + tool + 獨立 context window；目的是 agents managing other agents。可參考 [awesome-claude-agents](https://github.com/vijaythecoder/awesome-claude-agents)、[SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework)
+3. **Best practice：你需要小心的安全網（careful backstops）**
+   - Codebase 內要有 test
+   - CI/CD best practice 落實
+   - 每個 agent 的可稽核性（auditability）
+   - 每個 diff 都標是哪個 agent 做的
+   - 不同 task class 用不同 model（**Opus 拿來 plan、Sonnet 當 workhorse**）
+   - 複雜 task 前期多花一點時間 hand-hold；fully async 任務則放手
+   - 經常 commit 做 checkpoint
+4. **Live workflow walkthrough** — Mihail demo 在實 task set 上看 agent 怎麼被 spin up、用 Claude proxy 觀察 LLM I/O。
+5. **Open question** — 怎麼自動化每個 task 開頭的 10-20% research phase？怎麼維護 pending task queue（特別是一次性小改動）？
 
-**Key takeaway**：成為 agent manager 不是技術升級，是 mindset 升級。從「我跟 agent 寫 code」變成「我設計任務 + 驗收 agent 產出」。能不能放手是 vibe coder 升級的天花板。
+**Key takeaway**：Agent manager 不是技術升級，是身分升級。寫 code 從「pair programming」變成「**delegate + audit**」。能不能在 fully async 任務放手、能不能對複雜 task 多 hand-hold 一點 — 這個分寸感比 prompt engineering 更決定一個 vibe coder 的天花板。Best practice 裡最被低估的一條是「**Opus 用來 plan、Sonnet 用來 implement**」 — 這個分工比同一 model 跑全程便宜又準確。
 
 ## Friday Lecture（10/17）：Boris Cherny（Claude Code creator）
 
 - **Speaker**: [Boris Cherny](https://www.linkedin.com/in/bcherny/), Creator of [Claude Code](https://www.anthropic.com/claude-code)
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1bv7Zozn6z45CAh-IyX99dMPMyXCHC7zj95UfwErBYQ8/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1bv7Zozn6z45CAh-IyX99dMPMyXCHC7zj95UfwErBYQ8/edit?usp=sharing)
 
-> Slides 需 Stanford 帳號，依 Boris Cherny 公開訪談 / blog / Anthropic best practice 文件 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Boris 演講 tl;dr 是 「**programming is changing → choose your path with claude code → think six months out**」：
 
-**Boris Cherny 與 Claude Code 背景**：Boris Cherny 在 Anthropic 主導打造 Claude Code，2024 年起以「research preview」形式釋出。他的設計哲學跟同期 IDE-based agent（Cursor、Windsurf）形成明顯對比 — Claude Code 走 CLI-first 路線，宣稱「terminal is the operating system for engineers」。Boris 在多個 podcast / blog 談過為什麼選這條路。
+1. **Programming is at an inflection point** — Boris 用一張 log(productivity) vs year 圖把過去 70 年的程式語言演化攤開：Fortran → Algol → Cobol → BASIC → C → Pascal → Prolog → C++ → Python → Java → JS → Go → Rust → Haskell → Swift → TypeScript。**productivity 是 exponential growth，現在被 AI 推到第二段斜率**。同時間 IDE 也在 exponential：ed → emacs → vi → Turbo Pascal → QBasic → VB → Eclipse → IntelliJ → Sublime → Cursor → Copilot → Devin → Claude Code。
+2. **History 速覽** — IBM 029（1964 punch card）→ ed（1969，Ken Thompson）→ Smalltalk-80（1980 第一個 GUI IDE，live editing）→ Visual Basic（1991 第一個主流 visual editor）→ Eclipse（2001，3rd-party plugin ecosystem、rich autocomplete）→ Copilot（2021，multi-line AI autocomplete）→ Devin（2024，conversation-first，不再直接操作 code）。**IDE DevX 演化加速中，下一個十年只會更快**。
+3. **Verification 也在 evolution** — manual debugging → static type（Algol）→ formal verification → abstract interpretation → automated testing → CI → property-based testing（QuickCheck）→ dependent typing → e2e testing → chaos testing（Chaos Monkey）→ AI-powered vulnerability testing → AI-powered unit testing（TestGen）→ AI-powered fuzz testing（Sapienz）→ self-play。
+4. **Claude Code 的 approach** — 三條核心設計原則：
+   - **Works everywhere**：terminal-native，所有 dev tool 都已經跑在 terminal
+   - **Low-level model access**：直接 expose model 能力，不過度抽象
+   - **Infinitely hackable**：使用者可在任何層擴充
+5. **Works across the whole SDLC** — 五階段全覆蓋：(1) Discover — 探 codebase / 看 git history / 搜文件 / onboard、(2) Design — plan project / 寫 tech spec / 定 architecture、(3) Build — implement / 寫 + 跑 test / 開 commit & PR、(4) Deploy — 自動 CI/CD / 設環境 / manage deployment、(5) Support & Scale — debug error / large-scale refactor / 監控 usage & performance。「使用並掌握你 team 所有 CLI tool（git / docker / bq）以聚焦在解法而非 syntax」。
+6. **One ✻code, many faces** — 同一個 Claude Code 有多種 surface：terminal、IDE、web & iOS、`/install-github-app`、SDK。SDK 範例：
+   ```
+   claude -p "what did i do this week?" --allowedTools Bash(git log:*) --output-format stream-json
+   get-gcp-logs 1uhd832d | claude -p "correlate errors + commits" --output-format=json | jq '.result'
+   ```
+   底層 model 同時支援 Anthropic / Bedrock / Vertex API。
+7. **四個 use case** —
+   - **Codebase Q&A + research**：例「how do I make a new `@app/services/ValidationTemplateFactory`?」「why does recoverFromException take so many arguments? look through git history」「why did we fix issue #18363 by adding the if/else in `@src/login.ts`?」「what did I ship last week?」
+   - **Write code 三模式**：1-shot / sidekick / prototype
+   - **Integrate tools & MCPs**：`claude mcp add barley_server -- node myserver` 然後 `> use the barley mcp server to check for error logs`
+   - **Power automation**
+8. **Fit the workflow to the task** — 三條 demo workflow：
+   - **explore › plan › confirm › code › commit**：「figure out the root cause for issue #983, then propose a few fixes. Let me choose an approach before you code. **ultrathink**」
+   - **tests › commit › code › iterate › commit**：「write tests for `@utils/markdown.ts` to make sure links render properly (note tests won't pass yet). then commit. then update the code to make tests pass.」（test-driven）
+   - **code › screenshot › iterate**：「implement [mock.png]. Then screenshot it with puppeteer and iterate till it looks like the mock.」（visual feedback loop）
+9. **Prototyping 範例** — Boris 秀一連串「actually, what if...」prompt 展示用 Claude Code 對 todo UI 做 8-10 輪 iteration，從 inline 顯示 → fixed list above input → pill 形式 → spinner merge → ctrl+T 展開 — 全在自然語言中完成 UI 設計探索。
+10. **Lessons** —
+    - **Build for the model six months from now**（最重要）— 不要對著今天的能力做 product，對著六個月後的能力做
+    - **Be ready to evolve**
+    - **Ask not what the model can do for you**（而是問你能怎麼配合 model）
+    - **Models get better, compute gets cheaper**
 
-預期 lecture 走向：
-
-1. **Why CLI, not IDE?** — IDE plugin 受限於 IDE 的 UI metaphor（buffer / panel / shortcut），CLI 反而是「universal interface」，所有 dev tool（git、npm、kubectl、SSH）都跑在 CLI。Claude Code 在 CLI 內等於擁有完整 dev environment 的存取權，IDE plugin 永遠隔一層
-2. **Anthropic 自己 dogfood 的故事** — Boris 會講 Claude Code 在 Anthropic 內部的 evolution。從 internal tool → research preview → public product 的反直覺路徑：先讓「會用 LLM 的工程師」每天用，再放給外部
-3. **設計取捨：minimal harness, maximal model leverage** — Claude Code 的 design principle 是「harness 做的事越少越好，把 leverage 留給 model」。對比 Devin / Cursor 那種「重 framework + 多 fallback」哲學
-4. **Subagent / hook / skill 的設計演化** — 為什麼這 4 個 primitive 各自存在？（CLAUDE.md / Skill / Subagent / Hook）。Boris 會講每個 primitive 的設計討論、被砍掉的 alternative、未來方向
-5. **Reverse-engineering 別人逆向他的回應** — [Peeking Under the Hood](../readings/w4_peeking_under_the_hood_of_claude_code.md) 揭露的 `<system-reminder>` tag、context front-loading 之類 implementation detail，Boris 會公開講設計動機（Anthropic 從不藏 prompt 是 unique culture）
-6. **What Claude Code is NOT** — Boris 通常會強調 Claude Code 不是 IDE 替代品、不是 Devin 替代品、不是 SuperClaude / Awesome Claude Agents 那種 framework 替代品。它是 *primitive*，社群在上面 build 才是健康生態
-7. **Q&A 預期熱點** — 為什麼不做 multi-agent orchestration？plugin marketplace 路線圖？Anthropic 內部最有趣的 Claude Code use case？Claude Code 的 unit economics？
-
-**Key takeaway**：Claude Code 是「opinionated primitive」 — 設計哲學是把 power user 的 leverage 最大化，而非把 onboarding 簡化。理解這個 thesis 才知道為什麼它的 UX 看起來「不夠 polished」其實是刻意的。
+**Key takeaway**：Boris 的核心訊息是 **「對六個月後的 model 設計你的工作流」**。今天的 Claude Code 是 opinionated primitive — 把 leverage 留給 model 而非 harness、CLI 而非 IDE plugin、infinitely hackable 而非 turnkey。理解這個 thesis 才看得懂為什麼它跟 Cursor / Devin 走完全不同的路 — 不是「比較好的 IDE」，是「比較少的 IDE」。
 
 ## Reading 摘要
 

@@ -81,40 +81,52 @@ W3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、C
 
 ## Monday Lecture（10/20）：How to Build a Breakout AI Developer Product
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1Djd4eBLBbRkma8rFnJAWMT0ptct_UGB8hipmoqFVkxQ/edit?usp=sharing)
-- **講者**: Mihail Eric
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1Djd4eBLBbRkma8rFnJAWMT0ptct_UGB8hipmoqFVkxQ/edit?usp=sharing)
+- **講者**: Mihail Eric（用 Warp 當 demo 工具）
 
-> Slides 需 Stanford 帳號，依 lecture title + Warp 公開資料 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節跳脫純技術，從「產品策略」角度拆 AI dev tool 怎麼做出 breakout 級成長。Warp 是 2022 上線、2024 年估值破 10 億美元、2025 年成功從「modern terminal」轉型「Agentic Development Environment」的範例，是這節的 case study 主角。預期 Mihail 會 cover：
+這節從產品策略角度拆「**為什麼 AI dev tool 在 2024-2025 出現史上最快的採用速度**」。Mihail 用 7 條產品設計原則作為主軸，每條都對應 Warp 等成功 AI dev tool 的具體決策：
 
-1. **AI dev tool market segmentation** — IDE（Cursor、Windsurf）、CLI agent（Claude Code、Codex）、terminal（Warp、Wave）、cloud agent（Devin、Cognition）四個賽道誰打誰、誰跟誰互補
-2. **「比較好看的 X」陷阱** — 為什麼 Hyper、Windows Terminal 沒爆紅而 Warp 爆紅？因為 Warp 重新設計 input/output 的資料結構，不只是換皮
-3. **Wedge product → expansion** — Warp 從「terminal」這個極窄 wedge 切入，逐步擴張到 IDE、agent runtime、cloud orchestration（Oz），這個 sequencing 怎麼設計
-4. **Distribution flywheel** — Developer tool 怎麼靠 dogfooding、open source、social proof（[How Warp Uses Warp to Build Warp](../readings/w5_how_warp_uses_warp_to_build_warp.md)）做 organic growth
-5. **AI-era product moat** — 在 LLM 是 commodity 的時代，moat 不在 model 而在 (a) UX 設計、(b) context system（Warp Drive）、(c) 整合廣度（MCP、Claude Code、Codex 都接得上）
-6. **與 Friday lecture 對齊** — 為 Zach Lloyd 的演講鋪 mental model
+1. **Start with what developers know** — 從既有 interface 過渡而非另起爐灶。每個 segment 都接到 developer 已熟的 metaphor：Cursor 接 IDE、Warp 接 terminal、Bolt 接 chat。範例：[explainshell.com](https://explainshell.com/explain) 是把「`tar -czvf`」這種公認痛點當切入點，逐步把使用者從 raw command line 解放，能在 code 與自然語言間自由切換。
+2. **Configuration flexibility** — 對 average user 零設定就能展示價值；power user 拿到完整 configurability：seamless 切換 model、prompts、project rules、MCP、Warp profiles per user。
+3. **Focus on developer ergonomics** — 「**If you can shave off a single keystroke, do it.**」keyboard hotkey、零 onboarding friction（「5 minutes to WOW」是 Warp 內部目標）、tab / enter 等小動作的黏著度。
+4. **Chat as a first-class citizen** — Code 本來就是 human intent 的 contrived representation，工具進化到一定程度後，更多互動會直接變自然語言。Demo Warp 內 debug error 流程就是用聊天替代 grep。
+5. **MCP integration** — MCP 已成為 LLM 與真實世界互動的 lingua franca。可擴展工具生態給 LLM 任何資源 / 動作。Demo：用 context7 給 Warp 抓最新 BrainTrust 文件。
+6. **Rapid feedback loops** — 改完立刻看到效果。Bolt / Lovable 的 real-time canvas、Warp 的 take action + immediate reaction 都在這個範式。可解釋性是 first-class citizen。「entire projects committed to just reducing build time」是這條原則的最強佐證。
+7. **Agent workflows** — 對實質任務給 full autonomy。「agent-take-the-wheel」的接受度逐月上升，但要支援不同等級的 human-in-the-loop（agent 問 clarifying question、YOLO mode）。Demo Warp 的 YOLO mode。
 
-**Key takeaway**：AI dev tool 不是「把 chatbot 黏在 editor 旁邊」就能爆紅，需要重構底層資料結構（block）、做出 persistent context system（Warp Drive）、設計清楚的 wedge → expansion 路徑。Warp 是這個 playbook 教科書級的範例。
+最後 Mihail 拋出**未來 open question**：
+
+- 會不會看到大規模整合？code review / app building / monitoring 等 point solution 會被 all-in-one platform 吞掉嗎？
+- AI IDE 會不會演化成 AI terminal、再演化成 AI browser-replit？
+- 像 Warp / Cursor 會不會 verticalize 變成「full-stack 開發專用」之類？
+- 給 coding agent 個人化 / project-specific rule 的 universal standard 會是什麼？目前 fragmented（`.cursorrules` / `CLAUDE.md` / `AGENTS.md`），AGENTS.md 是首個 step in that direction。
+
+**Key takeaway**：AI dev tool 爆紅不是「把 chatbot 黏在編輯器旁邊」 — 它需要從 (1) 接既有 mental model 開始、(2) 對 power user 開全部 configurability、(3) 偷每一個 keystroke 的 ergonomic 紀律、(4) 把 chat 當 first-class、(5) MCP 接通生態、(6) feedback loop 越快越好、(7) 對實質任務放 autonomy 同時保留人類介入點。這 7 條原則是 vibe coder 評估「該不該換工具」的 checklist。
 
 ## Friday Lecture（10/24）：Zach Lloyd（Warp CEO）
 
 - **Speaker**: [Zach Lloyd](https://www.linkedin.com/in/zachlloyd/), CEO of [Warp](https://www.warp.dev/)
-- **Slides**: [Figma Slides](https://www.figma.com/slides/kwbcmtqTFQMfUhiMH8BiEx/Warp---Stanford--Copy-?node-id=9-116&t=oBWBCk8mjg2l2NR5-1)
+- **Slides**: [Figma Slides（公開連結）](https://www.figma.com/slides/kwbcmtqTFQMfUhiMH8BiEx/Warp---Stanford--Copy-?node-id=9-116&t=oBWBCk8mjg2l2NR5-1)
 
-> Figma slides 公開但內容是 Warp 對 Stanford 客製，依 Zach 公開訪談 + Warp 產品文件 best-effort 重建：
+> 以下基於 slide deck 公開內容（PDF 39 張 slide vision OCR）整理的繁中摘要。Slide 結構為六段：(1) The world is changing、(2) From development by hand to by prompt、(3) What is Warp、(4) Warp tour、(5) Using agents to go from prompt to production、(6) The business of agentic development，最後 Q&A。
 
-Zach Lloyd 在 Google 待過 8 年（前 Google Docs 共同創辦人之一，後升 Principal Engineer），2020 年離職創立 Warp，主因是「他在 Google 看遍最頂級的內部開發工具，回到 open source terminal 突然覺得倒退 30 年」。預期演講重點：
+1. **論點主軸 — 從 by-hand 到 by-prompt 的 dev paradigm shift**：Lloyd 開場用 Greylock 的引言定錨「為 code generation 與 engineering workflow 解鎖 high-fidelity、reliable AI 是巨大機會」。整場演講的核心張力是「**Current: Development by hand → Future: Development by prompt**」，而 prompt-driven development 又分兩支：使用者主動觸發的 **interactive agent**，以及由 webhook / cron / event 觸發的 **ambient agent**。Warp 的賭注是同時做好這兩端的開發者體驗，把產品定位為 **ADE（Agentic Development Environment，代理式開發環境）**。
 
-1. **Origin story** — 為什麼從零打造 terminal 而不是寫個 plugin？因為 VT100 protocol 的 line-buffered 架構先天限制太多，要做 block 必須自己寫 renderer。技術選擇 Rust + GPU-accelerated rendering（Metal on macOS、Vulkan on Linux），效能比 Electron-based terminal 好一個 order of magnitude
-2. **Block 是怎麼想出來的** — Zach 在多次訪談提過，block 概念來自「為什麼我複製 terminal output 永遠包含 prompt 和錯誤的換行」這個小痛點，往下挖才意識到 line buffer 本身就是問題
-3. **AI features 的 sequencing** — Warp 的 AI features 其實是 2022 年 GPT-3.5 之後才加的，最早的 v1 是純粹的「modern terminal without AI」。Block 化先做完，再上 AI，這個順序是關鍵 — 沒有 block 就沒有「對單一 command 做 AI 解釋」這個自然 affordance
-4. **Agent Mode 的設計取捨** — `⌘+I` 在 terminal mode 與 agent mode 間切，為什麼不像 Claude Code 那樣全 CLI？因為 Zach 認為 (a) 大多數時候你還是要直接打 git command，(b) 切換成本要極低（一個 shortcut）才會被真的用
-5. **Oz（cloud agent platform）roadmap** — 為什麼 2025 年要做 cloud agent？因為 local agent 的根本限制是「人在等」，cloud agent 解放長 task（PR review、dependency upgrade、issue triage）讓開發者可平行多 task
-6. **與 Claude / Anthropic 的關係** — Warp 把 Claude Code 當 first-class CLI agent 而非競品，這個 stance 怎麼來？商業上 Warp 賺 IDE 訂閱、Claude 賺 model API，不衝突。Anthropic 也樂見 Claude Code 在 better terminal 裡跑
-7. **未來方向** — Multi-modal terminal（語音 input、影片 output）、team workspace（class room collaboration）、enterprise（自家機房跑 Oz）
+2. **為什麼是 terminal — 三個結構性理由**：Lloyd 認為 command line 是 agent 最自然的住所。理由：(a) **Lowest tool in the dev stack**（在開發堆疊最底層、其他工具都跑在它上面）；(b) **Leverages CLI ecosystem**（git、docker、gcloud、curl 全都已經 CLI 化，不必重造）；(c) **Already set up for orchestrating long-running tasks**（terminal 從第一天就是非同步、process-spawning friendly）。但他立刻補一句「**terminal needs to be modernized**」— terminal 是對的介面，VT100 是錯的實作。
 
-**Key takeaway**：Warp 不是「terminal + AI」，是把 terminal 重新想成 agent runtime 的 ground-up rebuild。block 是這個重構的最小單位，AI 與 cloud agent 是後續的自然延伸。對 vibe coder 的 implication：選 terminal 不再只是 cosmetic 偏好，而是選 agent 工作流的 host。
+3. **Warp's history（2020 → 2025 timeline）**：Lloyd 用一條時間軸 walk through 公司演化，每年加上對應的產品里程碑：**2020 spring** had an idea，**2020 fall** started building，**2021** Warp MVP + Private Beta（強調 "Better UX"），**2022** Mac Public Release，**2023** Warp Drive + AI Chat + AI Command Search 三件 AI feature 一次推出，**2024** velocity 暴增（Linux、Agent Mode、Session Sharing），**2025** Windows release + ADE 重新定位。後面接一張密密麻麻的 feature grid（Split Panes、Markdown Viewer、Command Search、Block Sharing、Secret Redaction、SSO、Active AI…），標題就叫「**Warp continues to grow**」。Mission 寫得很短：「**Empower all developers to deliver great software, quickly and reliably.**」
+
+4. **Product Design Roadmap — 四大 pillar 與 Agent Quality 三角**：Warp 把 ADE 拆成四個 product surface：**Terminal**（modern intelligent terminal）、**Code**（在真實 codebase 裡跑 coding agent，原生 review/edit）、**Agents**（同時部署多 agent、集中追蹤）、**Drive**（centralize knowledge / context）。對應 slide 上 4 張產品截圖（git rebase block、code review diff、agent 跑 eval、Drive folder tree）。Ambient agent 線路另外講：**API / Hosting / Management / Integrations** 四件事讓 agent 能「從任何環境呼叫 Warp 的 agent runtime」「跑在 Warp server 或 self-hosted」「跨 session 追蹤」「跟常用 app 一鍵串接」。最後拋出 **Agent Quality = Models + Harness + Dev Ex** 公式 — model 由 Warp 動態挑（resilient to provider outage）、harness 做 prompt tuning + context summarization + A/B eval、dev ex 把 agent 做成「不用滑鼠、不用 text edit、能 reuse / share context、能接 MCP」的純文字介面。
+
+5. **How Warp uses Warp to build Warp（內部 5 條 coding mandate）**：(1) **Start with a prompt**（描述「怎麼做」而不只是「做什麼」、附上 file/image context）、(2) **Iterate on a plan**（先和 agent 把問題搞清楚、把方案 script 出來再放手讓它跑）、(3) **Steer the agent**（不要 set-and-forget、邊跑邊 re-prompt + review diff、必要時手 edit）、(4) **Engineers own the PR**（送 review 的 PR 作者必須能像自己寫的一樣解釋每一行）、(5) **Document context for the next PR**（每次學到的東西回寫到 `WARP.md` 或其他 rules 檔，下次 agent 直接拿）。這條清單是整場演講最具體的可操作守則。
+
+6. **Business 與市場定位 — 2×2 framework**：Lloyd 用一張 2×2 圖把 dev tool 市場分成 X 軸 Code by hand ↔ Code by prompt、Y 軸 Editor-first ↔ Terminal-first；JetBrains / VS Code 在左下、Cursor 在中下、Windsurf / Augment 在右下、**Warp 與 Claude Code 同坐右上（Code by prompt + Terminal-first）**。Lloyd 強調 Warp vs AI IDE 的差異是：橫跨整個 setup → production 生命週期、跨多 project、原生支援多個 long-running agent；vs CLI tool 的差異是：原生 in-app 編輯（不用 context switch）、有 codebase embedding、有 multi-agent 通知 UX。市場判斷：**huge market**（automating development = 11m+ 開發者）、**not winner-take-all**（dev 喜歡 try new thing、公司也願意 honor preference）、**still early**（最大玩家還沒進場、model 還在進步）；風險端坦誠 **competitive market**（Cursor 等對手錢多）、**inference expensive**（usage-based 成本壓邊際）、**complex relation with labs**（Anthropic / OpenAI 既是供應商也是競爭者）。
+
+7. **給學生的 closing — What's next**：「Keep studying CS！」Lloyd 認為不論 model 怎麼進化，**深度 CS 知識 + problem solving skill** 永遠值得投資；「**It's never been a better time to be a builder**」是他對 Stanford 學生的結語，呼應 W1 Karpathy 講的「軟體開發民主化」。
+
+**Key takeaway**：Warp 的 thesis 不是「terminal + AI 黏一黏」，而是把 command line 當作下一代 agent runtime 的最佳 host。產品設計圍繞「interactive agent + ambient agent」雙軌，agent 品質拆成 model / harness / dev ex 三件可獨立優化的事；對 vibe coder 的啟示是 **prompt-first、own your PR、把 learning 寫回 `WARP.md` / `AGENTS.md`** 這條 dogfooding 紀律比換不換 terminal 重要。
 
 ## Reading 摘要
 

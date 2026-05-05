@@ -97,45 +97,62 @@ Devin 強調 **architecture-first prompting**（講 *how* 不只 *what*）、**d
 
 ## Monday Lecture（10/6）：From first prompt to optimal IDE setup
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/11pQNCde_mmRnImBat0Zymnp8TCS_cT_1up7zbcj6Sjg/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/11pQNCde_mmRnImBat0Zymnp8TCS_cT_1up7zbcj6Sjg/edit?usp=sharing)
 - **Design Doc Template**: [Drive 連結](https://drive.google.com/file/d/1MZ0Qx68Vzw4x5x_XcV8XiPLp7fFDe1LJ/view?usp=drive_link)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + reading 主題 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節的主線是「從零開始打造 production-ready 的 AI IDE setup」。預期內容：
+Mihail 把 IDE 演化壓縮成一條 timeline，再導出「為什麼 AI IDE 是 2023 年才可能」的論點。Lecture 的核心命題是：**AI IDE 的 evolution 是「functionality consolidation vs developer customization」之間的 see-saw**。
 
-1. **Recap：W1/W2 的 prompt + agent 結構** — 為什麼 base prompt + tool calling 不夠應付真實 codebase（context window 飽和、跨檔案 reasoning 失準、tool selection 混淆）
-2. **Context engineering 的三層 stack** —
-   - Layer 1: **Persistent context** — `CLAUDE.md` / `.cursorrules` / `AGENTS.md`，repo level 永久 load
-   - Layer 2: **Session context** — `@file` reference、screenshot、CLI tool output，當下 task 灌入
-   - Layer 3: **On-demand context** — MCP server、subagent、`Skills`，按需求載入避免污染主對話
-3. **PRD 對 agent 的版本** — 用 design doc template 走一遍：user story、acceptance criteria、guardrail、non-goal、verification 五段。重點是「能不能餵給 Claude Code 直接 implement」
-4. **MCP server / custom slash command 配置** — 把 W2 學的 MCP 接到 IDE：Claude Desktop config、Cursor MCP integration、custom slash command 怎麼寫一個
-5. **Live demo：從 zero 到 ship 一個小 feature** — 用 Cursor 或 Claude Code 在 demo repo 走一次完整流程：寫 PRD → load context → plan → implement → verify → commit
-6. **Common pitfall** — CLAUDE.md 過長導致 important rule 被淹、tool 太多導致 routing accuracy 下降、context decay 在 long session 的徵兆
+1. **IDE 簡史** — Turbo Pascal（1983）first true IDE → Microsoft Visual Studio（1997）first IntelliSense（autocomplete 前身）→ IntelliJ IDEA（2001）contextual code navigation / refactoring → VS Code（2015）lightweight + 高度可擴充 ecosystem，也引進 LSP（MCP 的概念祖先）→ Cursor（2023）第一個真正 AI-native IDE。
+2. **Cursor 使用模式分層** — Bread-and-butter mode（**Tab** 簡單 inline、**Cmd-K** 幾行的 quick edit、**Cmd-L** multi-file），True AI-native（background agent、MCP integration、learn memories、Bugbot PR review）。
+3. **AI IDE 底層運作** —
+   - **Tab-complete**：圍繞 cursor 的小 context window 加密送到 server，跑 infilling LLM 後送回建議
+   - **Chat**：把 code chunk 存成 embedding 在 server 的 semantic index（檔名 obfuscated），query 時 retrieve 最相關 chunk 餵 LLM；IDE 定期 re-index 並用 Merkle tree 算 chunk diff 做 efficient update
+4. **Best practice：simple change vs complex task** —
+   - Simple change：不必太用心 prompting
+   - Complex task：你要進入 PM 模式，寫精雕的 specs doc，包含：**Goal**（這次改動目的）、**Definitions**（LLM 需要的 prereq）、**Plan**（high-level breakdown）、**Source files being changed**、**Test cases**、**Edge cases**、**Out-of-scope**（什麼**不要**改）、**Extensions**（之後可能加什麼，讓 LLM 不要走捷徑）
+5. **Codebase optimization for human + agent** — 多數 LLM 混亂來自 messy repo。優化清單：repo orientation、file structure、setup & environment、best practices、code style、access patterns、APIs and contracts。建議 monorepo design。「**A messy repo can be as simple as having different access patterns, variable naming, multiple functions that do the same thing.**」
+6. **Agent configuration files 對比** —
+   - **CLAUDE.md**：Claude 自動 pull 進 context，放 common bash command、core file、code style、testing instruction
+   - **.cursorrules**、**AGENTS.md**（OpenAI Codex 用，[官方範例 repo](https://github.com/openai/codex/blob/main/AGENTS.md)）— README 是給人看的（quick start、project description、contribution guideline），AGENTS.md 是給 agent 看的（build step、test、convention、code style、security）
+   - **llms.txt**：給網頁 scraping LLM 的導航
+   - 重點 caveat：「**The agents won't always adhere to these descriptions/directives. They are intended as guidance.**」這些檔案是建議不是強制
+7. **Live demo 段** — 走一個帶 specs doc 的 complex coding task，看 cursorrules / Claude Code spec 在實 repo 裡長什麼樣。
 
-**Key takeaway**：optimal IDE setup 不是工具越多越好，是「為這個 codebase + 這個 task 量身配置 minimum viable context」。
+**Key takeaway**：Optimal IDE setup 不是「工具越多越好」 — 而是把 repo 整理到 human 跟 agent 都能讀得懂的狀態，再配上一份對 task 量身寫的 specs doc。messy repo + sloppy prompt 是 LLM 寫不出好 code 的最大原因，永遠先檢查這兩件事再去改 prompt 措辭。
 
 ## Friday Lecture（10/10）：Silas Alberti（Cognition）
 
-- **Speaker**: [Silas Alberti](https://www.linkedin.com/in/silasalberti/), Head of Research at [Cognition](https://cognition.ai/)
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1i0pRttHf72lgz8C-n7DSegcLBgncYZe_ppU7dB9zhUA/edit?usp=sharing)
+- **Speaker**: [Silas Alberti](https://www.linkedin.com/in/silasalberti/), Founding Team @ [Cognition](https://cognition.ai/)（前 Stanford PhD Student）
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1i0pRttHf72lgz8C-n7DSegcLBgncYZe_ppU7dB9zhUA/edit?usp=sharing)
 
-> Slides 需 Stanford 帳號，依 Cognition / Devin 的公開資料 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Silas 的演講題目是「**IDE ❤️ Agents：An opinionated guide to AI coding in 2025**」：
 
-**Cognition 與 Devin 背景**：Cognition 是 2023 年成立的 SF AI startup，2024 年 3 月推出 Devin，被定位成「世界第一個 AI software engineer」。早期 demo 在 SWE-bench 拿到當時 SOTA（13.86% resolved rate vs Claude 2 的 4.8%），引發 vibe coding / agent 熱潮。Silas Alberti 是 Head of Research，負責 model post-training 與 agent architecture。
+Silas 把 AI coding tool 演化分成三世代，每一代的「效率提升」量級截然不同：
 
-預期 lecture 走向：
+1. **Three Eras of AI Coding Tools**
+   - **Era 1: Code Completion**（GitHub Copilot）— ~10% efficiency gain，speed up coding，純 local
+   - **Era 2: IDE Automation / AI IDEs**（Cursor、Windsurf）— ~20% gain，single-player task completion，仍 local
+   - **Era 3: AI Software Engineer**（Devin）— **6-12× efficiency gain**，移到 cloud + asynchronous，scale workflow in parallel
+2. **Sync vs Async 的本質差異** —
+   - **Sync**：single-threaded、human-in-the-loop、注意力鎖在單一 task → AI agent 工作 20 秒到 1.5 分鐘
+   - **Async**：multi-threaded、人類 delegate 給 AI、注意力可在多 task 間切換 → AI agent 工作 10 分鐘到數小時
+   - **Cloud + Async 解鎖 10× parallelism**：每個工程師可同時跑多個 Devin instance（in VPC），一對多、共享組織知識；對比 Local AI IDE 是一對一、knowledge 隔離
+3. **Devin 的 workflow autonomy 三階段** —
+   - **Plan（engineer in the loop）**：用 Search / Wiki 問 Devin 找 file / API / test → clarify scope → Devin 寫 step-by-step plan。耗時：分鐘級
+   - **Build（Devin in the loop）**：Devin 在 isolated workspace（shell + editor + browser）執行 → plan → execute → test → iterate 直到 task 全綠。完全 async，你可以去做別的事
+   - **Review（engineer 回 loop）**：Devin 開乾淨的 PR 含 passing test 與 change summary → 你 review、comment 或 merge → Devin 可依要求修。**Human effort ≲ 15% of original task**
+4. **「Semi-Async：尷尬的中間地帶」** — 5 秒 / 10 秒 / 30 秒 / 1 分 / 3 分 / 5 分 / 10 分 / 1 時 / 3 時 的 spectrum 上，**3-10 分鐘是 Avoid 區段**：太慢 stay in flow、太短 multi-task。要嘛**做更快**保持 flow，要嘛**用更多時間換更高 intelligence**。
+5. **Async agent 是 hard but learnable skill** — 雖然 async agent 解鎖 10× gain，但多數人還在用 sync agent。原因：管理 / 委派本身就是難 skill，不論對象是人還是 agent。需要 cycle 多 task 的能力 + 快速理解新 context 的能力。
+6. **Planning / Coding / Testing 三階段的 sync vs async 配置** —
+   - 今天：planning sync（DeepWiki、Ask Devin、Codemap、DeepWiki in Windsurf）→ coding async（delegate 給 agent）→ testing sync（在 Windsurf 裡 refine）
+   - 未來：testing 也會 async（agent 自己驗收），那時 leverage 會跨另一個量級
+7. **Common workflow demo**：(1) delegate task to Devin async、(2) test & refine changes in Windsurf sync — Devin 處理 long-form 工作，Windsurf 接手 last-mile sync 微調。
+8. **Where are we headed**：human engineer 變成 agent manager，sync tool 解最難的問題、async tool 拿 10× leverage。對未來 valuable 的能力：(a) delegation & multi-threading、(b) code reading、(c) planning / scoping / architecting。
 
-1. **Devin 的 design philosophy** — 為什麼選 fully autonomous + cloud sandbox 而不是 IDE plugin？背後的 thesis 是「engineer 應該變 manager，不是 pair programmer」。Devin 用 web UI + persistent VM 強迫 user 進入 manager mode
-2. **Cognition 的 agent architecture** — 不是 single-agent loop，是 multi-agent + planner + verifier 的組合。怎麼處理 long-horizon task（需要 hours 級執行）的 state management、context decay、failure recovery
-3. **Real-world failure modes & lessons** — Devin 上線後最常見的失敗 case（任務太 open-ended、verification 不充分、人類期待錯位）。為什麼 80% 自動化 ≠ 80% 業務時間節省（review cost 也算）
-4. **Comparison：Devin vs Claude Code vs Cursor agent** — 不同 autonomy default 的 trade-off，什麼任務適合哪個工具
-5. **Future direction** — Cognition 的 research bet（更長 context、更好 long-horizon planning、reliability over capability）。對 SWE-bench 之類 benchmark 飽和後，下一個 evaluation paradigm 會是什麼
-6. **Q&A 預期熱點** — Devin 的 unit economics（一個 task 多少美金）、how to evaluate when to use Devin vs human、open-source agent 對 Cognition 的競爭威脅
-
-**Key takeaway**：「autonomous agent」不是 marketing buzzword，是一條跟「interactive collaborator」並行的設計路線。理解兩種哲學的 trade-off，才能在實務上挑對工具。
+**Key takeaway**：Devin 的設計哲學不是「IDE 升級版」，是把工程工作從 local sync 推到 cloud async 的範式轉移。**6-12× 不是 marketing 數字 — 是 parallelism × autonomy 的乘積**。但要拿到這個 gain，工程師必須學會「同時 supervise 多個 agent」這項新技能，這是比 prompt engineering 更難、更值錢的能力。
 
 ## Reading 摘要
 

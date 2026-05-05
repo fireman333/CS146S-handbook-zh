@@ -75,21 +75,41 @@ Vercel 在這波 prompt-to-app 賽道裡是少數同時做產品（v0）+ infras
 
 ## Monday Lecture（11/10）：End-to-end apps with a single prompt
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1GrVLsfMFIXMiGjIW9D7EJIyLYh_-3ReHHNd_vRfZUoo/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1GrVLsfMFIXMiGjIW9D7EJIyLYh_-3ReHHNd_vRfZUoo/edit?usp=sharing)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + 2025-2026 prompt-to-app 工具景觀 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節 Mihail 把「一句話生整個 app」現象拆成可被 evaluate 的工程問題。預期內容：
+Mihail 用一句自我吐槽開場：「**This is not the vibe coding class** — 因為我是 software development purist。**…except today**」。今天破例專講「prompt-to-app」現象。
 
-1. **景觀總覽** — v0 / Lovable / Bolt / Replit Agent / Cursor Composer 五大工具的功能 matrix（誰生 UI、誰跑 sandbox、誰部署、誰連 DB），對應上面四象限分析
-2. **技術棧分析** — 為什麼 Next.js + shadcn/ui + Tailwind + TypeScript 是 AI-native 共識？對比過去 React + CSS-in-JS 時代為什麼 LLM 寫不順
-3. **Prompt-to-app 的失敗模式** — 三類典型 fail：(a) generation 看起來能跑但 deploy 後 build 失敗、(b) UI 漂亮但功能假、(c) 一句話生 demo 美但 second iteration 開始崩
-4. **Live demo 段** — Mihail 應該會 demo 用 v0 從 prompt 到 deploy 一個 todo app + dashboard，全程不寫一行 code，計時看多快能上線
-5. **「what AI builds well vs poorly」** — Crud dashboard、landing page、form-heavy admin tool 是 AI 強項；real-time collaboration、payment integration、auth flow、performance-critical animation 還是要人工
-6. **企業 / 個人選擇 framework** — 對學生：先學 v0 + Cursor 即可；對 startup：選 Vercel + AI SDK；對企業：考慮 LangChain / LlamaIndex 等 framework-agnostic 方案
+1. **Why — 現代 SaaS 已二十多年聚焦 web app** — Salesforce 1999 通常被視為第一個 SaaS 平台。
+2. **The Old Days — 經典技術棧巡禮** —
+   - **LAMP**：Linux + Apache + MySQL + PHP（dynamic site / 傳統 web app）
+   - **MERN**：MongoDB + Express + React + Node.js（modern interactive SPA，client-side / server-side / database 三層）
+   - **MEVN**：MongoDB + Express + Vue + Node.js（用 Vue 替代 React，輕量靈活）
+   - **JAM stack**：JavaScript（dynamic 功能）+ APIs（連後端 service）+ Markup（pre-built static HTML）。常見工具 Gatsby、Next.js、Nuxt + headless CMS 像 Contentful、Sanity
+   - **Serverless**：frontend（React / Vue / Svelte）+ backend（AWS Lambda / Google Cloud Functions）+ DB（DynamoDB / Firebase）
+   - **AWS stack**：跨 service combo
+3. **Take #1: Visual Low-code / No-code** — Wix、Squarespace、Webflow（pre-AI 時代非工程師建站方案）。
+4. **The new AI world** — 第二波生成式 app builder：**Lovable、Replit、Vercel v0、Base44、Cursor / Claude Code**。
+5. **What has changed** —
+   - 一句 prompt 生出完整 app
+   - 工程師跨職能化（design、product management）
+   - 任何人都能建 app
+   - 比第一代 no-code（Webflow、Wix、Squarespace）更 user-friendly
+6. **Live demo: Let's make an app right now** — 用 Bolt 建 frontend + backend，做一個「salsa partner finder」。初次 generation 後再做 iteration：更新 color palette（給三個 hex code：#EF8354 / #660000 / #EFCA08）、改 iconography、改 typography。展示自然語言 iteration 的 fluidity。
+7. **App builder architecture — WebContainer** — Bolt 等工具的核心是 WebContainer：在瀏覽器內跑任意 generated code 的 sandbox（Node.js / npm 在瀏覽器跑），瞬間 preview 不必 deploy。
+8. **App builder system prompt 解析** — Mihail 引用兩個 [外洩 Bolt system prompt](https://gist.github.com/curran/753aa62fd99b7df8f858743d605f1d02)：
+   - 明確要求 LLM 只用 established / well-known technology / framework（避免 LLM 用偏門 lib）
+   - 用自訂 `<boltartifact>` / `<boltaction>` 標籤標示「在 WebContainer 裡該發生什麼動作」（建檔、跑檔等）
+9. **Limitations** —
+   - **Everything is awesome 直到出事就回到原點** — debug 不順時 prompt-driven UI 無法救
+   - **Prompt 是建議不是指令** — 不是每個 user 都懂這個
+   - **Security 已經是個問題**（過去事件）
+   - 如何避免所有 app 看起來一樣？
+   - 這些 app 真的能撐多複雜？
 
-**Key takeaway**：「一句話生整個 app」現象的工程本質是 LLM × component library × execution sandbox × deployment platform 四要素的整合。Demo 容易、production 難 — 知道邊界在哪比追新工具更重要。
+**Key takeaway**：Prompt-to-app 的工程本質是 **LLM × component library × execution sandbox（WebContainer）× system prompt 紀律** 的整合。Bolt / Lovable / v0 看起來像魔法，背後是精心設計的 system prompt（強迫用主流 framework）+ 沙盒（瀏覽器內跑 npm）+ 即時 preview。Demo 級別容易、production 級還有距離 — 知道邊界（complex business logic / 真實 auth / payment / 一致 design）在哪，比追新工具更重要。
 
 ## Friday Lecture（11/14）：Gaspar Garcia（Vercel Head of AI Research）
 

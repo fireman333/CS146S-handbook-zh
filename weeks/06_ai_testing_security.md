@@ -86,21 +86,42 @@ Non-determinism 的根因在 [Context Rot](../readings/w6_context_rot.md)：Chro
 
 ## Monday Lecture（10/27）：AI QA, SAST, DAST, and Beyond
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1C05bCLasMDigBbkwdWbiz4WrXibzi6ua4hQQbTod_8c/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1C05bCLasMDigBbkwdWbiz4WrXibzi6ua4hQQbTod_8c/edit?usp=sharing)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + reading materials best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節要把「軟體品質 + 資安」的演化史壓縮成 75 分鐘，從 1990 年代手寫 unit test 開始一路講到 2025 年 LLM-driven security audit。預期內容：
+Mihail 開場切入點直接：「軟體錯誤可以毀掉使用者對產品 / 公司的信任、造成巨大金錢成本。當 LLM 在寫你大部分 code 時，需要強而廣的 guardrail 才不會出包。」
 
-1. **QA 自動化簡史** — Unit test → integration test → E2E test → property-based test → fuzz test → mutation test 的演進，每一階段都是「用更少人力測試更多情境」的 leverage 進化
-2. **SAST / DAST / SCA 三角介紹** — 對照 [SAST vs DAST](../readings/w6_sast_vs_dast.md) reading，建立工具分類詞彙；OWASP Top Ten 2021 十項對應到哪些工具能掃
-3. **CI/CD 整合** — SAST 接 IDE / commit hook 即時 feedback、DAST 在 staging 跑、SCA 跟 Dependabot / Renovate auto PR — pipeline 怎麼串
-4. **AI-augmented testing v1** — 用 LLM 寫 unit test（Cursor「generate tests」、Claude Code「補 test coverage」），實務上能達到什麼水準？哪類 test 寫得好（純 function、明確 input/output），哪類拉胯（需 deep domain context 的 integration test）
-5. **AI-generated security audit v2** — 把 [Semgrep + Claude Code 實驗](../readings/w6_finding_vulnerabilities_claude_codex.md) 的數字攤開：46 個真 bug 但 86% false positive、non-deterministic 問題、context rot 根因
-6. **Beyond — 未來方向** — Test gen agent 跑 evaluation loop（寫 test → run → 看 fail 修 → 再 run）、property-based test 用 LLM 自動 infer property、自動 maintain test suite（code 改了 test 跟著改）
+1. **既有 threat landscape 速覽** — SQL injection、Cross-site scripting（XSS）、broken authentication、insecure direct object reference、security misconfiguration、sensitive data exposure 六大類。
+2. **Vulnerability detection 三角：SAST / DAST / SCA** —
+   - **SAST（Static Application Security Testing）**：白箱、看 binary + source code、SDLC 早期跑（修 bug 最便宜）。Pattern matching scan codebase。可抓 SQL injection、command injection、XSS。工具範例：Bandit、Semgrep、ESLint + extensions。
+   - **DAST（Dynamic Application Security Testing）**：黑箱、模擬真實 hacker 攻 running app、SDLC 全程都可跑（false positive 比 SAST 少）。技術：input fuzzing、session token manipulation、config / header testing、brute force rate limit。
+   - **SCA（Software Composition Analysis）**：深度分析 OSS package。技術：分析 package metadata、transitive dependency resolution、跟 vulnerability DB 比對、binary / artifact scanning。
+   - 三者 cover 三層：code（SAST）+ runtime（DAST）+ dependency（SCA）。
+3. **What's changed: Bad — 新 AI agent attack vector** —
+   - **Prompt injection**：藏 hidden / 誤導指令在 LLM ingest 的內容裡讓它偏離原本行為。Slide 引用 AMP code 案例：用 prompt injection 從 AI agent 提取 system prompt。
+   - **Tool misuse**：用欺騙 prompt 讓 agent 濫用整合的 tool。引用 [embracethered.com 的 AMP escape blog](https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/) — agent 修改 system configuration 並 escape sandbox。
+   - **Code attacks**：利用 agent 的 code execution 能力獲得執行環境的未授權存取。
+   - **Intent breaking**：操縱 agent 的 plan，讓 action 偏離原本目的。
+   - **Identity spoofing**：用 compromised authentication 假冒合法 agent。
+4. **What's changed: Good — 新 SAST/DAST/SCA 增強技術** —
+   - **「Shift left」security 比以前更可及** — LLM 可被嵌入 workflow 抓問題
+   - **Automated penetration testing**
+5. **LLM 在 security testing 的限制** —
+   - **AI SAST 的 false positive 率高得驚人** — Claude Code / Codex 對某些漏洞類別 50-100% false positive，比傳統 SAST（50+%）還糟
+   - **既有 benchmark 不貼近真實情境**，難 evaluate LLM
+   - **Non-deterministic**：同 prompt 多跑得不同結果，怎麼確認 catch 完所有 vulnerability？
+   - **Context rot**：not all context is created equal；compaction（壓縮 context）會讓資訊變形
+6. **Open question** —
+   - 怎麼降 vulnerability detection 的 false positive 與 hallucination？
+   - 怎麼 verify LLM 生的 patch 真的安全、不引入 regression？
+   - 怎麼讓 LLM 解釋它為什麼 flag 這個 vulnerability、為什麼 propose 這個 fix？
+   - 衡量 LLM AppSec 表現的對的 benchmark 是什麼？
+   - LLM 怎麼嵌進 CI/CD 不淹沒 team 的告警雜訊？
+   - AI 生成的 patch 引入新 vulnerability 時誰要負責？
 
-**Key takeaway**：AI 沒有讓 QA 變不需要，反而讓 QA 變更重要 — vibe-coded code 寫得快但品質不穩，必須用更強的 test infra 兜底。SAST + DAST + SCA + AI test gen 是 2025 後的新四元組，每一項都該整進你的 pipeline。
+**Key takeaway**：AI 沒讓 QA / Security 變不需要 — **反而讓它變更重要**。SAST + DAST + SCA 的三角依然是基礎，加上對 prompt injection / tool misuse / code attack 三類 AI-era attack vector 的特別防護才完整。LLM 找漏洞能力有但 false positive 高、非確定性、context rot 三個根本問題還沒解 — 把 LLM 警報當「嫌疑名單」處理而非結論。
 
 ## Friday Lecture（10/31）：Isaac Evans（Semgrep CEO）
 

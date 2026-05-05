@@ -88,39 +88,92 @@ Graphite 的 Diamond AI reviewer 跑在數百萬個 production PR 上，沉澱�
 
 ## Monday Lecture（11/3）：AI code review
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1NkPzpuSQt6Esbnr2-EnxM9007TL6ebSPFwITyVY-QxU/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1NkPzpuSQt6Esbnr2-EnxM9007TL6ebSPFwITyVY-QxU/edit?usp=sharing)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture topic 與課程脈絡 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節 Mihail 把第一個小時花在「為什麼 code review 在 AI 時代反而變得更重要而不是更不重要」。預期內容包括：
+Mihail 開場直接給 statistics 撐住論點：**code review 是工程師能做的最高槓桿活動之一**。
 
-1. **Code review 的角色變遷** — 從 Fagan inspection（1976）→ GitHub PR review（2008）→ AI-augmented review（2024+）三個世代的對比，搭配 McConnell 55-60% defect detection 數據鋪墊「review 的歷史 ROI」
-2. **AI 寫 code 後 review 為什麼更重要** — 當 70% code 是 AI 寫的，author 對 code 的 mental model 會比過去淺，**review 變成 author 自己跟 codebase 對齊的最後機會**。Bug detection 反而退到次要
-3. **三大 AI reviewer 商品化現況** — Graphite Diamond、CodeRabbit、GitHub Copilot Code Review 的功能對比、定價、整合方式（GitHub App / GitLab webhook / 自架）
-4. **AutoCommenter 的 Google 內部數據解讀** — 68% best practice coverage、66% beyond linter、40% resolution rate 三個數字的工程意涵
-5. **企業導入路徑** — 從 hobby 一人專案 → 5 人新創 → 100 人公司 → 數千人企業，每個 stage 該選哪種 reviewer 配置
-6. **demo 段** — Mihail 應該會 live demo 在他自己的 repo 開 PR，跑 Diamond / CodeRabbit 看 comment 品質
+1. **Why — code review 的硬數據** —
+   - Code review 的 error detection rate 達 **55-60%**，而各類 testing 是 25-45%
+   - 一份比較有 vs 沒 review 的程式錯誤研究：**4.5 → 0.82 errors / 100 lines of code**
+   - AT&T 內部研究：code review 帶來 **14% productivity 增加 + 90% defect 減少**（Source: Coding Horror）
+2. **What to catch — Review 該抓什麼**：(a) logic & correctness errors、(b) readability & maintainability、(c) performance、(d) security、(e) **best practices / codebase 內部 idiom**（例：用 service 而非 direct DB lookup、特定 access pattern、命名慣例）。
+3. **Review 的多重 ROI**（Blake Smith framing）—
+   - 幫 team member 適應 system 演化的 mental model
+   - 確保改動真的解決原問題
+   - 開出設計優缺點的討論
+   - production 前抓 bug
+   - 維持 code style / 組織一致
+4. **What's a good review comment** — 對比 anti-pattern「This won't work」與好 comment：「I see your new method matches the existing style in this file, taking [X] parameters. Having that many parameters hurts readability and implies the function is doing too much. What do you think about refactoring this method and the existing ones in a later PR to reduce how many parameters they take?」 — 提供具體細節、引用 specific code / issue、suggest resolution、給 evidence / explanation。
+5. **The new AI world** — 商業 AI reviewer 景觀：**Graphite**（Friday guest lecture）、Greptile、CodeRabbit、Claude Code / Codex。
+6. **What has changed — AI reviewer 的六大優勢**（出處 Greptile + Graphite）—
+   - **Efficiency**：自動化降低 review 時間、提早抓問題
+   - **Knowledge sharing**：developer 從 AI suggestion 學 best practice
+   - **Consistency**：AI 對所有 PR 套同一標準
+   - **Reduced cognitive load**：AI 處理 routine check，human 聚焦複雜邏輯
+   - **Continuous improvement**：AI system 隨資料量變強
+   - **Holistic understanding**：modern AI reviewer 提供 contextual analysis、pattern recognition，比 linter 深得多
+7. **Live demo** — Graphite example 走實 PR review 流程。
+8. **Limitations** —
+   - 比 linter 多設定 / setup 成本
+   - False positive
+   - 需要持續訓練 / continuous learning
+   - 抓不到 codebase-specific idiom 與 best practice（最大盲區）
+   - 處理不了複雜 business logic 與 architecture decision（永遠是 human 的領域）
+   - **Security change 必須額外謹慎**
+   - 常常漏 edge case
+   - **Code review 在 AI coding system 之下比以前更重要** — 你 own merged + shipped 的 code，不能 blame AI
+   - 必須明確告訴 AI 什麼不要 review、codebase 的 pattern / idiom 是什麼
+   - 對 user input、authentication、file operation、network request 要特別 mindful
 
-**Key takeaway**：AI 寫得越多，review 越不能省。Mechanical layer 交給 AI（風格、明顯 bug、security），alignment layer 留給人（架構、業務邏輯、心智模型同步）。
+**Key takeaway**：AI code review 不是替代 human reviewer，是增強 review 紀律。McConnell 55-60% defect detection 的歷史紅利還在，AI 讓「跑 review」的邊際成本趨近於零，但「**讀懂 codebase idiom + 評斷 architecture**」這條 alignment layer 永遠是 human 的責任。AI 寫得越多，review 越不能省。
 
 ## Friday Lecture（11/7）：Tomas Reimers（Graphite CPO）
 
 - **Speaker**: [Tomas Reimers](https://www.linkedin.com/in/tomasreimers/), CPO of [Graphite](https://graphite.dev/)
-- **Slides**: [Drive 連結](https://drive.google.com/file/d/1hwF-RIkOJ_OFy17BKhzFyCtxSS7Pcf7p/view?usp=drive_link)
+- **Slides**: [Drive 連結（公開）](https://drive.google.com/file/d/1hwF-RIkOJ_OFy17BKhzFyCtxSS7Pcf7p/view?usp=drive_link)
 
-> Slides 為 Drive 連結（需 Stanford 帳號），依 [YouTube 演講](../readings/w7_lessons_from_millions_of_ai_code_reviews.md) + Graphite 公開資料 best-effort 重建：
+> 以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。Tomas 演講題目「**The Modern Software Developer: Code Review**」，分四段（Hi → Collaborating with humans → Collaborating with AI → Software development in the limit）：
 
-Reimers 是 Graphite 共同創辦人 + CPO，這場演講的核心素材就是他在 YouTube 那場 "Lessons from Millions of AI Code Reviews"。預期內容：
+**段 0：Graphite 自介** — Graphite 是 AI-powered code review platform，help developer create / review / merge code change。AI agent 能回答 PR 相關問題、fully codebase aware、可主動 propose updates 幫 reviewer 解 comment 與 CI。Trusted by 100,000s+ developer、1,000s+ organization。Production 數據：**Shopify 採用 Graphite 後 PR shipped per developer +33%**、Asana **LoC/eng +21%**、Ramp **time between PRs merged -74%**。
 
-1. **Graphite 的起點：stacked PR 的設計哲學** — 在 GitHub 預設一個 PR 就是一段 branch 的世界裡，Graphite 推 stacked PR（堆疊式 PR）— 把一個大 feature 拆成多個 small PR，每個 PR 依賴前一個。對應 Smith 的「scalpel-driven development」原則。Tomas 會解釋為什麼 stacked PR 是 AI-augmented review 的天然搭配 — 小 PR + AI reviewer = signal-to-noise 最高的組合
-2. **Diamond 的 product evolution** — V1 用 raw GPT-4 + simple system prompt → 一堆 false positive、user trust 崩盤。V2 引入 quadrant 框架、加入 codebase context retrieval。V3 換 metric 到 action rate、做 per-rule sensitivity tuning
-3. **2x2 quadrant 框架現場推導** — 講過為什麼 thumbs-up/down 失敗、為什麼選 action rate、52% vs 50% parity 的故事
-4. **LLM 的兩個 systemic 盲區** — codebase-specific convention（左上）+ always-correct-but-unwelcome（右下）。會給具體例子：「revert this code」「CSS doesn't work this way（其實會）」
-5. **What's next: review 之後** — Diamond 的下一步是不是 auto-fix？是不是直接生成 follow-up PR？AI reviewer 跟 AI coding agent 的邊界該畫在哪？
-6. **Q&A 重點預期**：學生會問 self-host vs 商業服務、prompt evolution 細節、Graphite 怎麼處理 IP / source code 安全
+**段 1：Collaborating with humans — Code review 的歷史**
 
-**Key takeaway**：AI code reviewer 不是讓它「變更聰明」，是讓它「知道自己不該開口的時候」。Quadrant 框架 + action rate metric 是這個工程問題的 dual key。
+1. **三步驟 collaboration**：CREATE（developer 提一組 code change，這個 atomic unit 叫 pull request、diff、patch、changelist 或 merge request）→ REVIEW（另一個 developer 給 comment、suggest improvement、approve）→ MERGE（原 developer 把 PR merge 回 codebase）
+2. **AI 讓 code 比以往多 → 也讓需要 review / merge 的 code 比以往多**（這是 Graphite 整個產品論點的根基）
+3. **Code review 簡史四階段** —
+   - **Fagan Inspections**（IBM, 1976，Michael Fagan 提出）— 重型形式審查
+   - **Email patches**（Linux kernel 至今仍用）— printed code → emailed patch
+   - **Mondrian**（Google, 2000s 早期，Guido van Rossum 主導）— 第一個 web UI for review
+   - **Online tools**（Review Board / Gerrit / Critique / Phabricator / GitHub）— review 從工程紀律變成主流 dev workflow
+
+**段 2：Collaborating with AI — 跟 super-human author 共事**
+
+4. **AI 已能抓的不只 typo** — Graphite 主動掃 PR 找 bug、把 potential issue post 到 Graphite 與 GitHub 兩邊、out-of-the-box work、fully customizable
+5. **核心問題：有了 AI，human 還需要 review 嗎？** Tomas 答：要，因為 review 的 purpose 排序是 **(01) Alignment confirmation → (02) Knowledge diffusion → (03) Proofreading**。Bug catching 只是第三順位。
+6. **Human 怎麼跟 AI 合作？— 兩條路 PLATFORM vs PARTICIPANT**
+   - **PLATFORM** route：AI 較適合做 context gathering、augment human reviewer
+   - **PARTICIPANT** route：AI 直接取代 human reviewer
+7. **The limits of AI（today vs tomorrow）** — slide 暗示 today 的 AI 邊界明天會被推得更遠
+
+**段 3：Software development in the limit — 未來方向**
+
+8. **Software dev 永遠有兩部分** — **Inner loop**（聚焦 development）+ **Outer loop**（聚焦 review & collaboration）
+9. **AI 已經把 inner loop 加速 10×** — 那 outer loop 會怎樣？
+10. **Three doors for the next generation software dev** —
+    - **CYBORG**：developer 直接 review change，靠 AI 增強。問題：如果作者不是 author，這還合理嗎？
+    - **EM**（engineering manager）：developer 直接管 AI，underwrite architecture 但不細究 technical specifics
+    - **AGENCY**：developer 把 AI 當 third-party contractor，underwrite product requirement 但不 own code
+11. **Graphite 的產品策略對應** —
+    - **AI Review Agent**：Graphite Agent 是 AI-powered companion 抓 bug、enforce convention、擋 error / security vulnerability
+    - **Stacking**：堆疊式 PR git workflow，讓 author 在不被 reviewer 卡的前提下繼續開發
+    - **Smarter CI**：predictive CI 只在需要時跑，省 team 時間與錢
+    - **Review experience built for teams**：reviewer assignment、merge queue、automation、insight
+    - **Measure developer productivity**：精確衡量 AI coding tool 與 Graphite 給 developer 帶來多少 efficiency gain
+
+**Key takeaway**：Tomas 的核心論點是 **AI 不是讓 review 變不需要 — 反而讓 review 變得更重要**。Code review 的真正 ROI 一直都在 alignment confirmation 與 knowledge diffusion，bug catching 是 side effect。AI 加速 inner loop 後，outer loop 會在 CYBORG / EM / AGENCY 三條路徑分流，但無論哪條，「human underwrite 什麼」決定 review 的形態。對 vibe coder 的 implication：你 ship 的 code 你負責，AI reviewer 是助力不是替罪羊。
 
 ## Reading 摘要
 

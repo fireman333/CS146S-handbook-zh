@@ -101,41 +101,47 @@ Function calling 的 protocol 各家不同（OpenAI 的 `tools` schema、Anthrop
 
 ## Monday Lecture（9/29）：Building a coding agent from scratch
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/11CP26VhsjnZOmi9YFgLlonzdib9BLyAlgc4cEvC5Fps/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/11CP26VhsjnZOmi9YFgLlonzdib9BLyAlgc4cEvC5Fps/edit?usp=sharing)
 - **Completed Exercise**: [Drive 連結](https://drive.google.com/file/d/1YtpKFVG13DHyQ2i3HOtwyVJOV90nWeL2/view?usp=drive_link)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + topics 重建：
+> 以下基於 Google Slides 公開內容（TXT export，slides 內容簡潔）整理的繁中摘要：
 
-這節的 hands-on 重點是「動手用 100 行 code 寫一個會跑的 coding agent」。預期流程：
+這節 slides 內容相當精簡（只有 ~1.2KB 文字），核心命題是「coding agent 沒你想得那麼複雜」。Mihail 提出最小可用 agent 的三句話骨架：使用者跟 client（Windsurf / Cursor / Claude Code）互動，client 內部跑一個 loop 接著一個 LLM；LLM 偶爾發出 tool call，由 client 在 LLM 之外（off-LLM）執行。實作步驟：
 
-1. **Setup** — 用 Anthropic / OpenAI SDK，model 選 Claude Sonnet 4.6 或 GPT-5
-2. **第一個 tool: read_file** — 定義 JSON schema、實作 tool function、把 result 塞回 context
-3. **第二個 tool: write_file + bash** — 加上能改檔案、能執行 shell 的能力
-4. **Agent loop** — `while True: response = llm.call(messages, tools); if response.stop_reason == "tool_use": execute tool, append; else: break`
-5. **觀察 model 行為** — 看它怎麼自己 chain tool（先 read 再 write）、怎麼處理 error
-6. **加入 planning** — 在 system prompt 加「先思考再動手」的指示，看 reasoning 變化
+1. **三段 prompt 結構** — system prompt 定義 LLM 行為與 directive、user prompt 是使用者請求、assistant prompt 是 LLM 回應
+2. **Agent loop 機制** — 從 terminal 讀 input、不斷 append 到 conversation；告訴 LLM 有什麼 tool 可用；LLM 在適當時機要求 call tool；offline 執行 tool 並把 result 塞回 context
+3. **三個基本 tool** — `read_file`、`list_dir`、`edit_file`（建立新檔、修改檔案）
+4. **Live build session** — 現場用幾十行 code 把上述 loop 接起來
 
-**Key takeaway**：Coding agent 的本質就是 LLM + 幾個基本 tool（read / write / bash / search）+ while loop，不到 100 行 code 就能跑起來。後面所有商用 agent（Claude Code、Cursor、Devin）都是在這個骨架上加細節。
+Lecture 收尾揭露 Claude Code 的「secret sauce」（Mihail 對外公開觀察 Claude Code 內部運作的整理）：
+
+- **Front-load context**：用小而精準的 prompt 在 session 開頭壓縮目標
+- **`<system-reminder>` 散布全程**：在 system prompt、user prompt、tool call、tool result 各層都注入 system reminder 標籤抵抗 long-context drift
+- **Command prefix extraction**：對使用者輸入做前綴解析來分流意圖
+- **Spawns sub-agents**：主動 fork 出 sub-agent 處理特定 sub-task，避免主對話 context overload
+
+**Key takeaway**：Coding agent 不是新物種 — 它就是 LLM + tool registry + while loop 的最小組合。Claude Code / Cursor / Devin 的差別不在這個骨架，而在 prompt scaffolding（系統提示、`<system-reminder>` 散布、sub-agent 隔離）這些工程紀律。寫過一次自己的 100 行 agent 你會發現：難的不是 loop，是讓 model 在對的時機選對 tool。
 
 ## Friday Lecture（10/3）：Building a custom MCP server
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1zSC2ra77XOUrJeyS85houg1DU7z9hq5Y4ebagTch-5o/edit?usp=drive_link)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1zSC2ra77XOUrJeyS85houg1DU7z9hq5Y4ebagTch-5o/edit?usp=drive_link)
 - **Completed Exercise**: [Drive 連結](https://drive.google.com/file/d/1J6lgZWcxPzpCpjujJSnW1aAkCYF6Yxv3/view?usp=drive_link)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + reading materials 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節從 [TypeScript MCP SDK](../readings/w2_mcp_server_sdk.md) 出發，動手寫一個能在 Claude Desktop 跑的 server。預期內容：
+這節從 W2 Monday 的「LLM 知識是 vast 但 static」痛點出發。要建 fully autonomous system，必須有可靠機制把 dynamic data（今天天氣、誰是現任總統、Bitcoin 價格、Nike 廣告旁白是誰）餵進 LLM。RAG 與 tool-calling 是目前最佳解 — 但 tool-calling 在 MCP 之前是 N×M 噩夢。
 
-1. **Setup** — `npm init`、裝 `@modelcontextprotocol/sdk`、定義 `Server` instance
-2. **註冊 tool** — 用 `server.tool(name, schema, handler)` 定義一個 tool（例：query 一個假 user database）
-3. **Local stdio transport** — `new StdioServerTransport()`，連到 `server.connect(transport)`
-4. **接到 Claude Desktop** — 改 `claude_desktop_config.json` 把 server command 加進 mcpServers
-5. **Debug & inspect** — 用 [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) GUI 測 server response
-6. **進階：加 resources / prompts** — 不只是 tool，也用 resources 餵模型 context
+1. **Why MCP** — MCP（Model Context Protocol）是 2024 年 11 月才被 Anthropic 推出的開放協定，**用一句話講就是「把 tool 暴露給 LLM 的標準格式」**。在 MCP 之前，每個 LLM app（Cursor、Claude Desktop、Continue.dev）要接每個 third-party API（Slack、GitHub、Notion）都要寫 N×M 個 connector，還要各自處理 poor doc、不一致 data format、authentication、error handling。MCP 把這個複雜度從 N×M 壓到 N+M。
+2. **設計傳承** — MCP 概念 extend 自 LSP（Language Server Protocol，VS Code 用來支援多語言的同類 N×M 解法），但 MCP 多了 **proactive agentic workflow** 的能力，不像 LSP 純 reactive。Output 強制 JSON-RPC 格式。
+3. **MCP 術語** — **Host**（Cursor、Claude Desktop）、**MCP Client**（Host 內嵌的 library，每個 server 一個 stateful session）、**MCP Server**（包裝 tool 的輕量 wrapper）、**Tool**（可被呼叫的 function，可以是 data source 或 API）。
+4. **Flow** — Client 對 server 發 `tools/list` 問「你能做什麼」→ server 回 JSON 描述每個 tool 的 name / summary / JSON schema → host 把這些 JSON 注入 model context → user prompt 觸發 model 發出 structured tool call → MCP server 執行後對話繼續。
+5. **Transport** — MCP 提供 stdio（local stdin/stdout）與 SSE（remote HTTP server-sent event）兩種。Local stdio 開發成本最低，原型階段不必處理 OAuth。
+6. **Live build session** — 從零寫一個 custom MCP server，現場 demo `list_files` / `edit_file` 兩個 tool 被 server 實際呼叫的情況。注意：tool 多時 model 不一定會挑對 server，要在 prompt 中明說用哪個 server。
+7. **Limitations** — 今天的 agent 處理多 tool 能力還不行（Cursor 有 hard limit）；API 回的資料會快速吃掉 context window；APIs 應該設計成 AI-native 而非把 rigid REST 直接搬過來。Mihail 推薦延伸閱讀 [arXiv 2505.03275](https://arxiv.org/pdf/2505.03275) 講 MCP mitigation 策略。
 
-**完成後你能做什麼**：把任何外部資料（你的 RemNote、PubMed、阿摩錯題庫、Google Calendar）包成 MCP server，Claude Desktop / Cursor 都能直接呼叫，不需 plugin 不需 extension。
+**Key takeaway**：MCP 不是又一套技術 buzzword — 它解決的是 N×M connector 爆炸這個工業界真實痛點。寫過一次自己的 MCP server，你就能把任何外部資料源（RemNote、PubMed、阿摩錯題庫、Google Calendar、健保碼）統一接到 Claude Desktop / Cursor / 任何 MCP host，零 plugin、零 extension。Limitation 也別忘 — tool 數量在 30-100 個之間就會明顯惡化 model 的選 tool 能力。
 
 ## Reading 摘要
 

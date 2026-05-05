@@ -96,40 +96,113 @@ Trace 由多個 **span（區段）** 組成，每個 span 是一個工作單位�
 
 ## Monday Lecture（11/17）：Incident response and DevOps
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1Mfe-auWAsg9URCujneKnHr0AbO8O-_U4QXBVOlO4qp0/edit?usp=sharing)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1Mfe-auWAsg9URCujneKnHr0AbO8O-_U4QXBVOlO4qp0/edit?usp=sharing)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 lecture title + SRE / DevOps 業界共識重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-這節是 W9 的 framing lecture — 從傳統 DevOps / SRE 切入，再連到 AI agent 怎麼介入這個 workflow。預期內容：
+Mihail 開場直接給出 framing 數據：「**Coding represents just 30% of engineering time**。難搞的 70% 是把 code 跑在 production 裡 — 那裡 complexity / tool silo / knowledge gap / interdependency 全 collide」。
 
-1. **Incident response 流程拆解** — 從 alert 觸發到 incident closure 的完整 lifecycle：detect（alert / SLO breach）→ triage（嚴重度評估、page 對的人）→ investigate（找 root cause）→ mitigate（止血）→ resolve（永久修）→ postmortem（檢討）。每個階段的 KPI（MTTD / MTTA / MTTR）與常見痛點
-2. **DevOps 在 AI 時代的轉型** — 從「自動化部署」進化到「自動化營運」。CI/CD 自動化解決了 deployment friction、observability 解決了 visibility friction，現在 AI agent 解決 investigation / decision friction
-3. **AI 在 incident response 各階段的介入點** — Detect 階段：anomaly detection model 取代 static threshold；Triage 階段：LLM 分類 severity / 路由到對的人；Investigate 階段：multi-agent 並行查 root cause；Mitigate 階段：suggest 或自動跑 rollback / restart；Postmortem 階段：自動產生 timeline 與 lesson learned 草稿
-4. **DevOps 文化的核心 — 不究責檢討（blame-free postmortem）** — Mihail 應該會強調這點：自動化只是工具，沒有 blame-free 文化、incident learning 不會發生
-5. **AI 的限制與 human-in-the-loop 設計** — 哪些動作 agent 可以自動執行（read-only investigation、report generation），哪些必須人類授權（rollback production、刪資料、call third-party API 花錢）
+1. **The old world — SRE 的痛點清單** —
+   - Operational monitoring：on-call、troubleshoot、infrastructure management、security
+   - Incident resolution 需要從多 source / 多 team 拼湊資訊
+   - 維護常常已過時的 runbook
+   - Cloud-native + Kubernetes + 容器化把 data / dependency / complexity 推到新高度
+   - SRE 因 on-call shift 普遍 burnout
+   - **estimates that downtime and service degradation cost the Global 2000 about $400 billion annually**
+2. **Infrastructure & DevOps 的核心紀律：Four Golden Signals of monitoring**
+   - **Latency**：分開追蹤 successful 與 failed request（避免 HTTP 500 失敗讓平均失真，慢 error 特別需要關注）
+   - **Traffic**：system demand，通常 req/sec、依系統決定（streaming 算 session、DB 算 transaction）
+   - **Errors**：失敗率，包含明確（HTTP 500）、隱含（200 OK 但 wrong content）、policy-based（超過 SLA）。需多層 monitoring 抓不同 failure
+   - **Saturation**：「系統滿到什麼程度」，追蹤 CPU / memory / I/O。System 通常在 100% 之前就慢，要訂 safe threshold
+   - 加上：monitor production trace
+3. **凌晨 3:12 的實境演練** — PagerDuty ping 你 DB query 出現 500 spike，怎麼辦？Mihail 給一份 8 步驟 incident playbook：
+   - **Acknowledge & assess**：在 PagerDuty acknowledge、確認嚴重度、看 app + DB dashboard、判斷 partial / full outage
+   - **Check Golden Signals（DB first）**：connection 是否爆 / 卡 / 突然掉？P95 latency spike？Slow query？timeout / refused / aborted transaction？CPU / IOPS / lock / memory / replication lag？
+   - **Look for what changed**：最近 deploy？DB migration？Config / feature flag 改？autoscaling 事件？— 有 correlation 立刻 rollback / revert
+   - **Localize failure**：所有 query 都壞 vs 特定 query？read 還是 write？primary 還是 replica？單 shard / instance 還是全部？App-side（pool / timeout）還是 DB-side（load / lock）？
+   - **Apply fast mitigation**：connection issue → restart pod / 降 concurrency；DB saturation → 關 heavy job / throttle traffic / read 路由到 replica；bad slow query → 關該 feature / 開 cached degraded mode；replica lag → read 路由到 primary / 重啟 replica；unhealthy node → 只重啟 replica，primary 要 escalate
+   - **Stabilize & monitor**：看 500 rate / DB latency / traffic 回正、確認沒 retry storm 與 cascading failure、health check 恢復
+   - **Communicate**：每 10-15 分鐘一次簡短 update（issue → action → status）
+   - **Close out**：時間軸、root cause、follow-up（query fix、indexing、scaling、retry tuning、capacity review）
+4. **Metrics tracked** — MTTR（mean time to repair）、被拉進 incident 的 engineer 數量、對 customer 的 reported SLA。
+5. **The new AI world** — Resolve AI（W9 Friday guest）、Datadog Bits AI Agent、Splunk Observability Assistant。
+6. **AI SRE 的特徵** —
+   - 動態維護 knowledge graph
+   - 跨 observability stack 與 cloud 的 agentic system
+   - 即時生成「現在發生什麼」的 narrative、pinpoint likely root cause + 證據、給 prescriptive remediation
+   - **Heavy emphasis on explainability and auditability**
+7. **What has changed** — AI 把 organizational / service-level knowledge **scale 出來** — 那些 undocumented dependency、brittle legacy service、只會在 high-stakes incident 浮現的 quirk，不再被孤立在某幾個資深 engineer 腦中。
+8. **AI SRE in action 預覽** — observability、working theory、span info、heavily evidence-based、chat 介面做動態查詢。
+9. **Limitations** —
+   - 能處理 incident 的複雜度有限
+   - 現代 production stack 異質性
+   - 從偵測到實際 remediate code 還很遠（all provider 都先做 root cause analysis 起）
+   - 好的 RCA 需要好的 monitoring「園藝」（gardening）— 工具雜草不除 AI 也救不了你
+   - Security 可能變新 attack vector
 
-**Key takeaway**：Incident response 是個成熟工作流，AI agent 不是要重新發明它，是要在 detect / triage / investigate 三個階段大幅縮短時間，把工程師從 firefighter 升級成 architect。
+**Key takeaway**：SRE 工作流（detect → check golden signals → look for change → localize → mitigate → stabilize → communicate → close out）是個成熟 8 段 playbook。AI agent 不是要重新發明它，是要在前面 5 段大幅縮短時間 — 從凌晨 3:12 page 到 4:00 找到 root cause，從原本的「**多 engineer + tool silo + 拼湊資訊**」變成「**single agent + dynamic knowledge graph + evidence-first**」。但 remediation 邊界還在，blast radius 大的動作必須 human authorize。
 
 ## Friday Lecture（11/21）：Mayank Agarwal + Milind Ganjoo（Resolve）
 
 - **Speakers**:
-  - [Mayank Agarwal](https://www.linkedin.com/in/mayank-ag/), CTO of [Resolve](https://resolve.ai/)
-  - [Milind Ganjoo](https://www.linkedin.com/in/mganjoo/), Technical Staff at Resolve
-- **Slides**: [Drive 連結](https://drive.google.com/file/d/11WnEbMGc9kny_WBpMN10I8oP8XsiQOnM/view?usp=sharing)
+  - [Mayank Agarwal](https://www.linkedin.com/in/mayank-ag/), Founder & CTO of [Resolve AI](https://resolve.ai/)（**OpenTelemetry creator**）
+  - [Milind Ganjoo](https://www.linkedin.com/in/mganjoo/), Member of Technical Staff at Resolve AI（**ex-DeepMind Staff MLE**）
+- **Slides**: [Drive 連結（公開）](https://drive.google.com/file/d/11WnEbMGc9kny_WBpMN10I8oP8XsiQOnM/view?usp=sharing)
 
-> Slides 需 Stanford 帳號，依 Resolve.ai 公開 blog（W9 reading 全 6 篇有 4 篇來自 Resolve）+ 講者背景重建：
+> 以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。演講題目「**Agentic AI for software in production**」：
 
-Resolve.ai 是 2024 年成立的 AI-native on-call startup，創辦團隊來自 Google / Meta / Datadog 的 SRE / observability 老將。他們的論點是：**production engineering 是 AI agent 的 killer app，因為它需要 multi-source data fusion + structured reasoning + tool use，三項都是 LLM 強項**。預期講者會 cover：
+**段 1：軟體工程的真實樣貌（不是 idealized）**
 
-1. **Resolve 創立故事** — 為什麼 2024 才有人做這件事？三個 enabler 同時成熟：(a) GPT-4 / Claude 級別 model 終於有能力跨 domain reasoning、(b) MCP / function calling protocol 標準化讓接 observability platform 變簡單、(c) Kubernetes / cloud-native 把 system 複雜度推到 single human 看不完的層級
-2. **Product 核心：dynamic knowledge graph** — 不是預寫 runbook，是接 Grafana / Datadog / Jenkins / GitHub 持續抓即時資料建一張動態 graph。Alert 觸發時 agent 在這張 graph 上做 reasoning，不是從零開始 query
-3. **Just-in-time runbook 的設計哲學** — Static SOP 一定會過時（新 service、新 dependency 一加就失效）。Resolve 的 agent 是 incident 當下根據 context 動態生成調查腳本 — 看 alert 是哪個 service、最近有什麼 deployment、依賴的 downstream 健康狀況，組合成這次 incident 專屬的 investigation plan
-4. **Multi-agent architecture 在 Resolve 的具體實作** — 對應 [Multi-Agent Systems blog](../readings/w9_multi_agent_systems_ai_native.md)：trace agent / DB agent / deployment agent / customer impact agent 並行跑，coordinator merge。講者可能會 demo 一個真實 incident 的 walkthrough — 從 PagerDuty alert 進來到 Slack 出 root cause hypothesis 的全流程
-5. **Real-world deployment lessons** — 跟早期客戶（如 Salesforce、Stripe-tier 公司）部署的教訓：(a) 客戶最初不信任 agent 的判斷，要先讓 agent 「watch only」幾週累積信任；(b) hallucination 在 read-only investigation 是可接受的（人類 review），但在 remediation 是 disaster — 所有破壞性動作必須 human-authorize；(c) postmortem 自動化是最受歡迎的功能（沒人愛寫），但要讓工程師能 edit
-6. **Future direction** — 從 reactive incident response 進化到 proactive resolution（[Top 5 Benefits](../readings/w9_benefits_of_agentic_ai_in_oncall.md) 第五點）— agent 不只等 alert，主動掃 metrics / log pattern 找尚未爆發的潛在問題
+軟體工程比想像複雜：跨 systems（code、AI、telemetry、cloud、knowledge、security）、跨 teams（application、infra、networking）、跨 workflows（development、deployment、on-call、cost management、compliance、security vulnerability、documentation）。**Software engineer 花 70+% 時間在 grunt work**：building context、working across tools、evidence gathering、log queries、coordination、application、documentation、compliance、on-call、optimization、deployment、problem solving — 只有少部分時間在 design decision、trade-off、creative work。
 
-**Key takeaway**：Resolve 是「為 SRE 場景重新設計 LLM agent」的具體商業案例。它示範了從 prompt engineering 到 production agent 中間的所有工程細節 — knowledge graph 怎麼維護、multi-agent 怎麼協調、human-in-the-loop 怎麼設計、信任怎麼累積。對想做 vertical AI startup 的人是必看 case study。
+**段 2：On-call engineer 在凌晨 3:04 被 page 後到底發生什麼**
+
+走 timeline：03:04 AM page → 03:20 AM L1 support 接手 → 04:00 AM multiple team escalation（infra / app & product / DB / engineering manager / incident commander）→ 04:45 AM 工程師終於把問題 mitigate → ? AM postmortem。整段過程要靠 runbook、observability、code、infra 拼湊，**nearly all manual effort** — incident commander 協調人、L1 看 infra、app & product team 看 application、director / comms manager 對外溝通。
+
+**段 3：什麼讓 production 對人類（與 model）來說都很難？**
+
+1. **跨多 system / tool 的 data silo** — 1000s of service across 100s of team、複雜瞬息的 infra（DB、messaging service…）、低層工具看 log / metric / dashboard / feature flag / CI-CD 各自 query language、access mechanism、operational behavior
+2. **跨 team / 跨 expertise 的協調** — application engineer、platform engineer、SRE、IT ops、security engineer、support engineer 各有專長，但 context 通常 fragmented and undocumented
+3. **直接影響營收與成本** — incident 拖好幾小時或好幾天才解掉、tool 維護成本高、incident regularly 牽涉 20+ engineer、change 難做又會 trigger issue、infrastructure 開支不斷漲、客戶常常先發現問題、只有少數工程師真的懂 production 全貌、新人 onboard 要 3-6 個月、**AI 生成的 code 又把問題放大**
+
+**段 4：AI 要怎麼幫工程師管 production？**
+
+Resolve 的 Agent-first approach 結合三件事：(1) understand and operate all your production tools、(2) capture tribal knowledge of your unique system、(3) combine expertise of all your engineers across team。Mayank 把這拆成 3 個設計原則對應到 3 個產品 capability：
+
+**設計原則 1：Production 系統複雜且持續變化** → AI 要深度理解 production
+- 接到 code、infra、tool、knowledge
+- 為「你的系統」建模（不是 generic SRE，是你公司的 architecture）
+- 在 graph 內導航到對的 node 蒐證據
+- 像專家一樣操作每個 tool / system
+- AI 連接 alerts / metric / dashboards / traces / logs / runbooks / change events 等多源訊號
+
+**設計原則 2：Knowledge fragmented or undocumented** → AI 要 capture tribal knowledge 並逐次變聰明
+- Capture 公司與 team 的知識
+- 記得 in-the-loop 給的 feedback / teaching
+- Retrieve context-specific information
+
+**設計原則 3：調查需要跨 team 專長** → AI 要結合所有 engineer 的專長
+- Create investigation plan
+- 並行 pursue 多個 hypothesis（multi-agent 並行查不同方向）
+- 持續 refine plan 到 root cause
+- 讓多人跨 org 邊界協作得到答案
+
+**段 5：Lessons learned building AI for prod**
+
+1. **這不只是 model 問題** — production 導航需要大量 domain expertise，這些必須 hard-code 進 architecture，**單靠 prompt engineering 蓋不出 production AI**
+2. **Context window 有限，production context 是無限的** — 10M log line 不可能塞進任何 context window。Intelligence 是「**knowing WHAT to query, WHEN, and HOW to filter**」based on production understanding
+3. **跟 tool 工作是 non-trivial 問題** — Raw API 不可用：response 太大、output 雜、為人類設計。必須建 AI system 能 filter noise、回 structured summary、graceful 處理 error、parallel 工作
+4. **Eval 跟 product 一樣難** — 建 eval 要重現 production complexity（service、dependency 等），沒 eval 就不能信任 output
+
+**段 6：AI is changing software engineering**
+
+Mayank 預測「By next year software engineering will look fundamentally different」。Three eras 的 grunt work / creative work 比例：
+- **Models era**（純 model API）：grunt work 主導
+- **Agents era**：grunt work 還是大頭，但 creative work 占比上升
+- **Closed-loop agents era**：grunt work 大幅縮減，creative work 占主導
+
+**Key takeaway**：Resolve 對 vibe coder 的最大 lesson 不是「**怎麼用 AI agent**」，是「**production AI 為什麼不能靠 prompt engineering 做出來**」。它需要 (a) hard-code domain expertise into architecture、(b) 知道何時 / 怎麼 query / filter 而非塞 raw data、(c) 把 messy raw API 包成 AI-friendly tool、(d) eval 跟 product 一樣難建。對未來 AI vertical startup 的 founder 是必看的工程現實 check — production engineering 是 LLM agent 的 killer app，但門檻比一般 chat agent 高一個量級。對自己的 side project，至少先學會這套「**接 alert → 檢查 golden signal → 看最近改了什麼 → localize → mitigate**」的 8 步驟 playbook，自己當自己的 SRE。
 
 ## Reading 摘要
 

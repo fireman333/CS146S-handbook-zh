@@ -87,36 +87,44 @@ OpenAI 自家的 [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.md
 
 ## Monday Lecture（9/22）：Introduction and how an LLM is made
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1zT2Ofy88cajLTLkd7TcuSM4BCELvF9qQdHmlz33i4t0/edit?usp=sharing)
-- **講者**: Mihail Eric（course instructor）
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1zT2Ofy88cajLTLkd7TcuSM4BCELvF9qQdHmlz33i4t0/edit?usp=sharing)
+- **講者**: Mihail Eric（course instructor，Stanford undergrad/grad、前 Amazon Alexa 早期 LLM 團隊、ML 教育新創創辦人、YC-backed AI coding company 創辦人）
 
-> Slides 需 Stanford 帳號，內容依 lecture topic 與課程脈絡 best-effort 重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-開課第一節要建立 mental model — LLM 不是魔法，是一條 pre-training → SFT → RLHF 的工業生產線。Mihail 在這節會：
+第一節要校準兩件事：(1) 這門課**不是 vibe coding 課**、不是教非工程背景使用者怎麼避開請工程師；(2) **LLM 不是黑盒子**，理解它的製造流程才能用好它。Mihail 把 lecture 切成三段：
 
-1. **過 course logistics** — 評分（80% final / 15% weekly / 5% participation）、prereq、weekly assignment 流程、final project 期待
-2. **拆 LLM 製造流程**（核心 30 分鐘）— 用圖示走一次 base model → instruction-tuned → aligned model 三段。重點是 base model 的 next-token prediction 本質、為什麼 SFT 能改變模型行為、RLHF 怎麼用 reward model 引導
-3. **解釋 capability spectrum** — 為什麼 GPT-5 / Claude Opus 級別模型能寫複雜 React app 但會數錯字母。Tokenization、context window、knowledge cutoff 三個常見限制
-4. **Coding 為什麼是 LLM 最 hot 的應用** — 程式碼有明確語法、可被 unit test 驗證、有大量 GitHub training data，三項條件讓它成為 LLM 最早 commercialize 的領域
+1. **State of the world 與軟體業現況** — 軟體工程行業正在被 AI 重塑，CS 主修申請數已下滑 20%。但 Mihail 的核心命題是：「**You won't be replaced by AI. You'll be replaced by a competent engineer who knows how to use AI.**」如果你的 value-add 只剩會 copy-paste Stack Overflow，就會被取代；但若能想 system architecture、抓 business context、設計可維運的 abstraction，AI 反而會把你的生產力推到 10 倍。
+2. **這門課的核心命題：human-agent engineering**（取代 vibe coding 的標準說法）— 包括 (a) 聚焦尚未被 AI 取代的能力（business understanding、tech lead 思維、好的 taste）、(b) 「LLMs are only as good as you are，good context leads to good code，if you can't understand your codebase, neither will an LLM」、(c) 大量讀 code、激進實驗。Mihail 強調目前沒有定型的 software pattern，整個業界都在摸索。
+3. **5 張投影片速講 LLM 製造流程**（給工程師的版本）—
+   - **Basics**：LLM 是 autoregressive next-token predictor。Tokenize → embedding（1-3K 維）→ 12-96+ 層 transformer + causal self-attention → 下個 token 機率分布
+   - **三階段訓練**：(a) **Pretraining** 用 100B-1T+ token（Common Crawl / Wikipedia / StackExchange / GitHub）做 self-supervised next-token prediction、(b) **SFT** 用數萬到數十萬筆人工 prompt-response pair 教 model 跟 instruction、(c) **Preference tuning** 收集成對 output 訓練 reward model 對齊 helpfulness / correctness / readability
+   - **資料量級對照**：GPT-3 ~300B token / 570 GB，PaLM 780B token，LLaMA-65B 1.4T token；code-specific 像 Codex 額外吃幾十 GB GitHub code，StarCoder 吃 3.1 TB（English Wikipedia 才 3B token 當作參考點）
+   - **Reasoning model**：在 SFT/RLHF 之上加 chain-of-thought trace + tool use + 對 reasoning step 收集人類偏好。Model size：Claude 3.5 Sonnet ~175B、LLaMA 3.1 405B、GPT-4 reportedly 1.8T
+4. **In practice 的 strengths vs limitations** — 強：expert-level code completion、code understanding、code fixing。弱：hallucination（在 less-represented language 更嚴重）、context window 雖然 100-200K 但有 primacy/recency bias 與 lost-in-the-middle、latency（秒到分）、cost（最頂模型 input ~$1-3/M token、output $10+/M token，但每年降約 10×）
 
-**Key takeaway**：把 LLM 當「讀過全網路的 contractor」而非「魔法」，後續所有 prompt / agent / IDE 設計決策都會自然推導出來。
+**Key takeaway**：把 LLM 當「讀過全網路的工程實習生」而非魔法 — 它在 pre-training 看過的 pattern（常見 framework、open source code）很強，但 SFT/RLHF 沒看過的（你公司 codebase、你昨天的 commit）必須透過 prompt 餵 context。後續九週所有工具都是把這個 mental model 的不同瓶頸拆開來解決。
 
 ## Friday Lecture（9/26）：Power prompting for LLMs
 
-- **Slides**: [Google Slides（需 Stanford 帳號）](https://docs.google.com/presentation/d/1MIhw8p6TLGdbQ9TcxhXSs5BaPf5d_h77QY70RHNfeGs/edit?usp=drive_link)
+- **Slides**: [Google Slides 公開連結](https://docs.google.com/presentation/d/1MIhw8p6TLGdbQ9TcxhXSs5BaPf5d_h77QY70RHNfeGs/edit?usp=drive_link)
 - **講者**: Mihail Eric
 
-> Slides 需 Stanford 帳號，依 topic + Anthropic prompt engineering 業界共識重建：
+> 以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：
 
-第二節聚焦「power prompting」— 不是基礎介紹，是進階技巧 + 實戰。預期內容包括：
+Mihail 借用 Karpathy 的觀點開場：**prompting 是 programming language 演化的下一階段**。就像搜尋引擎的 query 從 boolean algebra 演化成自然語言，prompting 也越來越自然語言化。但「自然」不代表「隨便」 — prompt 是 art + science 的混合體：LLM 的 black-box 本質讓它有「whispering」的玄學成分，但業界已經沉澱出一套 empirically improved 的技巧。Lecture 系統地走過這套技巧 catalog：
 
-1. **Prompt 槽位設計** — system prompt（persistent rules）vs user prompt（task）vs few-shot examples vs structured output 四個槽位該放什麼
-2. **CoT 與 thinking 的進化** — 從 "Let's think step by step" 到 Claude `<thinking>` block / OpenAI o1 的 reasoning effort，把 reasoning 顯式化的趨勢
-3. **Structured output 工程化** — XML tag、JSON schema、Pydantic model、Zod schema 強制 model 產出可被下游 parse 的格式
-4. **Prompt chaining** — 把一個複雜任務拆成多個 prompt，每個專注一件事
-5. **Common failure modes 與 debug 法** — model 漏指令、過度諂媚、edge case 處理失敗時怎麼從 prompt 著手
+1. **Zero-shot prompting** — 直接 ask，沒範例。例：「Make me a heap allocator in C」。適合 LLM 已熟的 well-known library / general coding task。
+2. **K-shot prompting（in-context learning）** — 給 1 / 3 / 5 個 example（empirical 上這幾個數字最有用）。**用在**：domain-specific API、enterprise 內部風格、命名慣例。**不用在**：well-known library、過度約束。Demo 用「在我們 repo 命名風格下寫 for-loop」，先 naive 提問再用 `<example>` 標籤包進兩段公司 convention 範例，立刻看到輸出差異。
+3. **Chain-of-Thought（CoT）** — 顯式 show reasoning step。兩種變體：(a) **Multi-shot CoT** 提供 worked-out reasoning trace，(b) **Zero-shot CoT** 用 "Let's think step-by-step" 觸發。是 reasoning model 的主力技術。適合 multi-step logic / programming / math。
+4. **Self-consistency prompting** — 同 prompt sample 多次（通常配 CoT）後取 majority vote，相當於 model ensembling，能降 hallucination。Demo 用「用 5 次取多數」debug 一個 IndexError。
+5. **Tool use** — 讓 LLM 把無法獨自完成的事 delegate 給外部系統。最重要的 hallucination 緩解技術之一，也是 autonomy 的基礎。Demo 用 `<tools>` 標籤列出 `pytest -s ...` / `pytest -v ...` 給 model 自己決定何時 call。
+6. **Retrieval Augmented Generation（RAG）** — 把 contextual data 注入 prompt。優點：保持 up-to-date、可解釋、自帶 citation、降 hallucination。Demo 把 `UserAuthService` 既有 code snippet + `requests-oauthlib` 文件 URL 一起塞進 prompt。Cursor / Windsurf 的 `@context` 就是 RAG。
+7. **Reflexion（self-critique）** — 多輪：Turn 1 model 出第一版 → Turn 2 加「critique your answer, was it correct?」讓 model 自我修正。Mihail 說這是 modern coding agent 完整 agentic 行為的 workhorse。
+8. **System / user / assistant prompt 三段結構** — 用 Claude 4.1 Opus 的真實 system prompt 當教材（「鬆散版的 Asimov 三大機器人定律」）。System prompt 通常 user 看不到，是 persona / 規則 / output style 的設定處。
+9. **Best practice 收尾** — (a) 給 prompt 給沒有背景的人看，他困惑 LLM 也會困惑；(b) 激進使用 role prompting（「You are a helpful assistant that loves programming...」vs「You are a Gen Z digital bestie...」展示巨大差異）；(c) 用結構化標籤包 data：`<log>...<log>` `<error>...<error>`；(d) explicit 寫出 language / stack / library / constraint；(e) decompose task。
 
-實務上 Mihail 應該會 demo 用 OpenAI / Anthropic playground 當場改 prompt 看效果，演示「prompting 是可被工程化的物件」這個核心概念。
+**Key takeaway**：Prompt 是可被工程化的物件，不是奇技淫巧。實務 escalation path：zero-shot → 不行用 few-shot → 還不行加 CoT → 還不行接 RAG / tool use。Reflexion 與 self-consistency 是當代 coding agent autonomy 的底層機制，理解這幾招就能看懂 Claude Code / Cursor 內部的 prompting layer 在做什麼。
 
 ## Reading 摘要
 

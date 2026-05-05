@@ -3,12 +3,8 @@
 _freeze/
 _site/
 
-# Don't commit large rendered assets to main; gh-pages branch carries them
-pdf/*.pdf
-pdf/*.html
-pdf/*.typ
-pdf/site_libs/
-pdf/search.json
+# Don't commit Quarto render output to main; gh-pages branch carries the built site
+pdf/**
 
 # OS / editor
 .DS_Store
@@ -24,3 +20,6 @@ pdf/search.json
 *.toc
 *.tex
 *.synctex.gz
+
+/.quarto/
+**/*.quarto_ipynb
