@@ -1,6 +1,20 @@
 # CS146S: The Modern Software Developer 繁中講義
 
 > Stanford 計算機科學系 Fall 2025 全新開的「現代軟體工程師」課程，繁中化教材包。
+>
+> 📖 線上版：https://fireman333.github.io/CS146S-handbook-zh/
+>
+> ⚠️ **非官方獨立翻譯**：本講義是社群繁中化教材，與 Stanford 大學 / Mihail Eric / 任何 industry guest speaker 無從屬關係。原版課程素材公開在 [themodernsoftware.dev](https://themodernsoftware.dev)。本工作以 [CC BY-NC-SA 4.0](LICENSE) 授權；所有原始素材版權歸原作者所有。
+
+## 著作權與引用原則
+
+本講義遵循以下原則以尊重原作者：
+
+- **所有 lecture 摘要為繁中 paraphrase**（200-500 字 / 篇）— 不含 verbatim 英文 transcript
+- **所有 reading 摘要為繁中 paraphrase**（200-400 字 / 篇）— 每篇均含原文連結，讀者應優先閱讀原文
+- **未公開的 slides / 受權限保護內容** 一律標記 `best-effort 重建` 並聲明非逐字引用
+- **所有 industry guest speaker 名稱、公司、頭銜** 均依公開資料引用，不含內部 / 私下談話內容
+- **任何被引用的原作者若希望移除引用，請透過 GitHub Issue 聯絡 WLK，會立即處理**
 
 ## 是什麼
 

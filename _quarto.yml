@@ -5,7 +5,7 @@ project:
 book:
   title: "CS146S: The Modern Software Developer"
   subtitle: "Stanford CS Fall 2025 — 繁中講義 + 50 篇 Reading 摘要"
-  author: "繁中譯解：康瑋麟（WLK）"
+  author: "繁中譯解：WLK"
   date: "2026-05-02"
   date-format: "YYYY-MM-DD"
   language: zh-TW

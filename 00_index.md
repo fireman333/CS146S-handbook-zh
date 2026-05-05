@@ -1,7 +1,7 @@
 ---
 title: "CS146S: The Modern Software Developer 繁中講義"
 subtitle: "Stanford CS, Fall 2025 — 全 10 週完整講義 + 50 篇 reading 中文摘要"
-author: "繁中譯解：康瑋麟（WLK）"
+author: "繁中譯解：WLK"
 date: "2026-05-02"
 source: "https://themodernsoftware.dev"
 ---
