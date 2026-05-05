@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Week 3：The AI IDE – CS146S: The Modern Software Developer</title>
+<title>28&nbsp; Getting AI to Work In Complex Codebases (ACE-FCA) – CS146S: The Modern Software Developer</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../weeks/04_coding_agent_patterns.html" rel="next">
-<link href="../weeks/02_anatomy_of_coding_agents.html" rel="prev">
+<link href="../readings/w3_how_faang_vibe_codes.html" rel="next">
+<link href="../readings/w3_devin_coding_agents_101.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -86,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/03_the_ai_ide.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../readings/_index.html">Reading 摘要</a></li><li class="breadcrumb-item"><a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Getting AI to Work In Complex Codebases (ACE-FCA)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link active">
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
   </div>
 </li>
@@ -295,7 +295,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html" class="sidebar-item-text sidebar-link">
+  <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Getting AI to Work In Complex Codebases (ACE-FCA)</span></span></a>
   </div>
 </li>
@@ -497,28 +497,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">5.1</span> 學習目標</a></li>
-  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">5.2</span> 核心概念導讀</a>
+  <li><a href="#getting-ai-to-work-in-complex-codebases-ace-fca" id="toc-getting-ai-to-work-in-complex-codebases-ace-fca" class="nav-link active" data-scroll-target="#getting-ai-to-work-in-complex-codebases-ace-fca"><span class="header-section-number">29</span> Getting AI to Work In Complex Codebases (ACE-FCA)</a>
   <ul class="collapse">
-  <li><a href="#一context-engineering-的三大課題selectioncompressiondecay" id="toc-一context-engineering-的三大課題selectioncompressiondecay" class="nav-link" data-scroll-target="#一context-engineering-的三大課題selectioncompressiondecay"><span class="header-section-number">5.2.1</span> 一、Context Engineering 的三大課題：Selection、Compression、Decay</a></li>
-  <li><a href="#二specs-are-the-new-source-code-工作流的反轉" id="toc-二specs-are-the-new-source-code-工作流的反轉" class="nav-link" data-scroll-target="#二specs-are-the-new-source-code-工作流的反轉"><span class="header-section-number">5.2.2</span> 二、Specs Are the New Source Code — 工作流的反轉</a></li>
-  <li><a href="#三ide-integration-的演化從-autocomplete-到-manager-mode" id="toc-三ide-integration-的演化從-autocomplete-到-manager-mode" class="nav-link" data-scroll-target="#三ide-integration-的演化從-autocomplete-到-manager-mode"><span class="header-section-number">5.2.3</span> 三、IDE Integration 的演化：從 autocomplete 到 manager mode</a></li>
-  <li><a href="#四devin-vs-claude-code-的設計哲學張力" id="toc-四devin-vs-claude-code-的設計哲學張力" class="nav-link" data-scroll-target="#四devin-vs-claude-code-的設計哲學張力"><span class="header-section-number">5.2.4</span> 四、Devin vs Claude Code 的設計哲學張力</a></li>
+  <li><a href="#核心論點150-200-字繁中" id="toc-核心論點150-200-字繁中" class="nav-link" data-scroll-target="#核心論點150-200-字繁中"><span class="header-section-number">29.1</span> 核心論點（150-200 字繁中）</a></li>
+  <li><a href="#關鍵概念" id="toc-關鍵概念" class="nav-link" data-scroll-target="#關鍵概念"><span class="header-section-number">29.2</span> 關鍵概念</a></li>
+  <li><a href="#對-cs146s-的意義" id="toc-對-cs146s-的意義" class="nav-link" data-scroll-target="#對-cs146s-的意義"><span class="header-section-number">29.3</span> 對 CS146S 的意義</a></li>
+  <li><a href="#對-vibe-coder-的-takeaway" id="toc-對-vibe-coder-的-takeaway" class="nav-link" data-scroll-target="#對-vibe-coder-的-takeaway"><span class="header-section-number">29.4</span> 對 Vibe Coder 的 Takeaway</a></li>
+  <li><a href="#原文連結" id="toc-原文連結" class="nav-link" data-scroll-target="#原文連結"><span class="header-section-number">29.5</span> 原文連結</a></li>
   </ul></li>
-  <li><a href="#monday-lecture106from-first-prompt-to-optimal-ide-setup" id="toc-monday-lecture106from-first-prompt-to-optimal-ide-setup" class="nav-link" data-scroll-target="#monday-lecture106from-first-prompt-to-optimal-ide-setup"><span class="header-section-number">5.3</span> Monday Lecture（10/6）：From first prompt to optimal IDE setup</a></li>
-  <li><a href="#friday-lecture1010silas-alberticognition" id="toc-friday-lecture1010silas-alberticognition" class="nav-link" data-scroll-target="#friday-lecture1010silas-alberticognition"><span class="header-section-number">5.4</span> Friday Lecture（10/10）：Silas Alberti（Cognition）</a></li>
-  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">5.5</span> Reading 摘要</a></li>
-  <li><a href="#assignmentbuild-a-custom-mcp-server" id="toc-assignmentbuild-a-custom-mcp-server" class="nav-link" data-scroll-target="#assignmentbuild-a-custom-mcp-server"><span class="header-section-number">5.6</span> Assignment：Build a Custom MCP Server</a></li>
-  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">5.7</span> 對 Vibe Coder 的應用</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/03_the_ai_ide.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../readings/_index.html">Reading 摘要</a></li><li class="breadcrumb-item"><a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Getting AI to Work In Complex Codebases (ACE-FCA)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></h1>
+<h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Getting AI to Work In Complex Codebases (ACE-FCA)</span></h1>
 </div>
 
 
@@ -535,349 +530,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="getting-ai-to-work-in-complex-codebases-ace-fca" class="level1" data-number="29">
+<h1 data-number="29"><span class="header-section-number">29</span> Getting AI to Work In Complex Codebases (ACE-FCA)</h1>
 <blockquote class="blockquote">
-<p><strong>本週你會學到什麼</strong>：AI IDE（Cursor、Windsurf、Zed、Continue.dev）怎麼管理 codebase context、怎麼讀懂大型 codebase；以及 spec / PRD 在 agent 時代的角色變化（“specs are the new source code”）。Friday 由 Cognition（Devin 母公司）的 Head of Research Silas Alberti 開講。</p>
+<p><strong>一句話摘要</strong>：AI 在 production codebase 表現差不是 model 不夠強，是 context engineering 不夠好；用 research → plan → implement 三段式 + frequent intentional compaction，才能在 brownfield 專案 ship 真正的 feature。</p>
 </blockquote>
-<section id="學習目標" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">5.1</span> 學習目標</h2>
-<p>完成本週後，你應該能：</p>
+<section id="核心論點150-200-字繁中" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="核心論點150-200-字繁中"><span class="header-section-number">29.1</span> 核心論點（150-200 字繁中）</h2>
+<p>humanlayer 團隊提出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「<strong>context window 的內容是你影響 output 品質的唯一槓桿</strong>」（agent 是 stateless function）。優先順序是 correctness → completeness → size → trajectory。框架核心是 <strong>Frequent Intentional Compaction（FIC，頻繁主動壓縮）</strong> 三段式 workflow：(1) <strong>Research phase</strong> — 主 agent 不寫 code，先了解 codebase、依賴關係、潛在 failure point，產出結構化 markdown；(2) <strong>Plan phase</strong> — file-level 精度的 implementation step、verification 策略、可平行產生多版 plan 比較 trade-off；(3) <strong>Implement phase</strong> — 照 plan 執行、每階段間 compact、context 維持 40-60% 使用率、在 isolated git worktree 工作。Subagent 用來隔離 expensive 操作（grep、檔案搜尋），避免污染主 reasoning。最關鍵的是 <strong>high-leverage human review</strong>：人類審查重心放在 research 與 plan 階段，<strong>不是 code review</strong> — 因為「plan 一行壞 = code 100 行壞」。實際成果：300k LOC 不熟的 Rust repo 幾小時內 fix bug、35k LOC feature 在 7 小時 pairing 完成。</p>
+</section>
+<section id="關鍵概念" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="關鍵概念"><span class="header-section-number">29.2</span> 關鍵概念</h2>
 <ol type="1">
-<li><strong>解釋</strong> context window 為什麼是 AI IDE 最關鍵的瓶頸，以及 RAG / chunking / re-ranking 怎麼解決</li>
-<li><strong>撰寫</strong> 一份能餵給 agent 的 PRD（Product Requirements Document），含 spec、acceptance criteria、guardrails</li>
-<li><strong>設定</strong> Claude Code / Cursor 的 context loading（CLAUDE.md / <code>.cursorrules</code>、MCP servers、custom commands）</li>
-<li><strong>評估</strong> Devin 跟 Claude Code 的設計哲學差異（autonomous agent vs interactive collaborator）</li>
+<li><strong>Context Engineering（脈絡工程）</strong> — 主動 curate 進入 agent context window 的內容，把 context 當 first-class artifact 管理而非副作用。</li>
+<li><strong>Frequent Intentional Compaction（FIC，頻繁主動壓縮）</strong> — 在每個 phase 邊界把過程資訊壓成結構化 summary，丟掉 raw exploration 的雜訊。</li>
+<li><strong>Research → Plan → Implement</strong> — 三段式 workflow；前兩段不寫 code，只有最後一段才產 code。</li>
+<li><strong>Subagent Context Isolation（子代理隔離）</strong> — Grep、檔案搜尋這類會產生大量 token noise 的操作派 subagent，主 agent 只接收 summary。</li>
+<li><strong>High-Leverage Human Review（高槓桿人類審查）</strong> — 人力放在 research / plan 而非 code，因為錯誤在前段被攔截 cost 最低。</li>
+<li><strong>Spec-First Thinking（規格優先思維）</strong> — 跟 Sean Grove / Ravi Mehta 同源：spec 是 source code，不是探索的副產品。</li>
 </ol>
 </section>
-<section id="核心概念導讀" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">5.2</span> 核心概念導讀</h2>
-<section id="一context-engineering-的三大課題selectioncompressiondecay" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="一context-engineering-的三大課題selectioncompressiondecay"><span class="header-section-number">5.2.1</span> 一、Context Engineering 的三大課題：Selection、Compression、Decay</h3>
-<p>W2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude Code 寫過 non-trivial 任務，就會遇到一個 W2 沒講的瓶頸 — <strong>context window 不是越大越好</strong>。Drew Breunig 在 <a href="../readings/w3_how_long_contexts_fail.html">How Long Contexts Fail</a> 把這件事拆成 4 種具體的 failure mode：</p>
-<ol type="1">
-<li><strong>Context poisoning（脈絡中毒）</strong> — Hallucination 一旦寫進對話 context 就會被反覆 self-reference，agent 朝不可能的目標前進。Gemini 玩 Pokémon 的著名 case：模型某輪生成「我已經拿到 X 道館徽章」（其實沒有），之後幾百輪 reasoning 都基於這個錯誤前提。</li>
-<li><strong>Context distraction（脈絡分心）</strong> — Context 過長時模型會偏向「重複歷史 action」而非用 train 出來的 reasoning 重新規劃。小模型 ~32k token 後開始崩、大模型 ~100k 後也會。</li>
-<li><strong>Context confusion（脈絡混淆）</strong> — Berkeley Function-Calling Leaderboard 顯示 8B 模型給 19 個 tool 還能用、46 個就崩。<strong>tool 越多 ≠ agent 越強</strong>，反而 routing accuracy 直接下降。</li>
-<li><strong>Context clash（脈絡衝突）</strong> — Microsoft / Salesforce 研究顯示「分輪餵相同資訊」比「一次性餵」accuracy 下降 39%。多輪對話一旦走偏，回不來。</li>
-</ol>
-<p>理解這 4 種 failure 後，<strong>context engineering</strong> 就拆成三件事：</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>課題</th>
-<th>問題</th>
-<th>解法</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Selection（選擇）</strong></td>
-<td>從 1M token codebase 裡，這次 task 該餵哪些 file 進 context？</td>
-<td>RAG、grep + re-rank、<code>@file</code> reference、CLAUDE.md routing</td>
-</tr>
-<tr class="even">
-<td><strong>Compression（壓縮）</strong></td>
-<td>Context 用到 60% 後怎麼濃縮？</td>
-<td><code>/compact</code> summary、subagent isolation、phase-boundary checkpoint</td>
-</tr>
-<tr class="odd">
-<td><strong>Decay（衰減）</strong></td>
-<td>長 session 怎麼防 drift？</td>
-<td><code>&lt;system-reminder&gt;</code> 重述目標、<code>/clear</code> 重啟、phase-spec re-anchor</td>
-</tr>
-</tbody>
-</table>
-<p>humanlayer 團隊在 <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html">Getting AI to Work In Complex Codebases</a> 直接喊出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「<strong>context window 的內容是你影響 output 品質的唯一槓桿</strong>」。Agent 是 stateless function — 同樣的 context window 給同樣的 model 永遠產出同樣品質。所以使用者最高槓桿的工作就是 curate 那個 window。</p>
-<blockquote class="blockquote">
-<p>💡 <strong>譯解</strong>：context engineering 跟臨床問診同構。問診（context selection）漏問就鑑別診斷漏；問診冗長（context bloat）就抓不到重點；前後病史矛盾（context clash）就推不出結論。Claude Code 寫不好 code 時，先檢查的不是 prompt 措辭，是「我有沒有給它對的 file」。</p>
-</blockquote>
+<section id="對-cs146s-的意義" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="對-cs146s-的意義"><span class="header-section-number">29.3</span> 對 CS146S 的意義</h2>
+<p>這篇是 Week 3 最 actionable 的 reading — 把「context engineering」從口號落地成可執行 workflow。其他 reading 講為什麼（Specs Are New Source、Long Contexts Fail），ACE-FCA 講怎麼做。是貫穿 PRD / spec / tool design 三主題的橋樑。</p>
 </section>
-<section id="二specs-are-the-new-source-code-工作流的反轉" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="二specs-are-the-new-source-code-工作流的反轉"><span class="header-section-number">5.2.2</span> 二、Specs Are the New Source Code — 工作流的反轉</h3>
-<p>W1/W2 還在「prompt 怎麼寫」的層級。Week 3 把視角拉高一階：<strong>當 AI 把 implementation 從週縮到分鐘，瓶頸從「會不會寫 code」變成「能不能描述清楚需求」</strong>。Ravi Mehta 在 <a href="../readings/w3_specs_are_the_new_source_code.html">Specs Are the New Source Code</a> 借 Sean Grove 的話：傳統世界是 source code（人讀）→ binary（機器讀），AI 時代等於「把 source 撕碎，反而謹慎 version control 那個 binary」 — 因為 code 只是 intent 的 <strong>lossy projection（有損投射）</strong>，spec 才是完整需求。</p>
-<p>Workflow 的反轉是這週的核心命題：</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>傳統 workflow</th>
-<th>AI agent workflow</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Idea → Spec → Prototype → 痛苦修改</td>
-<td><strong>Rapid prototype → 真實 customer feedback → 凝結成 crystal-clear spec → 大量再生</strong></td>
-</tr>
-<tr class="even">
-<td>Spec 寫得糊也能補救（人類工程師會問問題）</td>
-<td>Spec 寫得糊 = code 寫得糊（agent 不會主動 challenge）</td>
-</tr>
-<tr class="odd">
-<td>Code = single source of truth</td>
-<td><strong>Spec = single source of truth</strong>，code 是 spec 的可重生產出</td>
-</tr>
-<tr class="even">
-<td>Code review 抓 bug</td>
-<td><strong>Spec review</strong> 抓 bug（一行 spec 錯 = 100 行 code 錯）</td>
-</tr>
-</tbody>
-</table>
-<p>對 PM、designer 也有解放性影響 — 過去想改一個 button 行為要排工程 sprint，現在寫得清楚的 spec 直接餵給 Claude Code 就能落地。Mihail 在 Monday lecture 會花相當時間講 PRD（Product Requirements Document）怎麼寫成「agent 看得懂的 spec」 — 含 user story、acceptance criteria、guardrails、non-goals 四個 block。</p>
+<section id="對-vibe-coder-的-takeaway" class="level2" data-number="29.4">
+<h2 data-number="29.4" class="anchored" data-anchor-id="對-vibe-coder-的-takeaway"><span class="header-section-number">29.4</span> 對 Vibe Coder 的 Takeaway</h2>
+<p>醫學生做 vibe coding 最常掉的坑是「跳過 research / plan 直接讓 Claude Code 開寫」，遇到 brownfield（已有 codebase）就崩。三個落地動作：(1) 任何 non-trivial task 強迫先產 <code>plan.md</code>，自己 review 完才 implement；(2) grep / 找檔案派 subagent 跑，不要在主 session 做；(3) Claude Code session context 用到 60% 就 compact，不要硬撐到爆。對統計分析也適用 — 先寫 analysis plan、review、再讓 agent 跑 R script。</p>
 </section>
-<section id="三ide-integration-的演化從-autocomplete-到-manager-mode" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="三ide-integration-的演化從-autocomplete-到-manager-mode"><span class="header-section-number">5.2.3</span> 三、IDE Integration 的演化：從 autocomplete 到 manager mode</h3>
-<p><a href="../readings/w3_devin_coding_agents_101.html">Devin: Coding Agents 101</a> 把開發者 AI tool 的演化分成四代，每一代的 IDE integration 都不同：</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>世代</th>
-<th>時期</th>
-<th>代表</th>
-<th>IDE 整合方式</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Autocomplete</strong></td>
-<td>~2015</td>
-<td>TabNine、Kite</td>
-<td>method 級補完，typing 旁邊跳建議</td>
-</tr>
-<tr class="even">
-<td><strong>Copilot</strong></td>
-<td>~2021</td>
-<td>GitHub Copilot</td>
-<td>多行 inline suggestion，按 Tab 接受</td>
-</tr>
-<tr class="odd">
-<td><strong>Generative chatbot</strong></td>
-<td>~2023</td>
-<td>Cursor Chat、Claude.ai</td>
-<td>檔案級 chat panel，貼 code 改 code</td>
-</tr>
-<tr class="even">
-<td><strong>Autonomous agent</strong></td>
-<td>2024-now</td>
-<td>Devin、Claude Code、Cursor agent mode</td>
-<td>end-to-end task 委派，從 prompt 到 PR</td>
-</tr>
-</tbody>
-</table>
-<p>每一代的 IDE 都在解決前一代的瓶頸：autocomplete 解決打字慢、copilot 解決 boilerplate、chatbot 解決「跨檔案 context」、agent 解決「多步驟自我 iterate」。但 agent 帶來新問題 — IDE 不再只是 editor，要兼容 background task、long-running process、agent state visualization。Cursor 的 agent panel、Claude Code 的 CLI session、Devin 的 web UI 各有不同設計取捨。</p>
-</section>
-<section id="四devin-vs-claude-code-的設計哲學張力" class="level3" data-number="5.2.4">
-<h3 data-number="5.2.4" class="anchored" data-anchor-id="四devin-vs-claude-code-的設計哲學張力"><span class="header-section-number">5.2.4</span> 四、Devin vs Claude Code 的設計哲學張力</h3>
-<p>Friday lecture 由 Cognition 的 Silas Alberti 開講，這節的張力預設是「Devin 的 autonomous-first 哲學 vs Anthropic Claude Code 的 interactive-first 哲學」。對比軸向：</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 38%">
-<col style="width: 48%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>軸向</th>
-<th>Devin（Cognition）</th>
-<th>Claude Code（Anthropic）</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>預設介入頻率</strong></td>
-<td>低 — 接 task 後 hours 級自跑</td>
-<td>高 — 每個 tool call 都可被打斷</td>
-</tr>
-<tr class="even">
-<td><strong>UI 形態</strong></td>
-<td>Web app + cloud sandbox VM</td>
-<td>CLI / IDE plugin，跑在 user 機器</td>
-</tr>
-<tr class="odd">
-<td><strong>錯誤恢復</strong></td>
-<td>自我 iterate test/CI 直到 green</td>
-<td>多半丟回 user 決定</td>
-</tr>
-<tr class="even">
-<td><strong>適合任務</strong></td>
-<td>scoped、有 clear acceptance criteria</td>
-<td>exploratory、需 user judgment</td>
-</tr>
-<tr class="odd">
-<td><strong>Engineering manager mode</strong></td>
-<td>強調，sales pitch 是「同時 supervise 5 個 Devin」</td>
-<td>弱，focus 在「你跟一個 Claude 對話」</td>
-</tr>
-</tbody>
-</table>
-<p>Devin 強調 <strong>architecture-first prompting</strong>（講 <em>how</em> 不只 <em>what</em>）、<strong>defensive prompting</strong>（預先告訴 agent 哪些坑）、<strong>feedback loop quality</strong>（type / test / lint signal）。但作者明確降溫：對大型任務 expect <strong>~80%</strong> 時間節省，不是完全自動化。這個誠實的 ratio 是工業界共識。</p>
-<p><a href="../readings/w3_writing_effective_tools_for_agents.html">Writing Effective Tools for Agents</a>（Anthropic engineering blog）則提供 tool design 的深度原則 — strategic selection（少而精）、meaningful naming（namespace prefix）、contextual response（semantic name 取代 UUID）、token-efficient implementation、descriptive specifications（像跟新進員工解釋）。這些 principle 是 Devin / Claude Code / Cursor 共通的 agent infrastructure layer。</p>
-</section>
-</section>
-<section id="monday-lecture106from-first-prompt-to-optimal-ide-setup" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="monday-lecture106from-first-prompt-to-optimal-ide-setup"><span class="header-section-number">5.3</span> Monday Lecture（10/6）：From first prompt to optimal IDE setup</h2>
-<ul>
-<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/11pQNCde_mmRnImBat0Zymnp8TCS_cT_1up7zbcj6Sjg/edit?usp=sharing">Google Slides 公開連結</a></li>
-<li><strong>Design Doc Template</strong>: <a href="https://drive.google.com/file/d/1MZ0Qx68Vzw4x5x_XcV8XiPLp7fFDe1LJ/view?usp=drive_link">Drive 連結</a></li>
-<li><strong>講者</strong>: Mihail Eric</li>
-</ul>
-<blockquote class="blockquote">
-<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
-</blockquote>
-<p>Mihail 把 IDE 演化壓縮成一條 timeline，再導出「為什麼 AI IDE 是 2023 年才可能」的論點。Lecture 的核心命題是：<strong>AI IDE 的 evolution 是「functionality consolidation vs developer customization」之間的 see-saw</strong>。</p>
-<ol type="1">
-<li><strong>IDE 簡史</strong> — Turbo Pascal（1983）first true IDE → Microsoft Visual Studio（1997）first IntelliSense（autocomplete 前身）→ IntelliJ IDEA（2001）contextual code navigation / refactoring → VS Code（2015）lightweight + 高度可擴充 ecosystem，也引進 LSP（MCP 的概念祖先）→ Cursor（2023）第一個真正 AI-native IDE。</li>
-<li><strong>Cursor 使用模式分層</strong> — Bread-and-butter mode（<strong>Tab</strong> 簡單 inline、<strong>Cmd-K</strong> 幾行的 quick edit、<strong>Cmd-L</strong> multi-file），True AI-native（background agent、MCP integration、learn memories、Bugbot PR review）。</li>
-<li><strong>AI IDE 底層運作</strong> —
-<ul>
-<li><strong>Tab-complete</strong>：圍繞 cursor 的小 context window 加密送到 server，跑 infilling LLM 後送回建議</li>
-<li><strong>Chat</strong>：把 code chunk 存成 embedding 在 server 的 semantic index（檔名 obfuscated），query 時 retrieve 最相關 chunk 餵 LLM；IDE 定期 re-index 並用 Merkle tree 算 chunk diff 做 efficient update</li>
-</ul></li>
-<li><strong>Best practice：simple change vs complex task</strong> —
-<ul>
-<li>Simple change：不必太用心 prompting</li>
-<li>Complex task：你要進入 PM 模式，寫精雕的 specs doc，包含：<strong>Goal</strong>（這次改動目的）、<strong>Definitions</strong>（LLM 需要的 prereq）、<strong>Plan</strong>（high-level breakdown）、<strong>Source files being changed</strong>、<strong>Test cases</strong>、<strong>Edge cases</strong>、<strong>Out-of-scope</strong>（什麼<strong>不要</strong>改）、<strong>Extensions</strong>（之後可能加什麼，讓 LLM 不要走捷徑）</li>
-</ul></li>
-<li><strong>Codebase optimization for human + agent</strong> — 多數 LLM 混亂來自 messy repo。優化清單：repo orientation、file structure、setup &amp; environment、best practices、code style、access patterns、APIs and contracts。建議 monorepo design。「<strong>A messy repo can be as simple as having different access patterns, variable naming, multiple functions that do the same thing.</strong>」</li>
-<li><strong>Agent configuration files 對比</strong> —
-<ul>
-<li><strong>CLAUDE.md</strong>：Claude 自動 pull 進 context，放 common bash command、core file、code style、testing instruction</li>
-<li><strong>.cursorrules</strong>、<strong>AGENTS.md</strong>（OpenAI Codex 用，<a href="https://github.com/openai/codex/blob/main/AGENTS.md">官方範例 repo</a>）— README 是給人看的（quick start、project description、contribution guideline），AGENTS.md 是給 agent 看的（build step、test、convention、code style、security）</li>
-<li><strong>llms.txt</strong>：給網頁 scraping LLM 的導航</li>
-<li>重點 caveat：「<strong>The agents won’t always adhere to these descriptions/directives. They are intended as guidance.</strong>」這些檔案是建議不是強制</li>
-</ul></li>
-<li><strong>Live demo 段</strong> — 走一個帶 specs doc 的 complex coding task，看 cursorrules / Claude Code spec 在實 repo 裡長什麼樣。</li>
-</ol>
-<p><strong>Key takeaway</strong>：Optimal IDE setup 不是「工具越多越好」 — 而是把 repo 整理到 human 跟 agent 都能讀得懂的狀態，再配上一份對 task 量身寫的 specs doc。messy repo + sloppy prompt 是 LLM 寫不出好 code 的最大原因，永遠先檢查這兩件事再去改 prompt 措辭。</p>
-</section>
-<section id="friday-lecture1010silas-alberticognition" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="friday-lecture1010silas-alberticognition"><span class="header-section-number">5.4</span> Friday Lecture（10/10）：Silas Alberti（Cognition）</h2>
-<ul>
-<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/silasalberti/">Silas Alberti</a>, Founding Team @ <a href="https://cognition.ai/">Cognition</a>（前 Stanford PhD Student）</li>
-<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1i0pRttHf72lgz8C-n7DSegcLBgncYZe_ppU7dB9zhUA/edit?usp=sharing">Google Slides 公開連結</a></li>
-</ul>
-<blockquote class="blockquote">
-<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Silas 的演講題目是「<strong>IDE ❤️ Agents：An opinionated guide to AI coding in 2025</strong>」：</p>
-</blockquote>
-<p>Silas 把 AI coding tool 演化分成三世代，每一代的「效率提升」量級截然不同：</p>
-<ol type="1">
-<li><strong>Three Eras of AI Coding Tools</strong>
-<ul>
-<li><strong>Era 1: Code Completion</strong>（GitHub Copilot）— ~10% efficiency gain，speed up coding，純 local</li>
-<li><strong>Era 2: IDE Automation / AI IDEs</strong>（Cursor、Windsurf）— ~20% gain，single-player task completion，仍 local</li>
-<li><strong>Era 3: AI Software Engineer</strong>（Devin）— <strong>6-12× efficiency gain</strong>，移到 cloud + asynchronous，scale workflow in parallel</li>
-</ul></li>
-<li><strong>Sync vs Async 的本質差異</strong> —
-<ul>
-<li><strong>Sync</strong>：single-threaded、human-in-the-loop、注意力鎖在單一 task → AI agent 工作 20 秒到 1.5 分鐘</li>
-<li><strong>Async</strong>：multi-threaded、人類 delegate 給 AI、注意力可在多 task 間切換 → AI agent 工作 10 分鐘到數小時</li>
-<li><strong>Cloud + Async 解鎖 10× parallelism</strong>：每個工程師可同時跑多個 Devin instance（in VPC），一對多、共享組織知識；對比 Local AI IDE 是一對一、knowledge 隔離</li>
-</ul></li>
-<li><strong>Devin 的 workflow autonomy 三階段</strong> —
-<ul>
-<li><strong>Plan（engineer in the loop）</strong>：用 Search / Wiki 問 Devin 找 file / API / test → clarify scope → Devin 寫 step-by-step plan。耗時：分鐘級</li>
-<li><strong>Build（Devin in the loop）</strong>：Devin 在 isolated workspace（shell + editor + browser）執行 → plan → execute → test → iterate 直到 task 全綠。完全 async，你可以去做別的事</li>
-<li><strong>Review（engineer 回 loop）</strong>：Devin 開乾淨的 PR 含 passing test 與 change summary → 你 review、comment 或 merge → Devin 可依要求修。<strong>Human effort ≲ 15% of original task</strong></li>
-</ul></li>
-<li><strong>「Semi-Async：尷尬的中間地帶」</strong> — 5 秒 / 10 秒 / 30 秒 / 1 分 / 3 分 / 5 分 / 10 分 / 1 時 / 3 時 的 spectrum 上，<strong>3-10 分鐘是 Avoid 區段</strong>：太慢 stay in flow、太短 multi-task。要嘛<strong>做更快</strong>保持 flow，要嘛<strong>用更多時間換更高 intelligence</strong>。</li>
-<li><strong>Async agent 是 hard but learnable skill</strong> — 雖然 async agent 解鎖 10× gain，但多數人還在用 sync agent。原因：管理 / 委派本身就是難 skill，不論對象是人還是 agent。需要 cycle 多 task 的能力 + 快速理解新 context 的能力。</li>
-<li><strong>Planning / Coding / Testing 三階段的 sync vs async 配置</strong> —
-<ul>
-<li>今天：planning sync（DeepWiki、Ask Devin、Codemap、DeepWiki in Windsurf）→ coding async（delegate 給 agent）→ testing sync（在 Windsurf 裡 refine）</li>
-<li>未來：testing 也會 async（agent 自己驗收），那時 leverage 會跨另一個量級</li>
-</ul></li>
-<li><strong>Common workflow demo</strong>：(1) delegate task to Devin async、(2) test &amp; refine changes in Windsurf sync — Devin 處理 long-form 工作，Windsurf 接手 last-mile sync 微調。</li>
-<li><strong>Where are we headed</strong>：human engineer 變成 agent manager，sync tool 解最難的問題、async tool 拿 10× leverage。對未來 valuable 的能力：(a) delegation &amp; multi-threading、(b) code reading、(c) planning / scoping / architecting。</li>
-</ol>
-<p><strong>Key takeaway</strong>：Devin 的設計哲學不是「IDE 升級版」，是把工程工作從 local sync 推到 cloud async 的範式轉移。<strong>6-12× 不是 marketing 數字 — 是 parallelism × autonomy 的乘積</strong>。但要拿到這個 gain，工程師必須學會「同時 supervise 多個 agent」這項新技能，這是比 prompt engineering 更難、更值錢的能力。</p>
-</section>
-<section id="reading-摘要" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">5.5</span> Reading 摘要</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>篇名</th>
-<th>來源</th>
-<th>一句話重點</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../readings/w3_specs_are_the_new_source_code.html">Specs Are the New Source Code</a></td>
-<td>Ravi Mehta blog</td>
-<td>Code 是 intent 的 lossy projection，spec 才是 AI 時代的 single source of truth</td>
-</tr>
-<tr class="even">
-<td><a href="../readings/w3_how_long_contexts_fail.html">How Long Contexts Fail</a></td>
-<td>dbreunig.com</td>
-<td>1M context ≠ 更好答案，4 種 failure mode（poisoning / distraction / confusion / clash）都會搞爛 agent</td>
-</tr>
-<tr class="odd">
-<td><a href="../readings/w3_devin_coding_agents_101.html">Devin: Coding Agents 101</a></td>
-<td>devin.ai</td>
-<td>Coding agent ≠ autocomplete / copilot / chatbot，是 end-to-end 的不同物種，工程師變 manager</td>
-</tr>
-<tr class="even">
-<td><a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html">Getting AI to Work In Complex Codebases (ACE-FCA)</a></td>
-<td>github.com/humanlayer</td>
-<td>Research → Plan → Implement 三段式 + frequent intentional compaction，brownfield codebase 工業級配方</td>
-</tr>
-<tr class="odd">
-<td><a href="../readings/w3_how_faang_vibe_codes.html">How FAANG Vibe Codes</a></td>
-<td>X / Twitter</td>
-<td>原文需登入 X，best-effort 推測：個人 vibe coding workflow 在大型 codebase 不能照搬</td>
-</tr>
-<tr class="even">
-<td><a href="../readings/w3_writing_effective_tools_for_agents.html">Writing Effective Tools for Agents</a></td>
-<td>Anthropic engineering</td>
-<td>Tool 不是 API — 少而精、namespace 命名、semantic output、actionable error，evaluation-driven 迭代</td>
-</tr>
-</tbody>
-</table>
-<p><strong>閱讀優先順序</strong>：時間有限的話，先讀 <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.html">ACE-FCA</a>（最 actionable，三段式 workflow 直接套用）→ <a href="../readings/w3_how_long_contexts_fail.html">How Long Contexts Fail</a>（理解 failure mode 才知道為什麼三段式有效）→ <a href="../readings/w3_specs_are_the_new_source_code.html">Specs Are the New Source Code</a>（mindset 翻轉）→ <a href="../readings/w3_writing_effective_tools_for_agents.html">Writing Effective Tools</a>（自己寫 MCP / skill 時必讀）。</p>
-</section>
-<section id="assignmentbuild-a-custom-mcp-server" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="assignmentbuild-a-custom-mcp-server"><span class="header-section-number">5.6</span> Assignment：Build a Custom MCP Server</h2>
-<ul>
-<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md">github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md</a></li>
-<li><strong>任務描述</strong>: 用 W2 學的 MCP SDK 實作一個 production-grade MCP server，把外部資料源（資料庫 / API / 檔案系統 / SaaS 工具）包成 Claude Desktop / Cursor 可直接呼叫的 tool。重點是套用 <a href="../readings/w3_writing_effective_tools_for_agents.html">Writing Effective Tools</a> 的設計原則：strategic tool consolidation（不要把每個 endpoint 都 wrap 成 tool）、semantic output、descriptive specifications、actionable error message。建議的 server 主題：你日常會查的 API（個人筆記、研究資料庫、健保碼、PubMed、Google Calendar），或把 W2 的 MCP server 升級成 production 品質。</li>
-<li><strong>自學者可行性</strong>: ⭐⭐⭐⭐ 完全可做但比 W2 進階。需要 W2 的 MCP 基礎、能寫 TypeScript 或 Python、有想包的外部資料源（自己的 PubMed query / Obsidian vault / 個人 API key）。預估 4-8 hr，含寫 code + 在 Claude Desktop 實測迭代。</li>
-</ul>
-<blockquote class="blockquote">
-<p>💡 <strong>沒有外部資料源也能做</strong>：用 SQLite + 假資料 dump 模擬資料庫，重點是練 tool consolidation 與 description 寫法 — design quality 不需要真實資料才能證明。</p>
-</blockquote>
-</section>
-<section id="對-vibe-coder-的應用" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">5.7</span> 對 Vibe Coder 的應用</h2>
-<p>W3 是 vibe coder 從「會用 Claude Code」升級到「能規模化用 Claude Code」的關鍵一週。實戰建議：</p>
-<ol type="1">
-<li><strong>任何 non-trivial 任務先寫 1 頁 spec</strong> — 不寫的代價是反覆改 5 次都不對。Spec 含 4 個 block：(a) user 是誰、(b) 要做什麼、(c) 成功長怎樣（驗收標準）、(d) 不做什麼（non-goal）。5 分鐘 spec 換 2 小時 debug 是夯爆的 ROI</li>
-<li><strong>採用 Research → Plan → Implement 三段式</strong> — 別讓 Claude Code 一接 task 就開寫。先讓它 research（理解 codebase / 現有 pattern）、產 plan.md（你 review 完才放行）、最後 implement。<strong>人力放在 plan review 而非 code review</strong>，因為一行 plan 錯 = 100 行 code 錯</li>
-<li><strong>CLAUDE.md 當 code 維護</strong> — 每行都問「刪掉會不會出錯」。過長會讓重要 rule 被淹（Drew Breunig 的 context distraction）。建議結構：repo 在做什麼（一段話）、命名慣例、業務 quirks、絕不做的事。其他 domain knowledge 走 skill 或 subagent，別塞 CLAUDE.md</li>
-<li><strong>Tool / MCP server 不是越多越好</strong> — Berkeley function-calling 數據顯示 tool &gt; 30 個就開始崩。挑你真會用的 5-10 個 MCP server 就好。寫自己的 MCP 時，把「3 個 low-level operation」合併成「1 個 high-level tool」，agent 友善太多</li>
-<li><strong>Long session 出現重複錯誤 = context poisoning，立刻 <code>/clear</code></strong> — 不要繼續解釋，會越解越糟。重啟，把正確結論寫進 CLAUDE.md / spec，再開新 session 跑一次</li>
-<li><strong>Subagent 處理 expensive exploration</strong> — grep、找檔案、跑長 search 派 subagent 跑，主對話只接 summary。Claude Code 的 Task tool 直接支援，這招會讓主 session 的 context 維持 40-60% 健康水位</li>
-</ol>
-<blockquote class="blockquote">
-<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天就在你最常用的 side project 試一次完整三段式：(1) 寫 1 頁 spec.md（含 user story + acceptance criteria）、(2) <code>/clear</code> 開新 session、(3) 對 Claude Code 說「先讀 spec.md，產出 plan.md，先不要 implement」、(4) review plan、(5) 確認後說「按 plan 執行」。你會發現一次到位的 ratio 從 30% 跳到 80%。從此回不去舊 workflow。</p>
-</blockquote>
-<hr>
-<p><strong>上一週</strong>：<a href="02_anatomy_of_coding_agents.html">W2 The Anatomy of Coding Agents</a> | <strong>下一週</strong>：<a href="04_coding_agent_patterns.html">W4 Coding Agent Patterns</a></p>
+<section id="原文連結" class="level2" data-number="29.5">
+<h2 data-number="29.5" class="anchored" data-anchor-id="原文連結"><span class="header-section-number">29.5</span> 原文連結</h2>
+<p><a href="https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md">Getting AI to Work In Complex Codebases (ACE-FCA)</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1283,13 +969,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../weeks/02_anatomy_of_coding_agents.html" class="pagination-link" aria-label="Week 2：The Anatomy of Coding Agents">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span>
+      <a href="../readings/w3_devin_coding_agents_101.html" class="pagination-link" aria-label="Devin: Coding Agents 101">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Devin: Coding Agents 101</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../weeks/04_coding_agent_patterns.html" class="pagination-link" aria-label="Week 4：Coding Agent Patterns">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../readings/w3_how_faang_vibe_codes.html" class="pagination-link" aria-label="How FAANG Vibe Codes">
+        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">How FAANG Vibe Codes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

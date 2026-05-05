@@ -1,0 +1,22 @@
+/* Allow long inline code (e.g. JSON example strings) to wrap instead of overflowing the viewport */
+:not(pre) > code {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+/* Code blocks: keep CLI examples readable — wrap at the spaces, fall back to horizontal scroll if a single token is huge */
+pre > code,
+div.sourceCode pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Tighten 譯解 callout (kept as blockquote pattern) so it visually pops */
+blockquote {
+  background: #f8f9fa;
+  border-left-color: #4582ec;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
