@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Week 5：The Modern Terminal – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/06_ai_testing_security.html" rel="next">
+<link href="../weeks/04_coding_agent_patterns.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/05_modern_terminal.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">7.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">7.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一terminal-演化簡史-為什麼-1970-年代的設計會撐到現在" id="toc-一terminal-演化簡史-為什麼-1970-年代的設計會撐到現在" class="nav-link" data-scroll-target="#一terminal-演化簡史-為什麼-1970-年代的設計會撐到現在"><span class="header-section-number">7.2.1</span> 一、Terminal 演化簡史 — 為什麼 1970 年代的設計會撐到現在</a></li>
+  <li><a href="#二ai-terminal-的四個價值主張" id="toc-二ai-terminal-的四個價值主張" class="nav-link" data-scroll-target="#二ai-terminal-的四個價值主張"><span class="header-section-number">7.2.2</span> 二、AI Terminal 的四個價值主張</a></li>
+  <li><a href="#三cli-agent-vs-ide-agent-設計取捨" id="toc-三cli-agent-vs-ide-agent-設計取捨" class="nav-link" data-scroll-target="#三cli-agent-vs-ide-agent-設計取捨"><span class="header-section-number">7.2.3</span> 三、CLI Agent vs IDE Agent — 設計取捨</a></li>
+  <li><a href="#四為什麼-vibe-coder-該認真考慮換-terminal" id="toc-四為什麼-vibe-coder-該認真考慮換-terminal" class="nav-link" data-scroll-target="#四為什麼-vibe-coder-該認真考慮換-terminal"><span class="header-section-number">7.2.4</span> 四、為什麼 Vibe Coder 該認真考慮換 Terminal</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture1020how-to-build-a-breakout-ai-developer-product" id="toc-monday-lecture1020how-to-build-a-breakout-ai-developer-product" class="nav-link" data-scroll-target="#monday-lecture1020how-to-build-a-breakout-ai-developer-product"><span class="header-section-number">7.3</span> Monday Lecture（10/20）：How to Build a Breakout AI Developer Product</a></li>
+  <li><a href="#friday-lecture1024zach-lloydwarp-ceo" id="toc-friday-lecture1024zach-lloydwarp-ceo" class="nav-link" data-scroll-target="#friday-lecture1024zach-lloydwarp-ceo"><span class="header-section-number">7.4</span> Friday Lecture（10/24）：Zach Lloyd（Warp CEO）</a></li>
+  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">7.5</span> Reading 摘要</a></li>
+  <li><a href="#assignmentagentic-development-with-warp" id="toc-assignmentagentic-development-with-warp" class="nav-link" data-scroll-target="#assignmentagentic-development-with-warp"><span class="header-section-number">7.6</span> Assignment：Agentic Development with Warp</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">7.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/05_modern_terminal.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：傳統 terminal（bash/zsh）是 1970 年代設計，2025 年的 AI terminal（Warp、Wave、Claude Code CLI、Codex CLI）長什麼樣？本週講 AI-enhanced CLI 與 terminal automation。Friday 由 Warp CEO Zach Lloyd 親自開講。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">7.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>辨識</strong> AI terminal 與傳統 terminal 在 input、output、history、collaboration 四個維度的差異</li>
+<li><strong>應用</strong> Warp 的 AI features（natural language → command、AI agents、workflows、shared workspaces）</li>
+<li><strong>比較</strong> Warp、Claude Code CLI、Codex CLI 三種 CLI agent 的設計取捨</li>
+<li><strong>設計</strong> 一個 terminal-first 工作流（含 AI-assisted scripting、history search、命令解釋）</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">7.2</span> 核心概念導讀</h2>
+<section id="一terminal-演化簡史-為什麼-1970-年代的設計會撐到現在" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="一terminal-演化簡史-為什麼-1970-年代的設計會撐到現在"><span class="header-section-number">7.2.1</span> 一、Terminal 演化簡史 — 為什麼 1970 年代的設計會撐到現在</h3>
+<p>要理解 modern terminal（如 Warp、Wave、Ghostty）為什麼會冒出來，得先看清楚我們現在用的這個 terminal 是什麼東西。今天你打開 macOS 內建的 Terminal.app 或 iTerm2，看到的本質上是 <strong>VT100 terminal emulator</strong> — 一個模擬 1978 年 DEC VT100 硬體終端機的軟體。VT100 的設計目標是讓打字機式硬體裝置能跟 mainframe 通訊：input 是一行 text、output 是一行 text，所有狀態存在「螢幕緩衝區（screen buffer）」這個一維 character grid 裡。</p>
+<p>這套設計撐了 50 年沒被換掉的原因有兩個：(1) 它「夠用」— 工程師寫 shell script、跑 git、看 log 都不需要更花俏的 UI；(2) <strong>生態鎖死</strong> — bash、zsh、vim、tmux、ssh、所有 CLI tool 都假設輸出是 line-buffered text、控制是 ANSI escape code，要換 terminal 就得讓上萬個既有工具相容。所以即使 GitHub 在 2017 推出 Hyper、Microsoft 在 2019 推出 Windows Terminal，本質都還是「比較好看的 VT100」。</p>
+<p><strong>真正的轉折點是 2022 年的 Warp</strong>。Warp 第一次在 terminal 層做兩件激進的事：(a) 把 line-buffered output 重構成 <strong>block</strong>（每條 command + output 是一個獨立物件，可選取、複製、分享、搜尋），(b) 把 LLM 直接縫進 input editor（自然語言轉 command、執行錯誤即時解釋）。這讓 terminal 從「字符串 I/O 通道」進化成「結構化 agent runtime」。後續 Wave、Ghostty、Claude Code CLI、Codex CLI 都在這個賽道上展開。</p>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：你可以把傳統 terminal 想成「醫院 1970 年代的紙本病歷」— 一切都是 free-text、沒結構、難搜尋；modern terminal 就像「電子病歷系統」— 每個 progress note 是有 metadata 的物件，可以 query、tag、跨病人比對。介面長得像但底層資料結構完全不同。</p>
+</blockquote>
+</section>
+<section id="二ai-terminal-的四個價值主張" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="二ai-terminal-的四個價值主張"><span class="header-section-number">7.2.2</span> 二、AI Terminal 的四個價值主張</h3>
+<p><a href="../readings/w5_warp_university.md">Warp University</a> 把 Warp 自我定位從「modern terminal」升級為 <strong>Agentic Development Environment（代理式開發環境，ADE）</strong>。對使用者來說，AI terminal 比傳統 terminal 多出四個 affordance：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 31%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>維度</th>
+<th>傳統 terminal</th>
+<th>AI terminal（Warp 為例）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Input</strong></td>
+<td>單行 text、按 ↑ 翻 history</td>
+<td>Natural language → command、<code>Ctrl+G</code> 多行編輯、<code>@</code> mention 檔案、語音輸入</td>
+</tr>
+<tr class="even">
+<td><strong>Output</strong></td>
+<td>Line-buffered text、ANSI escape</td>
+<td>Block（可分享、搜尋、附 metadata）、agent 自動解釋 error</td>
+</tr>
+<tr class="odd">
+<td><strong>History</strong></td>
+<td>Per-shell <code>.zsh_history</code> 檔</td>
+<td>Cloud-synced、可 query「上週那個 docker build 怎麼下的」</td>
+</tr>
+<tr class="even">
+<td><strong>Collaboration</strong></td>
+<td>截圖丟 Slack</td>
+<td>Block 一鍵分享 link、shared workspace、cloud agent 跑非同步任務</td>
+</tr>
+</tbody>
+</table>
+<p>關鍵概念是 <strong>block-based terminal</strong> — 每條 <code>command + output</code> 是一個 first-class object，不再是 line buffer 裡的一坨 text。這個 mental model 變化的影響極大：你能對單一 block 做「重跑」「分享」「丟給 agent 解釋」「轉成 workflow 模板」等動作，這些在傳統 terminal 裡需要先把輸出複製出來、貼進別處才能做。</p>
+<p><a href="../readings/w5_warp_university.md">Warp University</a> 還提出 <strong>Warp（local terminal）+ Oz（cloud agent orchestration）</strong> 的雙產品架構：local agent 是 interactive、人在 loop 裡審 diff；cloud agent 是 background、被 webhook / cron 觸發、可大規模並行（PR review、issue triage、dependency update）。兩端共用同一個 agent core 與 <strong>Warp Drive</strong>（rules / prompts / env var / workflow 的 persistent context layer），所以「雲端開工、local 接手」是 seamless 的。</p>
+</section>
+<section id="三cli-agent-vs-ide-agent-設計取捨" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="三cli-agent-vs-ide-agent-設計取捨"><span class="header-section-number">7.2.3</span> 三、CLI Agent vs IDE Agent — 設計取捨</h3>
+<p>W3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、Codex），W5 把兩個放在同一個 terminal 裡。三種 agent 的取捨可這樣比：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 24%">
+<col style="width: 27%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>設計面向</th>
+<th>IDE Agent（Cursor）</th>
+<th>CLI Agent（Claude Code）</th>
+<th>Terminal Agent（Warp Agent Mode）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Host</strong></td>
+<td>VS Code fork</td>
+<td>任何 terminal</td>
+<td>Warp 本身</td>
+</tr>
+<tr class="even">
+<td><strong>Context source</strong></td>
+<td>Editor open files、selection</td>
+<td><code>CLAUDE.md</code> + 工作目錄</td>
+<td>Codebase index + <code>WARP.md</code> + Warp Drive + MCP</td>
+</tr>
+<tr class="odd">
+<td><strong>互動模式</strong></td>
+<td>在 editor 旁邊 chat panel</td>
+<td>純 CLI prompt</td>
+<td>Block-based、Ctrl+G 多行、 <code>⌘+I</code> mode 切換</td>
+</tr>
+<tr class="even">
+<td><strong>Tool access</strong></td>
+<td>Editor command + shell</td>
+<td>Shell + file system</td>
+<td>Shell + file system + 整套 Warp affordance</td>
+</tr>
+<tr class="odd">
+<td><strong>長 task</strong></td>
+<td>中等（chat panel 易斷）</td>
+<td>強（CLI 天生 async）</td>
+<td>強（cloud agent 可背景跑）</td>
+</tr>
+<tr class="even">
+<td><strong>Multi-file refactor</strong></td>
+<td>強（diff view 內建）</td>
+<td>中（需 review CLI diff）</td>
+<td>強（內建 code review panel）</td>
+</tr>
+</tbody>
+</table>
+<p><a href="../readings/w5_warp_vs_claude_code.md">Warp vs Claude Code</a> 文中講得很直白：Warp 不把 Claude Code 當對手而是當 first-class CLI agent host — 你可以在 Warp 裡跑 <code>claude</code>，自動拿到 rich input editor、agent notification、inline code review、vertical tabs 等 IDE 級 affordance。或者你也可以直接用 Warp 內建的 Agent Mode（<code>⌘+Enter</code>）。最關鍵的 migration 提示：<strong>把 <code>CLAUDE.md</code> 改名為 <code>AGENTS.md</code> 或 <code>WARP.md</code> 放專案 root，Warp 會自動讀取，不必重寫</strong>。</p>
+</section>
+<section id="四為什麼-vibe-coder-該認真考慮換-terminal" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="四為什麼-vibe-coder-該認真考慮換-terminal"><span class="header-section-number">7.2.4</span> 四、為什麼 Vibe Coder 該認真考慮換 Terminal</h3>
+<p><a href="../readings/w5_how_warp_uses_warp_to_build_warp.md">How Warp Uses Warp to Build Warp</a> 揭露 Warp 公司內部的 <strong>Coding Mandate</strong> — 每個 coding task 都從在 Warp 裡 prompt 起手，連續卡關 10 分鐘才能 fallback 到別的工具。這條規則對個人開發者太嚴格，但精神對非資工背景的 vibe coder 反而更重要：</p>
+<ol type="1">
+<li><strong>Prompt-first 強迫你想清楚需求</strong> — 用 natural language 描述「我要的是什麼」比直接寫 code 更容易發現需求模糊</li>
+<li><strong>Block 化讓你能回頭審視</strong> — 不再是滾動的 line buffer，每個操作都是可被 review、re-run、share 的物件</li>
+<li><strong>Persistent context 取代碎片記憶</strong> — Warp Drive 的 Rules / Prompts / Workflow 等同 Claude Code 的 <code>CLAUDE.md</code>，重複指令不必每次重打</li>
+<li><strong>Cloud agent 解放等待時間</strong> — 大 task（跑完整 test suite、build、deploy）丟去 background，不必盯著 terminal</li>
+</ol>
+<p>對台大醫學系背景轉 vibe coder 的讀者，這個對應關係特別有用：Warp Drive 之於 terminal，等於 RemNote 之於知識管理 — 都是「把碎片化的 context 沉澱成可重用 artifact」。學會一邊就能類推另一邊。</p>
+</section>
+</section>
+<section id="monday-lecture1020how-to-build-a-breakout-ai-developer-product" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="monday-lecture1020how-to-build-a-breakout-ai-developer-product"><span class="header-section-number">7.3</span> Monday Lecture（10/20）：How to Build a Breakout AI Developer Product</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1Djd4eBLBbRkma8rFnJAWMT0ptct_UGB8hipmoqFVkxQ/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>講者</strong>: Mihail Eric（用 Warp 當 demo 工具）</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>這節從產品策略角度拆「<strong>為什麼 AI dev tool 在 2024-2025 出現史上最快的採用速度</strong>」。Mihail 用 7 條產品設計原則作為主軸，每條都對應 Warp 等成功 AI dev tool 的具體決策：</p>
+<ol type="1">
+<li><strong>Start with what developers know</strong> — 從既有 interface 過渡而非另起爐灶。每個 segment 都接到 developer 已熟的 metaphor：Cursor 接 IDE、Warp 接 terminal、Bolt 接 chat。範例：<a href="https://explainshell.com/explain">explainshell.com</a> 是把「<code>tar -czvf</code>」這種公認痛點當切入點，逐步把使用者從 raw command line 解放，能在 code 與自然語言間自由切換。</li>
+<li><strong>Configuration flexibility</strong> — 對 average user 零設定就能展示價值；power user 拿到完整 configurability：seamless 切換 model、prompts、project rules、MCP、Warp profiles per user。</li>
+<li><strong>Focus on developer ergonomics</strong> — 「<strong>If you can shave off a single keystroke, do it.</strong>」keyboard hotkey、零 onboarding friction（「5 minutes to WOW」是 Warp 內部目標）、tab / enter 等小動作的黏著度。</li>
+<li><strong>Chat as a first-class citizen</strong> — Code 本來就是 human intent 的 contrived representation，工具進化到一定程度後，更多互動會直接變自然語言。Demo Warp 內 debug error 流程就是用聊天替代 grep。</li>
+<li><strong>MCP integration</strong> — MCP 已成為 LLM 與真實世界互動的 lingua franca。可擴展工具生態給 LLM 任何資源 / 動作。Demo：用 context7 給 Warp 抓最新 BrainTrust 文件。</li>
+<li><strong>Rapid feedback loops</strong> — 改完立刻看到效果。Bolt / Lovable 的 real-time canvas、Warp 的 take action + immediate reaction 都在這個範式。可解釋性是 first-class citizen。「entire projects committed to just reducing build time」是這條原則的最強佐證。</li>
+<li><strong>Agent workflows</strong> — 對實質任務給 full autonomy。「agent-take-the-wheel」的接受度逐月上升，但要支援不同等級的 human-in-the-loop（agent 問 clarifying question、YOLO mode）。Demo Warp 的 YOLO mode。</li>
+</ol>
+<p>最後 Mihail 拋出<strong>未來 open question</strong>：</p>
+<ul>
+<li>會不會看到大規模整合？code review / app building / monitoring 等 point solution 會被 all-in-one platform 吞掉嗎？</li>
+<li>AI IDE 會不會演化成 AI terminal、再演化成 AI browser-replit？</li>
+<li>像 Warp / Cursor 會不會 verticalize 變成「full-stack 開發專用」之類？</li>
+<li>給 coding agent 個人化 / project-specific rule 的 universal standard 會是什麼？目前 fragmented（<code>.cursorrules</code> / <code>CLAUDE.md</code> / <code>AGENTS.md</code>），AGENTS.md 是首個 step in that direction。</li>
+</ul>
+<p><strong>Key takeaway</strong>：AI dev tool 爆紅不是「把 chatbot 黏在編輯器旁邊」 — 它需要從 (1) 接既有 mental model 開始、(2) 對 power user 開全部 configurability、(3) 偷每一個 keystroke 的 ergonomic 紀律、(4) 把 chat 當 first-class、(5) MCP 接通生態、(6) feedback loop 越快越好、(7) 對實質任務放 autonomy 同時保留人類介入點。這 7 條原則是 vibe coder 評估「該不該換工具」的 checklist。</p>
+</section>
+<section id="friday-lecture1024zach-lloydwarp-ceo" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="friday-lecture1024zach-lloydwarp-ceo"><span class="header-section-number">7.4</span> Friday Lecture（10/24）：Zach Lloyd（Warp CEO）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/zachlloyd/">Zach Lloyd</a>, CEO of <a href="https://www.warp.dev/">Warp</a></li>
+<li><strong>Slides</strong>: <a href="https://www.figma.com/slides/kwbcmtqTFQMfUhiMH8BiEx/Warp---Stanford--Copy-?node-id=9-116&amp;t=oBWBCk8mjg2l2NR5-1">Figma Slides（公開連結）</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 slide deck 公開內容（PDF 39 張 slide vision OCR）整理的繁中摘要。Slide 結構為六段：(1) The world is changing、(2) From development by hand to by prompt、(3) What is Warp、(4) Warp tour、(5) Using agents to go from prompt to production、(6) The business of agentic development，最後 Q&amp;A。</p>
+</blockquote>
+<ol type="1">
+<li><p><strong>論點主軸 — 從 by-hand 到 by-prompt 的 dev paradigm shift</strong>：Lloyd 開場用 Greylock 的引言定錨「為 code generation 與 engineering workflow 解鎖 high-fidelity、reliable AI 是巨大機會」。整場演講的核心張力是「<strong>Current: Development by hand → Future: Development by prompt</strong>」，而 prompt-driven development 又分兩支：使用者主動觸發的 <strong>interactive agent</strong>，以及由 webhook / cron / event 觸發的 <strong>ambient agent</strong>。Warp 的賭注是同時做好這兩端的開發者體驗，把產品定位為 <strong>ADE（Agentic Development Environment，代理式開發環境）</strong>。</p></li>
+<li><p><strong>為什麼是 terminal — 三個結構性理由</strong>：Lloyd 認為 command line 是 agent 最自然的住所。理由：(a) <strong>Lowest tool in the dev stack</strong>（在開發堆疊最底層、其他工具都跑在它上面）；(b) <strong>Leverages CLI ecosystem</strong>（git、docker、gcloud、curl 全都已經 CLI 化，不必重造）；(c) <strong>Already set up for orchestrating long-running tasks</strong>（terminal 從第一天就是非同步、process-spawning friendly）。但他立刻補一句「<strong>terminal needs to be modernized</strong>」— terminal 是對的介面，VT100 是錯的實作。</p></li>
+<li><p><strong>Warp’s history（2020 → 2025 timeline）</strong>：Lloyd 用一條時間軸 walk through 公司演化，每年加上對應的產品里程碑：<strong>2020 spring</strong> had an idea，<strong>2020 fall</strong> started building，<strong>2021</strong> Warp MVP + Private Beta（強調 “Better UX”），<strong>2022</strong> Mac Public Release，<strong>2023</strong> Warp Drive + AI Chat + AI Command Search 三件 AI feature 一次推出，<strong>2024</strong> velocity 暴增（Linux、Agent Mode、Session Sharing），<strong>2025</strong> Windows release + ADE 重新定位。後面接一張密密麻麻的 feature grid（Split Panes、Markdown Viewer、Command Search、Block Sharing、Secret Redaction、SSO、Active AI…），標題就叫「<strong>Warp continues to grow</strong>」。Mission 寫得很短：「<strong>Empower all developers to deliver great software, quickly and reliably.</strong>」</p></li>
+<li><p><strong>Product Design Roadmap — 四大 pillar 與 Agent Quality 三角</strong>：Warp 把 ADE 拆成四個 product surface：<strong>Terminal</strong>（modern intelligent terminal）、<strong>Code</strong>（在真實 codebase 裡跑 coding agent，原生 review/edit）、<strong>Agents</strong>（同時部署多 agent、集中追蹤）、<strong>Drive</strong>（centralize knowledge / context）。對應 slide 上 4 張產品截圖（git rebase block、code review diff、agent 跑 eval、Drive folder tree）。Ambient agent 線路另外講：<strong>API / Hosting / Management / Integrations</strong> 四件事讓 agent 能「從任何環境呼叫 Warp 的 agent runtime」「跑在 Warp server 或 self-hosted」「跨 session 追蹤」「跟常用 app 一鍵串接」。最後拋出 <strong>Agent Quality = Models + Harness + Dev Ex</strong> 公式 — model 由 Warp 動態挑（resilient to provider outage）、harness 做 prompt tuning + context summarization + A/B eval、dev ex 把 agent 做成「不用滑鼠、不用 text edit、能 reuse / share context、能接 MCP」的純文字介面。</p></li>
+<li><p><strong>How Warp uses Warp to build Warp（內部 5 條 coding mandate）</strong>：(1) <strong>Start with a prompt</strong>（描述「怎麼做」而不只是「做什麼」、附上 file/image context）、(2) <strong>Iterate on a plan</strong>（先和 agent 把問題搞清楚、把方案 script 出來再放手讓它跑）、(3) <strong>Steer the agent</strong>（不要 set-and-forget、邊跑邊 re-prompt + review diff、必要時手 edit）、(4) <strong>Engineers own the PR</strong>（送 review 的 PR 作者必須能像自己寫的一樣解釋每一行）、(5) <strong>Document context for the next PR</strong>（每次學到的東西回寫到 <code>WARP.md</code> 或其他 rules 檔，下次 agent 直接拿）。這條清單是整場演講最具體的可操作守則。</p></li>
+<li><p><strong>Business 與市場定位 — 2×2 framework</strong>：Lloyd 用一張 2×2 圖把 dev tool 市場分成 X 軸 Code by hand ↔︎ Code by prompt、Y 軸 Editor-first ↔︎ Terminal-first；JetBrains / VS Code 在左下、Cursor 在中下、Windsurf / Augment 在右下、<strong>Warp 與 Claude Code 同坐右上（Code by prompt + Terminal-first）</strong>。Lloyd 強調 Warp vs AI IDE 的差異是：橫跨整個 setup → production 生命週期、跨多 project、原生支援多個 long-running agent；vs CLI tool 的差異是：原生 in-app 編輯（不用 context switch）、有 codebase embedding、有 multi-agent 通知 UX。市場判斷：<strong>huge market</strong>（automating development = 11m+ 開發者）、<strong>not winner-take-all</strong>（dev 喜歡 try new thing、公司也願意 honor preference）、<strong>still early</strong>（最大玩家還沒進場、model 還在進步）；風險端坦誠 <strong>competitive market</strong>（Cursor 等對手錢多）、<strong>inference expensive</strong>（usage-based 成本壓邊際）、<strong>complex relation with labs</strong>（Anthropic / OpenAI 既是供應商也是競爭者）。</p></li>
+<li><p><strong>給學生的 closing — What’s next</strong>：「Keep studying CS！」Lloyd 認為不論 model 怎麼進化，<strong>深度 CS 知識 + problem solving skill</strong> 永遠值得投資；「<strong>It’s never been a better time to be a builder</strong>」是他對 Stanford 學生的結語，呼應 W1 Karpathy 講的「軟體開發民主化」。</p></li>
+</ol>
+<p><strong>Key takeaway</strong>：Warp 的 thesis 不是「terminal + AI 黏一黏」，而是把 command line 當作下一代 agent runtime 的最佳 host。產品設計圍繞「interactive agent + ambient agent」雙軌，agent 品質拆成 model / harness / dev ex 三件可獨立優化的事；對 vibe coder 的啟示是 <strong>prompt-first、own your PR、把 learning 寫回 <code>WARP.md</code> / <code>AGENTS.md</code></strong> 這條 dogfooding 紀律比換不換 terminal 重要。</p>
+</section>
+<section id="reading-摘要" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">7.5</span> Reading 摘要</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>篇名</th>
+<th>來源</th>
+<th>一句話重點</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../readings/w5_warp_university.md">Warp University</a></td>
+<td>warp.dev</td>
+<td>Warp = 「Agentic Development Environment」= local terminal + cloud agent platform（Oz）+ Warp Drive 跨端 context</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w5_warp_vs_claude_code.md">Warp vs Claude Code</a></td>
+<td>warp.dev/university</td>
+<td>Warp 與 Claude Code 不是競品而是 stack 兩層，把 <code>CLAUDE.md</code> rename 成 <code>AGENTS.md</code> 即可零成本遷移</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w5_how_warp_uses_warp_to_build_warp.md">How Warp Uses Warp to Build Warp</a></td>
+<td>notion.warp.dev</td>
+<td>Warp 內部 Coding Mandate：每個 task 從 prompt 起手、卡 10 分鐘要回報、bug 一律先變 eval 不直接 patch</td>
+</tr>
+</tbody>
+</table>
+<p><strong>閱讀優先順序</strong>：先讀 <a href="../readings/w5_warp_university.md">Warp University</a> 建立 ADE 心智模型 → 再讀 <a href="../readings/w5_warp_vs_claude_code.md">Warp vs Claude Code</a> 看 Warp 與 Claude Code 怎麼共存 → 最後 <a href="../readings/w5_how_warp_uses_warp_to_build_warp.md">How Warp Uses Warp</a> 看 dogfooding 紀律 — 三篇加起來不到 30 分鐘但能拿到完整圖像。</p>
+</section>
+<section id="assignmentagentic-development-with-warp" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="assignmentagentic-development-with-warp"><span class="header-section-number">7.6</span> Assignment：Agentic Development with Warp</h2>
+<ul>
+<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/tree/master/week5">github.com/mihail911/modern-software-dev-assignments/tree/master/week5</a></li>
+<li><strong>任務描述</strong>: 安裝 Warp，跑一系列 hands-on 練習：(a) 用 Agent Mode 對陌生 repo 做 codebase exploration，(b) 寫 <code>WARP.md</code>（或 rename 既有 <code>CLAUDE.md</code>）讓 agent 拿到 persistent context，(c) 用 Warp Drive 把重複指令存成 workflow，(d) 在 Warp 內跑 Claude Code CLI 體驗 first-class wrapper（Ctrl+G 多行、agent notification、code review panel），(e) 設一個 cloud agent task 跑 background test。</li>
+<li><strong>自學者可行性</strong>: ⭐⭐⭐⭐⭐ 完全可做。Warp 個人 free tier 包含 AI quota，足以跑完作業。預估 3-5 hr。需 macOS 13+ / Windows 11 / Ubuntu 22.04+。</li>
+</ul>
+<blockquote class="blockquote">
+<p>💡 <strong>不想換 terminal 的替代方案</strong>：可以只在練習期間裝 Warp、做完 export workflow 後 uninstall。Warp 不會 hijack 你 default shell，只是另一個 GUI app。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">7.7</span> 對 Vibe Coder 的應用</h2>
+<p>對 Claude Code 重度用戶（也就是這份講義的目標讀者）來說，「該不該換 terminal」是個值得認真評估的問題。決策框架：</p>
+<ol type="1">
+<li><strong>如果你已經把 Claude Code 用得很順</strong> — 不必勉強切，<strong>至少把 <code>CLAUDE.md</code> 複製一份成 <code>AGENTS.md</code></strong> 放專案 root。這個檔在 Cursor、Warp、Codex CLI、未來 MCP-aware agent 都會被自動讀取，等於同一份 context 投入多家工具，零 lock-in</li>
+<li><strong>若你 daily 主力是 iTerm2 + Claude Code</strong> — 評估 Warp 主要看 (a) 你常開幾個並行 agent session？三個以上 Warp 的 vertical tabs + agent metadata 真的會省心；(b) 你有沒有「碎片時間想跑 background task」的需求？有則 cloud agent 直接打到痛點</li>
+<li><strong>絕對先學會的 Warp feature</strong> — <code>Ctrl+G</code> 多行 prompt（給 Claude Code 寫長 prompt 不再要逃跳脫換行）、block share link（把錯誤訊息一鍵丟同事比截圖好十倍）、Warp Drive Rules（重複指令 / 風格規範一次寫、永久套用）</li>
+<li><strong>Warp Drive vs <code>CLAUDE.md</code> 的分工</strong> — <code>AGENTS.md</code> 放專案層級 context（這 repo 是什麼、命名慣例、業務邏輯）；Warp Drive 放跨專案的個人 preference（總是用 pnpm、commit message 用英文、push 前必跑 lint）。兩層不重疊</li>
+<li><strong>不要打開 YOLO mode</strong> — Warp 也有「全自動 approve all tool」選項，跟 W6 會講到的 Copilot RCE 是同一種風險。Vibe coding 速度再快也別省這個 confirm</li>
+<li><strong>Cloud agent 適合的 task 類型</strong> — 跑完整 test suite、build production bundle、跑 dependency audit、批次 rename file、每週一鍵更新 lock file。<strong>不適合</strong>：實際邏輯改動（你沒在現場 review diff、跑出來的 code 你不知道對不對）</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天裝 Warp、把現有 <code>CLAUDE.md</code> 複製成 <code>AGENTS.md</code>、在 Warp 內 <code>cd</code> 進你的 side project、按 <code>⌘+Enter</code> 進 Agent Mode 問「what does this repo do?」。20 秒內你會看到 Warp 自動 index codebase 並回給你一份比 README 還完整的 architectural summary — 這是傳統 terminal 永遠做不到的事，體驗一次你就會知道值不值得遷移。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/04_coding_agent_patterns.html">W4 Coding Agent Patterns</a> | <strong>下一週</strong>：<a href="../weeks/06_ai_testing_security.html">W6 AI Testing and Security</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/04_coding_agent_patterns.html" class="pagination-link" aria-label="Week 4：Coding Agent Patterns">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/06_ai_testing_security.html" class="pagination-link" aria-label="Week 6：AI Testing and Security">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

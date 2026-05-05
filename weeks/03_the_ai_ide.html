@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Week 3：The AI IDE – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/04_coding_agent_patterns.html" rel="next">
+<link href="../weeks/02_anatomy_of_coding_agents.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/03_the_ai_ide.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">5.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">5.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一context-engineering-的三大課題selectioncompressiondecay" id="toc-一context-engineering-的三大課題selectioncompressiondecay" class="nav-link" data-scroll-target="#一context-engineering-的三大課題selectioncompressiondecay"><span class="header-section-number">5.2.1</span> 一、Context Engineering 的三大課題：Selection、Compression、Decay</a></li>
+  <li><a href="#二specs-are-the-new-source-code-工作流的反轉" id="toc-二specs-are-the-new-source-code-工作流的反轉" class="nav-link" data-scroll-target="#二specs-are-the-new-source-code-工作流的反轉"><span class="header-section-number">5.2.2</span> 二、Specs Are the New Source Code — 工作流的反轉</a></li>
+  <li><a href="#三ide-integration-的演化從-autocomplete-到-manager-mode" id="toc-三ide-integration-的演化從-autocomplete-到-manager-mode" class="nav-link" data-scroll-target="#三ide-integration-的演化從-autocomplete-到-manager-mode"><span class="header-section-number">5.2.3</span> 三、IDE Integration 的演化：從 autocomplete 到 manager mode</a></li>
+  <li><a href="#四devin-vs-claude-code-的設計哲學張力" id="toc-四devin-vs-claude-code-的設計哲學張力" class="nav-link" data-scroll-target="#四devin-vs-claude-code-的設計哲學張力"><span class="header-section-number">5.2.4</span> 四、Devin vs Claude Code 的設計哲學張力</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture106from-first-prompt-to-optimal-ide-setup" id="toc-monday-lecture106from-first-prompt-to-optimal-ide-setup" class="nav-link" data-scroll-target="#monday-lecture106from-first-prompt-to-optimal-ide-setup"><span class="header-section-number">5.3</span> Monday Lecture（10/6）：From first prompt to optimal IDE setup</a></li>
+  <li><a href="#friday-lecture1010silas-alberticognition" id="toc-friday-lecture1010silas-alberticognition" class="nav-link" data-scroll-target="#friday-lecture1010silas-alberticognition"><span class="header-section-number">5.4</span> Friday Lecture（10/10）：Silas Alberti（Cognition）</a></li>
+  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">5.5</span> Reading 摘要</a></li>
+  <li><a href="#assignmentbuild-a-custom-mcp-server" id="toc-assignmentbuild-a-custom-mcp-server" class="nav-link" data-scroll-target="#assignmentbuild-a-custom-mcp-server"><span class="header-section-number">5.6</span> Assignment：Build a Custom MCP Server</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">5.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/03_the_ai_ide.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：AI IDE（Cursor、Windsurf、Zed、Continue.dev）怎麼管理 codebase context、怎麼讀懂大型 codebase；以及 spec / PRD 在 agent 時代的角色變化（“specs are the new source code”）。Friday 由 Cognition（Devin 母公司）的 Head of Research Silas Alberti 開講。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">5.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>解釋</strong> context window 為什麼是 AI IDE 最關鍵的瓶頸，以及 RAG / chunking / re-ranking 怎麼解決</li>
+<li><strong>撰寫</strong> 一份能餵給 agent 的 PRD（Product Requirements Document），含 spec、acceptance criteria、guardrails</li>
+<li><strong>設定</strong> Claude Code / Cursor 的 context loading（CLAUDE.md / <code>.cursorrules</code>、MCP servers、custom commands）</li>
+<li><strong>評估</strong> Devin 跟 Claude Code 的設計哲學差異（autonomous agent vs interactive collaborator）</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">5.2</span> 核心概念導讀</h2>
+<section id="一context-engineering-的三大課題selectioncompressiondecay" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="一context-engineering-的三大課題selectioncompressiondecay"><span class="header-section-number">5.2.1</span> 一、Context Engineering 的三大課題：Selection、Compression、Decay</h3>
+<p>W2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude Code 寫過 non-trivial 任務，就會遇到一個 W2 沒講的瓶頸 — <strong>context window 不是越大越好</strong>。Drew Breunig 在 <a href="../readings/w3_how_long_contexts_fail.md">How Long Contexts Fail</a> 把這件事拆成 4 種具體的 failure mode：</p>
+<ol type="1">
+<li><strong>Context poisoning（脈絡中毒）</strong> — Hallucination 一旦寫進對話 context 就會被反覆 self-reference，agent 朝不可能的目標前進。Gemini 玩 Pokémon 的著名 case：模型某輪生成「我已經拿到 X 道館徽章」（其實沒有），之後幾百輪 reasoning 都基於這個錯誤前提。</li>
+<li><strong>Context distraction（脈絡分心）</strong> — Context 過長時模型會偏向「重複歷史 action」而非用 train 出來的 reasoning 重新規劃。小模型 ~32k token 後開始崩、大模型 ~100k 後也會。</li>
+<li><strong>Context confusion（脈絡混淆）</strong> — Berkeley Function-Calling Leaderboard 顯示 8B 模型給 19 個 tool 還能用、46 個就崩。<strong>tool 越多 ≠ agent 越強</strong>，反而 routing accuracy 直接下降。</li>
+<li><strong>Context clash（脈絡衝突）</strong> — Microsoft / Salesforce 研究顯示「分輪餵相同資訊」比「一次性餵」accuracy 下降 39%。多輪對話一旦走偏，回不來。</li>
+</ol>
+<p>理解這 4 種 failure 後，<strong>context engineering</strong> 就拆成三件事：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>課題</th>
+<th>問題</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Selection（選擇）</strong></td>
+<td>從 1M token codebase 裡，這次 task 該餵哪些 file 進 context？</td>
+<td>RAG、grep + re-rank、<code>@file</code> reference、CLAUDE.md routing</td>
+</tr>
+<tr class="even">
+<td><strong>Compression（壓縮）</strong></td>
+<td>Context 用到 60% 後怎麼濃縮？</td>
+<td><code>/compact</code> summary、subagent isolation、phase-boundary checkpoint</td>
+</tr>
+<tr class="odd">
+<td><strong>Decay（衰減）</strong></td>
+<td>長 session 怎麼防 drift？</td>
+<td><code>&lt;system-reminder&gt;</code> 重述目標、<code>/clear</code> 重啟、phase-spec re-anchor</td>
+</tr>
+</tbody>
+</table>
+<p>humanlayer 團隊在 <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.md">Getting AI to Work In Complex Codebases</a> 直接喊出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「<strong>context window 的內容是你影響 output 品質的唯一槓桿</strong>」。Agent 是 stateless function — 同樣的 context window 給同樣的 model 永遠產出同樣品質。所以使用者最高槓桿的工作就是 curate 那個 window。</p>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：context engineering 跟臨床問診同構。問診（context selection）漏問就鑑別診斷漏；問診冗長（context bloat）就抓不到重點；前後病史矛盾（context clash）就推不出結論。Claude Code 寫不好 code 時，先檢查的不是 prompt 措辭，是「我有沒有給它對的 file」。</p>
+</blockquote>
+</section>
+<section id="二specs-are-the-new-source-code-工作流的反轉" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="二specs-are-the-new-source-code-工作流的反轉"><span class="header-section-number">5.2.2</span> 二、Specs Are the New Source Code — 工作流的反轉</h3>
+<p>W1/W2 還在「prompt 怎麼寫」的層級。Week 3 把視角拉高一階：<strong>當 AI 把 implementation 從週縮到分鐘，瓶頸從「會不會寫 code」變成「能不能描述清楚需求」</strong>。Ravi Mehta 在 <a href="../readings/w3_specs_are_the_new_source_code.md">Specs Are the New Source Code</a> 借 Sean Grove 的話：傳統世界是 source code（人讀）→ binary（機器讀），AI 時代等於「把 source 撕碎，反而謹慎 version control 那個 binary」 — 因為 code 只是 intent 的 <strong>lossy projection（有損投射）</strong>，spec 才是完整需求。</p>
+<p>Workflow 的反轉是這週的核心命題：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>傳統 workflow</th>
+<th>AI agent workflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Idea → Spec → Prototype → 痛苦修改</td>
+<td><strong>Rapid prototype → 真實 customer feedback → 凝結成 crystal-clear spec → 大量再生</strong></td>
+</tr>
+<tr class="even">
+<td>Spec 寫得糊也能補救（人類工程師會問問題）</td>
+<td>Spec 寫得糊 = code 寫得糊（agent 不會主動 challenge）</td>
+</tr>
+<tr class="odd">
+<td>Code = single source of truth</td>
+<td><strong>Spec = single source of truth</strong>，code 是 spec 的可重生產出</td>
+</tr>
+<tr class="even">
+<td>Code review 抓 bug</td>
+<td><strong>Spec review</strong> 抓 bug（一行 spec 錯 = 100 行 code 錯）</td>
+</tr>
+</tbody>
+</table>
+<p>對 PM、designer 也有解放性影響 — 過去想改一個 button 行為要排工程 sprint，現在寫得清楚的 spec 直接餵給 Claude Code 就能落地。Mihail 在 Monday lecture 會花相當時間講 PRD（Product Requirements Document）怎麼寫成「agent 看得懂的 spec」 — 含 user story、acceptance criteria、guardrails、non-goals 四個 block。</p>
+</section>
+<section id="三ide-integration-的演化從-autocomplete-到-manager-mode" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="三ide-integration-的演化從-autocomplete-到-manager-mode"><span class="header-section-number">5.2.3</span> 三、IDE Integration 的演化：從 autocomplete 到 manager mode</h3>
+<p><a href="../readings/w3_devin_coding_agents_101.md">Devin: Coding Agents 101</a> 把開發者 AI tool 的演化分成四代，每一代的 IDE integration 都不同：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>世代</th>
+<th>時期</th>
+<th>代表</th>
+<th>IDE 整合方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Autocomplete</strong></td>
+<td>~2015</td>
+<td>TabNine、Kite</td>
+<td>method 級補完，typing 旁邊跳建議</td>
+</tr>
+<tr class="even">
+<td><strong>Copilot</strong></td>
+<td>~2021</td>
+<td>GitHub Copilot</td>
+<td>多行 inline suggestion，按 Tab 接受</td>
+</tr>
+<tr class="odd">
+<td><strong>Generative chatbot</strong></td>
+<td>~2023</td>
+<td>Cursor Chat、Claude.ai</td>
+<td>檔案級 chat panel，貼 code 改 code</td>
+</tr>
+<tr class="even">
+<td><strong>Autonomous agent</strong></td>
+<td>2024-now</td>
+<td>Devin、Claude Code、Cursor agent mode</td>
+<td>end-to-end task 委派，從 prompt 到 PR</td>
+</tr>
+</tbody>
+</table>
+<p>每一代的 IDE 都在解決前一代的瓶頸：autocomplete 解決打字慢、copilot 解決 boilerplate、chatbot 解決「跨檔案 context」、agent 解決「多步驟自我 iterate」。但 agent 帶來新問題 — IDE 不再只是 editor，要兼容 background task、long-running process、agent state visualization。Cursor 的 agent panel、Claude Code 的 CLI session、Devin 的 web UI 各有不同設計取捨。</p>
+</section>
+<section id="四devin-vs-claude-code-的設計哲學張力" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="四devin-vs-claude-code-的設計哲學張力"><span class="header-section-number">5.2.4</span> 四、Devin vs Claude Code 的設計哲學張力</h3>
+<p>Friday lecture 由 Cognition 的 Silas Alberti 開講，這節的張力預設是「Devin 的 autonomous-first 哲學 vs Anthropic Claude Code 的 interactive-first 哲學」。對比軸向：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 38%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>軸向</th>
+<th>Devin（Cognition）</th>
+<th>Claude Code（Anthropic）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>預設介入頻率</strong></td>
+<td>低 — 接 task 後 hours 級自跑</td>
+<td>高 — 每個 tool call 都可被打斷</td>
+</tr>
+<tr class="even">
+<td><strong>UI 形態</strong></td>
+<td>Web app + cloud sandbox VM</td>
+<td>CLI / IDE plugin，跑在 user 機器</td>
+</tr>
+<tr class="odd">
+<td><strong>錯誤恢復</strong></td>
+<td>自我 iterate test/CI 直到 green</td>
+<td>多半丟回 user 決定</td>
+</tr>
+<tr class="even">
+<td><strong>適合任務</strong></td>
+<td>scoped、有 clear acceptance criteria</td>
+<td>exploratory、需 user judgment</td>
+</tr>
+<tr class="odd">
+<td><strong>Engineering manager mode</strong></td>
+<td>強調，sales pitch 是「同時 supervise 5 個 Devin」</td>
+<td>弱，focus 在「你跟一個 Claude 對話」</td>
+</tr>
+</tbody>
+</table>
+<p>Devin 強調 <strong>architecture-first prompting</strong>（講 <em>how</em> 不只 <em>what</em>）、<strong>defensive prompting</strong>（預先告訴 agent 哪些坑）、<strong>feedback loop quality</strong>（type / test / lint signal）。但作者明確降溫：對大型任務 expect <strong>~80%</strong> 時間節省，不是完全自動化。這個誠實的 ratio 是工業界共識。</p>
+<p><a href="../readings/w3_writing_effective_tools_for_agents.md">Writing Effective Tools for Agents</a>（Anthropic engineering blog）則提供 tool design 的深度原則 — strategic selection（少而精）、meaningful naming（namespace prefix）、contextual response（semantic name 取代 UUID）、token-efficient implementation、descriptive specifications（像跟新進員工解釋）。這些 principle 是 Devin / Claude Code / Cursor 共通的 agent infrastructure layer。</p>
+</section>
+</section>
+<section id="monday-lecture106from-first-prompt-to-optimal-ide-setup" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="monday-lecture106from-first-prompt-to-optimal-ide-setup"><span class="header-section-number">5.3</span> Monday Lecture（10/6）：From first prompt to optimal IDE setup</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/11pQNCde_mmRnImBat0Zymnp8TCS_cT_1up7zbcj6Sjg/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>Design Doc Template</strong>: <a href="https://drive.google.com/file/d/1MZ0Qx68Vzw4x5x_XcV8XiPLp7fFDe1LJ/view?usp=drive_link">Drive 連結</a></li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>Mihail 把 IDE 演化壓縮成一條 timeline，再導出「為什麼 AI IDE 是 2023 年才可能」的論點。Lecture 的核心命題是：<strong>AI IDE 的 evolution 是「functionality consolidation vs developer customization」之間的 see-saw</strong>。</p>
+<ol type="1">
+<li><strong>IDE 簡史</strong> — Turbo Pascal（1983）first true IDE → Microsoft Visual Studio（1997）first IntelliSense（autocomplete 前身）→ IntelliJ IDEA（2001）contextual code navigation / refactoring → VS Code（2015）lightweight + 高度可擴充 ecosystem，也引進 LSP（MCP 的概念祖先）→ Cursor（2023）第一個真正 AI-native IDE。</li>
+<li><strong>Cursor 使用模式分層</strong> — Bread-and-butter mode（<strong>Tab</strong> 簡單 inline、<strong>Cmd-K</strong> 幾行的 quick edit、<strong>Cmd-L</strong> multi-file），True AI-native（background agent、MCP integration、learn memories、Bugbot PR review）。</li>
+<li><strong>AI IDE 底層運作</strong> —
+<ul>
+<li><strong>Tab-complete</strong>：圍繞 cursor 的小 context window 加密送到 server，跑 infilling LLM 後送回建議</li>
+<li><strong>Chat</strong>：把 code chunk 存成 embedding 在 server 的 semantic index（檔名 obfuscated），query 時 retrieve 最相關 chunk 餵 LLM；IDE 定期 re-index 並用 Merkle tree 算 chunk diff 做 efficient update</li>
+</ul></li>
+<li><strong>Best practice：simple change vs complex task</strong> —
+<ul>
+<li>Simple change：不必太用心 prompting</li>
+<li>Complex task：你要進入 PM 模式，寫精雕的 specs doc，包含：<strong>Goal</strong>（這次改動目的）、<strong>Definitions</strong>（LLM 需要的 prereq）、<strong>Plan</strong>（high-level breakdown）、<strong>Source files being changed</strong>、<strong>Test cases</strong>、<strong>Edge cases</strong>、<strong>Out-of-scope</strong>（什麼<strong>不要</strong>改）、<strong>Extensions</strong>（之後可能加什麼，讓 LLM 不要走捷徑）</li>
+</ul></li>
+<li><strong>Codebase optimization for human + agent</strong> — 多數 LLM 混亂來自 messy repo。優化清單：repo orientation、file structure、setup &amp; environment、best practices、code style、access patterns、APIs and contracts。建議 monorepo design。「<strong>A messy repo can be as simple as having different access patterns, variable naming, multiple functions that do the same thing.</strong>」</li>
+<li><strong>Agent configuration files 對比</strong> —
+<ul>
+<li><strong>CLAUDE.md</strong>：Claude 自動 pull 進 context，放 common bash command、core file、code style、testing instruction</li>
+<li><strong>.cursorrules</strong>、<strong>AGENTS.md</strong>（OpenAI Codex 用，<a href="https://github.com/openai/codex/blob/main/AGENTS.md">官方範例 repo</a>）— README 是給人看的（quick start、project description、contribution guideline），AGENTS.md 是給 agent 看的（build step、test、convention、code style、security）</li>
+<li><strong>llms.txt</strong>：給網頁 scraping LLM 的導航</li>
+<li>重點 caveat：「<strong>The agents won’t always adhere to these descriptions/directives. They are intended as guidance.</strong>」這些檔案是建議不是強制</li>
+</ul></li>
+<li><strong>Live demo 段</strong> — 走一個帶 specs doc 的 complex coding task，看 cursorrules / Claude Code spec 在實 repo 裡長什麼樣。</li>
+</ol>
+<p><strong>Key takeaway</strong>：Optimal IDE setup 不是「工具越多越好」 — 而是把 repo 整理到 human 跟 agent 都能讀得懂的狀態，再配上一份對 task 量身寫的 specs doc。messy repo + sloppy prompt 是 LLM 寫不出好 code 的最大原因，永遠先檢查這兩件事再去改 prompt 措辭。</p>
+</section>
+<section id="friday-lecture1010silas-alberticognition" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="friday-lecture1010silas-alberticognition"><span class="header-section-number">5.4</span> Friday Lecture（10/10）：Silas Alberti（Cognition）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/silasalberti/">Silas Alberti</a>, Founding Team @ <a href="https://cognition.ai/">Cognition</a>（前 Stanford PhD Student）</li>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1i0pRttHf72lgz8C-n7DSegcLBgncYZe_ppU7dB9zhUA/edit?usp=sharing">Google Slides 公開連結</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Silas 的演講題目是「<strong>IDE ❤️ Agents：An opinionated guide to AI coding in 2025</strong>」：</p>
+</blockquote>
+<p>Silas 把 AI coding tool 演化分成三世代，每一代的「效率提升」量級截然不同：</p>
+<ol type="1">
+<li><strong>Three Eras of AI Coding Tools</strong>
+<ul>
+<li><strong>Era 1: Code Completion</strong>（GitHub Copilot）— ~10% efficiency gain，speed up coding，純 local</li>
+<li><strong>Era 2: IDE Automation / AI IDEs</strong>（Cursor、Windsurf）— ~20% gain，single-player task completion，仍 local</li>
+<li><strong>Era 3: AI Software Engineer</strong>（Devin）— <strong>6-12× efficiency gain</strong>，移到 cloud + asynchronous，scale workflow in parallel</li>
+</ul></li>
+<li><strong>Sync vs Async 的本質差異</strong> —
+<ul>
+<li><strong>Sync</strong>：single-threaded、human-in-the-loop、注意力鎖在單一 task → AI agent 工作 20 秒到 1.5 分鐘</li>
+<li><strong>Async</strong>：multi-threaded、人類 delegate 給 AI、注意力可在多 task 間切換 → AI agent 工作 10 分鐘到數小時</li>
+<li><strong>Cloud + Async 解鎖 10× parallelism</strong>：每個工程師可同時跑多個 Devin instance（in VPC），一對多、共享組織知識；對比 Local AI IDE 是一對一、knowledge 隔離</li>
+</ul></li>
+<li><strong>Devin 的 workflow autonomy 三階段</strong> —
+<ul>
+<li><strong>Plan（engineer in the loop）</strong>：用 Search / Wiki 問 Devin 找 file / API / test → clarify scope → Devin 寫 step-by-step plan。耗時：分鐘級</li>
+<li><strong>Build（Devin in the loop）</strong>：Devin 在 isolated workspace（shell + editor + browser）執行 → plan → execute → test → iterate 直到 task 全綠。完全 async，你可以去做別的事</li>
+<li><strong>Review（engineer 回 loop）</strong>：Devin 開乾淨的 PR 含 passing test 與 change summary → 你 review、comment 或 merge → Devin 可依要求修。<strong>Human effort ≲ 15% of original task</strong></li>
+</ul></li>
+<li><strong>「Semi-Async：尷尬的中間地帶」</strong> — 5 秒 / 10 秒 / 30 秒 / 1 分 / 3 分 / 5 分 / 10 分 / 1 時 / 3 時 的 spectrum 上，<strong>3-10 分鐘是 Avoid 區段</strong>：太慢 stay in flow、太短 multi-task。要嘛<strong>做更快</strong>保持 flow，要嘛<strong>用更多時間換更高 intelligence</strong>。</li>
+<li><strong>Async agent 是 hard but learnable skill</strong> — 雖然 async agent 解鎖 10× gain，但多數人還在用 sync agent。原因：管理 / 委派本身就是難 skill，不論對象是人還是 agent。需要 cycle 多 task 的能力 + 快速理解新 context 的能力。</li>
+<li><strong>Planning / Coding / Testing 三階段的 sync vs async 配置</strong> —
+<ul>
+<li>今天：planning sync（DeepWiki、Ask Devin、Codemap、DeepWiki in Windsurf）→ coding async（delegate 給 agent）→ testing sync（在 Windsurf 裡 refine）</li>
+<li>未來：testing 也會 async（agent 自己驗收），那時 leverage 會跨另一個量級</li>
+</ul></li>
+<li><strong>Common workflow demo</strong>：(1) delegate task to Devin async、(2) test &amp; refine changes in Windsurf sync — Devin 處理 long-form 工作，Windsurf 接手 last-mile sync 微調。</li>
+<li><strong>Where are we headed</strong>：human engineer 變成 agent manager，sync tool 解最難的問題、async tool 拿 10× leverage。對未來 valuable 的能力：(a) delegation &amp; multi-threading、(b) code reading、(c) planning / scoping / architecting。</li>
+</ol>
+<p><strong>Key takeaway</strong>：Devin 的設計哲學不是「IDE 升級版」，是把工程工作從 local sync 推到 cloud async 的範式轉移。<strong>6-12× 不是 marketing 數字 — 是 parallelism × autonomy 的乘積</strong>。但要拿到這個 gain，工程師必須學會「同時 supervise 多個 agent」這項新技能，這是比 prompt engineering 更難、更值錢的能力。</p>
+</section>
+<section id="reading-摘要" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">5.5</span> Reading 摘要</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>篇名</th>
+<th>來源</th>
+<th>一句話重點</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../readings/w3_specs_are_the_new_source_code.md">Specs Are the New Source Code</a></td>
+<td>Ravi Mehta blog</td>
+<td>Code 是 intent 的 lossy projection，spec 才是 AI 時代的 single source of truth</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w3_how_long_contexts_fail.md">How Long Contexts Fail</a></td>
+<td>dbreunig.com</td>
+<td>1M context ≠ 更好答案，4 種 failure mode（poisoning / distraction / confusion / clash）都會搞爛 agent</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w3_devin_coding_agents_101.md">Devin: Coding Agents 101</a></td>
+<td>devin.ai</td>
+<td>Coding agent ≠ autocomplete / copilot / chatbot，是 end-to-end 的不同物種，工程師變 manager</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w3_getting_ai_to_work_in_complex_codebases.md">Getting AI to Work In Complex Codebases (ACE-FCA)</a></td>
+<td>github.com/humanlayer</td>
+<td>Research → Plan → Implement 三段式 + frequent intentional compaction，brownfield codebase 工業級配方</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w3_how_faang_vibe_codes.md">How FAANG Vibe Codes</a></td>
+<td>X / Twitter</td>
+<td>原文需登入 X，best-effort 推測：個人 vibe coding workflow 在大型 codebase 不能照搬</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w3_writing_effective_tools_for_agents.md">Writing Effective Tools for Agents</a></td>
+<td>Anthropic engineering</td>
+<td>Tool 不是 API — 少而精、namespace 命名、semantic output、actionable error，evaluation-driven 迭代</td>
+</tr>
+</tbody>
+</table>
+<p><strong>閱讀優先順序</strong>：時間有限的話，先讀 <a href="../readings/w3_getting_ai_to_work_in_complex_codebases.md">ACE-FCA</a>（最 actionable，三段式 workflow 直接套用）→ <a href="../readings/w3_how_long_contexts_fail.md">How Long Contexts Fail</a>（理解 failure mode 才知道為什麼三段式有效）→ <a href="../readings/w3_specs_are_the_new_source_code.md">Specs Are the New Source Code</a>（mindset 翻轉）→ <a href="../readings/w3_writing_effective_tools_for_agents.md">Writing Effective Tools</a>（自己寫 MCP / skill 時必讀）。</p>
+</section>
+<section id="assignmentbuild-a-custom-mcp-server" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="assignmentbuild-a-custom-mcp-server"><span class="header-section-number">5.6</span> Assignment：Build a Custom MCP Server</h2>
+<ul>
+<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md">github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md</a></li>
+<li><strong>任務描述</strong>: 用 W2 學的 MCP SDK 實作一個 production-grade MCP server，把外部資料源（資料庫 / API / 檔案系統 / SaaS 工具）包成 Claude Desktop / Cursor 可直接呼叫的 tool。重點是套用 <a href="../readings/w3_writing_effective_tools_for_agents.md">Writing Effective Tools</a> 的設計原則：strategic tool consolidation（不要把每個 endpoint 都 wrap 成 tool）、semantic output、descriptive specifications、actionable error message。建議的 server 主題：你日常會查的 API（個人筆記、研究資料庫、健保碼、PubMed、Google Calendar），或把 W2 的 MCP server 升級成 production 品質。</li>
+<li><strong>自學者可行性</strong>: ⭐⭐⭐⭐ 完全可做但比 W2 進階。需要 W2 的 MCP 基礎、能寫 TypeScript 或 Python、有想包的外部資料源（自己的 PubMed query / Obsidian vault / 個人 API key）。預估 4-8 hr，含寫 code + 在 Claude Desktop 實測迭代。</li>
+</ul>
+<blockquote class="blockquote">
+<p>💡 <strong>沒有外部資料源也能做</strong>：用 SQLite + 假資料 dump 模擬資料庫，重點是練 tool consolidation 與 description 寫法 — design quality 不需要真實資料才能證明。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">5.7</span> 對 Vibe Coder 的應用</h2>
+<p>W3 是 vibe coder 從「會用 Claude Code」升級到「能規模化用 Claude Code」的關鍵一週。實戰建議：</p>
+<ol type="1">
+<li><strong>任何 non-trivial 任務先寫 1 頁 spec</strong> — 不寫的代價是反覆改 5 次都不對。Spec 含 4 個 block：(a) user 是誰、(b) 要做什麼、(c) 成功長怎樣（驗收標準）、(d) 不做什麼（non-goal）。5 分鐘 spec 換 2 小時 debug 是夯爆的 ROI</li>
+<li><strong>採用 Research → Plan → Implement 三段式</strong> — 別讓 Claude Code 一接 task 就開寫。先讓它 research（理解 codebase / 現有 pattern）、產 plan.md（你 review 完才放行）、最後 implement。<strong>人力放在 plan review 而非 code review</strong>，因為一行 plan 錯 = 100 行 code 錯</li>
+<li><strong>CLAUDE.md 當 code 維護</strong> — 每行都問「刪掉會不會出錯」。過長會讓重要 rule 被淹（Drew Breunig 的 context distraction）。建議結構：repo 在做什麼（一段話）、命名慣例、業務 quirks、絕不做的事。其他 domain knowledge 走 skill 或 subagent，別塞 CLAUDE.md</li>
+<li><strong>Tool / MCP server 不是越多越好</strong> — Berkeley function-calling 數據顯示 tool &gt; 30 個就開始崩。挑你真會用的 5-10 個 MCP server 就好。寫自己的 MCP 時，把「3 個 low-level operation」合併成「1 個 high-level tool」，agent 友善太多</li>
+<li><strong>Long session 出現重複錯誤 = context poisoning，立刻 <code>/clear</code></strong> — 不要繼續解釋，會越解越糟。重啟，把正確結論寫進 CLAUDE.md / spec，再開新 session 跑一次</li>
+<li><strong>Subagent 處理 expensive exploration</strong> — grep、找檔案、跑長 search 派 subagent 跑，主對話只接 summary。Claude Code 的 Task tool 直接支援，這招會讓主 session 的 context 維持 40-60% 健康水位</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天就在你最常用的 side project 試一次完整三段式：(1) 寫 1 頁 spec.md（含 user story + acceptance criteria）、(2) <code>/clear</code> 開新 session、(3) 對 Claude Code 說「先讀 spec.md，產出 plan.md，先不要 implement」、(4) review plan、(5) 確認後說「按 plan 執行」。你會發現一次到位的 ratio 從 30% 跳到 80%。從此回不去舊 workflow。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/02_anatomy_of_coding_agents.html">W2 The Anatomy of Coding Agents</a> | <strong>下一週</strong>：<a href="../weeks/04_coding_agent_patterns.html">W4 Coding Agent Patterns</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/02_anatomy_of_coding_agents.html" class="pagination-link" aria-label="Week 2：The Anatomy of Coding Agents">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/04_coding_agent_patterns.html" class="pagination-link" aria-label="Week 4：Coding Agent Patterns">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

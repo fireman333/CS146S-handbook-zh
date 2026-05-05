@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; Week 8：Automated UI and App Building – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/09_agents_post_deployment.html" rel="next">
+<link href="../weeks/07_modern_software_support.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/08_automated_ui_app_building.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">10.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">10.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一ui-generation-的演化從截圖轉-code到一句話生-app" id="toc-一ui-generation-的演化從截圖轉-code到一句話生-app" class="nav-link" data-scroll-target="#一ui-generation-的演化從截圖轉-code到一句話生-app"><span class="header-section-number">10.2.1</span> 一、UI generation 的演化：從「截圖轉 code」到「一句話生 app」</a></li>
+  <li><a href="#二design-system-與-component-library-在-ai-時代的角色重定位" id="toc-二design-system-與-component-library-在-ai-時代的角色重定位" class="nav-link" data-scroll-target="#二design-system-與-component-library-在-ai-時代的角色重定位"><span class="header-section-number">10.2.2</span> 二、Design system 與 component library 在 AI 時代的角色重定位</a></li>
+  <li><a href="#三prompt-to-app-五大工具的職能差異" id="toc-三prompt-to-app-五大工具的職能差異" class="nav-link" data-scroll-target="#三prompt-to-app-五大工具的職能差異"><span class="header-section-number">10.2.3</span> 三、Prompt-to-app 五大工具的職能差異</a></li>
+  <li><a href="#四為什麼-vercel-的全棧押注v0-ai-sdk-ai-gateway值得單獨理解" id="toc-四為什麼-vercel-的全棧押注v0-ai-sdk-ai-gateway值得單獨理解" class="nav-link" data-scroll-target="#四為什麼-vercel-的全棧押注v0-ai-sdk-ai-gateway值得單獨理解"><span class="header-section-number">10.2.4</span> 四、為什麼 Vercel 的全棧押注（v0 + AI SDK + AI Gateway）值得單獨理解</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture1110end-to-end-apps-with-a-single-prompt" id="toc-monday-lecture1110end-to-end-apps-with-a-single-prompt" class="nav-link" data-scroll-target="#monday-lecture1110end-to-end-apps-with-a-single-prompt"><span class="header-section-number">10.3</span> Monday Lecture（11/10）：End-to-end apps with a single prompt</a></li>
+  <li><a href="#friday-lecture1114gaspar-garciavercel-head-of-ai-research" id="toc-friday-lecture1114gaspar-garciavercel-head-of-ai-research" class="nav-link" data-scroll-target="#friday-lecture1114gaspar-garciavercel-head-of-ai-research"><span class="header-section-number">10.4</span> Friday Lecture（11/14）：Gaspar Garcia（Vercel Head of AI Research）</a></li>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading"><span class="header-section-number">10.5</span> Reading</a></li>
+  <li><a href="#assignmentmulti-stack-web-app-builds" id="toc-assignmentmulti-stack-web-app-builds" class="nav-link" data-scroll-target="#assignmentmulti-stack-web-app-builds"><span class="header-section-number">10.6</span> Assignment：Multi-stack Web App Builds</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">10.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/08_automated_ui_app_building.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：v0、Lovable、Bolt、Replit Agent、Cursor Composer — 這一波「一句話生整個 app」的工具怎麼運作？前端設計與 UX 對非設計師變得多容易？本週由 Vercel（v0 母公司）的 Head of AI Research Gaspar Garcia 親自開講。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">10.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>比較</strong> v0 / Lovable / Bolt / Replit Agent / Cursor Composer 在「一句話生 app」的能力差異</li>
+<li><strong>應用</strong> v0 prompt 技巧生成 production-ready React/Next.js component</li>
+<li><strong>設計</strong> 一個「prompt → preview → iterate → deploy」的完整 vibe coding workflow</li>
+<li><strong>評估</strong> 哪些 app 適合 AI 全自動生成 vs 哪些需要人工架構設計</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">10.2</span> 核心概念導讀</h2>
+<section id="一ui-generation-的演化從截圖轉-code到一句話生-app" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="一ui-generation-的演化從截圖轉-code到一句話生-app"><span class="header-section-number">10.2.1</span> 一、UI generation 的演化：從「截圖轉 code」到「一句話生 app」</h3>
+<p>過去三年 UI generation 的能力曲線跳了三個世代。<strong>第一代（2023, v0 1.0）</strong>：Vercel 把 v0 推出時定位是「screenshot → JSX」，你貼一張 Figma 截圖或 mockup，它輸出對應的 React code。可用但有限，只能處理單一 component、設計一複雜就崩。<strong>第二代（2024, v0 2.0 + 競品爆發）</strong>：從 single-component 變 single-page，從只生 markup 變生帶 state 的互動元件。同時間 Lovable、Bolt、Replit Agent 跳出來，各自切不同 niche — Bolt 強調 in-browser dev environment、Replit Agent 強調全棧 + 部署、Lovable 強調 design-first。<strong>第三代（2025, v0 3.0 / Cursor Composer / Claude Artifacts）</strong>：跨入「一句話生整個 app」 — 包含 routing、auth、database schema、API route、UI 全套。能力到 production-grade demo level 但離 production-ready 還有距離（multi-tenancy、payment、observability 多半還是要人工接）。</p>
+<p>理解這個演化曲線，重點不是記住每個版本能做什麼，而是看清<strong>這條技術曲線的驅動力</strong>：(a) LLM model 能力提升（context window 從 8k → 200k → 1M，可以塞整個小型 codebase）；(b) tool ecosystem 成熟（Next.js App Router、shadcn/ui、Tailwind v4 等 AI-friendly 框架同時崛起）；(c) execution sandbox 成熟（WebContainers 讓 LLM 能在瀏覽器裡跑 npm install 並 preview）。三者加乘才催生第三代。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="二design-system-與-component-library-在-ai-時代的角色重定位" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="二design-system-與-component-library-在-ai-時代的角色重定位"><span class="header-section-number">10.2.2</span> 二、Design system 與 component library 在 AI 時代的角色重定位</h3>
+<p>過去 design system（設計系統）是大公司的奢侈品 — 自己維護一套 token、一套 component、一套 documentation site。AI 時代這個資源結構逆轉：<strong>design system 從「成本」變「prompt 槓桿」</strong>。當你跟 v0 說「給我一個 dashboard」，它需要某個 default 來生成 — 那個 default 就是它讀過、訓練過、知道怎麼穩定產出的 component library。</p>
+<p>這就是為什麼 <strong>shadcn/ui</strong> 在 2024-2025 年大爆發。它不是傳統意義上的 component library（不是 npm 包），而是一套 <strong>copy-paste-able</strong> 的 React component source code，建立在 Radix UI primitives + Tailwind CSS 之上。對 AI 友善的三個關鍵設計：</p>
+<ol type="1">
+<li><strong>Source 在你 repo</strong>：不是 black-box 套件，每個 component 的 code 全在你 codebase 裡，AI 讀 code 直接知道結構，不用猜 props</li>
+<li><strong>Tailwind utility class</strong>：所有 styling 是 inline class，AI 改 styling 不用追到外部 CSS 檔</li>
+<li><strong>Composition over configuration</strong>：複合元件用 <code>&lt;Dialog&gt;&lt;DialogTrigger /&gt;&lt;DialogContent /&gt;&lt;/Dialog&gt;</code> 結構，AI 對這種 declarative tree 的 reasoning 比 prop-heavy API 強</li>
+</ol>
+<p>對應的，Tailwind CSS 也是 AI-native：所有 design decision 直接在 markup 裡，沒有「跳到另一個 .css 檔」的 context-switch 成本。v0、Cursor Composer、Claude Artifacts 預設都跑 Tailwind + shadcn/ui，幾乎是業界共識。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="三prompt-to-app-五大工具的職能差異" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="三prompt-to-app-五大工具的職能差異"><span class="header-section-number">10.2.3</span> 三、Prompt-to-app 五大工具的職能差異</h3>
+<p>把 2025-2026 主要的「自然語言生 app」工具放在同一張地圖上比較，差異不在「會不會生 code」，在<strong>它替你做了多少 infra 決策</strong>：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 33%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>工具</th>
+<th>設計哲學</th>
+<th>強項</th>
+<th>弱項</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>v0（Vercel）</strong></td>
+<td>UI-first、generate React/Next.js</td>
+<td>元件品質頂、整合 Vercel 部署一鍵到位、shadcn/ui 原生</td>
+<td>後端要自己接、不適合非 Next.js 棧</td>
+</tr>
+<tr class="even">
+<td><strong>Lovable</strong></td>
+<td>Design-first、做 SaaS 起手式</td>
+<td>包整套 frontend + Supabase backend、迭代體驗順</td>
+<td>棧鎖定（Supabase + React）、客製度有限</td>
+</tr>
+<tr class="odd">
+<td><strong>Bolt（StackBlitz）</strong></td>
+<td>In-browser full-stack IDE</td>
+<td>WebContainers 跑 Node.js / npm 完全在 browser、瞬間 preview</td>
+<td>Browser 能跑就能寫，無法做 native / heavy compute</td>
+</tr>
+<tr class="even">
+<td><strong>Replit Agent</strong></td>
+<td>All-in-one：寫 + 跑 + 部署</td>
+<td>一站完整、適合 0 設定 prototyping、有 cloud DB</td>
+<td>Replit 平台鎖定、產出搬到別處要重整</td>
+</tr>
+<tr class="odd">
+<td><strong>Cursor Composer</strong></td>
+<td>IDE 內 multi-file edit</td>
+<td>直接在你 local repo 操作、跨 file 改動最強、用熟的工具</td>
+<td>沒 preview / 沒 deploy，純 coding 段</td>
+</tr>
+</tbody>
+</table>
+<p>選用直覺：<strong>Demo / prototype 趕時間</strong> → Lovable 或 Bolt（一句話到能 share 的 link）；<strong>自己長期 side project</strong> → Cursor Composer + v0（v0 生 UI、Cursor 改 code、Vercel 部署）；<strong>全棧 + 不想碰 infra</strong> → Replit Agent。</p>
+<p>第二類差異是「<strong>iteration loop 的閉合速度</strong>」 — 從你說一句話到看到結果的時間。Bolt / Lovable 在 30 秒內，v0 約 1-2 分鐘，Cursor Composer 看你 repo 大小但通常即時。loop 越快，prompt iteration 的次數越多，最終品質越高。這就是為什麼 v0 / Bolt 把 preview 做進產品本體 — 它們把 iteration loop 內建化。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="四為什麼-vercel-的全棧押注v0-ai-sdk-ai-gateway值得單獨理解" class="level3" data-number="10.2.4">
+<h3 data-number="10.2.4" class="anchored" data-anchor-id="四為什麼-vercel-的全棧押注v0-ai-sdk-ai-gateway值得單獨理解"><span class="header-section-number">10.2.4</span> 四、為什麼 Vercel 的全棧押注（v0 + AI SDK + AI Gateway）值得單獨理解</h3>
+<p>Vercel 在這波 prompt-to-app 賽道裡是少數同時做產品（v0）+ infrastructure（Vercel platform）+ developer SDK（AI SDK）+ AI infra（AI Gateway）四層的玩家。理解這個 stack 才看得懂 Gaspar Garcia 演講背後的策略：</p>
+<ul>
+<li><strong>v0</strong>：自然語言 → React/Next.js component / app（前端 UI 層）</li>
+<li><strong>Vercel AI SDK</strong>：TypeScript SDK，讓你在自己 app 裡接各家 LLM（OpenAI / Anthropic / Google）的統一介面，提供 streaming、tool use、structured output、generative UI 等高階 abstraction</li>
+<li><strong>AI Gateway</strong>：跨 LLM provider 的統一 endpoint + observability + cost control + rate limiting，讓 production app 能在 model 之間 hot-swap</li>
+<li><strong>Vercel Platform</strong>：edge runtime、serverless function、CDN、preview deployment，是 v0 生成的 app 部署的 default 目的地</li>
+</ul>
+<p>這個 stack 的整合點是 <strong>edge-first generative UI</strong>：v0 生 component → AI SDK 在 edge runtime 串 LLM → AI Gateway 做 multi-provider routing → Vercel 部署。對 vibe coder 的 takeaway：選 Next.js + Vercel 棧的最大紅利不是 framework 本身，是這條完整的 AI-native infrastructure pipeline，每一段都減少你的工程負擔。（基於既有知識的延伸寫作）</p>
+</section>
+</section>
+<section id="monday-lecture1110end-to-end-apps-with-a-single-prompt" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="monday-lecture1110end-to-end-apps-with-a-single-prompt"><span class="header-section-number">10.3</span> Monday Lecture（11/10）：End-to-end apps with a single prompt</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1GrVLsfMFIXMiGjIW9D7EJIyLYh_-3ReHHNd_vRfZUoo/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>Mihail 用一句自我吐槽開場：「<strong>This is not the vibe coding class</strong> — 因為我是 software development purist。<strong>…except today</strong>」。今天破例專講「prompt-to-app」現象。</p>
+<ol type="1">
+<li><strong>Why — 現代 SaaS 已二十多年聚焦 web app</strong> — Salesforce 1999 通常被視為第一個 SaaS 平台。</li>
+<li><strong>The Old Days — 經典技術棧巡禮</strong> —
+<ul>
+<li><strong>LAMP</strong>：Linux + Apache + MySQL + PHP（dynamic site / 傳統 web app）</li>
+<li><strong>MERN</strong>：MongoDB + Express + React + Node.js（modern interactive SPA，client-side / server-side / database 三層）</li>
+<li><strong>MEVN</strong>：MongoDB + Express + Vue + Node.js（用 Vue 替代 React，輕量靈活）</li>
+<li><strong>JAM stack</strong>：JavaScript（dynamic 功能）+ APIs（連後端 service）+ Markup（pre-built static HTML）。常見工具 Gatsby、Next.js、Nuxt + headless CMS 像 Contentful、Sanity</li>
+<li><strong>Serverless</strong>：frontend（React / Vue / Svelte）+ backend（AWS Lambda / Google Cloud Functions）+ DB（DynamoDB / Firebase）</li>
+<li><strong>AWS stack</strong>：跨 service combo</li>
+</ul></li>
+<li><strong>Take #1: Visual Low-code / No-code</strong> — Wix、Squarespace、Webflow（pre-AI 時代非工程師建站方案）。</li>
+<li><strong>The new AI world</strong> — 第二波生成式 app builder：<strong>Lovable、Replit、Vercel v0、Base44、Cursor / Claude Code</strong>。</li>
+<li><strong>What has changed</strong> —
+<ul>
+<li>一句 prompt 生出完整 app</li>
+<li>工程師跨職能化（design、product management）</li>
+<li>任何人都能建 app</li>
+<li>比第一代 no-code（Webflow、Wix、Squarespace）更 user-friendly</li>
+</ul></li>
+<li><strong>Live demo: Let’s make an app right now</strong> — 用 Bolt 建 frontend + backend，做一個「salsa partner finder」。初次 generation 後再做 iteration：更新 color palette（給三個 hex code：#EF8354 / #660000 / #EFCA08）、改 iconography、改 typography。展示自然語言 iteration 的 fluidity。</li>
+<li><strong>App builder architecture — WebContainer</strong> — Bolt 等工具的核心是 WebContainer：在瀏覽器內跑任意 generated code 的 sandbox（Node.js / npm 在瀏覽器跑），瞬間 preview 不必 deploy。</li>
+<li><strong>App builder system prompt 解析</strong> — Mihail 引用兩個 <a href="https://gist.github.com/curran/753aa62fd99b7df8f858743d605f1d02">外洩 Bolt system prompt</a>：
+<ul>
+<li>明確要求 LLM 只用 established / well-known technology / framework（避免 LLM 用偏門 lib）</li>
+<li>用自訂 <code>&lt;boltartifact&gt;</code> / <code>&lt;boltaction&gt;</code> 標籤標示「在 WebContainer 裡該發生什麼動作」（建檔、跑檔等）</li>
+</ul></li>
+<li><strong>Limitations</strong> —
+<ul>
+<li><strong>Everything is awesome 直到出事就回到原點</strong> — debug 不順時 prompt-driven UI 無法救</li>
+<li><strong>Prompt 是建議不是指令</strong> — 不是每個 user 都懂這個</li>
+<li><strong>Security 已經是個問題</strong>（過去事件）</li>
+<li>如何避免所有 app 看起來一樣？</li>
+<li>這些 app 真的能撐多複雜？</li>
+</ul></li>
+</ol>
+<p><strong>Key takeaway</strong>：Prompt-to-app 的工程本質是 <strong>LLM × component library × execution sandbox（WebContainer）× system prompt 紀律</strong> 的整合。Bolt / Lovable / v0 看起來像魔法，背後是精心設計的 system prompt（強迫用主流 framework）+ 沙盒（瀏覽器內跑 npm）+ 即時 preview。Demo 級別容易、production 級還有距離 — 知道邊界（complex business logic / 真實 auth / payment / 一致 design）在哪，比追新工具更重要。</p>
+</section>
+<section id="friday-lecture1114gaspar-garciavercel-head-of-ai-research" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="friday-lecture1114gaspar-garciavercel-head-of-ai-research"><span class="header-section-number">10.4</span> Friday Lecture（11/14）：Gaspar Garcia（Vercel Head of AI Research）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/gaspargarcia/">Gaspar Garcia</a>, Head of AI Research at <a href="https://vercel.com/">Vercel</a></li>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1Jf2aN5zIChd5tT86rZWWqY-iDWbxgR-uynKJxBR7E9E/edit?usp=sharing">Google Slides（需 Stanford 帳號）</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>Slides 需 Stanford 帳號，依 Vercel 公開資料 + Gaspar Garcia 角色 best-effort 重建：</p>
+</blockquote>
+<p>Garcia 在 Vercel 領導 AI research，這場演講預期會橫跨 v0 / AI SDK / AI Gateway 三條產品線：</p>
+<ol type="1">
+<li><strong>v0 的設計哲學</strong> — 為什麼 v0 不只生 code、要做 chat-driven iteration loop？為什麼 default 用 shadcn/ui？v0 V1 → V3 的 product evolution 故事</li>
+<li><strong>Generative UI 的範式轉移</strong> — 傳統 UI 是「設計師畫 → 工程師實作 → 用戶看」，generative UI 是「LLM 即時 generate component 給每個用戶看」。這不只是 v0 的內部技術，也是 AI SDK 給 developer 的 abstraction（<code>generateUI</code> API、streaming React components）</li>
+<li><strong>Vercel AI SDK 的 design decision</strong> — 為什麼選 TypeScript first、為什麼 streaming 是 first-class、為什麼 tool use 跟 generative UI 同一套 API。對比 LangChain / OpenAI SDK 的取捨</li>
+<li><strong>AI Gateway 的 production reality</strong> — 為什麼大家最終需要 multi-provider abstraction（cost、rate limit、availability、quality drift）。AI Gateway 怎麼解：unified endpoint + observability + caching + fallback chain</li>
+<li><strong>Vercel infrastructure 怎麼支撐 vibe coding</strong> — Edge runtime、preview deployment、Postgres / KV / Blob storage 三件套怎麼讓 v0 生的 app 能 zero-config 上 production</li>
+<li><strong>What’s next</strong> — Garcia 應該會給 Vercel 對 generative UI / agent infra 的下一步想法（agent-as-a-service？multi-tenant generative app？）</li>
+</ol>
+<p><strong>Key takeaway</strong>：v0 不是孤立的「畫 UI 工具」，是 Vercel 整條 AI-native stack 的 entry point。Vibe coder 用 v0 + AI SDK + Vercel 部署的最大紅利是「<strong>從 prompt 到 production 的單一供應商整合</strong>」，把工程負擔壓到趨近於零。</p>
+</section>
+<section id="reading" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="reading"><span class="header-section-number">10.5</span> Reading</h2>
+<blockquote class="blockquote">
+<p>本週原 syllabus 沒列 reading list。本講義延伸推薦資源：</p>
+<ul>
+<li><a href="https://v0.dev/docs">v0 by Vercel — Official Docs</a></li>
+<li><a href="https://sdk.vercel.ai/docs">Vercel AI SDK Docs</a></li>
+<li><a href="https://ui.shadcn.com/">shadcn/ui — The component library AI loves</a></li>
+<li><a href="https://lovable.dev/">Lovable.dev</a> / <a href="https://bolt.new/">bolt.new</a> / <a href="https://replit.com/agent">replit.com/agent</a>（產品比較）</li>
+</ul>
+</blockquote>
+</section>
+<section id="assignmentmulti-stack-web-app-builds" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="assignmentmulti-stack-web-app-builds"><span class="header-section-number">10.6</span> Assignment：Multi-stack Web App Builds</h2>
+<ul>
+<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/tree/master/week8">github.com/mihail911/modern-software-dev-assignments/tree/master/week8</a></li>
+<li><strong>任務描述</strong>: 用至少三種不同工具（建議 v0 + Lovable + Cursor Composer，或 Bolt + Replit Agent + v0）各自從同一個 prompt 生成同一款小型 web app（例：todo app with auth、blog with markdown editor、minimal SaaS landing page），比較產出的 (a) UI 品質、(b) code 結構乾淨度、(c) 從 prompt 到 deploy 的時間、(d) iteration 第二輪的穩定度。最終寫一份 comparison report，給未來的 vibe coder 同學一份「該用哪個工具」決策指南。</li>
+<li><strong>自學者可行性</strong>: ⭐⭐⭐⭐⭐ 完全可做且強烈推薦做。所有工具都有 free tier：v0 個人 free quota、Lovable 試用、Bolt 在 stackblitz.com 直接用、Replit 個人免費、Cursor 14 天試用。預估 6-10 hr — 這是整門課最動手的 assignment 之一，做完你會對 prompt-to-app 工具的真實能力邊界有 first-hand 直覺，而不是 demo 影片裡的感覺。</li>
+</ul>
+<blockquote class="blockquote">
+<p>💡 <strong>加速 tip</strong>：三個工具不要分開三天做，<strong>同一天並行做</strong>最有效 — 你能 side-by-side 看到同一 prompt 產出三個截然不同的結果，差異最明顯。比如同一個下午開三個瀏覽器分頁，每個 paste 同一段 prompt，等 30 秒看誰先生完、誰生得對。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">10.7</span> 對 Vibe Coder 的應用</h2>
+<p>W8 是把 vibe coder 從「能寫 component」升級到「<strong>能一個人 ship 完整 app</strong>」的關鍵一週。實戰建議：</p>
+<ol type="1">
+<li><p><strong>建立 v0 + Cursor + Vercel 三件套 workflow</strong> — 這是目前最成熟、最便宜（個人 free tier 可走完整 pipeline）、最少 vendor lock-in 的組合。流程：(a) 在 v0 生第一版 UI（用 chat 迭代到滿意）→ (b) 把 v0 產出 export 到本地 repo（v0 有 “Open in Cursor” / “Download Code” 按鈕）→ (c) Cursor Composer 接手做業務邏輯、API 接、跨 file 改動 → (d) git push 自動觸發 Vercel preview deployment → (e) merge 到 main 自動 production deploy</p></li>
+<li><p><strong>shadcn/ui 是 default 不要懷疑</strong> — 任何新 React/Next.js 專案開頭直接 <code>npx shadcn-ui@latest init</code>。理由 W8 核心概念已說明：source 在你 repo、Tailwind utility、composition pattern 三件事讓 AI 寫起來最穩。其他 component library（MUI、Chakra、Mantine）對 AI 都沒這麼友善</p></li>
+<li><p><strong>Prompt 永遠帶 design system context</strong> — 跟 v0 / Cursor 對話時把 design system 寫進 prompt：「使用 shadcn/ui Card / Dialog / Form 元件，配色用 zinc + emerald，圓角 lg，間距 6/8/12 rhythm」。這比寫「做個漂亮的 dashboard」效果差 10 倍。沒 design system 直覺的話先去 <a href="https://ui.shadcn.com/blocks">shadcn/ui blocks</a> 抓一個現成 layout 當 reference，把 reference 截圖貼進 prompt</p></li>
+<li><p><strong>Iteration 鐵律：第一版用 v0 / Lovable 做粗、第二版進 Cursor 做細</strong> — Prompt-to-app 工具在 first generation 是天才、second iteration 開始崩（會回頭刪你已經改好的東西）。穩定的 workflow 是 <strong>第一版做 dirty draft → export 到 git repo → 之後所有改動在 Cursor 做</strong>，把 v0 當「美術初稿生成器」而非「長期 IDE」</p></li>
+<li><p><strong>不要在 Replit / Bolt 養大型專案</strong> — 它們是 prototype 殺手 app，不是長期 dev environment。Demo / hackathon / 一日 MVP 用得很爽，但你 side project 想養三個月以上一定要在 git repo + local IDE + 自選 deployment 平台。Vendor lock-in 越早脫離越好</p></li>
+<li><p><strong>Design system prompting 進階技巧</strong> — 把你常用的 design 偏好寫進 <code>CLAUDE.md</code> / <code>.cursorrules</code> / <code>v0 system instructions</code>：「色票限定 zinc + emerald」「字體 Inter」「圓角統一 lg」「動畫用 framer-motion」「icon 用 lucide-react」「不要用 gradient 除非我明說」。每次新 prompt 不必重述，產出一致性會跳一個 level</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天 30 分鐘做這件事 — 開 <a href="https://v0.dev">v0.dev</a>，prompt「Build a clean dashboard with sidebar navigation, top header with user avatar, main area showing 4 stat cards and a data table. Use shadcn/ui, Tailwind, zinc + emerald color scheme, lucide-react icons」。等 1 分鐘看產出。然後點 “Open in Cursor”，把產出拉到本地 repo。再 prompt Cursor「把這個 dashboard 接到 mock data，加一個 dark mode toggle」。最後 <code>vercel deploy</code> 上線。從零到 production URL 不到一小時 — 這就是你 W8 之後常駐的 baseline workflow。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/07_modern_software_support.html">W7 Modern Software Support</a> | <strong>下一週</strong>：<a href="../weeks/09_agents_post_deployment.html">W9 Agents Post-Deployment</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/07_modern_software_support.html" class="pagination-link" aria-label="Week 7：Modern Software Support">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/09_agents_post_deployment.html" class="pagination-link" aria-label="Week 9：Agents Post-Deployment">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

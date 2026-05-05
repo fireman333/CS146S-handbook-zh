@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; Week 10：What’s Next for AI Software Engineering – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../readings/_index.html" rel="next">
+<link href="../weeks/09_agents_post_deployment.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/10_whats_next.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">12.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">12.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一software-dev-role-的-5-種演化路徑" id="toc-一software-dev-role-的-5-種演化路徑" class="nav-link" data-scroll-target="#一software-dev-role-的-5-種演化路徑"><span class="header-section-number">12.2.1</span> 一、Software Dev Role 的 5 種演化路徑</a></li>
+  <li><a href="#二emerging-paradigmsspec-driven-dev-formal-verification-ai-autonomous-repo-maintenance" id="toc-二emerging-paradigmsspec-driven-dev-formal-verification-ai-autonomous-repo-maintenance" class="nav-link" data-scroll-target="#二emerging-paradigmsspec-driven-dev-formal-verification-ai-autonomous-repo-maintenance"><span class="header-section-number">12.2.2</span> 二、Emerging Paradigms：Spec-driven Dev / Formal Verification × AI / Autonomous Repo Maintenance</a></li>
+  <li><a href="#三ai-dev-tool-市場的-winner-pattern" id="toc-三ai-dev-tool-市場的-winner-pattern" class="nav-link" data-scroll-target="#三ai-dev-tool-市場的-winner-pattern"><span class="header-section-number">12.2.3</span> 三、AI Dev Tool 市場的 Winner Pattern</a></li>
+  <li><a href="#四a16z-的-ai-dev-tool-投資-thesis" id="toc-四a16z-的-ai-dev-tool-投資-thesis" class="nav-link" data-scroll-target="#四a16z-的-ai-dev-tool-投資-thesis"><span class="header-section-number">12.2.4</span> 四、a16z 的 AI Dev Tool 投資 Thesis</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture121software-development-in-10-years" id="toc-monday-lecture121software-development-in-10-years" class="nav-link" data-scroll-target="#monday-lecture121software-development-in-10-years"><span class="header-section-number">12.3</span> Monday Lecture（12/1）：Software development in 10 years</a></li>
+  <li><a href="#friday-lecture125martin-casadoa16z-general-partner" id="toc-friday-lecture125martin-casadoa16z-general-partner" class="nav-link" data-scroll-target="#friday-lecture125martin-casadoa16z-general-partner"><span class="header-section-number">12.4</span> Friday Lecture（12/5）：Martin Casado（a16z General Partner）</a></li>
+  <li><a href="#reading" id="toc-reading" class="nav-link" data-scroll-target="#reading"><span class="header-section-number">12.5</span> Reading</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">12.6</span> Assignment</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">12.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/10_whats_next.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：10 年後軟體工程師長什麼樣？「junior dev」會被 AI 取代嗎？emerging paradigm 有哪些（agentic CI/CD、formal spec、autonomous open-source contribution）？本週由 a16z（Andreessen Horowitz，矽谷指標 VC）的 General Partner Martin Casado 開講，從投資人視角看產業 10 年。</p>
+<p>💡 <strong>本週特別說明</strong>：W10 原 syllabus 沒有 reading list、Mon lecture 也沒公開 slides — 內容偏 forward-looking speculation + 講者個人 thesis。本講義以 W1-W9 學到的 9 週素材為基礎、結合 a16z 公開 essays 與業界共識做延伸寫作，所有預測都標註「（基於既有知識的延伸寫作）」並避免聲稱「Stanford 課堂這樣講」。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">12.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>辨識</strong> software dev role 在 AI 時代的 5 種可能演化路徑（augmentation / specialization / abstraction / replacement / new roles）</li>
+<li><strong>解釋</strong> emerging paradigms（spec-driven dev、formal verification × AI、autonomous repo maintenance）的技術前提</li>
+<li><strong>評估</strong> 自己的 skill stack 在未來 5 年的相對價值（哪些 skill 會 commoditize、哪些會更值錢）</li>
+<li><strong>預測</strong> AI dev tool 市場的下一個 winner pattern（platform vs vertical、open vs closed）</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">12.2</span> 核心概念導讀</h2>
+<section id="一software-dev-role-的-5-種演化路徑" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="一software-dev-role-的-5-種演化路徑"><span class="header-section-number">12.2.1</span> 一、Software Dev Role 的 5 種演化路徑</h3>
+<p>「AI 會不會取代軟體工程師？」這個問題問了 3 年，答案從來不是 yes/no — 是 role 會分裂成幾種典型形態。從 W1-W9 的素材抽絲剝繭，可以看到 5 條互不互斥的演化路徑：</p>
+<ol type="1">
+<li><strong>Augmentation（增強）— 大多數人會走的路</strong> — 不換工作，把 Claude Code / Cursor / Warp 整合進現有工作流，產出 / 時間提升 30-100%。需要的新 skill：context engineering、agent management（W4）、prompt-driven debugging（W6/W7）。這條路最 boring 但 ROI 最高</li>
+<li><strong>Specialization（專業化）— 變成「某類 AI tool 的世界級用戶」</strong> — 例：成為 Claude Code subagent / skill 系統的專家、或 v0 prompting 的世界級操作者、或 Vercel AI SDK 的 community contributor。這條路有「先發優勢」但會被後來者追平</li>
+<li><strong>Abstraction Up（抽象上層）— 從 implementer 轉 architect / agent manager</strong> — 不再寫 code，全心做 spec design、acceptance criteria、verification 設計、人機分工策略。對應 W3 的 spec-driven 命題與 W4 的 agent manager mindset</li>
+<li><strong>Replacement（取代）— 真實但範圍有限</strong> — 不是取代「軟體工程師」這個 role，是取代「<strong>寫 boilerplate / 補測試 / 改格式 / 做 routine refactor</strong>」這些 task。受影響最大：junior dev 在 boilerplate-heavy 公司、外包 contract programmer。受影響最小：產品經理、tech lead、staff+ engineer</li>
+<li><strong>New roles（新角色）— 已經出現</strong> — AI Engineer（W2-W4 的 agent / MCP 操作者）、Forward Deployed Engineer（在客戶端配合 AI 解決方案的工程師）、AI Reliability Engineer（W9 的 AI-native SRE）、Prompt Architect（資深 prompt 設計師）、Eval Engineer（評測 AI system 的專家）</li>
+</ol>
+<p>對使用者個人 strategic（醫學生 + RA + vibe coding hobby）的對應：路徑 1 是基本盤（Claude Code 整合進醫學研究 workflow）、路徑 2 可選（成為「醫學 + AI tool」的早期專家）、路徑 5 跨領域（醫學 AI engineer、clinical AI ops 都是 emerging niche）。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="二emerging-paradigmsspec-driven-dev-formal-verification-ai-autonomous-repo-maintenance" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="二emerging-paradigmsspec-driven-dev-formal-verification-ai-autonomous-repo-maintenance"><span class="header-section-number">12.2.2</span> 二、Emerging Paradigms：Spec-driven Dev / Formal Verification × AI / Autonomous Repo Maintenance</h3>
+<p>W3 已經提了 spec-driven dev 的概念，W10 把它放進更大的 paradigm shift 圖裡。3 個正在浮現的範式變化值得注意：</p>
+<p><strong>1. Spec-driven Development（規格驅動開發）走向主流</strong> - W3 的 <a href="../readings/w3_specs_are_the_new_source_code.md">Specs Are the New Source Code</a> 是先驅論文。實際走勢：未來 5 年大公司（Google、Meta）會把 PRD / design doc 轉成可被 agent 直接 implement 的 formal spec - 副作用：PM 跟 designer 的工作會變硬 — 寫得糊的 spec 直接沒結果，逼大家寫得精準 - Vibe coder 對應：把寫 PRD 當 first-class skill 練（不是 nice-to-have）</p>
+<p><strong>2. Formal Verification × AI 的二度興起</strong> - 2010 年代 formal verification 因為手寫太難失敗。2025-2030 年 LLM 把證明重擔自動化，formal methods 在 safety-critical（醫療、金融、自駕、aerospace）領域會大爆發 - W6 的 <a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt Analysis with O3</a> 是早期信號 — LLM 已經能做 formal-ish vulnerability analysis - 對醫療 AI 的長尾影響：FDA 過審 AI 醫材會強制要 formal verification step</p>
+<p><strong>3. Autonomous Open-source Maintenance</strong> - 已有早期跡象：Dependabot、Renovate（dependency 自動 upgrade）、CodeRabbit / Diamond（W7 PR review）、Devin（Cognition 的自動 PR 機器人）。下一步：autonomous bug fix、autonomous feature backport、autonomous release management - 風險：低品質 / spam PR 暴增，maintainer 變成「reviewer of reviewers」 - Vibe coder 對應：你的 side project repo 提早設定 AI reviewer + auto upgrade，用得越早越熟</p>
+<p>（基於既有知識的延伸寫作）</p>
+</section>
+<section id="三ai-dev-tool-市場的-winner-pattern" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="三ai-dev-tool-市場的-winner-pattern"><span class="header-section-number">12.2.3</span> 三、AI Dev Tool 市場的 Winner Pattern</h3>
+<p>W2-W9 串連起來看，AI dev tool 市場已經分成 4 個 layer，每層的 winner pattern 不同：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 43%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>範例（2026 強者）</th>
+<th>Winner Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Foundation models</strong></td>
+<td>Anthropic（Claude）、OpenAI（GPT）、Google（Gemini）</td>
+<td>寡占 — 訓練成本高、moat 在 model 與 evals</td>
+</tr>
+<tr class="even">
+<td><strong>Coding agents / IDE</strong></td>
+<td>Claude Code、Cursor、Devin、Warp</td>
+<td>寡占走向碎片化 — 每個 niche（CLI / IDE / autonomous）會有 1-2 強者</td>
+</tr>
+<tr class="odd">
+<td><strong>Vertical tools</strong></td>
+<td>Graphite（W7 code review）、Resolve（W9 SRE）、v0（W8 UI）</td>
+<td>Vertical SaaS — 每個 vertical 1-2 個專業玩家</td>
+</tr>
+<tr class="even">
+<td><strong>Infrastructure</strong></td>
+<td>Vercel（AI SDK + Gateway）、Cloudflare、Modal</td>
+<td>Platform-led — 跟 cloud provider 整合越深越強</td>
+</tr>
+</tbody>
+</table>
+<p>幾個跨層 trend： - <strong>Vertical 比 horizontal 賺錢</strong> — 一個 code review 公司（Graphite）、一個 on-call 公司（Resolve）、一個 UI 公司（v0）能各自撐 unicorn valuation；做「all-in-one AI dev tool」的反而難變現 - <strong>Open source 是漲粉、不是商業模式</strong> — Claude Code / Cursor 都不開源核心，但開放擴充（subagent、skill、extension）；MCP 協定開源（吸引 ecosystem），客戶端產品閉源（保 monetization） - <strong>Foundation model 是 commoditizing</strong> — Anthropic / OpenAI / Google 三家差距在縮小，wrapper 產品（Cursor、Devin）會越來越用 router 在三家間切換以降本（W6 的 Context Rot 也說明 model 之間差距已經不大）</p>
+<p>對使用者個人決策的 takeaway：別把學習投資押在單一 model（Claude vs GPT 之爭已經 boring），押在<strong>跨 model abstraction 層</strong>（MCP、Vercel AI SDK、LangChain）跟<strong>vertical workflow</strong>（你的醫學研究 pipeline、阿摩錯題迴圈、IRB 自動化）— 這兩層的價值不會被 model 變遷洗掉。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="四a16z-的-ai-dev-tool-投資-thesis" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="四a16z-的-ai-dev-tool-投資-thesis"><span class="header-section-number">12.2.4</span> 四、a16z 的 AI Dev Tool 投資 Thesis</h3>
+<p>Martin Casado 在 a16z 主導 American Dynamism + Infrastructure / AI 的投資組合。從他公開 essays（“The End of Cloud Computing”、“AI 50” series）和 a16z 對 Cognition（Devin）、Cursor（Anysphere）、各 AI dev tool 公司的投資紀錄，可以推出他的 4 條 thesis：</p>
+<ol type="1">
+<li><strong>Infrastructure layer 比 application layer 大</strong> — Cloud computing 的 winner 是 AWS / GCP / Azure 而非 SaaS 應用。同理 AI 時代的 winner 不會是 chatbot 應用，是 Vercel / Cloudflare / Modal 這類 AI infra</li>
+<li><strong>Agentic platform = 下一個 unicorn factory</strong> — 不只是「AI 寫 code」，是「<strong>AI 自主完成 task 並付費</strong>」。Devin（autonomous coding）、Resolve（autonomous on-call）都在這條軸線上</li>
+<li><strong>Vertical AI &gt; horizontal AI</strong> — 醫療 AI、法律 AI、code review AI、SRE AI 各自會出 unicorn，比通用 chatbot 更穩</li>
+<li><strong>Talent geography 大洗牌</strong> — AI 解放 talent 不必住 SF Bay。a16z 的 American Dynamism 主題押注是「全美都會有 AI startup」。對台灣 / 亞洲：英文良好的 AI engineer 在 remote / async 模式下能直接接美國公司 contract，門檻變低</li>
+</ol>
+<p>對使用者長期 career bet 的對應： - <strong>押 vertical AI</strong>（醫學 + AI 的交集）而非 generic AI - <strong>押 infra layer 工具</strong>（會用 MCP / Vercel AI SDK / observability 三件套）而非單一 wrapper 產品 - <strong>遠端 / 自由 contracting</strong> 比 traditional FTE 路線在 AI 時代 ROI 更高</p>
+<p>（基於既有知識的延伸寫作）</p>
+</section>
+</section>
+<section id="monday-lecture121software-development-in-10-years" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="monday-lecture121software-development-in-10-years"><span class="header-section-number">12.3</span> Monday Lecture（12/1）：Software development in 10 years</h2>
+<ul>
+<li><strong>Slides</strong>: 未公開</li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>Slides 未公開，依 lecture title + W1-W9 累積的素材 best-effort 推測：</p>
+</blockquote>
+<p>這節是課程收尾的個人 prediction 演講。預期內容：</p>
+<ol type="1">
+<li><strong>Recap：W1-W9 串成一條線</strong> — 從「LLM 是什麼」（W1）到「LLM 在 production 怎麼跑」（W9）的 9 週技術疊加，最後落到「10 年後是什麼樣」</li>
+<li><strong>3 個 ten-year prediction</strong> — Mihail 應該會給幾個具體預測（例：「10 年後 80% 的 PR 是 AI 開的」「software engineer 平均薪水降但人數不變」「formal verification 變必修」），每個附 reasoning chain</li>
+<li><strong>What stays valuable</strong> — 哪些 skill 不會被 commoditize：spec design、agent management、cross-domain knowledge、taste / judgment、organizational influence</li>
+<li><strong>What gets cheap</strong> — 哪些 skill 會被 AI 接手：boilerplate generation、test coverage、style enforcement、documentation、basic refactoring</li>
+<li><strong>教育與 onboarding 的衝擊</strong> — 沒有 boilerplate 練習，junior dev 怎麼從 zero 上手？大學 CS 教育要怎麼改？</li>
+<li><strong>Open Q&amp;A</strong> — 這類課程末尾的 reflection lecture 通常會留大量時間給學生問問題</li>
+</ol>
+<p><strong>Key takeaway</strong>：10 年後的軟體工程不是「沒有工程師」，是「工程師的工作 mix 變了」 — 寫 code 比例下降、設計 / 審 / 管理 agent 比例上升。早一年 adapt 比晚一年值很多。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="friday-lecture125martin-casadoa16z-general-partner" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="friday-lecture125martin-casadoa16z-general-partner"><span class="header-section-number">12.4</span> Friday Lecture（12/5）：Martin Casado（a16z General Partner）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://a16z.com/author/martin-casado/">Martin Casado</a>, General Partner at <a href="https://a16z.com/">a16z</a></li>
+<li><strong>Slides</strong>: 未公開</li>
+</ul>
+<blockquote class="blockquote">
+<p>Slides 未公開，依 Casado 公開 essays + a16z 投資組合 best-effort 重建：</p>
+</blockquote>
+<p>Casado 的研究背景（Lawrence Livermore National Lab、Stanford CS PhD、Nicira 創辦人，後賣給 VMware $1.26B）讓他擅長把工程深度與 VC thesis 串接。預期演講：</p>
+<ol type="1">
+<li><strong>Cloud → AI 的 historical analogy</strong> — 把 2007-2015 的 cloud computing winner pattern 套到 2023-2030 的 AI dev tool。哪些教訓直接適用、哪些不適用</li>
+<li><strong>Why infrastructure wins</strong> — 為什麼 AWS / GCP / Azure 在 cloud 是 winner？為什麼 Casado 認為 AI infra（Vercel / Modal / Replicate / Cloudflare）會是下一波 winner，而非 application 層</li>
+<li><strong>Devin / Cursor / Anysphere 投資 case</strong> — a16z 投了 Cognition（Devin）、Anysphere（Cursor）、其他 AI dev tool 公司。每個 case 的 thesis（為什麼這個 team / 這個 timing / 這個市場）</li>
+<li><strong>Agentic AI 的 trillion-dollar opportunity</strong> — Agent 不只是工具，是「能自主完成 task 並付費」的 economic actor。這個轉變創造的市場是傳統 SaaS 的 10 倍</li>
+<li><strong>What founders should build now</strong> — 給 Stanford 學生的建議：哪些 niche 還空著、哪些 problem 真的值得解、什麼樣的 founder background 在這波會贏</li>
+<li><strong>a16z 招募 founder 的訊號</strong> — Casado 應該會 implicit 招手 — 這類演講常常是「you should build, talk to me」</li>
+</ol>
+<p><strong>Key takeaway</strong>：AI 不是泡沫也不是炒作，是 cloud-scale 的 platform shift。這次的 platform 是 agent，winner 是有深度技術 + 工程 craft 的人。對 vibe coder 個人：把現在當成 1995 年（網際網路啟動）或 2007 年（cloud computing 啟動）— 早一年 commit 後面差很多。（基於既有知識的延伸寫作）</p>
+</section>
+<section id="reading" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="reading"><span class="header-section-number">12.5</span> Reading</h2>
+<blockquote class="blockquote">
+<p>本週原 syllabus 沒列 reading list。本講義延伸推薦資源：</p>
+<ul>
+<li><a href="https://a16z.com/author/martin-casado/">Martin Casado on a16z author page</a> — 看他過去 essays，特別是 “The End of Cloud Computing” 與 AI infra 系列</li>
+<li><a href="https://a16z.com/portfolio/">a16z American Dynamism / AI portfolio</a> — 看 Cognition、Cursor、Anysphere 等 AI dev tool 投資</li>
+<li><a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle">Gartner Hype Cycle for AI 2025</a> — 對照 emerging paradigm 的 hype vs reality</li>
+<li><a href="https://survey.stackoverflow.co/2025/">Stack Overflow Developer Survey 2025</a> — 看 dev 對 AI tool 的 adoption / sentiment</li>
+</ul>
+</blockquote>
+</section>
+<section id="assignment" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="assignment"><span class="header-section-number">12.6</span> Assignment</h2>
+<blockquote class="blockquote">
+<p>本週原 syllabus 沒列 weekly assignment（Final Project 應該已進入 demo 階段）。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">12.7</span> 對 Vibe Coder 的應用</h2>
+<p>W10 不是 actionable week，是 strategic week — 思考「3 年後我要在哪」而不是「今天我做什麼」。給自己的問題：</p>
+<ol type="1">
+<li><strong>挑 3-year skill bet</strong> — 哪 3 個 skill 你會 deeply 投資 1000+ 小時？建議：(a) <strong>context engineering</strong>（W3/W4 的 spec / CLAUDE.md / subagent 紀律 — 跨 model 都受用）、(b) <strong>vertical workflow design</strong>（你的醫學研究 / 阿摩 / IRB 自動化 pipeline — 別人複製不了的領域知識）、(c) <strong>agent observability</strong>（W9 的 LLM eval / hallucination 監控 — 任何 production AI 都需要的）</li>
+<li><strong>挑 3 件不再學的事</strong> — 隨意：(a) 手寫 boilerplate（讓 v0 / Claude Code 處理）、(b) 追每個新 framework（鎖定 1-2 套深用就好）、(c) 跟 model 比快（你比 LLM 慢但比 LLM 有 taste）</li>
+<li><strong>Side project future-proofing</strong> — 你的 vibe coding side project 要做到「3 年後不會被 AI tool 進化淘汰」。原則：(a) 不做純技術 demo（會被新 model 立刻超越），(b) 要做「<strong>跟你個人 taste / 領域知識 / niche 結合</strong>」的東西，(c) 接 MCP / 走標準 protocol 而非 vendor-locked</li>
+<li><strong>Portfolio 差異化</strong> — 純會用 Cursor / Claude Code 已經不是差異化（人人會）。差異化來自：deep cross-domain（醫學 + AI）、open source contribution（社群影響力）、production-grade product（不是 demo）三個方向選 1-2 個押</li>
+<li><strong>Geographic optionality</strong> — Casado 的 American Dynamism thesis 對台灣有解放性影響：英文良好 + 遠端 + AI fluent 的 engineer 能直接接美國 contract / remote FTE。把英文寫作 / 同步溝通練好，是 ROI 最高的 non-technical skill</li>
+<li><strong>時程管理：每年 review 一次</strong> — Tech 變化太快，3-year plan 會過時。建議每年生日或新年做一次「skill bet 復盤」，砍掉不對的 bet、加新興 bet</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天花 30 分鐘做兩件事：(a) 寫一份「2029 年的我長什麼樣」的 1-page note，列 5 個你想擁有的能力 / portfolio item / 影響力 KPI；(b) 反推回今天，列 3 個本週可以做的小事讓你接近那個未來。寫下來，半年後再看一次。這個 exercise 讓 W10 不只是 reading week，而是 strategic week。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/09_agents_post_deployment.html">W9 Agents Post-Deployment</a> | <strong>總目錄</strong>：<a href="../00_index.md">00_index.md</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/09_agents_post_deployment.html" class="pagination-link" aria-label="Week 9：Agents Post-Deployment">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../readings/_index.html" class="pagination-link" aria-label="Reading 摘要總目錄">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

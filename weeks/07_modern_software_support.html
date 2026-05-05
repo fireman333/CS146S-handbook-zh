@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Week 7：Modern Software Support – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/08_automated_ui_app_building.html" rel="next">
+<link href="../weeks/06_ai_testing_security.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/07_modern_software_support.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">9.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">9.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一code-review-從品管把關到心智模型同步的歷史轉折" id="toc-一code-review-從品管把關到心智模型同步的歷史轉折" class="nav-link" data-scroll-target="#一code-review-從品管把關到心智模型同步的歷史轉折"><span class="header-section-number">9.2.1</span> 一、Code review 從「品管把關」到「心智模型同步」的歷史轉折</a></li>
+  <li><a href="#二ai-code-review-能做什麼做不到什麼兩軸四象限框架" id="toc-二ai-code-review-能做什麼做不到什麼兩軸四象限框架" class="nav-link" data-scroll-target="#二ai-code-review-能做什麼做不到什麼兩軸四象限框架"><span class="header-section-number">9.2.2</span> 二、AI code review 能做什麼、做不到什麼：兩軸四象限框架</a></li>
+  <li><a href="#三為什麼-millions-of-reviews-教我們的事比任何-paper-都重要" id="toc-三為什麼-millions-of-reviews-教我們的事比任何-paper-都重要" class="nav-link" data-scroll-target="#三為什麼-millions-of-reviews-教我們的事比任何-paper-都重要"><span class="header-section-number">9.2.3</span> 三、為什麼 millions of reviews 教我們的事比任何 paper 都重要</a></li>
+  <li><a href="#四ai-寫-ai-review-人類-approve-的-pr-workflow" id="toc-四ai-寫-ai-review-人類-approve-的-pr-workflow" class="nav-link" data-scroll-target="#四ai-寫-ai-review-人類-approve-的-pr-workflow"><span class="header-section-number">9.2.4</span> 四、AI 寫 + AI review + 人類 approve 的 PR workflow</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture113ai-code-review" id="toc-monday-lecture113ai-code-review" class="nav-link" data-scroll-target="#monday-lecture113ai-code-review"><span class="header-section-number">9.3</span> Monday Lecture（11/3）：AI code review</a></li>
+  <li><a href="#friday-lecture117tomas-reimersgraphite-cpo" id="toc-friday-lecture117tomas-reimersgraphite-cpo" class="nav-link" data-scroll-target="#friday-lecture117tomas-reimersgraphite-cpo"><span class="header-section-number">9.4</span> Friday Lecture（11/7）：Tomas Reimers（Graphite CPO）</a></li>
+  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">9.5</span> Reading 摘要</a></li>
+  <li><a href="#assignmentcode-review-reps" id="toc-assignmentcode-review-reps" class="nav-link" data-scroll-target="#assignmentcode-review-reps"><span class="header-section-number">9.6</span> Assignment：Code Review Reps</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">9.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/07_modern_software_support.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：AI code review、AI-assisted debugging、智慧型文件生成。當你的 codebase 被 AI 寫出 70% 之後，code review 的意義變了 — 不是「同事看人寫的 code」而是「人類審 AI 寫的 code」。Friday 由 Graphite CPO Tomas Reimers 開講（Graphite 是頂尖的 AI code review 平台）。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">9.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>辨識</strong> AI code review 在 catch bug、style enforcement、knowledge transfer 三個面向的能力與盲點</li>
+<li><strong>應用</strong> Graphite / CodeRabbit / GitHub Copilot Code Review 設定 PR review 流程</li>
+<li><strong>設計</strong> 一個「AI 寫 + AI review + 人類最終 approve」的 PR workflow</li>
+<li><strong>評估</strong> 哪些 code review 任務適合全自動 vs 哪些必須留給人類</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">9.2</span> 核心概念導讀</h2>
+<section id="一code-review-從品管把關到心智模型同步的歷史轉折" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="一code-review-從品管把關到心智模型同步的歷史轉折"><span class="header-section-number">9.2.1</span> 一、Code review 從「品管把關」到「心智模型同步」的歷史轉折</h3>
+<p>要看懂為什麼 2026 年大家還在認真討論 code review（明明 AI 都會寫 code 了），你必須先理解 review 在過去 50 年的角色變遷。早期 IBM 1976 年提出的 Fagan inspection（Fagan 形式審查）是一套重型流程，目的單純：在 code ship 出去之前再多一雙眼睛抓 defect（缺陷）。Steve McConnell 在《Code Complete》整理的 industry data 給了這個流程量化背書 — design + code inspection 平均能抓到 55-60% 的 defect，遠高於各種 testing method（25-45%）。Jeff Atwood 2008 年寫的 <a href="../readings/w7_code_reviews_just_do_it.md">Code Reviews: Just Do It</a> 把這個論點直接搬上檯面：別爭辯做不做、有做就贏，每一分鐘 review 投資都會 paid back tenfold（十倍奉還）。</p>
+<p>但 review 真正的價值很快超越「抓 bug」。Blake Smith 2015 年 <a href="../readings/w7_code_review_essentials_for_software_teams.md">Code Review Essentials</a> 把 review 重新 framing 成 <strong>mental model synchronization（心智模型同步）</strong> — 「當 Bob 提交 accounting subsystem 的 PR，Amy 在 review 中同步更新她對該 system 的 mental model」。Bug 被擋下來只是 side effect，真正的 ROI 是團隊知識擴散、降低未來修改的 onboarding 成本。GitHub staff engineer Sarah Vessels 在 <a href="../readings/w7_how_to_review_code_effectively.md">How to Review Code Effectively</a> 進一步把 review 拉高到「shape the product’s implementation」 — review 不是末端 quality gate，是設計階段的延伸。</p>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：把 code review 當「品管站」是 1980 年代的思維。2020 年代的 framing 是「review = 一場結構化對話」，bug detection、knowledge transfer、architectural alignment 三件事一起發生。理解這個轉變，後面看 AI reviewer 才不會誤以為「AI 會抓 bug 就能取代 review」 — 它取代的只是其中一層。</p>
+</blockquote>
+</section>
+<section id="二ai-code-review-能做什麼做不到什麼兩軸四象限框架" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="二ai-code-review-能做什麼做不到什麼兩軸四象限框架"><span class="header-section-number">9.2.2</span> 二、AI code review 能做什麼、做不到什麼：兩軸四象限框架</h3>
+<p>進入 LLM 時代，code review 被拆成兩種勞力：mechanical layer（機械層）跟 alignment layer（對齊層）。Google 2024 年發在 AIware ’24 的論文 <a href="../readings/w7_ai_assisted_assessment_coding_practices.md">AI-Assisted Assessment of Coding Practices</a> 提供了第一份 academic baseline — Google 內部 AutoCommenter 對數萬名 developer 部署，覆蓋 C++ / Java / Python / Go，能涵蓋 <strong>68% 的 human reviewer 常引用 best practice</strong>，而且其中 <strong>66% 是傳統 linter 抓不到的</strong>（comment clarity、justified naming exception、context-dependent 慣例）。Comment resolution rate（評論解決率）約 40%，與 human reviewer 的 ~50% 接近。</p>
+<p>Graphite co-founder Tomas Reimers 在 <a href="../readings/w7_lessons_from_millions_of_ai_code_reviews.md">Lessons from Millions of AI Code Reviews</a> 提出更實用的 <strong>2x2 quadrant（兩軸四象限）框架</strong>：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>LLM 能 reliably catch</th>
+<th>LLM 抓不準</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Human 想收</strong></td>
+<td>✅ 右上：留 comment</td>
+<td>❌ 左上：人類 reviewer 守備</td>
+</tr>
+<tr class="even">
+<td><strong>Human 不想收</strong></td>
+<td>❌ 右下：always-correct-but-unwelcome（add test / extract function）</td>
+<td>❌ 左下：別碰</td>
+</tr>
+</tbody>
+</table>
+<p>只有右上象限的 comment 該被 AI 留下。Reimers 點出兩個典型失敗模式：</p>
+<ul>
+<li><strong>左上盲區</strong>：LLM 抓不到 codebase-specific convention（公司命名慣例、業務 domain 邏輯、住在資深工程師腦中沒寫成文件的 tribal knowledge）</li>
+<li><strong>右下過度發言</strong>：LLM 愛留「你應該加 test」「這應該 extract function」這類技術上沒錯但 reviewer 不該無腦留的 comment，留多了 author 直接 ignore 整個 reviewer</li>
+</ul>
+<p>Graphite 的 <a href="../readings/w7_ai_code_review_implementation_best_practices.md">AI Code Review Implementation Best Practices</a> 把這個 insight 翻譯成商業 framework — AI reviewer 應走 <strong>human-in-the-loop（人類介入式）</strong> 路線，AI 跑 first pass、human 驗證並 approve。signal-to-noise ratio（訊號雜訊比）是首要指標，三個操作槓桿：(1) per-issue-type sensitivity tuning（敏感度調校）、(2) false-positive feedback loop（讓 developer 標 false positive 訓練系統）、(3) priority level（火力集中在 security + obvious bug，nit / style 暫時關掉）。</p>
+</section>
+<section id="三為什麼-millions-of-reviews-教我們的事比任何-paper-都重要" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="三為什麼-millions-of-reviews-教我們的事比任何-paper-都重要"><span class="header-section-number">9.2.3</span> 三、為什麼 millions of reviews 教我們的事比任何 paper 都重要</h3>
+<p>Graphite 的 Diamond AI reviewer 跑在數百萬個 production PR 上，沉澱出三條關鍵 lesson，是任何 academic benchmark 都看不到的：</p>
+<ol type="1">
+<li><p><strong>Metric 設計決定產品命運</strong>：傳統 thumbs-up / thumbs-down 收集率太低（&lt;4% 下票率沒區辨力）。Graphite 改用「<strong>action rate</strong>」 — comment 是否導致 author 在後續 commit 改 code — 當作 success metric。這個 metric 直接 align 商業價值（comment 沒被 act on = 浪費 reviewer 時間 = 浪費 LLM API call）。</p></li>
+<li><p><strong>52% vs 50% parity 的意義</strong>：Human reviewer 的 comment 約 50% 帶來 action，Diamond 經過調校到 2025 March 已達 52% — 等同 human baseline。這個數字翻譯成白話：AI reviewer 已經追平人類 reviewer 的 actionability，剩下的是「哪些象限該留給誰」的分工問題，不是「能不能用」的問題。</p></li>
+<li><p><strong>False positive 比 model size 重要</strong>：Google AutoCommenter 與 Graphite Diamond 不約而同得出同一結論 — production 成功的關鍵不是 model quality，是「<strong>承認 LLM 會錯、留出 retract 通道</strong>」。Google 用 URL suppression（per-rule mute），Graphite 用 false-positive feedback loop。一個 false positive 比例高的 reviewer，再準的部分也會被 developer 一起 ignore。</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：商用 AI reviewer 像一個「永遠在試用期的新員工」。它技術力到位，但說話會 over-commit、會踩公司潛規則。產品設計的關鍵不是讓它變更聰明，是給它「不知道就閉嘴」的機制。Diamond 的 quadrant 框架本質上是教 LLM 自己 self-censor。</p>
+</blockquote>
+</section>
+<section id="四ai-寫-ai-review-人類-approve-的-pr-workflow" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="四ai-寫-ai-review-人類-approve-的-pr-workflow"><span class="header-section-number">9.2.4</span> 四、AI 寫 + AI review + 人類 approve 的 PR workflow</h3>
+<p>把 W7 所有概念整合起來，2026 年 vibe coder 的標準 PR workflow 應該長這樣：</p>
+<pre><code>1. Author（你 + Claude Code / Cursor）寫 code → 自動 commit
+2. 自己 self-review diff（Vessels 原則）→ 切成 scalpel-like 小 PR（Smith 原則）
+3. 寫 PR description：problem + structural change + testing（Smith 原則）
+4. 開 PR → AI reviewer（Diamond / CodeRabbit）跑 first pass
+5. AI reviewer 留右上象限 comment（mechanical layer：bug / security / style violation）
+6. 你決定哪些是 blocker / nit / false positive，回應或標記
+7. False positive 標 thumbs-down 訓練 reviewer
+8. 自己再過一輪 — 確認 alignment layer（這個改動跟 codebase 整體設計合不合）
+9. 人類最終 approve（在團隊裡是 reviewer / 一人專案就是你自己延後一天再看一次）
+10. Merge</code></pre>
+<p>每一步對應一篇 reading 的核心 insight：1-3 步是 Atwood / Smith 的 review fundamentals；4-7 步是 AutoCommenter / Graphite 的 AI reviewer engineering；8-9 步是 Vessels 強調的 mental model synchronization、AI 永遠取代不了的部分。</p>
+</section>
+</section>
+<section id="monday-lecture113ai-code-review" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="monday-lecture113ai-code-review"><span class="header-section-number">9.3</span> Monday Lecture（11/3）：AI code review</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1NkPzpuSQt6Esbnr2-EnxM9007TL6ebSPFwITyVY-QxU/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>Mihail 開場直接給 statistics 撐住論點：<strong>code review 是工程師能做的最高槓桿活動之一</strong>。</p>
+<ol type="1">
+<li><strong>Why — code review 的硬數據</strong> —
+<ul>
+<li>Code review 的 error detection rate 達 <strong>55-60%</strong>，而各類 testing 是 25-45%</li>
+<li>一份比較有 vs 沒 review 的程式錯誤研究：<strong>4.5 → 0.82 errors / 100 lines of code</strong></li>
+<li>AT&amp;T 內部研究：code review 帶來 <strong>14% productivity 增加 + 90% defect 減少</strong>（Source: Coding Horror）</li>
+</ul></li>
+<li><strong>What to catch — Review 該抓什麼</strong>：(a) logic &amp; correctness errors、(b) readability &amp; maintainability、(c) performance、(d) security、(e) <strong>best practices / codebase 內部 idiom</strong>（例：用 service 而非 direct DB lookup、特定 access pattern、命名慣例）。</li>
+<li><strong>Review 的多重 ROI</strong>（Blake Smith framing）—
+<ul>
+<li>幫 team member 適應 system 演化的 mental model</li>
+<li>確保改動真的解決原問題</li>
+<li>開出設計優缺點的討論</li>
+<li>production 前抓 bug</li>
+<li>維持 code style / 組織一致</li>
+</ul></li>
+<li><strong>What’s a good review comment</strong> — 對比 anti-pattern「This won’t work」與好 comment：「I see your new method matches the existing style in this file, taking [X] parameters. Having that many parameters hurts readability and implies the function is doing too much. What do you think about refactoring this method and the existing ones in a later PR to reduce how many parameters they take?」 — 提供具體細節、引用 specific code / issue、suggest resolution、給 evidence / explanation。</li>
+<li><strong>The new AI world</strong> — 商業 AI reviewer 景觀：<strong>Graphite</strong>（Friday guest lecture）、Greptile、CodeRabbit、Claude Code / Codex。</li>
+<li><strong>What has changed — AI reviewer 的六大優勢</strong>（出處 Greptile + Graphite）—
+<ul>
+<li><strong>Efficiency</strong>：自動化降低 review 時間、提早抓問題</li>
+<li><strong>Knowledge sharing</strong>：developer 從 AI suggestion 學 best practice</li>
+<li><strong>Consistency</strong>：AI 對所有 PR 套同一標準</li>
+<li><strong>Reduced cognitive load</strong>：AI 處理 routine check，human 聚焦複雜邏輯</li>
+<li><strong>Continuous improvement</strong>：AI system 隨資料量變強</li>
+<li><strong>Holistic understanding</strong>：modern AI reviewer 提供 contextual analysis、pattern recognition，比 linter 深得多</li>
+</ul></li>
+<li><strong>Live demo</strong> — Graphite example 走實 PR review 流程。</li>
+<li><strong>Limitations</strong> —
+<ul>
+<li>比 linter 多設定 / setup 成本</li>
+<li>False positive</li>
+<li>需要持續訓練 / continuous learning</li>
+<li>抓不到 codebase-specific idiom 與 best practice（最大盲區）</li>
+<li>處理不了複雜 business logic 與 architecture decision（永遠是 human 的領域）</li>
+<li><strong>Security change 必須額外謹慎</strong></li>
+<li>常常漏 edge case</li>
+<li><strong>Code review 在 AI coding system 之下比以前更重要</strong> — 你 own merged + shipped 的 code，不能 blame AI</li>
+<li>必須明確告訴 AI 什麼不要 review、codebase 的 pattern / idiom 是什麼</li>
+<li>對 user input、authentication、file operation、network request 要特別 mindful</li>
+</ul></li>
+</ol>
+<p><strong>Key takeaway</strong>：AI code review 不是替代 human reviewer，是增強 review 紀律。McConnell 55-60% defect detection 的歷史紅利還在，AI 讓「跑 review」的邊際成本趨近於零，但「<strong>讀懂 codebase idiom + 評斷 architecture</strong>」這條 alignment layer 永遠是 human 的責任。AI 寫得越多，review 越不能省。</p>
+</section>
+<section id="friday-lecture117tomas-reimersgraphite-cpo" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="friday-lecture117tomas-reimersgraphite-cpo"><span class="header-section-number">9.4</span> Friday Lecture（11/7）：Tomas Reimers（Graphite CPO）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/tomasreimers/">Tomas Reimers</a>, CPO of <a href="https://graphite.dev/">Graphite</a></li>
+<li><strong>Slides</strong>: <a href="https://drive.google.com/file/d/1hwF-RIkOJ_OFy17BKhzFyCtxSS7Pcf7p/view?usp=drive_link">Drive 連結（公開）</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。Tomas 演講題目「<strong>The Modern Software Developer: Code Review</strong>」，分四段（Hi → Collaborating with humans → Collaborating with AI → Software development in the limit）：</p>
+</blockquote>
+<p><strong>段 0：Graphite 自介</strong> — Graphite 是 AI-powered code review platform，help developer create / review / merge code change。AI agent 能回答 PR 相關問題、fully codebase aware、可主動 propose updates 幫 reviewer 解 comment 與 CI。Trusted by 100,000s+ developer、1,000s+ organization。Production 數據：<strong>Shopify 採用 Graphite 後 PR shipped per developer +33%</strong>、Asana <strong>LoC/eng +21%</strong>、Ramp <strong>time between PRs merged -74%</strong>。</p>
+<p><strong>段 1：Collaborating with humans — Code review 的歷史</strong></p>
+<ol type="1">
+<li><strong>三步驟 collaboration</strong>：CREATE（developer 提一組 code change，這個 atomic unit 叫 pull request、diff、patch、changelist 或 merge request）→ REVIEW（另一個 developer 給 comment、suggest improvement、approve）→ MERGE（原 developer 把 PR merge 回 codebase）</li>
+<li><strong>AI 讓 code 比以往多 → 也讓需要 review / merge 的 code 比以往多</strong>（這是 Graphite 整個產品論點的根基）</li>
+<li><strong>Code review 簡史四階段</strong> —
+<ul>
+<li><strong>Fagan Inspections</strong>（IBM, 1976，Michael Fagan 提出）— 重型形式審查</li>
+<li><strong>Email patches</strong>（Linux kernel 至今仍用）— printed code → emailed patch</li>
+<li><strong>Mondrian</strong>（Google, 2000s 早期，Guido van Rossum 主導）— 第一個 web UI for review</li>
+<li><strong>Online tools</strong>（Review Board / Gerrit / Critique / Phabricator / GitHub）— review 從工程紀律變成主流 dev workflow</li>
+</ul></li>
+</ol>
+<p><strong>段 2：Collaborating with AI — 跟 super-human author 共事</strong></p>
+<ol start="4" type="1">
+<li><strong>AI 已能抓的不只 typo</strong> — Graphite 主動掃 PR 找 bug、把 potential issue post 到 Graphite 與 GitHub 兩邊、out-of-the-box work、fully customizable</li>
+<li><strong>核心問題：有了 AI，human 還需要 review 嗎？</strong> Tomas 答：要，因為 review 的 purpose 排序是 <strong>(01) Alignment confirmation → (02) Knowledge diffusion → (03) Proofreading</strong>。Bug catching 只是第三順位。</li>
+<li><strong>Human 怎麼跟 AI 合作？— 兩條路 PLATFORM vs PARTICIPANT</strong>
+<ul>
+<li><strong>PLATFORM</strong> route：AI 較適合做 context gathering、augment human reviewer</li>
+<li><strong>PARTICIPANT</strong> route：AI 直接取代 human reviewer</li>
+</ul></li>
+<li><strong>The limits of AI（today vs tomorrow）</strong> — slide 暗示 today 的 AI 邊界明天會被推得更遠</li>
+</ol>
+<p><strong>段 3：Software development in the limit — 未來方向</strong></p>
+<ol start="8" type="1">
+<li><strong>Software dev 永遠有兩部分</strong> — <strong>Inner loop</strong>（聚焦 development）+ <strong>Outer loop</strong>（聚焦 review &amp; collaboration）</li>
+<li><strong>AI 已經把 inner loop 加速 10×</strong> — 那 outer loop 會怎樣？</li>
+<li><strong>Three doors for the next generation software dev</strong> —
+<ul>
+<li><strong>CYBORG</strong>：developer 直接 review change，靠 AI 增強。問題：如果作者不是 author，這還合理嗎？</li>
+<li><strong>EM</strong>（engineering manager）：developer 直接管 AI，underwrite architecture 但不細究 technical specifics</li>
+<li><strong>AGENCY</strong>：developer 把 AI 當 third-party contractor，underwrite product requirement 但不 own code</li>
+</ul></li>
+<li><strong>Graphite 的產品策略對應</strong> —
+<ul>
+<li><strong>AI Review Agent</strong>：Graphite Agent 是 AI-powered companion 抓 bug、enforce convention、擋 error / security vulnerability</li>
+<li><strong>Stacking</strong>：堆疊式 PR git workflow，讓 author 在不被 reviewer 卡的前提下繼續開發</li>
+<li><strong>Smarter CI</strong>：predictive CI 只在需要時跑，省 team 時間與錢</li>
+<li><strong>Review experience built for teams</strong>：reviewer assignment、merge queue、automation、insight</li>
+<li><strong>Measure developer productivity</strong>：精確衡量 AI coding tool 與 Graphite 給 developer 帶來多少 efficiency gain</li>
+</ul></li>
+</ol>
+<p><strong>Key takeaway</strong>：Tomas 的核心論點是 <strong>AI 不是讓 review 變不需要 — 反而讓 review 變得更重要</strong>。Code review 的真正 ROI 一直都在 alignment confirmation 與 knowledge diffusion，bug catching 是 side effect。AI 加速 inner loop 後，outer loop 會在 CYBORG / EM / AGENCY 三條路徑分流，但無論哪條，「human underwrite 什麼」決定 review 的形態。對 vibe coder 的 implication：你 ship 的 code 你負責，AI reviewer 是助力不是替罪羊。</p>
+</section>
+<section id="reading-摘要" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">9.5</span> Reading 摘要</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>篇名</th>
+<th>來源</th>
+<th>一句話重點</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../readings/w7_code_reviews_just_do_it.md">Code Reviews: Just Do It</a></td>
+<td>Coding Horror（Atwood, 2008）</td>
+<td>Review 是性價比最高的 quality practice，inspection 抓 55-60% defect 遠勝 testing 25-45%，有做就贏</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w7_how_to_review_code_effectively.md">How to Review Code Effectively</a></td>
+<td>GitHub blog（Vessels）</td>
+<td>三原則：ask questions over demands、separate substance from preference、provide specific examples</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w7_ai_assisted_assessment_coding_practices.md">AI-Assisted Assessment of Coding Practices</a></td>
+<td>arXiv 2405.13565（Google AIware ’24）</td>
+<td>AutoCommenter 覆蓋 68% best practice，66% 是 linter 做不到的，40% resolution rate</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w7_ai_code_review_implementation_best_practices.md">AI Code Review Implementation Best Practices</a></td>
+<td>Graphite</td>
+<td>Human-in-the-loop + sensitivity tuning + false-positive feedback loop = 可用的 AI reviewer</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w7_code_review_essentials_for_software_teams.md">Code Review Essentials for Software Teams</a></td>
+<td>blakesmith.me（2015）</td>
+<td>Review 的核心是 mental model synchronization，scalpel-driven 小 PR + clarifying tone</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w7_lessons_from_millions_of_ai_code_reviews.md">Lessons from Millions of AI Code Reviews</a></td>
+<td>YouTube（Tomas Reimers, Graphite）</td>
+<td>2x2 quadrant：只留「LLM 能 catch × human 想收」象限；action rate 52% 已追平 human</td>
+</tr>
+</tbody>
+</table>
+<p><strong>閱讀優先順序</strong>：時間有限的話，先讀 <a href="../readings/w7_lessons_from_millions_of_ai_code_reviews.md">Tomas Reimers YouTube</a>（最具體的 industry insight）→ 再讀 <a href="../readings/w7_ai_assisted_assessment_coding_practices.md">Google AutoCommenter paper</a>（academic baseline）→ 補 <a href="../readings/w7_how_to_review_code_effectively.md">Vessels GitHub blog</a>（human-side 原則）。Atwood / Smith 兩篇是經典背景，建立完 mental model 再回頭讀。</p>
+</section>
+<section id="assignmentcode-review-reps" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="assignmentcode-review-reps"><span class="header-section-number">9.6</span> Assignment：Code Review Reps</h2>
+<ul>
+<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/tree/master/week7">github.com/mihail911/modern-software-dev-assignments/tree/master/week7</a></li>
+<li><strong>任務描述</strong>: 練習 AI code review 的完整 loop — 拿一個有 bug 的 starter repo、用 Cursor / Claude Code 寫 fix、開 PR、跑 Diamond 或 CodeRabbit、評估 AI reviewer 的 comment 品質（用 Reimers 的 quadrant 框架打分）、回應 comment、merge。重點是建立「你能判斷哪些 comment 該收、哪些該 dismiss」的肌肉記憶。</li>
+<li><strong>自學者可行性</strong>: ⭐⭐⭐⭐ 完全可做。需 GitHub 帳號 + 一個 AI reviewer service（Graphite 有 free tier、CodeRabbit 個人 plan 約 $15/月、GitHub Copilot Code Review 內含於 Copilot 訂閱）。預估 4-6 hr — 比 W1-W2 assignment 重，因為要實際開 PR 跑完整 loop 而非沙盒練習。</li>
+</ul>
+<blockquote class="blockquote">
+<p>💡 <strong>沒有付費訂閱的替代方案</strong>：(1) GitHub Copilot 學生方案免費，包含 Copilot Code Review；(2) Graphite Diamond 個人 free tier 每月有 review quota；(3) 用 Claude Code 在 local 模擬：自己 commit 後對 Claude 說「你現在是 senior code reviewer，請對這個 diff 留 comment，限 mechanical layer，不要留 architectural 建議」。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">9.7</span> 對 Vibe Coder 的應用</h2>
+<p>W7 是把 vibe coder 從「寫得出來」升級到「<strong>寫得對且維持得住</strong>」的關鍵一週。實戰建議：</p>
+<ol type="1">
+<li><p><strong>side project 馬上裝一個 AI reviewer</strong> — 推薦順序：GitHub Copilot Code Review（免費學生方案 / 已訂 Copilot 直接內含）→ Graphite Diamond（free tier 夠個人專案用）→ CodeRabbit（功能多但要付費）。裝完先別期待奇蹟，先觀察 false positive 比例兩週</p></li>
+<li><p><strong>PR description 永遠寫三段</strong> — 即使一人專案：(a) 這次解決什麼問題、(b) 改了哪幾個 file 跟整體結構變化、(c) 怎麼測（手測 / unit test / 跑哪個 script）。三個月後的自己跟 AI agent 都會感謝你</p></li>
+<li><p><strong>學會用 Reimers quadrant 篩 comment</strong> — AI reviewer 留 comment 後，先問自己兩問：(a) 它抓的這件事 LLM 真的能可靠判斷嗎？（如果是 codebase-specific convention 直接 dismiss）(b) 我願意收這類 comment 嗎？（如果是「請加 test」這種 always-correct-but-unwelcome，當下 dismiss、之後 batch 處理）</p></li>
+<li><p><strong>PR 永遠切 scalpel-like 小 cut</strong> — 500 行以上 PR 不論 human 還是 AI reviewer 都會 skim 過去；切成 5 個 100 行 PR 的 review 品質會好 5 倍。Graphite stacked PR 工具就是為此設計</p></li>
+<li><p><strong>跟 Claude Code 的對話加一層 review reflex</strong> — 每次 Claude 寫完 code，固定問一句「請以 senior code reviewer 角度檢視剛才的改動，列出 3 個你會留 comment 的點，並標記是 blocker / nit / false positive」。這等於把 review 內建進 Claude Code 的 loop，配合 W6 學的 testing 一起，能擋掉大量 bug</p></li>
+<li><p><strong>codebase 的 tribal knowledge 寫進 <code>CLAUDE.md</code></strong> — Reimers 點出 LLM 最大盲區是 codebase-specific convention。把你專案的命名慣例、業務邏輯、奇怪的 quirk 寫進 <code>CLAUDE.md</code>（同 W1 學的），AI reviewer 會自動讀到（如果工具支援），等於把左上象限的盲區補起來</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天就在你 main side project 開一個小 PR（隨便重構一個 function 也好），裝 Graphite Diamond 或 GitHub Copilot Code Review，看 AI reviewer 留什麼 comment，用 Reimers 的 quadrant 對每條 comment 標籤（右上 / 左上 / 右下 / 左下）。你會發現大部分 comment 落在右下（always-correct-but-unwelcome）— 那就是你該調 sensitivity 的訊號。一輪下來 30 分鐘，你對 AI code review 的直覺會完全不一樣。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/06_ai_testing_security.html">W6 AI Testing and Security</a> | <strong>下一週</strong>：<a href="../weeks/08_automated_ui_app_building.html">W8 Automated UI and App Building</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/06_ai_testing_security.html" class="pagination-link" aria-label="Week 6：AI Testing and Security">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/08_automated_ui_app_building.html" class="pagination-link" aria-label="Week 8：Automated UI and App Building">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

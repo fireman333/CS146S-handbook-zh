@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Week 6：AI Testing and Security – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/07_modern_software_support.html" rel="next">
+<link href="../weeks/05_modern_terminal.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/06_ai_testing_security.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">8.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">8.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一vibe-coding-的五大資安盲點-為什麼速度越快越危險" id="toc-一vibe-coding-的五大資安盲點-為什麼速度越快越危險" class="nav-link" data-scroll-target="#一vibe-coding-的五大資安盲點-為什麼速度越快越危險"><span class="header-section-number">8.2.1</span> 一、Vibe Coding 的五大資安盲點 — 為什麼速度越快越危險</a></li>
+  <li><a href="#二sastdastsca-漏洞檢測的三角" id="toc-二sastdastsca-漏洞檢測的三角" class="nav-link" data-scroll-target="#二sastdastsca-漏洞檢測的三角"><span class="header-section-number">8.2.2</span> 二、SAST、DAST、SCA — 漏洞檢測的三角</a></li>
+  <li><a href="#三prompt-injection-coding-agent-時代的全新攻擊面" id="toc-三prompt-injection-coding-agent-時代的全新攻擊面" class="nav-link" data-scroll-target="#三prompt-injection-coding-agent-時代的全新攻擊面"><span class="header-section-number">8.2.3</span> 三、Prompt Injection — Coding Agent 時代的全新攻擊面</a></li>
+  <li><a href="#四ai-generated-test-與-ai-find-vulnerabilities-實證告訴我們什麼" id="toc-四ai-generated-test-與-ai-find-vulnerabilities-實證告訴我們什麼" class="nav-link" data-scroll-target="#四ai-generated-test-與-ai-find-vulnerabilities-實證告訴我們什麼"><span class="header-section-number">8.2.4</span> 四、AI-generated Test 與 AI Find Vulnerabilities — 實證告訴我們什麼</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture1027ai-qa-sast-dast-and-beyond" id="toc-monday-lecture1027ai-qa-sast-dast-and-beyond" class="nav-link" data-scroll-target="#monday-lecture1027ai-qa-sast-dast-and-beyond"><span class="header-section-number">8.3</span> Monday Lecture（10/27）：AI QA, SAST, DAST, and Beyond</a></li>
+  <li><a href="#friday-lecture1031isaac-evanssemgrep-ceo" id="toc-friday-lecture1031isaac-evanssemgrep-ceo" class="nav-link" data-scroll-target="#friday-lecture1031isaac-evanssemgrep-ceo"><span class="header-section-number">8.4</span> Friday Lecture（10/31）：Isaac Evans（Semgrep CEO）</a></li>
+  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">8.5</span> Reading 摘要</a></li>
+  <li><a href="#assignmentwriting-secure-ai-code" id="toc-assignmentwriting-secure-ai-code" class="nav-link" data-scroll-target="#assignmentwriting-secure-ai-code"><span class="header-section-number">8.6</span> Assignment：Writing Secure AI Code</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">8.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/06_ai_testing_security.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：vibe coding（用 AI 一句話生整個 app）的最大盲點 = 資安。本週講 secure vibe coding、vulnerability detection 的歷史（SAST/DAST/SCA）、prompt injection 攻擊面、以及怎麼用 AI 自動產生 test suites。Friday 由 Semgrep CEO Isaac Evans 親自開講。</p>
+<p>💡 <strong>對非資工背景讀者</strong>：本週是 10 週裡最 technical 的一週。可以用醫療類比理解 — vulnerability ≈ 病灶，SAST ≈ 預防醫學（驗血），DAST ≈ 臨床檢查（影像），prompt injection ≈ 社交工程詐騙。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">8.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>辨識</strong> SAST（Static Application Security Testing）vs DAST（Dynamic Application Security Testing）的適用情境</li>
+<li><strong>解釋</strong> prompt injection 怎麼攻擊 coding agent（含 GitHub Copilot RCE 的真實 case）</li>
+<li><strong>應用</strong> Semgrep / Snyk / GitHub Advanced Security 對 vibe-coded 專案做 security audit</li>
+<li><strong>評估</strong> OWASP Top 10 在 LLM 應用上的對應風險（OWASP LLM Top 10）</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">8.2</span> 核心概念導讀</h2>
+<section id="一vibe-coding-的五大資安盲點-為什麼速度越快越危險" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="一vibe-coding-的五大資安盲點-為什麼速度越快越危險"><span class="header-section-number">8.2.1</span> 一、Vibe Coding 的五大資安盲點 — 為什麼速度越快越危險</h3>
+<p>W1-W5 教你怎麼用 LLM 把開發速度拉到 10x，這週要回頭算帳：<strong>速度的另一面是 attack surface 同步擴張</strong>。對非資工背景的 vibe coder（醫學生、生科研究者、設計師），五個最常踩的盲點是：</p>
+<ol type="1">
+<li><strong>API key 直接寫進 code</strong> — Claude Code 跑出來的 demo 常常把 OpenAI API key、AWS credential、DB password 直接放在 source file 裡，commit 上 GitHub 等於把鑰匙公開貼在 7-11 門口</li>
+<li><strong>User input 直接拼 SQL / shell / HTML</strong> — Vibe coding 一句「做個搜尋 page」生出的 code 99% 沒做 input sanitization，給點機會就是 SQL injection（注入式攻擊）/ XSS（cross-site scripting，跨站腳本攻擊）/ command injection</li>
+<li><strong>Authentication 自己寫</strong> — 真正該用 Auth0、Clerk、Supabase Auth 之類成熟方案，但 vibe coder 常被 LLM 忽悠寫個自製 JWT（JSON Web Token）系統，sign / verify 做錯就是直接登入別人帳號</li>
+<li><strong>Dependency 來路不明</strong> — <code>npm install something-vibe-good</code> 之前沒人 audit，惡意 package 偷 env var、安裝 backdoor 是常態</li>
+<li><strong>Agent 的全自動 approve mode</strong> — Claude Code / Cursor / Warp 都有「all tool calls auto-approve」選項，打開 = 把 shell 鑰匙交給可被 prompt injection 劫持的 LLM（見下方 <a href="../readings/w6_copilot_rce_via_prompt_injection.md">Copilot RCE</a> 案例）</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解（醫療類比）</strong>：Vibe coding 的 security 風險就像「治療速度太快、沒做完整 history taking」 — 你救了當下的 acute 症狀（功能 work 了），但漏掉的 underlying disease（漏洞）會在後面爆掉。SAST 對應預防醫學的全套 lab work（驗血、尿液、影像 — 看靜態指標），DAST 對應 stress test（運動心電圖、心導管 — 對運作中的系統打壓力測試），prompt injection 對應社交工程詐騙（騙病人本人說出密碼、騙醫護越權給藥）。</p>
+</blockquote>
+</section>
+<section id="二sastdastsca-漏洞檢測的三角" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="二sastdastsca-漏洞檢測的三角"><span class="header-section-number">8.2.2</span> 二、SAST、DAST、SCA — 漏洞檢測的三角</h3>
+<p><a href="../readings/w6_sast_vs_dast.md">SAST vs DAST</a> 把 application security testing 拆成兩種互補典範。實務上要再加上 SCA（Software Composition Analysis，軟體成分分析），合稱檢測三角：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>工具類別</th>
+<th>看什麼</th>
+<th>何時跑</th>
+<th>醫療類比</th>
+<th>實務工具</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SAST</strong>（靜態應用程式安全測試）</td>
+<td>Source code / binary（不執行）</td>
+<td>Commit 前、IDE 內、CI early stage</td>
+<td><strong>預防醫學</strong> — 看 lab 數值找潛在病灶</td>
+<td>Semgrep、CodeQL、SonarQube</td>
+</tr>
+<tr class="even">
+<td><strong>DAST</strong>（動態應用程式安全測試）</td>
+<td>Running app（送 malicious request 觀察反應）</td>
+<td>Staging deploy 後、scheduled scan</td>
+<td><strong>臨床檢查</strong> — 對活體做運動測試找症狀</td>
+<td>OWASP ZAP、Burp Suite、Nuclei</td>
+</tr>
+<tr class="odd">
+<td><strong>SCA</strong>（軟體成分分析）</td>
+<td><code>package.json</code> / <code>requirements.txt</code> 等 dependency 清單</td>
+<td>每次 <code>npm install</code> 後、weekly cron</td>
+<td><strong>流行病學監測</strong> — 看你吃進的「藥」（package）有沒有已知 contraindication</td>
+<td>Dependabot、Snyk、Renovate</td>
+</tr>
+</tbody>
+</table>
+<p>三者的 trade-off： - <strong>SAST 早期便宜但 false positive 高</strong> — 一掃幾秒、commit 前就能跑，但會誤報一堆「理論上有風險但實際 unreachable」的 code path（醫療類比：腫瘤 marker 偽陽性多，需臨床判斷複核） - <strong>DAST 貼近真實攻擊但發現晚</strong> — 等 app 跑起來才能掃，bug 修復成本高（醫療類比：到 ER 時 acute MI 已經發作，治療成本比預防高 100 倍） - <strong>SCA 是 prerequisite</strong> — 你寫得再安全，npm 套件帶後門也沒救（醫療類比：自己生活作息再好，吃到污染食品照樣中毒）</p>
+<p><a href="../readings/w6_owasp_top_ten.md">OWASP Top Ten</a> 是這個檢測三角的「分類字典」 — A01 Broken Access Control、A03 Injection、A05 Security Misconfiguration 是 vibe coder 最常踩的三類，每寫一個 endpoint 自問「這條對 Top Ten 哪幾項有曝險？」是基本紀律。</p>
+</section>
+<section id="三prompt-injection-coding-agent-時代的全新攻擊面" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="三prompt-injection-coding-agent-時代的全新攻擊面"><span class="header-section-number">8.2.3</span> 三、Prompt Injection — Coding Agent 時代的全新攻擊面</h3>
+<p>傳統 web app 的攻擊面 OWASP 列在 Top Ten 裡，但 <strong>prompt injection（提示詞注入）是 LLM 時代才出現的新類別</strong>。原理：把惡意指令藏在 LLM 會 ingest 的內容（code comment、GitHub issue、web page、PDF、image OCR），讓它覆蓋原本的 system instruction。</p>
+<p><a href="../readings/w6_copilot_rce_via_prompt_injection.md">Copilot RCE via Prompt Injection</a> 是這類攻擊的教科書級案例。研究員 Johann Rehberger 發現 <strong>CVE-2025-53773</strong>（CVE = 全球漏洞身份證編號）：攻擊鏈為 (1) malicious instruction 藏進 source code 或 GitHub issue → (2) Copilot 讀進 context → (3) injection 指示 Copilot 自行寫入 <code>.vscode/settings.json</code> 開啟 <code>chat.tools.autoApprove: true</code>（YOLO mode）→ (4) 從此 Copilot 任何 shell command 都不再向 user 確認 → (5) 達成 <strong>RCE（Remote Code Execution，遠端任意程式執行）</strong>。</p>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解（醫療類比）</strong>：Prompt injection 像「social engineering 詐騙打電話到護理站、聲稱是主治醫師、指示護士改某病人的醫囑」— 系統本身（電話、HIS）沒漏洞，但 trust boundary 設計錯了：你不能把「會講人話的東西」自動當成有權限的人。Coding agent 的 prompt injection 之所以致命，是因為它能把「文字攻擊」轉成「真的執行 shell command」，從詐騙電話升級為直接動手簽醫囑單。</p>
+</blockquote>
+<p><a href="../readings/w6_agentic_ai_threats_identity_spoofing.md">Agentic AI Threats</a> 把這個攻擊面再往前推：agentic AI 操作 enterprise infra（GCP、AWS、internal API）會被劫持去偷 service account token（cloud metadata service 的 <code>169.254.169.254</code> IP 是經典攻擊目標），或藉 BOLA（Broken Object Level Authorization，物件層級授權失敗）越權讀其他 user 資料。Defense 必須是 layered：prompt hardening + sandbox + tool input sanitization + runtime filtering，沒有單一 mitigation 夠用。</p>
+</section>
+<section id="四ai-generated-test-與-ai-find-vulnerabilities-實證告訴我們什麼" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="四ai-generated-test-與-ai-find-vulnerabilities-實證告訴我們什麼"><span class="header-section-number">8.2.4</span> 四、AI-generated Test 與 AI Find Vulnerabilities — 實證告訴我們什麼</h3>
+<p>LLM 不只是攻擊面，它也是新工具。但這個工具好不好用？<a href="../readings/w6_finding_vulnerabilities_claude_codex.md">Finding Vulnerabilities with Claude Code &amp; Codex</a>（Semgrep blog）給了一份冷靜的實證：對 11 個真實 Python web app（&gt;800,000 LoC）跑 Claude Code（Sonnet 4）與 OpenAI Codex（o4-mini）做 security audit，結果：</p>
+<ul>
+<li>Claude 找到 46 個真實漏洞、Codex 找到 21 個 — <strong>真的能找到 bug</strong></li>
+<li>但 false positive 率分別 <strong>86% 與 82%</strong> — 十條警報只兩條是真</li>
+<li>同一份 code 跑三次得到 3 / 6 / 11 個不同 bug — <strong>嚴重 non-deterministic</strong></li>
+</ul>
+<p>Non-determinism 的根因在 <a href="../readings/w6_context_rot.md">Context Rot</a>：Chroma Research 對 18 個 SOTA LLM 做擴展版 NIAH（Needle in a Haystack）測試，發現 input 越長 performance 越不穩，即使是百萬 token context window 也一樣 — distractor、coherent narrative、low semantic similarity 都會加劇衰減。所以 LLM 掃大 codebase 時，後段檔案可能根本沒被「真的看到」。</p>
+<p>對照組是 <a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt Analysis with O3</a> 的 success case — Sean Heelan 用嚴格的 system prompt（三階段：code path → conditional analysis → contradiction detection；強制原則「<strong>寧可漏報也不誤報</strong>」）驅動 OpenAI o3 在 Linux kernel 找出 <strong>CVE-2025-37899</strong>（一個真實的 use-after-free 漏洞）。差別在哪？<strong>Scope 窄</strong>（一類漏洞、特定模組）、<strong>紀律嚴</strong>（強制 step-by-step trace、禁止 hypothetical）、<strong>反幻覺</strong>（allow「no findings」是合法輸出）。</p>
+<p>歸納：LLM 找 bug 不是 silver bullet，但配對 (a) 鎖定特定 vulnerability class、(b) 多次採樣取聯集、(c) 仍跑傳統 SAST 補 taint tracking 盲區、(d) 把 LLM 警報當「嫌疑名單」而非結論，可以變成有用的補強層。</p>
+</section>
+</section>
+<section id="monday-lecture1027ai-qa-sast-dast-and-beyond" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="monday-lecture1027ai-qa-sast-dast-and-beyond"><span class="header-section-number">8.3</span> Monday Lecture（10/27）：AI QA, SAST, DAST, and Beyond</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1C05bCLasMDigBbkwdWbiz4WrXibzi6ua4hQQbTod_8c/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>Mihail 開場切入點直接：「軟體錯誤可以毀掉使用者對產品 / 公司的信任、造成巨大金錢成本。當 LLM 在寫你大部分 code 時，需要強而廣的 guardrail 才不會出包。」</p>
+<ol type="1">
+<li><strong>既有 threat landscape 速覽</strong> — SQL injection、Cross-site scripting（XSS）、broken authentication、insecure direct object reference、security misconfiguration、sensitive data exposure 六大類。</li>
+<li><strong>Vulnerability detection 三角：SAST / DAST / SCA</strong> —
+<ul>
+<li><strong>SAST（Static Application Security Testing）</strong>：白箱、看 binary + source code、SDLC 早期跑（修 bug 最便宜）。Pattern matching scan codebase。可抓 SQL injection、command injection、XSS。工具範例：Bandit、Semgrep、ESLint + extensions。</li>
+<li><strong>DAST（Dynamic Application Security Testing）</strong>：黑箱、模擬真實 hacker 攻 running app、SDLC 全程都可跑（false positive 比 SAST 少）。技術：input fuzzing、session token manipulation、config / header testing、brute force rate limit。</li>
+<li><strong>SCA（Software Composition Analysis）</strong>：深度分析 OSS package。技術：分析 package metadata、transitive dependency resolution、跟 vulnerability DB 比對、binary / artifact scanning。</li>
+<li>三者 cover 三層：code（SAST）+ runtime（DAST）+ dependency（SCA）。</li>
+</ul></li>
+<li><strong>What’s changed: Bad — 新 AI agent attack vector</strong> —
+<ul>
+<li><strong>Prompt injection</strong>：藏 hidden / 誤導指令在 LLM ingest 的內容裡讓它偏離原本行為。Slide 引用 AMP code 案例：用 prompt injection 從 AI agent 提取 system prompt。</li>
+<li><strong>Tool misuse</strong>：用欺騙 prompt 讓 agent 濫用整合的 tool。引用 <a href="https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/">embracethered.com 的 AMP escape blog</a> — agent 修改 system configuration 並 escape sandbox。</li>
+<li><strong>Code attacks</strong>：利用 agent 的 code execution 能力獲得執行環境的未授權存取。</li>
+<li><strong>Intent breaking</strong>：操縱 agent 的 plan，讓 action 偏離原本目的。</li>
+<li><strong>Identity spoofing</strong>：用 compromised authentication 假冒合法 agent。</li>
+</ul></li>
+<li><strong>What’s changed: Good — 新 SAST/DAST/SCA 增強技術</strong> —
+<ul>
+<li><strong>「Shift left」security 比以前更可及</strong> — LLM 可被嵌入 workflow 抓問題</li>
+<li><strong>Automated penetration testing</strong></li>
+</ul></li>
+<li><strong>LLM 在 security testing 的限制</strong> —
+<ul>
+<li><strong>AI SAST 的 false positive 率高得驚人</strong> — Claude Code / Codex 對某些漏洞類別 50-100% false positive，比傳統 SAST（50+%）還糟</li>
+<li><strong>既有 benchmark 不貼近真實情境</strong>，難 evaluate LLM</li>
+<li><strong>Non-deterministic</strong>：同 prompt 多跑得不同結果，怎麼確認 catch 完所有 vulnerability？</li>
+<li><strong>Context rot</strong>：not all context is created equal；compaction（壓縮 context）會讓資訊變形</li>
+</ul></li>
+<li><strong>Open question</strong> —
+<ul>
+<li>怎麼降 vulnerability detection 的 false positive 與 hallucination？</li>
+<li>怎麼 verify LLM 生的 patch 真的安全、不引入 regression？</li>
+<li>怎麼讓 LLM 解釋它為什麼 flag 這個 vulnerability、為什麼 propose 這個 fix？</li>
+<li>衡量 LLM AppSec 表現的對的 benchmark 是什麼？</li>
+<li>LLM 怎麼嵌進 CI/CD 不淹沒 team 的告警雜訊？</li>
+<li>AI 生成的 patch 引入新 vulnerability 時誰要負責？</li>
+</ul></li>
+</ol>
+<p><strong>Key takeaway</strong>：AI 沒讓 QA / Security 變不需要 — <strong>反而讓它變更重要</strong>。SAST + DAST + SCA 的三角依然是基礎，加上對 prompt injection / tool misuse / code attack 三類 AI-era attack vector 的特別防護才完整。LLM 找漏洞能力有但 false positive 高、非確定性、context rot 三個根本問題還沒解 — 把 LLM 警報當「嫌疑名單」處理而非結論。</p>
+</section>
+<section id="friday-lecture1031isaac-evanssemgrep-ceo" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="friday-lecture1031isaac-evanssemgrep-ceo"><span class="header-section-number">8.4</span> Friday Lecture（10/31）：Isaac Evans（Semgrep CEO）</h2>
+<ul>
+<li><strong>Speaker</strong>: <a href="https://www.linkedin.com/in/isaacevans/">Isaac Evans</a>, CEO of <a href="https://semgrep.dev/">Semgrep</a></li>
+<li><strong>Slides</strong>: 未公開</li>
+</ul>
+<blockquote class="blockquote">
+<p>Slides 未公開，依 Isaac 公開訪談 + Semgrep 公開技術文件 + 同期 Semgrep blog（<a href="../readings/w6_finding_vulnerabilities_claude_codex.md">Finding Vulnerabilities with Claude Code</a>）best-effort 重建：</p>
+</blockquote>
+<p>Isaac Evans 是 MIT Lincoln Laboratory cybersecurity researcher 出身，2017 年創立 Semgrep（前身 r2c）— 把學術界的 program analysis 技術做成 developer-friendly 的 SAST 工具。Semgrep 的 unique stance 是「rule-as-code」：每條 security rule 寫成 YAML pattern，跟 grep 一樣好懂但比 grep 強得多（語法樹層級的 pattern matching）。預期演講內容：</p>
+<ol type="1">
+<li><strong>Semgrep origin story</strong> — 為什麼從 r2c rebrand 成 Semgrep、為什麼選擇 open-source rule registry（任何人能寫 rule、社群共享）這個 distribution model</li>
+<li><strong>Static analysis 的歷史</strong> — 從 lint（1979 Bell Labs）→ Coverity（commercial SAST 開山）→ FindBugs / SpotBugs（學術界 Java tool）→ CodeQL（GitHub 收購、query language 取向）→ Semgrep（pattern matching + 開源 rule registry）</li>
+<li><strong>為什麼 LLM 不會取代 SAST</strong> — 對應 reading 那篇實證：LLM 缺 inter-procedural taint flow 能力、non-deterministic、context rot；rule-based SAST 反而在 injection 類 deterministic 偵測強。兩者是互補不是取代</li>
+<li><strong>AI 怎麼增強 SAST</strong> — Semgrep 自己怎麼用 AI：(a) 用 LLM 自動生 rule（看一個 CVE patch 反推可掃同類問題的 rule）、(b) 用 LLM 做 false positive triage（rule 報的警報先讓 LLM 篩一輪）、(c) 用 LLM 自動 suggest fix（不只報 bug 還給 patch suggestion）</li>
+<li><strong>AI Coding 對 Semgrep 的衝擊</strong> — AI 寫的 code 是不是 less secure？實證上是的（Stanford 2023 study 已經證實），所以 vibe coding 浪潮反而擴大 SAST 市場</li>
+<li><strong>企業導入經驗</strong> — Semgrep 服務的客戶（Snowflake、Slack、Figma 等）怎麼把 SAST 整進 dev workflow、怎麼平衡 false positive 與 dev velocity、security team 怎麼跟 AI dev tool 共處</li>
+<li><strong>Roadmap</strong> — Supply chain security（SCA + SAST 融合）、prompt injection-aware rule、LLM-aware threat model</li>
+</ol>
+<p><strong>Key takeaway</strong>：Static analysis 沒被 LLM 殺掉，反而因為 vibe coding 浪潮變得更重要。Semgrep 的 stance 是「rule-based + AI-augmented」混合方法 — rule 給 deterministic、AI 給 contextual reasoning，兩者各取所長。對 vibe coder 的 implication：別以為「找 Claude 幫我 audit」就夠了，必須加上 deterministic SAST（Semgrep 有 free tier）才能蓋住 LLM 的 taint tracking 盲區。</p>
+</section>
+<section id="reading-摘要" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">8.5</span> Reading 摘要</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>篇名</th>
+<th>來源</th>
+<th>一句話重點</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../readings/w6_sast_vs_dast.md">SAST vs DAST</a></td>
+<td>Splunk blog</td>
+<td>SAST（白箱、看 source）+ DAST（黑箱、跑 runtime）+ 可加 RASP 形成多層防禦，現代 pipeline 必整合兩者</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w6_copilot_rce_via_prompt_injection.md">Copilot RCE via Prompt Injection</a></td>
+<td>embracethered.com</td>
+<td>CVE-2025-53773：prompt injection 騙 Copilot 自寫 <code>.vscode/settings.json</code> 開啟 YOLO mode → 完全 RCE</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w6_finding_vulnerabilities_claude_codex.md">Finding Vulnerabilities with Claude Code &amp; Codex</a></td>
+<td>Semgrep blog</td>
+<td>11 repo / &gt;800k LoC 實測：找到真 bug 但 86% false positive、non-deterministic，LLM 不能取代 SAST</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w6_agentic_ai_threats_identity_spoofing.md">Agentic AI Threats: Identity Spoofing</a></td>
+<td>Palo Alto Unit 42</td>
+<td>Agent 可被騙去偷 cloud metadata token / 越權讀資料（BOLA），漏洞 framework-agnostic、源於 insecure design</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w6_owasp_top_ten.md">OWASP Top Ten</a></td>
+<td>owasp.org</td>
+<td>十大 web app 風險清單，2021 版以 incidence rate 排序，是 secure coding 的共同詞彙</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w6_context_rot.md">Context Rot</a></td>
+<td>research.trychroma.com</td>
+<td>18 個 SOTA LLM 實證 — context window 越大不等於越可靠，10k token 後 performance 顯著衰減</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt Analysis with O3</a></td>
+<td>github.com/SeanHeelan</td>
+<td>三階段 prompt + 寧可漏報原則，o3 真的找到 CVE-2025-37899（Linux kernel UAF）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>閱讀優先順序</strong>：時間有限的話先讀 <a href="../readings/w6_owasp_top_ten.md">OWASP Top Ten</a>（建立詞彙）→ <a href="../readings/w6_sast_vs_dast.md">SAST vs DAST</a>（工具光譜）→ <a href="../readings/w6_copilot_rce_via_prompt_injection.md">Copilot RCE</a>（prompt injection 教科書 case）→ <a href="../readings/w6_finding_vulnerabilities_claude_codex.md">Finding Vulnerabilities with Claude Code</a>（LLM 實戰能力 baseline）→ <a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt with O3</a>（怎麼把 LLM 用對）。其他兩篇是延伸 — <a href="../readings/w6_agentic_ai_threats_identity_spoofing.md">Agentic AI Threats</a> 適合做 enterprise agent app 的人、<a href="../readings/w6_context_rot.md">Context Rot</a> 是 root-cause 補充。</p>
+</section>
+<section id="assignmentwriting-secure-ai-code" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="assignmentwriting-secure-ai-code"><span class="header-section-number">8.6</span> Assignment：Writing Secure AI Code</h2>
+<ul>
+<li><strong>Source</strong>: <a href="https://github.com/mihail911/modern-software-dev-assignments/blob/master/week6/assignment.md">github.com/mihail911/modern-software-dev-assignments/blob/master/week6/assignment.md</a></li>
+<li><strong>任務描述</strong>: 對一個 vibe-coded web app（assignment 提供或自帶 side project）做完整 security review：(a) 跑 Semgrep / Snyk 等 SAST tool 並 triage 結果、(b) 對 OWASP Top Ten 每一類盤點 risk、(c) 用 <a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt with O3</a> 的三階段 prompt 範本驅動 Claude 找特定類型漏洞、(d) 模擬 prompt injection attack（在 README 或 comment 藏指令）測試自家 agent 抗性、(e) 寫 fix 並驗證。</li>
+<li><strong>自學者可行性</strong>: ⭐⭐⭐ 可做但偏深。需要的工具都有 free tier（Semgrep、Snyk free、OWASP ZAP open source），但 OWASP 詞彙與 web security mental model 對非資工背景讀者有學習曲線。預估 5-8 hr。</li>
+</ul>
+<blockquote class="blockquote">
+<p>💡 <strong>非資工背景讀者的減量做法</strong>：把 (a)（跑 Semgrep）+ (e)（修出來的 critical bug）做完，其他 task 看 reading 理解就夠。最終目標是建立「每次 commit 前要跑哪些 check」的肌肉記憶，不是變成 pen-tester。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">8.7</span> 對 Vibe Coder 的應用</h2>
+<p>W6 的內容對非資工背景讀者門檻高，但本節不要求你成為 security expert — 目標是建立<strong>最小可行的 security hygiene</strong>，把高頻、致命的風險擋掉。實戰建議：</p>
+<ol type="1">
+<li><p><strong>API key 管理 — 鐵律三條</strong></p>
+<ul>
+<li><strong>絕不寫進 source code</strong>：用 <code>.env</code>（要加進 <code>.gitignore</code>）、生產環境用 cloud secret manager（Vercel/Railway env var、AWS Secrets Manager）</li>
+<li><strong>公開 repo 第一件事跑 <a href="https://github.com/gitleaks/gitleaks">gitleaks</a></strong> 掃 commit history，看有沒有歷史不慎 leak 的 key（醫療類比：每次新工作報到都驗血看有沒有 hidden chronic condition）</li>
+<li><strong>API key 一發現外洩立刻 revoke + rotate</strong>，別存僥倖。OpenAI / Anthropic 都有 monitoring，1 小時內可能就被人盜刷數百美金</li>
+</ul></li>
+<li><p><strong>Vibe-coded side project 的 minimal viable security check</strong>（每次 push 前跑）</p>
+<ul>
+<li><strong>SAST</strong>：<code>semgrep --config=auto</code> 或 <code>snyk code test</code>（兩者皆 free tier）</li>
+<li><strong>SCA</strong>：<code>npm audit</code> / <code>pip-audit</code>，或讓 GitHub Dependabot 自動開 PR</li>
+<li><strong>Secret scan</strong>：gitleaks pre-commit hook</li>
+<li><strong>OWASP Top Ten 自查</strong>：endpoint 寫完問自己「有沒有 access control？user input 有 sanitize？config secret 有沒有寫 code 裡？」</li>
+</ul>
+<p>這四個加起來 5 分鐘以內，是 P3 人上人 等級的最小 viable hygiene</p></li>
+<li><p><strong>Claude Code / Cursor / Warp 的 security risk pattern — 別做的事</strong></p>
+<ul>
+<li><strong>絕不開 YOLO mode / auto-approve all tools</strong>：對應 <a href="../readings/w6_copilot_rce_via_prompt_injection.md">Copilot RCE</a> 的 attack chain，這是 single point of failure</li>
+<li><strong>clone 別人的 repo 第一件事檢查 <code>.vscode/</code>、<code>.cursor/</code>、<code>.claude/</code></strong>：這些是 agent config，可能藏 prompt injection</li>
+<li><strong>限制 agent 的 file write / shell exec scope</strong>：用 Claude Code 的 <code>permissions</code> 設定把可寫範圍鎖在專案資料夾內，別讓它能改 <code>~/.zshrc</code> 或 <code>/etc/</code></li>
+<li><strong>對外部 untrusted source 抱「假設裡面有 prompt injection」心態</strong>：fetch 來的網頁、PDF、image OCR 都該被視為 hostile input</li>
+</ul></li>
+<li><p><strong>請 LLM 找 bug 的 4 條紀律</strong>（從 <a href="../readings/w6_vulnerability_prompt_analysis_with_o3.md">Vulnerability Prompt with O3</a> 提煉）</p>
+<ul>
+<li><strong>Scope 要窄</strong>：指定一類漏洞（如 SQL injection）、一個檔案，而非「找所有漏洞」</li>
+<li><strong>強制三階段輸出</strong>：code path → conditional analysis → contradiction detection，不要只要結論</li>
+<li><strong>明確說「找不到回 no findings、別亂掰」</strong>：寧可漏報不要誤報這條紀律會大幅降 false positive</li>
+<li><strong>跑多次（≥3）取聯集</strong>：對應 <a href="../readings/w6_context_rot.md">Context Rot</a> 與 <a href="../readings/w6_finding_vulnerabilities_claude_codex.md">Semgrep 實證</a> 的 non-determinism</li>
+</ul></li>
+<li><p><strong>Authentication / Payment 等 critical path 永遠用成熟方案</strong></p>
+<ul>
+<li>Auth：Clerk、Auth0、Supabase Auth、NextAuth — 別自己寫 JWT</li>
+<li>Payment：Stripe、Paddle — 別自己處理信用卡資料（PCI-DSS 是合規地獄）</li>
+<li>上傳檔案：用 cloud storage signed URL（S3、GCS），別讓檔案直接過你的 server</li>
+<li><strong>這些東西踩錯一次代價極大（資料外洩、被罰、被盜刷）</strong>，比花時間自製划算太多倍</li>
+</ul></li>
+<li><p><strong>Claude Code 的好習慣 — 把 security 寫進 <code>CLAUDE.md</code></strong></p>
+<ul>
+<li>加一段 <code>## Security Guardrails</code>：禁止把 secret 寫進 code、user input 必須 sanitize、新 endpoint 必加 access control check</li>
+<li>加一段 <code>## Forbidden Patterns</code>：列出已踩過的雷（例：「絕不用 <code>eval()</code>」「絕不直接拼 SQL」），Claude 每次都會讀</li>
+</ul></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天就在你最 active 的 side project 跑這三條 — (1) <code>npm install -g gitleaks &amp;&amp; gitleaks detect</code>（10 秒看有沒有歷史 leak 的 key），(2) 申請 <a href="https://semgrep.dev/">Semgrep free account</a> 把 repo 連上、自動跑一次掃描看 finding，(3) 在 <code>CLAUDE.md</code> 加上 <code>## Security Guardrails: never put secrets in source code; sanitize all user input; require auth check on every endpoint</code>。30 分鐘建好的這三條 hygiene 在 95% 的情境下就贏過大多數 vibe-coded project。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/05_modern_terminal.html">W5 The Modern Terminal</a> | <strong>下一週</strong>：<a href="../weeks/07_modern_software_support.html">W7 Modern Software Support</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/05_modern_terminal.html" class="pagination-link" aria-label="Week 5：The Modern Terminal">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/07_modern_software_support.html" class="pagination-link" aria-label="Week 7：Modern Software Support">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

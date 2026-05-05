@@ -1,0 +1,1167 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CS146S: The Modern Software Developer",
+    "section": "",
+    "text": "這是一份 Stanford 計算機科學系 Fall 2025 開設的全新課程 CS146S《The Modern Software Developer》 的繁中講義。原版課程主軸是 AI-assisted coding（LLM 基礎、coding agents、Model Context Protocol、AI IDE、Claude Code、Warp、AI testing/security、code review、app building、observability、未來趨勢），素材公開在 themodernsoftware.dev。\n本講義將 10 週課程內容、50+ 篇 reading、9 個 weekly assignment 全部消化成繁中，並補上對非資工背景讀者的譯解，以及對 vibe coder（業餘 AI-assisted coding 使用者）的應用建議。\n詳見 00_index.md 與 01_overview.md。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html",
+    "href": "01_overview.html",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "",
+    "text": "2.1 為什麼這門課值得念\nCS146S《The Modern Software Developer》是 Stanford CS 在 Fall 2025 全新開的課，由 Mihail Eric（mihail911 — ex-Amazon AGI、ex-Goodlight）主講。它的特殊性在於：",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#為什麼這門課值得念",
+    "href": "01_overview.html#為什麼這門課值得念",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "",
+    "text": "內容極度當前：講義連結 2025 年才出現的工具（Claude Code、Warp、Devin、Vercel v0、Resolve.ai），industry guest speaker 都是這些公司的創辦人或核心成員。\n聚焦「人 + AI 協作」的實作層：不是純 ML 理論，而是「身為一個軟體工程師，要怎麼用 AI 工具更快做出正確的東西」。\nFinal project 占 80%：強迫實作。沒寫過東西、只看課的話會看不出價值。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#為什麼非資工背景也能念",
+    "href": "01_overview.html#為什麼非資工背景也能念",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.2 為什麼非資工背景也能念",
+    "text": "2.2 為什麼非資工背景也能念\n雖然 prerequisite 寫 CS111 + CS221/229 recommended，但實際上：\n\n大半週次的 lecture 內容是工具使用與工作流（W1 prompt、W2 MCP、W3 IDE setup、W4 agent management、W5 terminal、W7 code review、W8 UI building），不需要深 ML 背景。\n真正需要 ML 知識的只有 W1 後半（“What is an LLM actually”）和 W6 vulnerability detection 的 prompt injection 攻擊面，本講義對這兩塊都會加倍譯解。\nW2/W3 的 agent + context engineering 是 vibe coder 的核心日常，不是學術內容。\n\n對非資工背景讀者的建議：W1 LLM 基礎讀完即可，不必鑽 transformer architecture；把時間花在 W2-W4 的 agent + IDE + Claude Code 實作練習上，這是 ROI 最高的部分。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#課程資訊完整",
+    "href": "01_overview.html#課程資訊完整",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.3 課程資訊（完整）",
+    "text": "2.3 課程資訊（完整）\n\n2.3.1 修課負擔\n\n每週 10-12 hrs：含 lecture（3 hrs）、assignment（4-6 hrs）、reading（2-3 hrs）\nFinal project 不計入週負擔，是學期末額外時間。\n\n\n\n2.3.2 評分組成\n\n\n\n\n\n\n\n\n項目\n占比\n說明\n\n\n\n\nFinal Project\n80%\n學期末個人專案，展示 modern dev practices\n\n\nWeekly Assignments\n15%\n9 個 hands-on 練習，多半是用 Claude Code / Cursor / MCP / Warp 實作\n\n\nClass Participation\n5%\nStanford 課堂出席與討論\n\n\n\n對自學者來說，weekly assignments 才是訓練的核心。Final project 沒有 peer / mentor 互相 review 的話，建議用「對應 vibe coding 副業 side project」當練習。\n\n\n2.3.3 旁聽政策\n\n“We’re open to auditing requests by Stanford students and staff. You will be able to attend all the lectures, but we won’t be able to grade your homework or give advice on final projects.”\n\n非 Stanford 學生不能旁聽現場課，但 syllabus / slides / reading 都公開在 themodernsoftware.dev。本講義就是基於公開資源做的繁中化版本。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#三條自學路線從-00_index.md-重點展開",
+    "href": "01_overview.html#三條自學路線從-00_index.md-重點展開",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.4 三條自學路線（從 00_index.md 重點展開）",
+    "text": "2.4 三條自學路線（從 00_index.md 重點展開）\n\n2.4.1 Track A — Vibe Coder 速成路線\n目標：1-2 週讀完，能用 Claude Code 從零做出一個 side project。\nW1（LLM 基礎 + prompting）\n  → W2（agents + MCP，挑出 MCP 部分動手做）\n    → W3（AI IDE + context engineering，學 PRD 寫法）\n      → W4（Claude Code 高階用法，Boris Cherny 的 agent manager 概念）\n        → W8（UI/app building，學 v0 / Vercel）\n          → 動手做 final project\n跳過：W5 terminal（除非你已經在用 Warp）、W6 security（advanced）、W7 code review（團隊用）、W9 observability（production 用）、W10 trends。\n\n\n2.4.2 Track B — 完整軟體工程路線\n目標：跟 Stanford 學生同步進度（10 週），全 syllabus 走完。\n每週流程： 1. 讀本講義的週 .md（30 min） 2. 讀該週 readings 至少 2 篇（90 min） 3. 嘗試該週 assignment（90-180 min） 4. 看 Mon lecture slides 對照（30 min） 5. Fri guest speaker 看 industry context（30 min）\n\n\n2.4.3 Track C — Tech Lead / PM 視角\n目標：理解 AI-assisted coding 對團隊、流程、產品的衝擊，不寫 code。\nW1（LLM 基礎，理解能力邊界）\n  → W4（agent autonomy levels，理解人機分工）\n    → W6（security，理解風險）\n      → W7（code review，理解品控變革）\n        → W9（observability，理解 production 風險）\n          → W10（industry trends，預測未來 5 年）",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#學習資源",
+    "href": "01_overview.html#學習資源",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.5 學習資源",
+    "text": "2.5 學習資源\n\n2.5.1 必備工具（免費可開始）\n\n\n\n工具\n用途\n免費額度\n\n\n\n\nClaude Code\nAI coding agent CLI\n免費 plan 有限額\n\n\nCursor\nAI IDE\n14 天 free trial\n\n\nWarp\nAI terminal\n個人免費\n\n\nVercel v0\nUI 生成\n免費額度\n\n\n\n\n\n2.5.2 學習成本最低的兩篇 prereq\n\nAndrej Karpathy Deep Dive into LLMs — 3.5 hr 影片，看完就懂 W1 後半的所有概念\nPrompt Engineering Guide — 30 min 讀完，覆蓋 W1 的 prompt 技巧",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#本講義的譯解原則",
+    "href": "01_overview.html#本講義的譯解原則",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.6 本講義的譯解原則",
+    "text": "2.6 本講義的譯解原則\n\n技術名詞：English（中文） 首次出現，後續用 English。例：Model Context Protocol（模型上下文協定，MCP），後續用 MCP。\n產品名稱：只用英文。例：Claude Code、Cursor、Warp、Semgrep、Graphite。\n縮寫：縮寫（全稱） 首次出現。例：MCP（Model Context Protocol）、PRD（Product Requirements Document）。\n不需翻譯的通用詞：直接使用。例：CLI、IDE、API、SDK、CI/CD。\n對非資工背景讀者的譯解：在概念第一次出現時，用「💡 譯解」block 補一句白話。\n\n例： &gt; MCP（Model Context Protocol） 是 Anthropic 提出的開放協定，讓 AI agent 能用標準化方式呼叫外部工具與資料源。 &gt; &gt; 💡 譯解：可以想成 USB-C 之於充電線——以前每個工具廠都有自己的接頭，MCP 讓 AI 可以一個統一接口接所有外部工具（Slack、GitHub、Google Drive 等）。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "01_overview.html#講義產出限制-已知-caveat",
+    "href": "01_overview.html#講義產出限制-已知-caveat",
+    "title": "2  課程簡介與自學路線圖",
+    "section": "2.7 講義產出限制 / 已知 caveat",
+    "text": "2.7 講義產出限制 / 已知 caveat\n\nGoogle Slides 大多需登入 → Mon lecture 內容是基於 topics + speaker context 做的 best-effort 重建，不是逐字 transcript。\nFriday industry guest speaker 部分內容無 source → 只能依 speaker bio + 公司產品做高層摘要。\nW8 與 W10 沒有 reading list → 內容偏延伸思考 + 工具介紹，會明確標註「我的延伸」。\nW6 與 W9 對非資工背景偏深 → 加倍譯解，但仍假設讀者理解基本 web / 系統概念。\n\n如發現摘要內容與原文有出入，請以原文為準（每篇摘要均含原文連結）。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>課程簡介與自學路線圖</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html",
+    "href": "weeks/01_intro_to_coding_llms.html",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "",
+    "text": "3.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#學習目標",
+    "href": "weeks/01_intro_to_coding_llms.html#學習目標",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "",
+    "text": "解釋 LLM 從原始文字資料 → 預訓練 → 後訓練 → instruction tuning → RLHF 的完整製造流程\n辨識 一個 LLM 在哪些任務上會強、哪些會弱（hallucination、context window、reasoning chains）\n應用 5 種以上的 prompt engineering 技巧（few-shot、chain-of-thought、role prompting、structured output、prompt chaining）\n比較 不同 LLM provider（OpenAI、Anthropic、Google）的 API 與 coding 場景表現",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#核心概念導讀",
+    "href": "weeks/01_intro_to_coding_llms.html#核心概念導讀",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.2 核心概念導讀",
+    "text": "3.2 核心概念導讀\n\n3.2.1 一、LLM 的「製造流程」決定它的能力與盲點\n要看懂這門課後續九週講的所有工具（Claude Code、Cursor、Devin、Warp），你必須先理解 LLM 不是黑盒子，它是一條三段式生產線的產物：\n\nPre-training（預訓練） — 把整個網際網路 scale 的文本（Common Crawl、Wikipedia、書籍、GitHub code、論壇）餵進 transformer 做 next-token prediction。產出的 base model 本質上是「網路文件補全器」 — 給它一段開頭，它會猜下一個 token、再下一個、再下一個。Karpathy 在 Deep Dive into LLMs 裡把 base model 比喻成「整個網路的有損壓縮」。\nPost-training（後訓練）— Supervised Fine-Tuning（SFT，監督式微調） — 用人工標註的對話資料（人問什麼、helpful assistant 應該怎麼回）對 base model 做 fine-tune，把「網路補全器」轉成「會對話的 assistant」。\nRLHF（Reinforcement Learning from Human Feedback，人類回饋強化學習） — 用人類偏好訓練一個 reward model，再用 PPO / DPO 之類演算法把 LLM 的回答品質拉上來。這階段決定了 LLM「願不願意拒絕請求」「會不會諂媚」「邏輯是否一致」。\n\n為什麼這個 mental model 重要？因為 LLM 的所有奇怪行為都能從這三段推得： - Hallucination（幻覺） = pre-training 時把「合理的下一個 token」當目標，statistical pattern 偶爾會生成看似合理但事實錯誤的內容 - Knowledge cutoff（知識截止） = pre-training data 截止日之後的事它不知道（除非接 web search tool） - 算術 / 字元計數失敗 = tokenization 把文字切成 BPE token，模型看到的不是「字母」是 token id - Capability spectrum（能力光譜）不均勻 = 某些任務（寫 React component）強到嚇人，某些任務（畫 ASCII art、簡單算術）爛到爆\n\n💡 譯解：你可以想成「LLM = 一個讀過全網路的學生 + 經過 RLHF 公司新訓練的客服」。它對網路上常見的東西超熟（程式、論文、Wikipedia 主題），但對訓練後才出現的事（你公司的 codebase、你昨天 commit 的程式）一無所知 — 必須透過 prompt 把那些 context 餵給它。\n\n\n\n3.2.2 二、Prompt Engineering 是「給 contractor 的 brief」\nAnthropic 的圓桌討論 裡有個比喻最精準：寫 prompt 像「請一個聰明但完全不認識你公司的 contractor 做一件事」。好 prompt 的本質不是奇技淫巧，是清楚的技術寫作。\nGoogle Cloud 的 prompt engineering overview 把這件事拆成可操作的四要素：\n\nFormat（格式） — 自然語言問句 vs 結構化指令 vs JSON schema，依任務選\nContext and examples（情境與範例） — 提供任務背景與 1-3 個 input-output pair（few-shot）\nFine-tuning（微調 prompt） — 看 model 失敗 case 反推 prompt 該補什麼\nMulti-turn conversations（多輪對話） — 設計能維持 context 的對話流程\n\nPrompt Engineering Guide 列了 18 種主流技巧，分四層：\n\n\n\n\n\n\n\n\n層級\n技巧\n何時用\n\n\n\n\n基礎\nzero-shot / few-shot\n80% 場景的起手式\n\n\n推理\nChain-of-Thought (CoT) / Self-Consistency / Tree of Thoughts\n多步驟問題、數學、邏輯\n\n\n工具\nRAG / ReAct / PAL / ART\n需要外部資料或執行 code\n\n\nMeta\nAPE / Reflexion / Meta Prompting / Prompt Chaining\n把 prompting 本身自動化\n\n\n\n實務升級路徑通常是：zero-shot → 不行就 few-shot → 還是不行加 CoT → 還是不行接 RAG。80% 的問題在第三步前就解掉。\n\n\n3.2.3 三、Coding LLM 的真實工業使用樣貌\nOpenAI 自家的 How OpenAI Uses Codex 是這週最重要的 case study。它不是 demo 也不是 marketing，是 OpenAI 內部 6 個團隊（Security、Product Engineering、Frontend、API、Infrastructure、Performance）每天怎麼用 Codex 的真實使用報告。歸納出 7 個高 ROI use case：\n\nCode understanding — 摸熟陌生 repo、追資料流、on-call incident triage\nRefactoring & migrations — 跨多檔案的一致性改動（callback → async/await）\nPerformance optimization — 找 hot path、批次化 DB query\nImproving test coverage — 補 unit / integration test\nIncreasing dev velocity — scaffold boilerplate、收尾 last-mile\nStaying in flow — 在 meeting / on-call 碎片時間 fire-and-forget 任務\nExploration & ideation — 找替代方案、辨識潛在 regression\n\n更重要的是 5 條 best practice，是這 1-2 年才被工業界沉澱出來的：\n\nAsk Mode 先於 Code Mode：先讓 model 出 implementation plan，你 review 後再讓它寫 code（避免寫完才發現方向錯）\nAGENTS.md / CLAUDE.md 放 repo-level persistent context（命名慣例、業務邏輯、quirks）\nBest-of-N：同 task 同時跑多個版本，挑或合併\nTask queue as backlog：把碎想丟 queue，不必當下完成 PR\nGitHub Issue-style prompt：含檔案路徑、模組名、diff、doc snippet 的 prompt 效果最好\n\n這 12 頁 PDF 是這週最該認真讀的，它把後續 W2-W4 要講的所有 agent 工具用法都濃縮成一份 production-tested 守則。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#monday-lecture922introduction-and-how-an-llm-is-made",
+    "href": "weeks/01_intro_to_coding_llms.html#monday-lecture922introduction-and-how-an-llm-is-made",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.3 Monday Lecture（9/22）：Introduction and how an LLM is made",
+    "text": "3.3 Monday Lecture（9/22）：Introduction and how an LLM is made\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric（course instructor，Stanford undergrad/grad、前 Amazon Alexa 早期 LLM 團隊、ML 教育新創創辦人、YC-backed AI coding company 創辦人）\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\n第一節要校準兩件事：(1) 這門課不是 vibe coding 課、不是教非工程背景使用者怎麼避開請工程師；(2) LLM 不是黑盒子，理解它的製造流程才能用好它。Mihail 把 lecture 切成三段：\n\nState of the world 與軟體業現況 — 軟體工程行業正在被 AI 重塑，CS 主修申請數已下滑 20%。但 Mihail 的核心命題是：「You won’t be replaced by AI. You’ll be replaced by a competent engineer who knows how to use AI.」如果你的 value-add 只剩會 copy-paste Stack Overflow，就會被取代；但若能想 system architecture、抓 business context、設計可維運的 abstraction，AI 反而會把你的生產力推到 10 倍。\n這門課的核心命題：human-agent engineering（取代 vibe coding 的標準說法）— 包括 (a) 聚焦尚未被 AI 取代的能力（business understanding、tech lead 思維、好的 taste）、(b) 「LLMs are only as good as you are，good context leads to good code，if you can’t understand your codebase, neither will an LLM」、(c) 大量讀 code、激進實驗。Mihail 強調目前沒有定型的 software pattern，整個業界都在摸索。\n5 張投影片速講 LLM 製造流程（給工程師的版本）—\n\nBasics：LLM 是 autoregressive next-token predictor。Tokenize → embedding（1-3K 維）→ 12-96+ 層 transformer + causal self-attention → 下個 token 機率分布\n三階段訓練：(a) Pretraining 用 100B-1T+ token（Common Crawl / Wikipedia / StackExchange / GitHub）做 self-supervised next-token prediction、(b) SFT 用數萬到數十萬筆人工 prompt-response pair 教 model 跟 instruction、(c) Preference tuning 收集成對 output 訓練 reward model 對齊 helpfulness / correctness / readability\n資料量級對照：GPT-3 ~300B token / 570 GB，PaLM 780B token，LLaMA-65B 1.4T token；code-specific 像 Codex 額外吃幾十 GB GitHub code，StarCoder 吃 3.1 TB（English Wikipedia 才 3B token 當作參考點）\nReasoning model：在 SFT/RLHF 之上加 chain-of-thought trace + tool use + 對 reasoning step 收集人類偏好。Model size：Claude 3.5 Sonnet ~175B、LLaMA 3.1 405B、GPT-4 reportedly 1.8T\n\nIn practice 的 strengths vs limitations — 強：expert-level code completion、code understanding、code fixing。弱：hallucination（在 less-represented language 更嚴重）、context window 雖然 100-200K 但有 primacy/recency bias 與 lost-in-the-middle、latency（秒到分）、cost（最頂模型 input ~$1-3/M token、output $10+/M token，但每年降約 10×）\n\nKey takeaway：把 LLM 當「讀過全網路的工程實習生」而非魔法 — 它在 pre-training 看過的 pattern（常見 framework、open source code）很強，但 SFT/RLHF 沒看過的（你公司 codebase、你昨天的 commit）必須透過 prompt 餵 context。後續九週所有工具都是把這個 mental model 的不同瓶頸拆開來解決。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#friday-lecture926power-prompting-for-llms",
+    "href": "weeks/01_intro_to_coding_llms.html#friday-lecture926power-prompting-for-llms",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.4 Friday Lecture（9/26）：Power prompting for LLMs",
+    "text": "3.4 Friday Lecture（9/26）：Power prompting for LLMs\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 借用 Karpathy 的觀點開場：prompting 是 programming language 演化的下一階段。就像搜尋引擎的 query 從 boolean algebra 演化成自然語言，prompting 也越來越自然語言化。但「自然」不代表「隨便」 — prompt 是 art + science 的混合體：LLM 的 black-box 本質讓它有「whispering」的玄學成分，但業界已經沉澱出一套 empirically improved 的技巧。Lecture 系統地走過這套技巧 catalog：\n\nZero-shot prompting — 直接 ask，沒範例。例：「Make me a heap allocator in C」。適合 LLM 已熟的 well-known library / general coding task。\nK-shot prompting（in-context learning） — 給 1 / 3 / 5 個 example（empirical 上這幾個數字最有用）。用在：domain-specific API、enterprise 內部風格、命名慣例。不用在：well-known library、過度約束。Demo 用「在我們 repo 命名風格下寫 for-loop」，先 naive 提問再用 &lt;example&gt; 標籤包進兩段公司 convention 範例，立刻看到輸出差異。\nChain-of-Thought（CoT） — 顯式 show reasoning step。兩種變體：(a) Multi-shot CoT 提供 worked-out reasoning trace，(b) Zero-shot CoT 用 “Let’s think step-by-step” 觸發。是 reasoning model 的主力技術。適合 multi-step logic / programming / math。\nSelf-consistency prompting — 同 prompt sample 多次（通常配 CoT）後取 majority vote，相當於 model ensembling，能降 hallucination。Demo 用「用 5 次取多數」debug 一個 IndexError。\nTool use — 讓 LLM 把無法獨自完成的事 delegate 給外部系統。最重要的 hallucination 緩解技術之一，也是 autonomy 的基礎。Demo 用 &lt;tools&gt; 標籤列出 pytest -s ... / pytest -v ... 給 model 自己決定何時 call。\nRetrieval Augmented Generation（RAG） — 把 contextual data 注入 prompt。優點：保持 up-to-date、可解釋、自帶 citation、降 hallucination。Demo 把 UserAuthService 既有 code snippet + requests-oauthlib 文件 URL 一起塞進 prompt。Cursor / Windsurf 的 @context 就是 RAG。\nReflexion（self-critique） — 多輪：Turn 1 model 出第一版 → Turn 2 加「critique your answer, was it correct?」讓 model 自我修正。Mihail 說這是 modern coding agent 完整 agentic 行為的 workhorse。\nSystem / user / assistant prompt 三段結構 — 用 Claude 4.1 Opus 的真實 system prompt 當教材（「鬆散版的 Asimov 三大機器人定律」）。System prompt 通常 user 看不到，是 persona / 規則 / output style 的設定處。\nBest practice 收尾 — (a) 給 prompt 給沒有背景的人看，他困惑 LLM 也會困惑；(b) 激進使用 role prompting（「You are a helpful assistant that loves programming…」vs「You are a Gen Z digital bestie…」展示巨大差異）；(c) 用結構化標籤包 data：&lt;log&gt;...&lt;log&gt; &lt;error&gt;...&lt;error&gt;；(d) explicit 寫出 language / stack / library / constraint；(e) decompose task。\n\nKey takeaway：Prompt 是可被工程化的物件，不是奇技淫巧。實務 escalation path：zero-shot → 不行用 few-shot → 還不行加 CoT → 還不行接 RAG / tool use。Reflexion 與 self-consistency 是當代 coding agent autonomy 的底層機制，理解這幾招就能看懂 Claude Code / Cursor 內部的 prompting layer 在做什麼。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#reading-摘要",
+    "href": "weeks/01_intro_to_coding_llms.html#reading-摘要",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.5 Reading 摘要",
+    "text": "3.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nDeep Dive into LLMs\nKarpathy YouTube 3.5hr\nLLM = pre-training + post-training + RLHF 三段生產線，所有 weirdness 都從這裡推\n\n\nPrompt Engineering Overview\nGoogle Cloud\nPrompt 設計四要素 + 5 種 prompt 類型（zero/one/few/multi-shot, CoT）\n\n\nPrompt Engineering Guide\npromptingguide.ai\n18 種 prompting 技巧 catalog，分基礎 / 推理 / 工具 / meta 四層\n\n\nAI Prompt Engineering: A Deep Dive\nAnthropic 圓桌\n寫 prompt = 給聰明 contractor 的清楚 brief，不是奇技淫巧\n\n\nHow OpenAI Uses Codex\nOpenAI 內部 PDF\n7 個 production use case + 5 條 best practice，最該讀的一篇\n\n\n\n閱讀優先順序：時間有限的話，先讀 How OpenAI Uses Codex（最 actionable）→ 再讀 Anthropic deep dive（業界視角）→ 有時間補 Karpathy YouTube（基礎理論）。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#assignmentllm-prompting-playground",
+    "href": "weeks/01_intro_to_coding_llms.html#assignmentllm-prompting-playground",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.6 Assignment：LLM Prompting Playground",
+    "text": "3.6 Assignment：LLM Prompting Playground\n\nSource: github.com/mihail911/modern-software-dev-assignments/tree/master/week1\n任務描述: 練習用不同 prompting 技巧（zero-shot、few-shot、CoT、structured output）解決一系列 task，比較 output 差異，培養「prompt 是可工程化物件」的直覺。\n自學者可行性: ⭐⭐⭐⭐⭐ 完全可做。需要 OpenAI 或 Anthropic API key（前者有 $5 免費額度、後者有 free tier）。預估 2-4 hr。\n\n\n💡 沒有 API key 的替代方案：用 Anthropic console 或 OpenAI playground 直接在 web UI 操作，免錢上手。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/01_intro_to_coding_llms.html#對-vibe-coder-的應用",
+    "href": "weeks/01_intro_to_coding_llms.html#對-vibe-coder-的應用",
+    "title": "3  Week 1：Introduction to Coding LLMs and AI Development",
+    "section": "3.7 對 Vibe Coder 的應用",
+    "text": "3.7 對 Vibe Coder 的應用\n這週的概念怎麼套到你日常用 Claude Code / Cursor 的工作流？\n\n建立 LLM 心智模型 — 下次 Claude 給你錯答案，先問自己「這是 hallucination（pre-training 沒學到）還是 context 沒給夠（post-training 沒看過你 codebase）？」前者要 RAG 或網路搜尋，後者要把 context 餵清楚\n養成「Ask Mode 先於 Code Mode」習慣 — 用 Claude Code 寫新功能前先問「請幫我列出實作計畫，先不要寫 code」，等你 review 完再讓它落地。這一招會省超多 rollback 時間\nRepo 加 CLAUDE.md — 把專案的命名慣例、業務邏輯、常見 quirks 寫進去（同 OpenAI 內部的 AGENTS.md）。Claude Code 每次都會讀，等於 persistent context\nFew-shot examples 不只給格式 — 給 example 時挑「你期望它怎麼推理」的 case，不只是「你期望它輸出什麼格式」。這個差異對 reasoning task 特別大\nStructured output 走 XML tag — Claude 對 &lt;output&gt; &lt;thinking&gt; 之類 XML 比 JSON 配合度更高，逼它產 structured data 時用 XML 比較穩\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天就在你的 side project repo 加 CLAUDE.md，內容寫 (a) 這個 repo 在做什麼（一段話）、(b) 命名慣例（snake_case / camelCase / PascalCase）、(c) 任何「Claude 容易搞錯的事」（例：用 pnpm 不是 npm、用 Tailwind v4 syntax 不是 v3）。你會發現 Claude Code 的輸出立刻變得不一樣。\n\n\n上一週：（無 — 本週是第 1 週） | 下一週：W2 The Anatomy of Coding Agents",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Week 1：Introduction to Coding LLMs and AI Development</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html",
+    "href": "weeks/02_anatomy_of_coding_agents.html",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "",
+    "text": "4.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#學習目標",
+    "href": "weeks/02_anatomy_of_coding_agents.html#學習目標",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "",
+    "text": "拆解 coding agent 的核心組成（LLM、tool registry、planner、memory、observer）\n解釋 function calling / tool use 在 LLM API 層面的運作機制\n設計 一個 MCP server 把外部資料源接進 Claude / Cursor\n比較 Claude Code、Cursor、Devin 三種 agent 在架構決策上的差異",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#核心概念導讀",
+    "href": "weeks/02_anatomy_of_coding_agents.html#核心概念導讀",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.2 核心概念導讀",
+    "text": "4.2 核心概念導讀\n\n4.2.1 一、Agent ≠ LLM + 一個 while loop\nW1 把 LLM 講成「讀過全網路的 contractor」，但只有 contractor 沒有手腳，做不了事。Agent = LLM + 能執行動作的能力 + 會記得自己做過什麼的記憶。最小可用 agent 的架構長這樣：\nloop:\n  1. 讀取當前 context（系統訊息 + 對話 + 上次 tool result）\n  2. LLM 推理 → 決定要 call 哪個 tool 還是直接回答\n  3. 若 call tool：執行 → 拿 result 塞回 context\n  4. 重複直到 LLM 認為任務完成\n這個 loop 的每一個環節都是一個設計決策：\n\n\n\n\n\n\n\n元件\n設計問題\n\n\n\n\nLLM\n用哪家？OpenAI / Anthropic / Google / open-source？跨 model 兼容嗎？\n\n\nTool registry\nTool 怎麼定義？Tool 數量多少會 overload model？怎麼分組？\n\n\nTool execution\nTool 跑在哪？sandbox 還是直接 host shell？怎麼處理 long-running task？\n\n\nMemory\nContext window 撐不下時怎麼壓縮？要不要外掛 vector DB？對話跨 session 嗎？\n\n\nPlanner\n直接 reactive 還是先 plan 再 act？Plan 出錯怎麼回滾？\n\n\nObserver / Reflexion\nAgent 跑錯時誰來糾正？人類介入還是 self-critique？\n\n\n\nClaude Code、Cursor agent、Devin、Codex 的差異全在這六個槽位的決策上。例如 Devin 強調 autonomous（少人介入）、Claude Code 強調 interactive（人類隨時打斷），對應的 memory 與 observer 設計就差很多。\n\n\n4.2.2 二、Tool use / Function calling 的底層機制\nTool use 是 agent 的「手腳」。在 LLM API 層面，function calling 的 protocol 大致長這樣：\n\nAPI request 同時送 prompt 和 tool schema（JSON 格式描述每個 tool 的 name、description、parameters）\nLLM 回應 不是直接回答而是回 tool_use block，含 tool name + 參數\nClient（你的 agent loop） 看到 tool_use 就執行對應 tool function\nTool result 包成 tool_result 塞回 context，再呼一次 LLM\nLLM 看到 tool result 後決定：再 call 一次 tool（多步驟）還是給最終 answer\n\n關鍵設計細節： - Tool description 是給 LLM 看的 prompt — 寫得越清楚，model 越會在對的時機 call - Parameter schema 用 JSON Schema / Zod / Pydantic — 強制 model 產生可被 parse 的結構化參數 - Tool result 的格式直接影響下一輪推理 — Reilly Wood 在 MCP Food-for-Thought 裡實測「同樣資訊用 CSV 比 JSON 省一半 token」 - Error handling — Tool 失敗時要回 model「可恢復的錯誤訊息」，不要只 throw exception\n\n\n4.2.3 三、MCP — 為什麼要再發明一個協定\nFunction calling 的 protocol 各家不同（OpenAI 的 tools schema、Anthropic 的 tool_use block、Google 的 functionDeclarations），意味著你寫的每個 tool 要為每個 LLM client 重做一次。MCP（Model Context Protocol，模型上下文協定） 就是要解決這個問題 — 讓 tool 寫一次，Claude Desktop、Cursor、Continue.dev、所有 MCP-compatible client 都能用。\n\n💡 譯解：MCP 之於 LLM tools，就像 USB-C 之於充電線。以前每個工具廠都有自己的接頭（OpenAI plugin / Cursor extension / Claude artifact），MCP 讓你用一個統一接口接所有外部工具（Slack、GitHub、Google Drive、你自己的資料庫）。\n\nStytch 的 MCP Introduction 把 MCP 拆成三類 capability：\n\n\n\n\n\n\n\n\nCapability\n用途\n範例\n\n\n\n\nTools\n可被 LLM 呼叫執行動作的函式\nsend_email, query_database, create_pr\n\n\nResources\n模型可讀取的 context 資料\n檔案內容、DB 紀錄、API 回傳\n\n\nPrompts\n預先定義的任務模板\n“/code-review”、“/explain-this”\n\n\n\n底層用 JSON-RPC 2.0 做 message format，transport 分 local（stdio）和 remote（HTTP/SSE）兩種。Local stdio transport 開發成本最低，原型階段不必處理 OAuth；要做 multi-user 服務再上 Cloudflare Workers + OAuth。\nMCP Registry（2025 年 9 月推出）解決「server 找不到、寫的人沒地方掛」的問題，採 federation-friendly 設計（中央 registry + sub-registry 共存），不做 app store 壟斷。\n\n\n4.2.4 四、寫 MCP server 的兩個核心 trap\nMCP Food-for-Thought 給了非常實際的反思：別把 OpenAPI spec 機械式包成 MCP tool。理由：\n\nTool proliferation（工具擴增） — Tool 數量在 128 之前就會明顯惡化 agent 的選 tool 準確率\nContext 浪費 — API 回的 wide record 含一堆用不到的 field、JSON 重複 key 名稱浪費 token\n錯失 agent 原生能力 — 為 agent 設計的 tool 應該回 free-form text + 引導 next step，不是 strict schema dump\n冗餘 — Claude Code 之類現代 agent 本來就會自己寫 code 直接 call API\n\n實務原則： - 把多支相關 API 合併成一個彈性 tool（含 fields 參數讓 caller 自選欄位） - Response 用 markdown table 或 CSV，別 dump 整坨 JSON - 在 description 裡寫「這個 tool 適合在 X 情境用，後續通常呼叫 Y」幫 agent routing - 做 layered tool chaining：response 引導 next step",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#monday-lecture929building-a-coding-agent-from-scratch",
+    "href": "weeks/02_anatomy_of_coding_agents.html#monday-lecture929building-a-coding-agent-from-scratch",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.3 Monday Lecture（9/29）：Building a coding agent from scratch",
+    "text": "4.3 Monday Lecture（9/29）：Building a coding agent from scratch\n\nSlides: Google Slides 公開連結\nCompleted Exercise: Drive 連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export，slides 內容簡潔）整理的繁中摘要：\n\n這節 slides 內容相當精簡（只有 ~1.2KB 文字），核心命題是「coding agent 沒你想得那麼複雜」。Mihail 提出最小可用 agent 的三句話骨架：使用者跟 client（Windsurf / Cursor / Claude Code）互動，client 內部跑一個 loop 接著一個 LLM；LLM 偶爾發出 tool call，由 client 在 LLM 之外（off-LLM）執行。實作步驟：\n\n三段 prompt 結構 — system prompt 定義 LLM 行為與 directive、user prompt 是使用者請求、assistant prompt 是 LLM 回應\nAgent loop 機制 — 從 terminal 讀 input、不斷 append 到 conversation；告訴 LLM 有什麼 tool 可用；LLM 在適當時機要求 call tool；offline 執行 tool 並把 result 塞回 context\n三個基本 tool — read_file、list_dir、edit_file（建立新檔、修改檔案）\nLive build session — 現場用幾十行 code 把上述 loop 接起來\n\nLecture 收尾揭露 Claude Code 的「secret sauce」（Mihail 對外公開觀察 Claude Code 內部運作的整理）：\n\nFront-load context：用小而精準的 prompt 在 session 開頭壓縮目標\n&lt;system-reminder&gt; 散布全程：在 system prompt、user prompt、tool call、tool result 各層都注入 system reminder 標籤抵抗 long-context drift\nCommand prefix extraction：對使用者輸入做前綴解析來分流意圖\nSpawns sub-agents：主動 fork 出 sub-agent 處理特定 sub-task，避免主對話 context overload\n\nKey takeaway：Coding agent 不是新物種 — 它就是 LLM + tool registry + while loop 的最小組合。Claude Code / Cursor / Devin 的差別不在這個骨架，而在 prompt scaffolding（系統提示、&lt;system-reminder&gt; 散布、sub-agent 隔離）這些工程紀律。寫過一次自己的 100 行 agent 你會發現：難的不是 loop，是讓 model 在對的時機選對 tool。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#friday-lecture103building-a-custom-mcp-server",
+    "href": "weeks/02_anatomy_of_coding_agents.html#friday-lecture103building-a-custom-mcp-server",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.4 Friday Lecture（10/3）：Building a custom MCP server",
+    "text": "4.4 Friday Lecture（10/3）：Building a custom MCP server\n\nSlides: Google Slides 公開連結\nCompleted Exercise: Drive 連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\n這節從 W2 Monday 的「LLM 知識是 vast 但 static」痛點出發。要建 fully autonomous system，必須有可靠機制把 dynamic data（今天天氣、誰是現任總統、Bitcoin 價格、Nike 廣告旁白是誰）餵進 LLM。RAG 與 tool-calling 是目前最佳解 — 但 tool-calling 在 MCP 之前是 N×M 噩夢。\n\nWhy MCP — MCP（Model Context Protocol）是 2024 年 11 月才被 Anthropic 推出的開放協定，用一句話講就是「把 tool 暴露給 LLM 的標準格式」。在 MCP 之前，每個 LLM app（Cursor、Claude Desktop、Continue.dev）要接每個 third-party API（Slack、GitHub、Notion）都要寫 N×M 個 connector，還要各自處理 poor doc、不一致 data format、authentication、error handling。MCP 把這個複雜度從 N×M 壓到 N+M。\n設計傳承 — MCP 概念 extend 自 LSP（Language Server Protocol，VS Code 用來支援多語言的同類 N×M 解法），但 MCP 多了 proactive agentic workflow 的能力，不像 LSP 純 reactive。Output 強制 JSON-RPC 格式。\nMCP 術語 — Host（Cursor、Claude Desktop）、MCP Client（Host 內嵌的 library，每個 server 一個 stateful session）、MCP Server（包裝 tool 的輕量 wrapper）、Tool（可被呼叫的 function，可以是 data source 或 API）。\nFlow — Client 對 server 發 tools/list 問「你能做什麼」→ server 回 JSON 描述每個 tool 的 name / summary / JSON schema → host 把這些 JSON 注入 model context → user prompt 觸發 model 發出 structured tool call → MCP server 執行後對話繼續。\nTransport — MCP 提供 stdio（local stdin/stdout）與 SSE（remote HTTP server-sent event）兩種。Local stdio 開發成本最低，原型階段不必處理 OAuth。\nLive build session — 從零寫一個 custom MCP server，現場 demo list_files / edit_file 兩個 tool 被 server 實際呼叫的情況。注意：tool 多時 model 不一定會挑對 server，要在 prompt 中明說用哪個 server。\nLimitations — 今天的 agent 處理多 tool 能力還不行（Cursor 有 hard limit）；API 回的資料會快速吃掉 context window；APIs 應該設計成 AI-native 而非把 rigid REST 直接搬過來。Mihail 推薦延伸閱讀 arXiv 2505.03275 講 MCP mitigation 策略。\n\nKey takeaway：MCP 不是又一套技術 buzzword — 它解決的是 N×M connector 爆炸這個工業界真實痛點。寫過一次自己的 MCP server，你就能把任何外部資料源（RemNote、PubMed、阿摩錯題庫、Google Calendar、健保碼）統一接到 Claude Desktop / Cursor / 任何 MCP host，零 plugin、零 extension。Limitation 也別忘 — tool 數量在 30-100 個之間就會明顯惡化 model 的選 tool 能力。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#reading-摘要",
+    "href": "weeks/02_anatomy_of_coding_agents.html#reading-摘要",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.5 Reading 摘要",
+    "text": "4.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nMCP Introduction\nStytch\nMCP = AI 應用與外部系統之間的 universal adapter，client-server + JSON-RPC 架構\n\n\nSample MCP Server Implementations\nGitHub\n官方 reference servers（filesystem、GitHub、Slack、Postgres 等），抄來改最快\n\n\nMCP Server Authentication\nCloudflare\nOAuth 2.0 加在 remote MCP server，hobby → production 必經之路\n\n\nMCP Server SDK\nGitHub\nTypeScript SDK README，寫 server 的 starting point\n\n\nMCP Registry\nblog.modelcontextprotocol.io\n官方中央目錄 + federation-friendly sub-registry 設計\n\n\nMCP Food-for-Thought\nreillywood.com\n別把 OpenAPI 機械式包成 MCP，要為 agent 重新設計 tool\n\n\n\n閱讀優先順序：先 MCP Introduction（建立 mental model）→ MCP Food-for-Thought（設計品味）→ MCP Server SDK（動手）→ 其他依需求補。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#assignmentfirst-steps-in-the-ai-ide",
+    "href": "weeks/02_anatomy_of_coding_agents.html#assignmentfirst-steps-in-the-ai-ide",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.6 Assignment：First Steps in the AI IDE",
+    "text": "4.6 Assignment：First Steps in the AI IDE\n\nSource: github.com/mihail911/modern-software-dev-assignments/tree/master/week2\n任務描述: 在 Cursor / Claude Code / VS Code GitHub Copilot 之一的 AI IDE 內完成一系列 hands-on 練習，建立 IDE 工作流的肌肉記憶。\n自學者可行性: ⭐⭐⭐⭐⭐ 完全可做。需 Cursor 14 天 trial 或 Claude Code 訂閱（前者免費試用、後者 free tier 有限額）。預估 3-5 hr。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/02_anatomy_of_coding_agents.html#對-vibe-coder-的應用",
+    "href": "weeks/02_anatomy_of_coding_agents.html#對-vibe-coder-的應用",
+    "title": "4  Week 2：The Anatomy of Coding Agents",
+    "section": "4.7 對 Vibe Coder 的應用",
+    "text": "4.7 對 Vibe Coder 的應用\nW2 是 vibe coder 應該重投入時間的一週 — 學會寫 MCP server 之後，Claude Code 的能力上限會直接拉一個 level。實戰建議：\n\n第一個 MCP server 從「自己最常查的資料」開始 — 你可能查最多的：自己的 Obsidian / RemNote 筆記、PubMed、特定 API（你習慣用的天氣、台股、健保碼）。挑一個，寫成 MCP server，接到 Claude Desktop。20 分鐘就能跑起來。\nTool description 比 implementation 重要 — Description 是給 LLM 讀的 prompt，寫得清楚 model 才會在對的時機 call。例：別寫 \"description\": \"Query database\"，要寫 \"description\": \"Search the user's Obsidian vault for notes by keyword. Use this when user asks about their personal notes, journals, or saved knowledge. Returns markdown content with file paths.\"\n永遠加 fields / limit 參數 — 別讓 tool 一次回 1000 筆，給 caller 自選 page size。對 token 經濟學至關重要\nLocal stdio 先做，OAuth 之後再說 — 90% 的 vibe coding use case 是個人用，stdio transport 配 Claude Desktop 就夠。要開放給朋友再上 Cloudflare Workers + OAuth\n善用 Sample servers — 官方 repo 有 filesystem、GitHub、Slack、Postgres 等 reference 實作，抄一份來改是最快路徑\n裝完 server 第一件事去 Registry 提交 — 免費、無審核延遲，別人能在 Claude Desktop 內搜到你的 server\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天裝 Claude Desktop，從 modelcontextprotocol/servers 挑一個你會用到的 server（filesystem、GitHub、brave-search 都好），改 ~/Library/Application Support/Claude/claude_desktop_config.json 加進去，重啟 Claude Desktop，立刻就有外部能力。再來才是寫自己的 server。\n\n\n上一週：W1 Introduction | 下一週：W3 The AI IDE",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Week 2：The Anatomy of Coding Agents</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html",
+    "href": "weeks/03_the_ai_ide.html",
+    "title": "5  Week 3：The AI IDE",
+    "section": "",
+    "text": "5.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#學習目標",
+    "href": "weeks/03_the_ai_ide.html#學習目標",
+    "title": "5  Week 3：The AI IDE",
+    "section": "",
+    "text": "解釋 context window 為什麼是 AI IDE 最關鍵的瓶頸，以及 RAG / chunking / re-ranking 怎麼解決\n撰寫 一份能餵給 agent 的 PRD（Product Requirements Document），含 spec、acceptance criteria、guardrails\n設定 Claude Code / Cursor 的 context loading（CLAUDE.md / .cursorrules、MCP servers、custom commands）\n評估 Devin 跟 Claude Code 的設計哲學差異（autonomous agent vs interactive collaborator）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#核心概念導讀",
+    "href": "weeks/03_the_ai_ide.html#核心概念導讀",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.2 核心概念導讀",
+    "text": "5.2 核心概念導讀\n\n5.2.1 一、Context Engineering 的三大課題：Selection、Compression、Decay\nW2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude Code 寫過 non-trivial 任務，就會遇到一個 W2 沒講的瓶頸 — context window 不是越大越好。Drew Breunig 在 How Long Contexts Fail 把這件事拆成 4 種具體的 failure mode：\n\nContext poisoning（脈絡中毒） — Hallucination 一旦寫進對話 context 就會被反覆 self-reference，agent 朝不可能的目標前進。Gemini 玩 Pokémon 的著名 case：模型某輪生成「我已經拿到 X 道館徽章」（其實沒有），之後幾百輪 reasoning 都基於這個錯誤前提。\nContext distraction（脈絡分心） — Context 過長時模型會偏向「重複歷史 action」而非用 train 出來的 reasoning 重新規劃。小模型 ~32k token 後開始崩、大模型 ~100k 後也會。\nContext confusion（脈絡混淆） — Berkeley Function-Calling Leaderboard 顯示 8B 模型給 19 個 tool 還能用、46 個就崩。tool 越多 ≠ agent 越強，反而 routing accuracy 直接下降。\nContext clash（脈絡衝突） — Microsoft / Salesforce 研究顯示「分輪餵相同資訊」比「一次性餵」accuracy 下降 39%。多輪對話一旦走偏，回不來。\n\n理解這 4 種 failure 後，context engineering 就拆成三件事：\n\n\n\n\n\n\n\n\n課題\n問題\n解法\n\n\n\n\nSelection（選擇）\n從 1M token codebase 裡，這次 task 該餵哪些 file 進 context？\nRAG、grep + re-rank、@file reference、CLAUDE.md routing\n\n\nCompression（壓縮）\nContext 用到 60% 後怎麼濃縮？\n/compact summary、subagent isolation、phase-boundary checkpoint\n\n\nDecay（衰減）\n長 session 怎麼防 drift？\n&lt;system-reminder&gt; 重述目標、/clear 重啟、phase-spec re-anchor\n\n\n\nhumanlayer 團隊在 Getting AI to Work In Complex Codebases 直接喊出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「context window 的內容是你影響 output 品質的唯一槓桿」。Agent 是 stateless function — 同樣的 context window 給同樣的 model 永遠產出同樣品質。所以使用者最高槓桿的工作就是 curate 那個 window。\n\n💡 譯解：context engineering 跟臨床問診同構。問診（context selection）漏問就鑑別診斷漏；問診冗長（context bloat）就抓不到重點；前後病史矛盾（context clash）就推不出結論。Claude Code 寫不好 code 時，先檢查的不是 prompt 措辭，是「我有沒有給它對的 file」。\n\n\n\n5.2.2 二、Specs Are the New Source Code — 工作流的反轉\nW1/W2 還在「prompt 怎麼寫」的層級。Week 3 把視角拉高一階：當 AI 把 implementation 從週縮到分鐘，瓶頸從「會不會寫 code」變成「能不能描述清楚需求」。Ravi Mehta 在 Specs Are the New Source Code 借 Sean Grove 的話：傳統世界是 source code（人讀）→ binary（機器讀），AI 時代等於「把 source 撕碎，反而謹慎 version control 那個 binary」 — 因為 code 只是 intent 的 lossy projection（有損投射），spec 才是完整需求。\nWorkflow 的反轉是這週的核心命題：\n\n\n\n\n\n\n\n傳統 workflow\nAI agent workflow\n\n\n\n\nIdea → Spec → Prototype → 痛苦修改\nRapid prototype → 真實 customer feedback → 凝結成 crystal-clear spec → 大量再生\n\n\nSpec 寫得糊也能補救（人類工程師會問問題）\nSpec 寫得糊 = code 寫得糊（agent 不會主動 challenge）\n\n\nCode = single source of truth\nSpec = single source of truth，code 是 spec 的可重生產出\n\n\nCode review 抓 bug\nSpec review 抓 bug（一行 spec 錯 = 100 行 code 錯）\n\n\n\n對 PM、designer 也有解放性影響 — 過去想改一個 button 行為要排工程 sprint，現在寫得清楚的 spec 直接餵給 Claude Code 就能落地。Mihail 在 Monday lecture 會花相當時間講 PRD（Product Requirements Document）怎麼寫成「agent 看得懂的 spec」 — 含 user story、acceptance criteria、guardrails、non-goals 四個 block。\n\n\n5.2.3 三、IDE Integration 的演化：從 autocomplete 到 manager mode\nDevin: Coding Agents 101 把開發者 AI tool 的演化分成四代，每一代的 IDE integration 都不同：\n\n\n\n\n\n\n\n\n\n世代\n時期\n代表\nIDE 整合方式\n\n\n\n\nAutocomplete\n~2015\nTabNine、Kite\nmethod 級補完，typing 旁邊跳建議\n\n\nCopilot\n~2021\nGitHub Copilot\n多行 inline suggestion，按 Tab 接受\n\n\nGenerative chatbot\n~2023\nCursor Chat、Claude.ai\n檔案級 chat panel，貼 code 改 code\n\n\nAutonomous agent\n2024-now\nDevin、Claude Code、Cursor agent mode\nend-to-end task 委派，從 prompt 到 PR\n\n\n\n每一代的 IDE 都在解決前一代的瓶頸：autocomplete 解決打字慢、copilot 解決 boilerplate、chatbot 解決「跨檔案 context」、agent 解決「多步驟自我 iterate」。但 agent 帶來新問題 — IDE 不再只是 editor，要兼容 background task、long-running process、agent state visualization。Cursor 的 agent panel、Claude Code 的 CLI session、Devin 的 web UI 各有不同設計取捨。\n\n\n5.2.4 四、Devin vs Claude Code 的設計哲學張力\nFriday lecture 由 Cognition 的 Silas Alberti 開講，這節的張力預設是「Devin 的 autonomous-first 哲學 vs Anthropic Claude Code 的 interactive-first 哲學」。對比軸向：\n\n\n\n\n\n\n\n\n軸向\nDevin（Cognition）\nClaude Code（Anthropic）\n\n\n\n\n預設介入頻率\n低 — 接 task 後 hours 級自跑\n高 — 每個 tool call 都可被打斷\n\n\nUI 形態\nWeb app + cloud sandbox VM\nCLI / IDE plugin，跑在 user 機器\n\n\n錯誤恢復\n自我 iterate test/CI 直到 green\n多半丟回 user 決定\n\n\n適合任務\nscoped、有 clear acceptance criteria\nexploratory、需 user judgment\n\n\nEngineering manager mode\n強調，sales pitch 是「同時 supervise 5 個 Devin」\n弱，focus 在「你跟一個 Claude 對話」\n\n\n\nDevin 強調 architecture-first prompting（講 how 不只 what）、defensive prompting（預先告訴 agent 哪些坑）、feedback loop quality（type / test / lint signal）。但作者明確降溫：對大型任務 expect ~80% 時間節省，不是完全自動化。這個誠實的 ratio 是工業界共識。\nWriting Effective Tools for Agents（Anthropic engineering blog）則提供 tool design 的深度原則 — strategic selection（少而精）、meaningful naming（namespace prefix）、contextual response（semantic name 取代 UUID）、token-efficient implementation、descriptive specifications（像跟新進員工解釋）。這些 principle 是 Devin / Claude Code / Cursor 共通的 agent infrastructure layer。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#monday-lecture106from-first-prompt-to-optimal-ide-setup",
+    "href": "weeks/03_the_ai_ide.html#monday-lecture106from-first-prompt-to-optimal-ide-setup",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.3 Monday Lecture（10/6）：From first prompt to optimal IDE setup",
+    "text": "5.3 Monday Lecture（10/6）：From first prompt to optimal IDE setup\n\nSlides: Google Slides 公開連結\nDesign Doc Template: Drive 連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 把 IDE 演化壓縮成一條 timeline，再導出「為什麼 AI IDE 是 2023 年才可能」的論點。Lecture 的核心命題是：AI IDE 的 evolution 是「functionality consolidation vs developer customization」之間的 see-saw。\n\nIDE 簡史 — Turbo Pascal（1983）first true IDE → Microsoft Visual Studio（1997）first IntelliSense（autocomplete 前身）→ IntelliJ IDEA（2001）contextual code navigation / refactoring → VS Code（2015）lightweight + 高度可擴充 ecosystem，也引進 LSP（MCP 的概念祖先）→ Cursor（2023）第一個真正 AI-native IDE。\nCursor 使用模式分層 — Bread-and-butter mode（Tab 簡單 inline、Cmd-K 幾行的 quick edit、Cmd-L multi-file），True AI-native（background agent、MCP integration、learn memories、Bugbot PR review）。\nAI IDE 底層運作 —\n\nTab-complete：圍繞 cursor 的小 context window 加密送到 server，跑 infilling LLM 後送回建議\nChat：把 code chunk 存成 embedding 在 server 的 semantic index（檔名 obfuscated），query 時 retrieve 最相關 chunk 餵 LLM；IDE 定期 re-index 並用 Merkle tree 算 chunk diff 做 efficient update\n\nBest practice：simple change vs complex task —\n\nSimple change：不必太用心 prompting\nComplex task：你要進入 PM 模式，寫精雕的 specs doc，包含：Goal（這次改動目的）、Definitions（LLM 需要的 prereq）、Plan（high-level breakdown）、Source files being changed、Test cases、Edge cases、Out-of-scope（什麼不要改）、Extensions（之後可能加什麼，讓 LLM 不要走捷徑）\n\nCodebase optimization for human + agent — 多數 LLM 混亂來自 messy repo。優化清單：repo orientation、file structure、setup & environment、best practices、code style、access patterns、APIs and contracts。建議 monorepo design。「A messy repo can be as simple as having different access patterns, variable naming, multiple functions that do the same thing.」\nAgent configuration files 對比 —\n\nCLAUDE.md：Claude 自動 pull 進 context，放 common bash command、core file、code style、testing instruction\n.cursorrules、AGENTS.md（OpenAI Codex 用，官方範例 repo）— README 是給人看的（quick start、project description、contribution guideline），AGENTS.md 是給 agent 看的（build step、test、convention、code style、security）\nllms.txt：給網頁 scraping LLM 的導航\n重點 caveat：「The agents won’t always adhere to these descriptions/directives. They are intended as guidance.」這些檔案是建議不是強制\n\nLive demo 段 — 走一個帶 specs doc 的 complex coding task，看 cursorrules / Claude Code spec 在實 repo 裡長什麼樣。\n\nKey takeaway：Optimal IDE setup 不是「工具越多越好」 — 而是把 repo 整理到 human 跟 agent 都能讀得懂的狀態，再配上一份對 task 量身寫的 specs doc。messy repo + sloppy prompt 是 LLM 寫不出好 code 的最大原因，永遠先檢查這兩件事再去改 prompt 措辭。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#friday-lecture1010silas-alberticognition",
+    "href": "weeks/03_the_ai_ide.html#friday-lecture1010silas-alberticognition",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.4 Friday Lecture（10/10）：Silas Alberti（Cognition）",
+    "text": "5.4 Friday Lecture（10/10）：Silas Alberti（Cognition）\n\nSpeaker: Silas Alberti, Founding Team @ Cognition（前 Stanford PhD Student）\nSlides: Google Slides 公開連結\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Silas 的演講題目是「IDE ❤️ Agents：An opinionated guide to AI coding in 2025」：\n\nSilas 把 AI coding tool 演化分成三世代，每一代的「效率提升」量級截然不同：\n\nThree Eras of AI Coding Tools\n\nEra 1: Code Completion（GitHub Copilot）— ~10% efficiency gain，speed up coding，純 local\nEra 2: IDE Automation / AI IDEs（Cursor、Windsurf）— ~20% gain，single-player task completion，仍 local\nEra 3: AI Software Engineer（Devin）— 6-12× efficiency gain，移到 cloud + asynchronous，scale workflow in parallel\n\nSync vs Async 的本質差異 —\n\nSync：single-threaded、human-in-the-loop、注意力鎖在單一 task → AI agent 工作 20 秒到 1.5 分鐘\nAsync：multi-threaded、人類 delegate 給 AI、注意力可在多 task 間切換 → AI agent 工作 10 分鐘到數小時\nCloud + Async 解鎖 10× parallelism：每個工程師可同時跑多個 Devin instance（in VPC），一對多、共享組織知識；對比 Local AI IDE 是一對一、knowledge 隔離\n\nDevin 的 workflow autonomy 三階段 —\n\nPlan（engineer in the loop）：用 Search / Wiki 問 Devin 找 file / API / test → clarify scope → Devin 寫 step-by-step plan。耗時：分鐘級\nBuild（Devin in the loop）：Devin 在 isolated workspace（shell + editor + browser）執行 → plan → execute → test → iterate 直到 task 全綠。完全 async，你可以去做別的事\nReview（engineer 回 loop）：Devin 開乾淨的 PR 含 passing test 與 change summary → 你 review、comment 或 merge → Devin 可依要求修。Human effort ≲ 15% of original task\n\n「Semi-Async：尷尬的中間地帶」 — 5 秒 / 10 秒 / 30 秒 / 1 分 / 3 分 / 5 分 / 10 分 / 1 時 / 3 時 的 spectrum 上，3-10 分鐘是 Avoid 區段：太慢 stay in flow、太短 multi-task。要嘛做更快保持 flow，要嘛用更多時間換更高 intelligence。\nAsync agent 是 hard but learnable skill — 雖然 async agent 解鎖 10× gain，但多數人還在用 sync agent。原因：管理 / 委派本身就是難 skill，不論對象是人還是 agent。需要 cycle 多 task 的能力 + 快速理解新 context 的能力。\nPlanning / Coding / Testing 三階段的 sync vs async 配置 —\n\n今天：planning sync（DeepWiki、Ask Devin、Codemap、DeepWiki in Windsurf）→ coding async（delegate 給 agent）→ testing sync（在 Windsurf 裡 refine）\n未來：testing 也會 async（agent 自己驗收），那時 leverage 會跨另一個量級\n\nCommon workflow demo：(1) delegate task to Devin async、(2) test & refine changes in Windsurf sync — Devin 處理 long-form 工作，Windsurf 接手 last-mile sync 微調。\nWhere are we headed：human engineer 變成 agent manager，sync tool 解最難的問題、async tool 拿 10× leverage。對未來 valuable 的能力：(a) delegation & multi-threading、(b) code reading、(c) planning / scoping / architecting。\n\nKey takeaway：Devin 的設計哲學不是「IDE 升級版」，是把工程工作從 local sync 推到 cloud async 的範式轉移。6-12× 不是 marketing 數字 — 是 parallelism × autonomy 的乘積。但要拿到這個 gain，工程師必須學會「同時 supervise 多個 agent」這項新技能，這是比 prompt engineering 更難、更值錢的能力。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#reading-摘要",
+    "href": "weeks/03_the_ai_ide.html#reading-摘要",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.5 Reading 摘要",
+    "text": "5.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nSpecs Are the New Source Code\nRavi Mehta blog\nCode 是 intent 的 lossy projection，spec 才是 AI 時代的 single source of truth\n\n\nHow Long Contexts Fail\ndbreunig.com\n1M context ≠ 更好答案，4 種 failure mode（poisoning / distraction / confusion / clash）都會搞爛 agent\n\n\nDevin: Coding Agents 101\ndevin.ai\nCoding agent ≠ autocomplete / copilot / chatbot，是 end-to-end 的不同物種，工程師變 manager\n\n\nGetting AI to Work In Complex Codebases (ACE-FCA)\ngithub.com/humanlayer\nResearch → Plan → Implement 三段式 + frequent intentional compaction，brownfield codebase 工業級配方\n\n\nHow FAANG Vibe Codes\nX / Twitter\n原文需登入 X，best-effort 推測：個人 vibe coding workflow 在大型 codebase 不能照搬\n\n\nWriting Effective Tools for Agents\nAnthropic engineering\nTool 不是 API — 少而精、namespace 命名、semantic output、actionable error，evaluation-driven 迭代\n\n\n\n閱讀優先順序：時間有限的話，先讀 ACE-FCA（最 actionable，三段式 workflow 直接套用）→ How Long Contexts Fail（理解 failure mode 才知道為什麼三段式有效）→ Specs Are the New Source Code（mindset 翻轉）→ Writing Effective Tools（自己寫 MCP / skill 時必讀）。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#assignmentbuild-a-custom-mcp-server",
+    "href": "weeks/03_the_ai_ide.html#assignmentbuild-a-custom-mcp-server",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.6 Assignment：Build a Custom MCP Server",
+    "text": "5.6 Assignment：Build a Custom MCP Server\n\nSource: github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md\n任務描述: 用 W2 學的 MCP SDK 實作一個 production-grade MCP server，把外部資料源（資料庫 / API / 檔案系統 / SaaS 工具）包成 Claude Desktop / Cursor 可直接呼叫的 tool。重點是套用 Writing Effective Tools 的設計原則：strategic tool consolidation（不要把每個 endpoint 都 wrap 成 tool）、semantic output、descriptive specifications、actionable error message。建議的 server 主題：你日常會查的 API（個人筆記、研究資料庫、健保碼、PubMed、Google Calendar），或把 W2 的 MCP server 升級成 production 品質。\n自學者可行性: ⭐⭐⭐⭐ 完全可做但比 W2 進階。需要 W2 的 MCP 基礎、能寫 TypeScript 或 Python、有想包的外部資料源（自己的 PubMed query / Obsidian vault / 個人 API key）。預估 4-8 hr，含寫 code + 在 Claude Desktop 實測迭代。\n\n\n💡 沒有外部資料源也能做：用 SQLite + 假資料 dump 模擬資料庫，重點是練 tool consolidation 與 description 寫法 — design quality 不需要真實資料才能證明。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/03_the_ai_ide.html#對-vibe-coder-的應用",
+    "href": "weeks/03_the_ai_ide.html#對-vibe-coder-的應用",
+    "title": "5  Week 3：The AI IDE",
+    "section": "5.7 對 Vibe Coder 的應用",
+    "text": "5.7 對 Vibe Coder 的應用\nW3 是 vibe coder 從「會用 Claude Code」升級到「能規模化用 Claude Code」的關鍵一週。實戰建議：\n\n任何 non-trivial 任務先寫 1 頁 spec — 不寫的代價是反覆改 5 次都不對。Spec 含 4 個 block：(a) user 是誰、(b) 要做什麼、(c) 成功長怎樣（驗收標準）、(d) 不做什麼（non-goal）。5 分鐘 spec 換 2 小時 debug 是夯爆的 ROI\n採用 Research → Plan → Implement 三段式 — 別讓 Claude Code 一接 task 就開寫。先讓它 research（理解 codebase / 現有 pattern）、產 plan.md（你 review 完才放行）、最後 implement。人力放在 plan review 而非 code review，因為一行 plan 錯 = 100 行 code 錯\nCLAUDE.md 當 code 維護 — 每行都問「刪掉會不會出錯」。過長會讓重要 rule 被淹（Drew Breunig 的 context distraction）。建議結構：repo 在做什麼（一段話）、命名慣例、業務 quirks、絕不做的事。其他 domain knowledge 走 skill 或 subagent，別塞 CLAUDE.md\nTool / MCP server 不是越多越好 — Berkeley function-calling 數據顯示 tool &gt; 30 個就開始崩。挑你真會用的 5-10 個 MCP server 就好。寫自己的 MCP 時，把「3 個 low-level operation」合併成「1 個 high-level tool」，agent 友善太多\nLong session 出現重複錯誤 = context poisoning，立刻 /clear — 不要繼續解釋，會越解越糟。重啟，把正確結論寫進 CLAUDE.md / spec，再開新 session 跑一次\nSubagent 處理 expensive exploration — grep、找檔案、跑長 search 派 subagent 跑，主對話只接 summary。Claude Code 的 Task tool 直接支援，這招會讓主 session 的 context 維持 40-60% 健康水位\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天就在你最常用的 side project 試一次完整三段式：(1) 寫 1 頁 spec.md（含 user story + acceptance criteria）、(2) /clear 開新 session、(3) 對 Claude Code 說「先讀 spec.md，產出 plan.md，先不要 implement」、(4) review plan、(5) 確認後說「按 plan 執行」。你會發現一次到位的 ratio 從 30% 跳到 80%。從此回不去舊 workflow。\n\n\n上一週：W2 The Anatomy of Coding Agents | 下一週：W4 Coding Agent Patterns",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Week 3：The AI IDE</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html",
+    "href": "weeks/04_coding_agent_patterns.html",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "",
+    "text": "6.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#學習目標",
+    "href": "weeks/04_coding_agent_patterns.html#學習目標",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "",
+    "text": "辨識 agent autonomy 5 個層級（suggest → preview → execute-with-review → autonomous-with-checkpoints → fully autonomous）\n應用 Claude Code best practices（CLAUDE.md、custom slash commands、hooks、subagents）\n設計 human-agent handoff 流程（什麼任務該全自動、什麼該停下來問）\n評估 Claude Code、Cursor agent mode、Codex 在 agent management 哲學上的差異",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#核心概念導讀",
+    "href": "weeks/04_coding_agent_patterns.html#核心概念導讀",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.2 核心概念導讀",
+    "text": "6.2 核心概念導讀\n\n6.2.1 一、Agent Autonomy 5 個層級 — 從 autocomplete 到 fully autonomous\nW3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copilot → chatbot → agent）。Week 4 把鏡頭拉到「同一個 agent 在不同任務下，autonomy 應該調到哪一級」 — 因為實務上你不會永遠用同一個 mode。Mihail 在 lecture 會用 5 個層級的 autonomy spectrum 教這件事：\n\n\n\n\n\n\n\n\n\nLevel\n名稱\n介入頻率\n適用任務\n\n\n\n\nL1\nSuggest\n每 token / 每行\n補完一段 boilerplate、寫 docstring\n\n\nL2\nPreview\n每 diff\n改一個 function、加一個 test\n\n\nL3\nExecute-with-review\n每個 tool call 前 ack\n跨檔案 refactor、跑 destructive command\n\n\nL4\nAutonomous-with-checkpoints\n每 phase 邊界 review\nfeature implementation、含 plan / test / commit\n\n\nL5\nFully autonomous\ntask end review only\nscoped bug fix、依 clear acceptance criteria 跑\n\n\n\n關鍵 insight：autonomy 不是越高越好 — 反而要依任務類型動態調整。Exploratory（不知道答案、需要 user judgment）→ L2/L3；scoped 且有 verification（type / test / lint 全綠就算對）→ L4/L5。Claude Code 的 default 在 L3（每 destructive command 問），auto mode 把它推到 L4，背後是 classifier 自動審 risky operation。Devin 的 default 是 L5。Cursor agent mode 是 L4。\n從 Devin: Coding Agents 101 來的 80% rule 在這裡發揮：對大型任務 expect ~80% 時間節省，剩下 20% 是 you-as-manager 的 review / re-direct 成本，跟 autonomy level 無關。Level 拉得再高也省不掉這 20%。\n\n\n6.2.2 二、Anthropic 自己怎麼用 Claude Code\nHow Anthropic Uses Claude Code 是這週最 grounded 的 reading — 不是 marketing pitch，是 Anthropic 內部 10 個團隊的真實使用報告。共通 pattern 有三個：\n\n非技術人員大量使用 — finance、legal、growth marketing、product design 都是 power user。他們的工作流是「用 plain text 描述流程 → 餵給 Claude Code 自動執行」。Legal 團隊用它生成法規 mapping、growth marketing 用它跑 cohort analysis、design 用它把 Figma spec 翻成 production code\nScreenshot-driven debugging — Kubernetes pod IP 耗盡、Google Cloud UI 導覽都靠截圖 + 自然語言描述就能 diagnose。這不是 demo，是 on-call engineer 真實 workflow\nSkill-gap bridging — 工程師可以 vibe-code 出設計稿、設計師可以改 production code、legal 自動生成法規 mapping。過去要排工程 sprint 的事，現在自己用 Claude Code 跑\n\n對 CS146S 學生的核心訊息：Claude Code 不是「coding assistant」是「team multiplier」。瓶頸從「會不會寫 code」轉成「能不能描述清楚需求」 — 這正好接回 W3 的 spec-driven 命題。\n\n\n6.2.3 三、Claude Code 的 4 種擴充 primitive：CLAUDE.md / Skill / Subagent / Hook\nClaude Best Practices 把 Claude Code 的擴充機制整理成 4 種 primitive，每個解決不同層級的問題。理解這個分工是用好 Claude Code 的關鍵：\n\n\n\n\n\n\n\n\n\nPrimitive\n何時 load\n解決什麼問題\n用途範例\n\n\n\n\nCLAUDE.md\n每次對話 auto load\npersistent context（永遠該記得的事）\nrepo 命名慣例、業務邏輯、絕不做的事\n\n\nSkill\n按需 load（trigger 詞 / 路由）\ndomain knowledge / workflow\nNCCN guideline、IRB 表格、統計 pipeline\n\n\nSubagent\nspawn 獨立 context window\ncontext isolation（避免污染主對話）\ngrep 大 codebase、跑 long-horizon research\n\n\nHook\ndeterministic trigger（pre/post tool）\n必須每次發生的動作\nlint、block migration 寫入、auto git commit\n\n\n\n重要原則 — 「必須每次發生」走 hook，不是 CLAUDE.md。CLAUDE.md 是 prompt 給 model 看，model 偶爾會忽略；hook 是 deterministic script，harness 強制執行。「想做但不確定」走 skill / subagent，按需 load 不污染主 context。\nPeeking Under the Hood of Claude Code 用 LiteLLM proxy 攔截 Claude Code 真實送出的 API call，逆向工程出 4 個 internal pattern：(1) context front-loading session 開頭主動濃縮對話 / 判斷主題切換、(2) &lt;system-reminder&gt; tag 散布在多層 prompt 抵抗 long-context drift、(3) prompt-based safety 用專門 prompt 偵測 command injection 而非 hardcoded rule、(4) conditional sub-agent reminder 預設不注入 reminder 保持 focus、行為偏離才注入。結論：Claude Code 的成功不是 model 優勢，是系統化的 context scaffolding。\n\n💡 譯解：Claude Code 的「魔法」其實全是 prompt engineering 紀律 — 每個 session 開頭都把目標壓成 50 字 title、每個 tool result 都包進 system reminder、每個 subagent 都隔離 context。這意味著你在自己的 long workflow 上也能模仿 — 在關鍵步驟前手動重述目標，比期待 model 自己記得可靠。\n\n\n\n6.2.4 四、Community Framework 的兩種路線：specialized agent zoo vs meta-framework\n社群已經沉澱出兩種主流的 Claude Code 擴充路線。\n路線 1：Specialized agent zoo（Awesome Claude Agents） — 把 24 個 specialized subagent 分四層編成「虛擬開發團隊」：(1) Orchestrators 3 個（Tech Lead、Project Analyst、Team Configurator）做路由、(2) Framework Specialists 13 個（Laravel、Django、Rails、React、Vue 各自的 backend / API / ORM 三組）、(3) Universal Experts 4 個跨棧、(4) Core Team 4 個（code reviewer、performance optimizer、documentation specialist、code archaeologist）做 QA。內建 auto-configurator 偵測 stack 自動派 specialist。命題是「specialized expertise + division of labor 勝過 solo Claude」。\n路線 2：Meta-framework（SuperClaude） — 不是換 agent，是在 Claude Code 上層疊加 30 個 slash command + 20 個 specialized agent + 7 個 behavioral mode + 8 個 MCP server。Behavioral mode 是 SuperClaude 最獨到的概念 — 不是 agent 也不是 command，是「整段對話的操作脈絡」（Brainstorming Mode 讓所有後續回應變成 Q&A 探索風格、Token-Efficiency Mode 強制簡短）。設計哲學強調「framework footprint 要小，把 context window 留給 project code」。\n兩條路線的 trade-off：specialized agent zoo 邊界清楚但 maintenance 成本高（24 個 agent 要維護）；meta-framework 整合度高但 lock-in 強（會跟你既有 CLAUDE.md / skill 衝突）。\nGood Context Good Code（標題即論點） — agent 寫不好 code，瓶頸不在 model 而在 context 品質。寫不好時先別罵 model 也別重寫 prompt — 先問三個問題：(a) 我有給它 reference file 嗎？(b) 我有給它 verification（test / expected output）嗎？(c) CLAUDE.md / skill 裡有沒有相關 domain knowledge？三個都做了還錯，再考慮其他原因。這跟臨床 history-taking 同構：問診（context）做不好，鑑別診斷（output）一定不會準。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#monday-lecture1013how-to-be-an-agent-manager",
+    "href": "weeks/04_coding_agent_patterns.html#monday-lecture1013how-to-be-an-agent-manager",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.3 Monday Lecture（10/13）：How to be an agent manager",
+    "text": "6.3 Monday Lecture（10/13）：How to be an agent manager\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 用一張軟體團隊演化簡史鋪 mindset shift：solo developer（1960） → 軟體團隊出現、開始專業化（NASA / DoD 推動，1970-1990） → 主流軟體團隊（2000s）→ AI 輔助的開發團隊（2023） → 每個工程師都是 tech lead，管自己的一支 agent 軍團（2025+）。Lecture 的核心命題是：未來每個 developer 都會像 tech lead 一樣，operate 一支由不同專長 agent 組成的隊伍 — 處理 PR / QA、跨語言（React / FastAPI / Svelte）、跨角色（data engineer / ML engineer / DevOps）。最後甚至中等技術的 PM 都能做這件事。\n\nSoftware task 的責任分配演化 — 把典型工作流標 🟩（人）/ 🟦（agent）：\n\nProvide high-level requirements 🟩\nConvert requirements into design doc 🟩 / 🟦\nImplement solution from doc 🟦\nAdd tests 🟦\nEnsure CI passes 🟦\nCode review 🟦\nUpdate docs 🟦\n人類愈來愈集中在 requirements 與 design alignment，其餘交給 agent\n\nDirecting agent 的四個 primitive（後面 Boris 會深入講）—\n\nAgent behavior file（CLAUDE.md / cursorrules / AGENTS.md）：定義 agent 整體行為的 anchor\nHooks：deterministic script 在 PreToolUse / PostToolUse / UserPromptSubmit / PreCompact 等預定事件觸發\nCommands：常用 prompt 存成檔，agent 可執行（例：跑 test、review code、git commit + push、Claude Code 的 ship-it command）\nSubagents：runtime delegation，建立不同 persona（frontend / backend）、cleanly 隔離 context、自帶 system prompt + tool + 獨立 context window；目的是 agents managing other agents。可參考 awesome-claude-agents、SuperClaude Framework\n\nBest practice：你需要小心的安全網（careful backstops）\n\nCodebase 內要有 test\nCI/CD best practice 落實\n每個 agent 的可稽核性（auditability）\n每個 diff 都標是哪個 agent 做的\n不同 task class 用不同 model（Opus 拿來 plan、Sonnet 當 workhorse）\n複雜 task 前期多花一點時間 hand-hold；fully async 任務則放手\n經常 commit 做 checkpoint\n\nLive workflow walkthrough — Mihail demo 在實 task set 上看 agent 怎麼被 spin up、用 Claude proxy 觀察 LLM I/O。\nOpen question — 怎麼自動化每個 task 開頭的 10-20% research phase？怎麼維護 pending task queue（特別是一次性小改動）？\n\nKey takeaway：Agent manager 不是技術升級，是身分升級。寫 code 從「pair programming」變成「delegate + audit」。能不能在 fully async 任務放手、能不能對複雜 task 多 hand-hold 一點 — 這個分寸感比 prompt engineering 更決定一個 vibe coder 的天花板。Best practice 裡最被低估的一條是「Opus 用來 plan、Sonnet 用來 implement」 — 這個分工比同一 model 跑全程便宜又準確。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#friday-lecture1017boris-chernyclaude-code-creator",
+    "href": "weeks/04_coding_agent_patterns.html#friday-lecture1017boris-chernyclaude-code-creator",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.4 Friday Lecture（10/17）：Boris Cherny（Claude Code creator）",
+    "text": "6.4 Friday Lecture（10/17）：Boris Cherny（Claude Code creator）\n\nSpeaker: Boris Cherny, Creator of Claude Code\nSlides: Google Slides 公開連結\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要。Boris 演講 tl;dr 是 「programming is changing → choose your path with claude code → think six months out」：\n\n\nProgramming is at an inflection point — Boris 用一張 log(productivity) vs year 圖把過去 70 年的程式語言演化攤開：Fortran → Algol → Cobol → BASIC → C → Pascal → Prolog → C++ → Python → Java → JS → Go → Rust → Haskell → Swift → TypeScript。productivity 是 exponential growth，現在被 AI 推到第二段斜率。同時間 IDE 也在 exponential：ed → emacs → vi → Turbo Pascal → QBasic → VB → Eclipse → IntelliJ → Sublime → Cursor → Copilot → Devin → Claude Code。\nHistory 速覽 — IBM 029（1964 punch card）→ ed（1969，Ken Thompson）→ Smalltalk-80（1980 第一個 GUI IDE，live editing）→ Visual Basic（1991 第一個主流 visual editor）→ Eclipse（2001，3rd-party plugin ecosystem、rich autocomplete）→ Copilot（2021，multi-line AI autocomplete）→ Devin（2024，conversation-first，不再直接操作 code）。IDE DevX 演化加速中，下一個十年只會更快。\nVerification 也在 evolution — manual debugging → static type（Algol）→ formal verification → abstract interpretation → automated testing → CI → property-based testing（QuickCheck）→ dependent typing → e2e testing → chaos testing（Chaos Monkey）→ AI-powered vulnerability testing → AI-powered unit testing（TestGen）→ AI-powered fuzz testing（Sapienz）→ self-play。\nClaude Code 的 approach — 三條核心設計原則：\n\nWorks everywhere：terminal-native，所有 dev tool 都已經跑在 terminal\nLow-level model access：直接 expose model 能力，不過度抽象\nInfinitely hackable：使用者可在任何層擴充\n\nWorks across the whole SDLC — 五階段全覆蓋：(1) Discover — 探 codebase / 看 git history / 搜文件 / onboard、(2) Design — plan project / 寫 tech spec / 定 architecture、(3) Build — implement / 寫 + 跑 test / 開 commit & PR、(4) Deploy — 自動 CI/CD / 設環境 / manage deployment、(5) Support & Scale — debug error / large-scale refactor / 監控 usage & performance。「使用並掌握你 team 所有 CLI tool（git / docker / bq）以聚焦在解法而非 syntax」。\nOne ✻code, many faces — 同一個 Claude Code 有多種 surface：terminal、IDE、web & iOS、/install-github-app、SDK。SDK 範例：\nclaude -p \"what did i do this week?\" --allowedTools Bash(git log:*) --output-format stream-json\nget-gcp-logs 1uhd832d | claude -p \"correlate errors + commits\" --output-format=json | jq '.result'\n底層 model 同時支援 Anthropic / Bedrock / Vertex API。\n四個 use case —\n\nCodebase Q&A + research：例「how do I make a new @app/services/ValidationTemplateFactory?」「why does recoverFromException take so many arguments? look through git history」「why did we fix issue #18363 by adding the if/else in @src/login.ts?」「what did I ship last week?」\nWrite code 三模式：1-shot / sidekick / prototype\nIntegrate tools & MCPs：claude mcp add barley_server -- node myserver 然後 &gt; use the barley mcp server to check for error logs\nPower automation\n\nFit the workflow to the task — 三條 demo workflow：\n\nexplore › plan › confirm › code › commit：「figure out the root cause for issue #983, then propose a few fixes. Let me choose an approach before you code. ultrathink」\ntests › commit › code › iterate › commit：「write tests for @utils/markdown.ts to make sure links render properly (note tests won’t pass yet). then commit. then update the code to make tests pass.」（test-driven）\ncode › screenshot › iterate：「implement [mock.png]. Then screenshot it with puppeteer and iterate till it looks like the mock.」（visual feedback loop）\n\nPrototyping 範例 — Boris 秀一連串「actually, what if…」prompt 展示用 Claude Code 對 todo UI 做 8-10 輪 iteration，從 inline 顯示 → fixed list above input → pill 形式 → spinner merge → ctrl+T 展開 — 全在自然語言中完成 UI 設計探索。\nLessons —\n\nBuild for the model six months from now（最重要）— 不要對著今天的能力做 product，對著六個月後的能力做\nBe ready to evolve\nAsk not what the model can do for you（而是問你能怎麼配合 model）\nModels get better, compute gets cheaper\n\n\nKey takeaway：Boris 的核心訊息是 「對六個月後的 model 設計你的工作流」。今天的 Claude Code 是 opinionated primitive — 把 leverage 留給 model 而非 harness、CLI 而非 IDE plugin、infinitely hackable 而非 turnkey。理解這個 thesis 才看得懂為什麼它跟 Cursor / Devin 走完全不同的路 — 不是「比較好的 IDE」，是「比較少的 IDE」。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#reading-摘要",
+    "href": "weeks/04_coding_agent_patterns.html#reading-摘要",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.5 Reading 摘要",
+    "text": "6.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nHow Anthropic Uses Claude Code\nAnthropic PDF\n內部 10 個團隊（含 legal、design、growth marketing）都用 Claude Code，是 team multiplier 不是 coding assistant\n\n\nClaude Code Best Practices\nAnthropic engineering\n4 種 primitive（CLAUDE.md / Skill / Subagent / Hook）+ Explore→Plan→Implement→Commit 工作流\n\n\nAwesome Claude Agents\ngithub.com/vijaythecoder\n24 個 specialized subagent 編成「虛擬開發團隊」(orchestrator + specialist + universal + core team)\n\n\nSuperClaude Framework\ngithub.com/SuperClaude-Org\nMeta-framework：30 command + 20 agent + 7 mode + 8 MCP 疊加在 Claude Code 上層\n\n\nGood Context, Good Code\nStock app blog\nCode quality ∝ context quality；agent 寫不好先檢查 context，不是 prompt 措辭\n\n\nPeeking Under the Hood of Claude Code\nOutsightAI Medium\nLiteLLM 攔截逆向工程出 4 個 pattern（front-loading / &lt;system-reminder&gt; / prompt-based safety / conditional sub-agent）\n\n\n\n閱讀優先順序：先讀 How Anthropic Uses Claude Code（看真實使用樣貌建立期待）→ Claude Code Best Practices（4 primitive 是核心教科書）→ Peeking Under the Hood（理解設計哲學）→ Good Context, Good Code（debug mindset）→ Awesome Agents / SuperClaude 兩個 community framework 看興趣選讀。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#assignmentcoding-with-claude-code",
+    "href": "weeks/04_coding_agent_patterns.html#assignmentcoding-with-claude-code",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.6 Assignment：Coding with Claude Code",
+    "text": "6.6 Assignment：Coding with Claude Code\n\nSource: github.com/mihail911/modern-software-dev-assignments/blob/master/week4/assignment.md\n任務描述: 在你選的 repo 裡完整實踐 Claude Code 4 種 primitive：(1) 寫一份精簡 CLAUDE.md（每行可審）、(2) 建一個 custom slash command（.claude/commands/&lt;name&gt;.md）、(3) 寫一個 subagent definition（.claude/agents/&lt;name&gt;.md）做 expensive search、(4) 設一個 hook（.claude/settings.json）強制 lint 或 block 危險命令。再用這套配置完成一個 non-trivial 的 feature 或 refactor，產出含 plan.md + verification.md + 最終 PR 的完整 trace。重點是體驗「Explore → Plan → Implement → Commit」工作流的 friction 與 ROI。\n自學者可行性: ⭐⭐⭐⭐⭐ 100% 可做。Claude Code 有 free tier，配 GitHub free repo 就能跑完。預估 4-6 hr，含 setup（1 hr）+ 寫 4 種 primitive（1.5 hr）+ 跑完整工作流（2.5 hr）。\n\n\n💡 不知道用什麼 repo 練？ 拿你既有的 side project（哪怕只有 50 行 code）就好。重點不是 codebase 大小，是把 4 個 primitive 各寫一個跑過一次的肌肉記憶。沒 side project 的話，從 scratch 開個 todo list app 也行。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/04_coding_agent_patterns.html#對-vibe-coder-的應用",
+    "href": "weeks/04_coding_agent_patterns.html#對-vibe-coder-的應用",
+    "title": "6  Week 4：Coding Agent Patterns",
+    "section": "6.7 對 Vibe Coder 的應用",
+    "text": "6.7 對 Vibe Coder 的應用\nW4 是 vibe coder 整個 10 週課程裡 ROI 最高的一週 — 把 Claude Code 4 個 primitive 練熟，後續 6 週的所有工具（Modern Terminal、CI/CD、Production Ops）都會省一半時間。實戰建議：\n\nCLAUDE.md 三層結構 — 不是流水帳，要有結構：(a) repo 在做什麼（一段話）、(b) 絕不做的事（最重要、列 5-8 條）、(c) 命名 / 風格慣例。每行都問「刪掉會不會出錯」 — 會的留下、不會的刪。Boris Cherny 自己在 podcast 講過 Anthropic 內部 CLAUDE.md 平均才 30-50 行，越短越有效\nCustom slash command 從「你最常打的同一段 prompt」開始 — 你發現自己每次都打「先讀 X、再分析 Y、最後輸出 Z」？把它寫成 .claude/commands/&lt;name&gt;.md，下次 /&lt;name&gt; 就跑完。對醫學研究 workflow 特別有用 — 「/table1」「/km-curve」「/oe-search」這類重複任務都該是 slash command\nSubagent 處理 expensive 探索 — 主對話開始爆 context 前就派 subagent。三個 typical use case：(a) 探索陌生 codebase（code-archaeologist 風格 agent）、(b) 跨 repo grep + summarize、(c) long literature search。主對話只接 subagent 的 summary，乾淨太多\nHook 處理「必須每次發生」的事 — 不要把「commit 前要跑 lint」寫進 CLAUDE.md（model 會忘），寫成 PreToolUse hook 強制執行。常見 hook：(a) auto git commit after Edit、(b) lint after Write、(c) block dangerous command（rm -rf / git push --force / DROP TABLE）、(d) auto-format on save。Hook 是 deterministic，永遠會跑\nSkill 系統 = domain knowledge as plugin — 比 CLAUDE.md 更進階的 reuse 機制。你已經有的 clinical-scores / openevidence / kaplan-meier 都是 skill 範例：trigger 詞觸發、按需 load、不污染預設 context。寫 skill 的甜蜜點：(a) 跨 project 重複用、(b) 有明確 trigger、(c) 需要 domain knowledge 才寫得對\nCommunity framework 選擇性引入，不要無腦 install — SuperClaude / Awesome Agents 有 inspiration 價值但會跟你既有 CLAUDE.md / skill 衝突。建議：抄 1-2 個你會真的用的 agent / command 進自己的 .claude/，不要 full install\n\nVibe coder 進階一級的徵兆：當你發現自己花在「寫 spec + plan + 設 verification」的時間 &gt; 「打 prompt」的時間 — 你已經是 agent manager 不是 pair programmer 了。這個 ratio 翻轉是 W4 想灌輸的核心 mindset shift。\n\n💡 vibe coder 的 Day-1 Quick Win：今天就在你最常用的 repo 加 .claude/commands/plan.md，內容寫「請讀 spec.md（如有），分析 codebase，產出 plan.md（含 file-level step + verification 策略），先不要 implement」。下次任何 non-trivial task 開始前打 /plan，跑完 review，再說「按 plan 執行」。3 行 markdown 就把你的工作流升級到 ACE-FCA 三段式。比裝整套 SuperClaude 有效 10 倍。\n\n\n上一週：W3 The AI IDE | 下一週：W5 The Modern Terminal",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Week 4：Coding Agent Patterns</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html",
+    "href": "weeks/05_modern_terminal.html",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "",
+    "text": "7.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#學習目標",
+    "href": "weeks/05_modern_terminal.html#學習目標",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "",
+    "text": "辨識 AI terminal 與傳統 terminal 在 input、output、history、collaboration 四個維度的差異\n應用 Warp 的 AI features（natural language → command、AI agents、workflows、shared workspaces）\n比較 Warp、Claude Code CLI、Codex CLI 三種 CLI agent 的設計取捨\n設計 一個 terminal-first 工作流（含 AI-assisted scripting、history search、命令解釋）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#核心概念導讀",
+    "href": "weeks/05_modern_terminal.html#核心概念導讀",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.2 核心概念導讀",
+    "text": "7.2 核心概念導讀\n\n7.2.1 一、Terminal 演化簡史 — 為什麼 1970 年代的設計會撐到現在\n要理解 modern terminal（如 Warp、Wave、Ghostty）為什麼會冒出來，得先看清楚我們現在用的這個 terminal 是什麼東西。今天你打開 macOS 內建的 Terminal.app 或 iTerm2，看到的本質上是 VT100 terminal emulator — 一個模擬 1978 年 DEC VT100 硬體終端機的軟體。VT100 的設計目標是讓打字機式硬體裝置能跟 mainframe 通訊：input 是一行 text、output 是一行 text，所有狀態存在「螢幕緩衝區（screen buffer）」這個一維 character grid 裡。\n這套設計撐了 50 年沒被換掉的原因有兩個：(1) 它「夠用」— 工程師寫 shell script、跑 git、看 log 都不需要更花俏的 UI；(2) 生態鎖死 — bash、zsh、vim、tmux、ssh、所有 CLI tool 都假設輸出是 line-buffered text、控制是 ANSI escape code，要換 terminal 就得讓上萬個既有工具相容。所以即使 GitHub 在 2017 推出 Hyper、Microsoft 在 2019 推出 Windows Terminal，本質都還是「比較好看的 VT100」。\n真正的轉折點是 2022 年的 Warp。Warp 第一次在 terminal 層做兩件激進的事：(a) 把 line-buffered output 重構成 block（每條 command + output 是一個獨立物件，可選取、複製、分享、搜尋），(b) 把 LLM 直接縫進 input editor（自然語言轉 command、執行錯誤即時解釋）。這讓 terminal 從「字符串 I/O 通道」進化成「結構化 agent runtime」。後續 Wave、Ghostty、Claude Code CLI、Codex CLI 都在這個賽道上展開。\n\n💡 譯解：你可以把傳統 terminal 想成「醫院 1970 年代的紙本病歷」— 一切都是 free-text、沒結構、難搜尋；modern terminal 就像「電子病歷系統」— 每個 progress note 是有 metadata 的物件，可以 query、tag、跨病人比對。介面長得像但底層資料結構完全不同。\n\n\n\n7.2.2 二、AI Terminal 的四個價值主張\nWarp University 把 Warp 自我定位從「modern terminal」升級為 Agentic Development Environment（代理式開發環境，ADE）。對使用者來說，AI terminal 比傳統 terminal 多出四個 affordance：\n\n\n\n\n\n\n\n\n維度\n傳統 terminal\nAI terminal（Warp 為例）\n\n\n\n\nInput\n單行 text、按 ↑ 翻 history\nNatural language → command、Ctrl+G 多行編輯、@ mention 檔案、語音輸入\n\n\nOutput\nLine-buffered text、ANSI escape\nBlock（可分享、搜尋、附 metadata）、agent 自動解釋 error\n\n\nHistory\nPer-shell .zsh_history 檔\nCloud-synced、可 query「上週那個 docker build 怎麼下的」\n\n\nCollaboration\n截圖丟 Slack\nBlock 一鍵分享 link、shared workspace、cloud agent 跑非同步任務\n\n\n\n關鍵概念是 block-based terminal — 每條 command + output 是一個 first-class object，不再是 line buffer 裡的一坨 text。這個 mental model 變化的影響極大：你能對單一 block 做「重跑」「分享」「丟給 agent 解釋」「轉成 workflow 模板」等動作，這些在傳統 terminal 裡需要先把輸出複製出來、貼進別處才能做。\nWarp University 還提出 Warp（local terminal）+ Oz（cloud agent orchestration） 的雙產品架構：local agent 是 interactive、人在 loop 裡審 diff；cloud agent 是 background、被 webhook / cron 觸發、可大規模並行（PR review、issue triage、dependency update）。兩端共用同一個 agent core 與 Warp Drive（rules / prompts / env var / workflow 的 persistent context layer），所以「雲端開工、local 接手」是 seamless 的。\n\n\n7.2.3 三、CLI Agent vs IDE Agent — 設計取捨\nW3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、Codex），W5 把兩個放在同一個 terminal 裡。三種 agent 的取捨可這樣比：\n\n\n\n\n\n\n\n\n\n設計面向\nIDE Agent（Cursor）\nCLI Agent（Claude Code）\nTerminal Agent（Warp Agent Mode）\n\n\n\n\nHost\nVS Code fork\n任何 terminal\nWarp 本身\n\n\nContext source\nEditor open files、selection\nCLAUDE.md + 工作目錄\nCodebase index + WARP.md + Warp Drive + MCP\n\n\n互動模式\n在 editor 旁邊 chat panel\n純 CLI prompt\nBlock-based、Ctrl+G 多行、 ⌘+I mode 切換\n\n\nTool access\nEditor command + shell\nShell + file system\nShell + file system + 整套 Warp affordance\n\n\n長 task\n中等（chat panel 易斷）\n強（CLI 天生 async）\n強（cloud agent 可背景跑）\n\n\nMulti-file refactor\n強（diff view 內建）\n中（需 review CLI diff）\n強（內建 code review panel）\n\n\n\nWarp vs Claude Code 文中講得很直白：Warp 不把 Claude Code 當對手而是當 first-class CLI agent host — 你可以在 Warp 裡跑 claude，自動拿到 rich input editor、agent notification、inline code review、vertical tabs 等 IDE 級 affordance。或者你也可以直接用 Warp 內建的 Agent Mode（⌘+Enter）。最關鍵的 migration 提示：把 CLAUDE.md 改名為 AGENTS.md 或 WARP.md 放專案 root，Warp 會自動讀取，不必重寫。\n\n\n7.2.4 四、為什麼 Vibe Coder 該認真考慮換 Terminal\nHow Warp Uses Warp to Build Warp 揭露 Warp 公司內部的 Coding Mandate — 每個 coding task 都從在 Warp 裡 prompt 起手，連續卡關 10 分鐘才能 fallback 到別的工具。這條規則對個人開發者太嚴格，但精神對非資工背景的 vibe coder 反而更重要：\n\nPrompt-first 強迫你想清楚需求 — 用 natural language 描述「我要的是什麼」比直接寫 code 更容易發現需求模糊\nBlock 化讓你能回頭審視 — 不再是滾動的 line buffer，每個操作都是可被 review、re-run、share 的物件\nPersistent context 取代碎片記憶 — Warp Drive 的 Rules / Prompts / Workflow 等同 Claude Code 的 CLAUDE.md，重複指令不必每次重打\nCloud agent 解放等待時間 — 大 task（跑完整 test suite、build、deploy）丟去 background，不必盯著 terminal\n\n對台大醫學系背景轉 vibe coder 的讀者，這個對應關係特別有用：Warp Drive 之於 terminal，等於 RemNote 之於知識管理 — 都是「把碎片化的 context 沉澱成可重用 artifact」。學會一邊就能類推另一邊。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#monday-lecture1020how-to-build-a-breakout-ai-developer-product",
+    "href": "weeks/05_modern_terminal.html#monday-lecture1020how-to-build-a-breakout-ai-developer-product",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.3 Monday Lecture（10/20）：How to Build a Breakout AI Developer Product",
+    "text": "7.3 Monday Lecture（10/20）：How to Build a Breakout AI Developer Product\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric（用 Warp 當 demo 工具）\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\n這節從產品策略角度拆「為什麼 AI dev tool 在 2024-2025 出現史上最快的採用速度」。Mihail 用 7 條產品設計原則作為主軸，每條都對應 Warp 等成功 AI dev tool 的具體決策：\n\nStart with what developers know — 從既有 interface 過渡而非另起爐灶。每個 segment 都接到 developer 已熟的 metaphor：Cursor 接 IDE、Warp 接 terminal、Bolt 接 chat。範例：explainshell.com 是把「tar -czvf」這種公認痛點當切入點，逐步把使用者從 raw command line 解放，能在 code 與自然語言間自由切換。\nConfiguration flexibility — 對 average user 零設定就能展示價值；power user 拿到完整 configurability：seamless 切換 model、prompts、project rules、MCP、Warp profiles per user。\nFocus on developer ergonomics — 「If you can shave off a single keystroke, do it.」keyboard hotkey、零 onboarding friction（「5 minutes to WOW」是 Warp 內部目標）、tab / enter 等小動作的黏著度。\nChat as a first-class citizen — Code 本來就是 human intent 的 contrived representation，工具進化到一定程度後，更多互動會直接變自然語言。Demo Warp 內 debug error 流程就是用聊天替代 grep。\nMCP integration — MCP 已成為 LLM 與真實世界互動的 lingua franca。可擴展工具生態給 LLM 任何資源 / 動作。Demo：用 context7 給 Warp 抓最新 BrainTrust 文件。\nRapid feedback loops — 改完立刻看到效果。Bolt / Lovable 的 real-time canvas、Warp 的 take action + immediate reaction 都在這個範式。可解釋性是 first-class citizen。「entire projects committed to just reducing build time」是這條原則的最強佐證。\nAgent workflows — 對實質任務給 full autonomy。「agent-take-the-wheel」的接受度逐月上升，但要支援不同等級的 human-in-the-loop（agent 問 clarifying question、YOLO mode）。Demo Warp 的 YOLO mode。\n\n最後 Mihail 拋出未來 open question：\n\n會不會看到大規模整合？code review / app building / monitoring 等 point solution 會被 all-in-one platform 吞掉嗎？\nAI IDE 會不會演化成 AI terminal、再演化成 AI browser-replit？\n像 Warp / Cursor 會不會 verticalize 變成「full-stack 開發專用」之類？\n給 coding agent 個人化 / project-specific rule 的 universal standard 會是什麼？目前 fragmented（.cursorrules / CLAUDE.md / AGENTS.md），AGENTS.md 是首個 step in that direction。\n\nKey takeaway：AI dev tool 爆紅不是「把 chatbot 黏在編輯器旁邊」 — 它需要從 (1) 接既有 mental model 開始、(2) 對 power user 開全部 configurability、(3) 偷每一個 keystroke 的 ergonomic 紀律、(4) 把 chat 當 first-class、(5) MCP 接通生態、(6) feedback loop 越快越好、(7) 對實質任務放 autonomy 同時保留人類介入點。這 7 條原則是 vibe coder 評估「該不該換工具」的 checklist。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#friday-lecture1024zach-lloydwarp-ceo",
+    "href": "weeks/05_modern_terminal.html#friday-lecture1024zach-lloydwarp-ceo",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.4 Friday Lecture（10/24）：Zach Lloyd（Warp CEO）",
+    "text": "7.4 Friday Lecture（10/24）：Zach Lloyd（Warp CEO）\n\nSpeaker: Zach Lloyd, CEO of Warp\nSlides: Figma Slides（公開連結）\n\n\n以下基於 slide deck 公開內容（PDF 39 張 slide vision OCR）整理的繁中摘要。Slide 結構為六段：(1) The world is changing、(2) From development by hand to by prompt、(3) What is Warp、(4) Warp tour、(5) Using agents to go from prompt to production、(6) The business of agentic development，最後 Q&A。\n\n\n論點主軸 — 從 by-hand 到 by-prompt 的 dev paradigm shift：Lloyd 開場用 Greylock 的引言定錨「為 code generation 與 engineering workflow 解鎖 high-fidelity、reliable AI 是巨大機會」。整場演講的核心張力是「Current: Development by hand → Future: Development by prompt」，而 prompt-driven development 又分兩支：使用者主動觸發的 interactive agent，以及由 webhook / cron / event 觸發的 ambient agent。Warp 的賭注是同時做好這兩端的開發者體驗，把產品定位為 ADE（Agentic Development Environment，代理式開發環境）。\n為什麼是 terminal — 三個結構性理由：Lloyd 認為 command line 是 agent 最自然的住所。理由：(a) Lowest tool in the dev stack（在開發堆疊最底層、其他工具都跑在它上面）；(b) Leverages CLI ecosystem（git、docker、gcloud、curl 全都已經 CLI 化，不必重造）；(c) Already set up for orchestrating long-running tasks（terminal 從第一天就是非同步、process-spawning friendly）。但他立刻補一句「terminal needs to be modernized」— terminal 是對的介面，VT100 是錯的實作。\nWarp’s history（2020 → 2025 timeline）：Lloyd 用一條時間軸 walk through 公司演化，每年加上對應的產品里程碑：2020 spring had an idea，2020 fall started building，2021 Warp MVP + Private Beta（強調 “Better UX”），2022 Mac Public Release，2023 Warp Drive + AI Chat + AI Command Search 三件 AI feature 一次推出，2024 velocity 暴增（Linux、Agent Mode、Session Sharing），2025 Windows release + ADE 重新定位。後面接一張密密麻麻的 feature grid（Split Panes、Markdown Viewer、Command Search、Block Sharing、Secret Redaction、SSO、Active AI…），標題就叫「Warp continues to grow」。Mission 寫得很短：「Empower all developers to deliver great software, quickly and reliably.」\nProduct Design Roadmap — 四大 pillar 與 Agent Quality 三角：Warp 把 ADE 拆成四個 product surface：Terminal（modern intelligent terminal）、Code（在真實 codebase 裡跑 coding agent，原生 review/edit）、Agents（同時部署多 agent、集中追蹤）、Drive（centralize knowledge / context）。對應 slide 上 4 張產品截圖（git rebase block、code review diff、agent 跑 eval、Drive folder tree）。Ambient agent 線路另外講：API / Hosting / Management / Integrations 四件事讓 agent 能「從任何環境呼叫 Warp 的 agent runtime」「跑在 Warp server 或 self-hosted」「跨 session 追蹤」「跟常用 app 一鍵串接」。最後拋出 Agent Quality = Models + Harness + Dev Ex 公式 — model 由 Warp 動態挑（resilient to provider outage）、harness 做 prompt tuning + context summarization + A/B eval、dev ex 把 agent 做成「不用滑鼠、不用 text edit、能 reuse / share context、能接 MCP」的純文字介面。\nHow Warp uses Warp to build Warp（內部 5 條 coding mandate）：(1) Start with a prompt（描述「怎麼做」而不只是「做什麼」、附上 file/image context）、(2) Iterate on a plan（先和 agent 把問題搞清楚、把方案 script 出來再放手讓它跑）、(3) Steer the agent（不要 set-and-forget、邊跑邊 re-prompt + review diff、必要時手 edit）、(4) Engineers own the PR（送 review 的 PR 作者必須能像自己寫的一樣解釋每一行）、(5) Document context for the next PR（每次學到的東西回寫到 WARP.md 或其他 rules 檔，下次 agent 直接拿）。這條清單是整場演講最具體的可操作守則。\nBusiness 與市場定位 — 2×2 framework：Lloyd 用一張 2×2 圖把 dev tool 市場分成 X 軸 Code by hand ↔︎ Code by prompt、Y 軸 Editor-first ↔︎ Terminal-first；JetBrains / VS Code 在左下、Cursor 在中下、Windsurf / Augment 在右下、Warp 與 Claude Code 同坐右上（Code by prompt + Terminal-first）。Lloyd 強調 Warp vs AI IDE 的差異是：橫跨整個 setup → production 生命週期、跨多 project、原生支援多個 long-running agent；vs CLI tool 的差異是：原生 in-app 編輯（不用 context switch）、有 codebase embedding、有 multi-agent 通知 UX。市場判斷：huge market（automating development = 11m+ 開發者）、not winner-take-all（dev 喜歡 try new thing、公司也願意 honor preference）、still early（最大玩家還沒進場、model 還在進步）；風險端坦誠 competitive market（Cursor 等對手錢多）、inference expensive（usage-based 成本壓邊際）、complex relation with labs（Anthropic / OpenAI 既是供應商也是競爭者）。\n給學生的 closing — What’s next：「Keep studying CS！」Lloyd 認為不論 model 怎麼進化，深度 CS 知識 + problem solving skill 永遠值得投資；「It’s never been a better time to be a builder」是他對 Stanford 學生的結語，呼應 W1 Karpathy 講的「軟體開發民主化」。\n\nKey takeaway：Warp 的 thesis 不是「terminal + AI 黏一黏」，而是把 command line 當作下一代 agent runtime 的最佳 host。產品設計圍繞「interactive agent + ambient agent」雙軌，agent 品質拆成 model / harness / dev ex 三件可獨立優化的事；對 vibe coder 的啟示是 prompt-first、own your PR、把 learning 寫回 WARP.md / AGENTS.md 這條 dogfooding 紀律比換不換 terminal 重要。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#reading-摘要",
+    "href": "weeks/05_modern_terminal.html#reading-摘要",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.5 Reading 摘要",
+    "text": "7.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nWarp University\nwarp.dev\nWarp = 「Agentic Development Environment」= local terminal + cloud agent platform（Oz）+ Warp Drive 跨端 context\n\n\nWarp vs Claude Code\nwarp.dev/university\nWarp 與 Claude Code 不是競品而是 stack 兩層，把 CLAUDE.md rename 成 AGENTS.md 即可零成本遷移\n\n\nHow Warp Uses Warp to Build Warp\nnotion.warp.dev\nWarp 內部 Coding Mandate：每個 task 從 prompt 起手、卡 10 分鐘要回報、bug 一律先變 eval 不直接 patch\n\n\n\n閱讀優先順序：先讀 Warp University 建立 ADE 心智模型 → 再讀 Warp vs Claude Code 看 Warp 與 Claude Code 怎麼共存 → 最後 How Warp Uses Warp 看 dogfooding 紀律 — 三篇加起來不到 30 分鐘但能拿到完整圖像。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#assignmentagentic-development-with-warp",
+    "href": "weeks/05_modern_terminal.html#assignmentagentic-development-with-warp",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.6 Assignment：Agentic Development with Warp",
+    "text": "7.6 Assignment：Agentic Development with Warp\n\nSource: github.com/mihail911/modern-software-dev-assignments/tree/master/week5\n任務描述: 安裝 Warp，跑一系列 hands-on 練習：(a) 用 Agent Mode 對陌生 repo 做 codebase exploration，(b) 寫 WARP.md（或 rename 既有 CLAUDE.md）讓 agent 拿到 persistent context，(c) 用 Warp Drive 把重複指令存成 workflow，(d) 在 Warp 內跑 Claude Code CLI 體驗 first-class wrapper（Ctrl+G 多行、agent notification、code review panel），(e) 設一個 cloud agent task 跑 background test。\n自學者可行性: ⭐⭐⭐⭐⭐ 完全可做。Warp 個人 free tier 包含 AI quota，足以跑完作業。預估 3-5 hr。需 macOS 13+ / Windows 11 / Ubuntu 22.04+。\n\n\n💡 不想換 terminal 的替代方案：可以只在練習期間裝 Warp、做完 export workflow 後 uninstall。Warp 不會 hijack 你 default shell，只是另一個 GUI app。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/05_modern_terminal.html#對-vibe-coder-的應用",
+    "href": "weeks/05_modern_terminal.html#對-vibe-coder-的應用",
+    "title": "7  Week 5：The Modern Terminal",
+    "section": "7.7 對 Vibe Coder 的應用",
+    "text": "7.7 對 Vibe Coder 的應用\n對 Claude Code 重度用戶（也就是這份講義的目標讀者）來說，「該不該換 terminal」是個值得認真評估的問題。決策框架：\n\n如果你已經把 Claude Code 用得很順 — 不必勉強切，至少把 CLAUDE.md 複製一份成 AGENTS.md 放專案 root。這個檔在 Cursor、Warp、Codex CLI、未來 MCP-aware agent 都會被自動讀取，等於同一份 context 投入多家工具，零 lock-in\n若你 daily 主力是 iTerm2 + Claude Code — 評估 Warp 主要看 (a) 你常開幾個並行 agent session？三個以上 Warp 的 vertical tabs + agent metadata 真的會省心；(b) 你有沒有「碎片時間想跑 background task」的需求？有則 cloud agent 直接打到痛點\n絕對先學會的 Warp feature — Ctrl+G 多行 prompt（給 Claude Code 寫長 prompt 不再要逃跳脫換行）、block share link（把錯誤訊息一鍵丟同事比截圖好十倍）、Warp Drive Rules（重複指令 / 風格規範一次寫、永久套用）\nWarp Drive vs CLAUDE.md 的分工 — AGENTS.md 放專案層級 context（這 repo 是什麼、命名慣例、業務邏輯）；Warp Drive 放跨專案的個人 preference（總是用 pnpm、commit message 用英文、push 前必跑 lint）。兩層不重疊\n不要打開 YOLO mode — Warp 也有「全自動 approve all tool」選項，跟 W6 會講到的 Copilot RCE 是同一種風險。Vibe coding 速度再快也別省這個 confirm\nCloud agent 適合的 task 類型 — 跑完整 test suite、build production bundle、跑 dependency audit、批次 rename file、每週一鍵更新 lock file。不適合：實際邏輯改動（你沒在現場 review diff、跑出來的 code 你不知道對不對）\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天裝 Warp、把現有 CLAUDE.md 複製成 AGENTS.md、在 Warp 內 cd 進你的 side project、按 ⌘+Enter 進 Agent Mode 問「what does this repo do?」。20 秒內你會看到 Warp 自動 index codebase 並回給你一份比 README 還完整的 architectural summary — 這是傳統 terminal 永遠做不到的事，體驗一次你就會知道值不值得遷移。\n\n\n上一週：W4 Coding Agent Patterns | 下一週：W6 AI Testing and Security",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Week 5：The Modern Terminal</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html",
+    "href": "weeks/06_ai_testing_security.html",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "",
+    "text": "8.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#學習目標",
+    "href": "weeks/06_ai_testing_security.html#學習目標",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "",
+    "text": "辨識 SAST（Static Application Security Testing）vs DAST（Dynamic Application Security Testing）的適用情境\n解釋 prompt injection 怎麼攻擊 coding agent（含 GitHub Copilot RCE 的真實 case）\n應用 Semgrep / Snyk / GitHub Advanced Security 對 vibe-coded 專案做 security audit\n評估 OWASP Top 10 在 LLM 應用上的對應風險（OWASP LLM Top 10）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#核心概念導讀",
+    "href": "weeks/06_ai_testing_security.html#核心概念導讀",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.2 核心概念導讀",
+    "text": "8.2 核心概念導讀\n\n8.2.1 一、Vibe Coding 的五大資安盲點 — 為什麼速度越快越危險\nW1-W5 教你怎麼用 LLM 把開發速度拉到 10x，這週要回頭算帳：速度的另一面是 attack surface 同步擴張。對非資工背景的 vibe coder（醫學生、生科研究者、設計師），五個最常踩的盲點是：\n\nAPI key 直接寫進 code — Claude Code 跑出來的 demo 常常把 OpenAI API key、AWS credential、DB password 直接放在 source file 裡，commit 上 GitHub 等於把鑰匙公開貼在 7-11 門口\nUser input 直接拼 SQL / shell / HTML — Vibe coding 一句「做個搜尋 page」生出的 code 99% 沒做 input sanitization，給點機會就是 SQL injection（注入式攻擊）/ XSS（cross-site scripting，跨站腳本攻擊）/ command injection\nAuthentication 自己寫 — 真正該用 Auth0、Clerk、Supabase Auth 之類成熟方案，但 vibe coder 常被 LLM 忽悠寫個自製 JWT（JSON Web Token）系統，sign / verify 做錯就是直接登入別人帳號\nDependency 來路不明 — npm install something-vibe-good 之前沒人 audit，惡意 package 偷 env var、安裝 backdoor 是常態\nAgent 的全自動 approve mode — Claude Code / Cursor / Warp 都有「all tool calls auto-approve」選項，打開 = 把 shell 鑰匙交給可被 prompt injection 劫持的 LLM（見下方 Copilot RCE 案例）\n\n\n💡 譯解（醫療類比）：Vibe coding 的 security 風險就像「治療速度太快、沒做完整 history taking」 — 你救了當下的 acute 症狀（功能 work 了），但漏掉的 underlying disease（漏洞）會在後面爆掉。SAST 對應預防醫學的全套 lab work（驗血、尿液、影像 — 看靜態指標），DAST 對應 stress test（運動心電圖、心導管 — 對運作中的系統打壓力測試），prompt injection 對應社交工程詐騙（騙病人本人說出密碼、騙醫護越權給藥）。\n\n\n\n8.2.2 二、SAST、DAST、SCA — 漏洞檢測的三角\nSAST vs DAST 把 application security testing 拆成兩種互補典範。實務上要再加上 SCA（Software Composition Analysis，軟體成分分析），合稱檢測三角：\n\n\n\n\n\n\n\n\n\n\n工具類別\n看什麼\n何時跑\n醫療類比\n實務工具\n\n\n\n\nSAST（靜態應用程式安全測試）\nSource code / binary（不執行）\nCommit 前、IDE 內、CI early stage\n預防醫學 — 看 lab 數值找潛在病灶\nSemgrep、CodeQL、SonarQube\n\n\nDAST（動態應用程式安全測試）\nRunning app（送 malicious request 觀察反應）\nStaging deploy 後、scheduled scan\n臨床檢查 — 對活體做運動測試找症狀\nOWASP ZAP、Burp Suite、Nuclei\n\n\nSCA（軟體成分分析）\npackage.json / requirements.txt 等 dependency 清單\n每次 npm install 後、weekly cron\n流行病學監測 — 看你吃進的「藥」（package）有沒有已知 contraindication\nDependabot、Snyk、Renovate\n\n\n\n三者的 trade-off： - SAST 早期便宜但 false positive 高 — 一掃幾秒、commit 前就能跑，但會誤報一堆「理論上有風險但實際 unreachable」的 code path（醫療類比：腫瘤 marker 偽陽性多，需臨床判斷複核） - DAST 貼近真實攻擊但發現晚 — 等 app 跑起來才能掃，bug 修復成本高（醫療類比：到 ER 時 acute MI 已經發作，治療成本比預防高 100 倍） - SCA 是 prerequisite — 你寫得再安全，npm 套件帶後門也沒救（醫療類比：自己生活作息再好，吃到污染食品照樣中毒）\nOWASP Top Ten 是這個檢測三角的「分類字典」 — A01 Broken Access Control、A03 Injection、A05 Security Misconfiguration 是 vibe coder 最常踩的三類，每寫一個 endpoint 自問「這條對 Top Ten 哪幾項有曝險？」是基本紀律。\n\n\n8.2.3 三、Prompt Injection — Coding Agent 時代的全新攻擊面\n傳統 web app 的攻擊面 OWASP 列在 Top Ten 裡，但 prompt injection（提示詞注入）是 LLM 時代才出現的新類別。原理：把惡意指令藏在 LLM 會 ingest 的內容（code comment、GitHub issue、web page、PDF、image OCR），讓它覆蓋原本的 system instruction。\nCopilot RCE via Prompt Injection 是這類攻擊的教科書級案例。研究員 Johann Rehberger 發現 CVE-2025-53773（CVE = 全球漏洞身份證編號）：攻擊鏈為 (1) malicious instruction 藏進 source code 或 GitHub issue → (2) Copilot 讀進 context → (3) injection 指示 Copilot 自行寫入 .vscode/settings.json 開啟 chat.tools.autoApprove: true（YOLO mode）→ (4) 從此 Copilot 任何 shell command 都不再向 user 確認 → (5) 達成 RCE（Remote Code Execution，遠端任意程式執行）。\n\n💡 譯解（醫療類比）：Prompt injection 像「social engineering 詐騙打電話到護理站、聲稱是主治醫師、指示護士改某病人的醫囑」— 系統本身（電話、HIS）沒漏洞，但 trust boundary 設計錯了：你不能把「會講人話的東西」自動當成有權限的人。Coding agent 的 prompt injection 之所以致命，是因為它能把「文字攻擊」轉成「真的執行 shell command」，從詐騙電話升級為直接動手簽醫囑單。\n\nAgentic AI Threats 把這個攻擊面再往前推：agentic AI 操作 enterprise infra（GCP、AWS、internal API）會被劫持去偷 service account token（cloud metadata service 的 169.254.169.254 IP 是經典攻擊目標），或藉 BOLA（Broken Object Level Authorization，物件層級授權失敗）越權讀其他 user 資料。Defense 必須是 layered：prompt hardening + sandbox + tool input sanitization + runtime filtering，沒有單一 mitigation 夠用。\n\n\n8.2.4 四、AI-generated Test 與 AI Find Vulnerabilities — 實證告訴我們什麼\nLLM 不只是攻擊面，它也是新工具。但這個工具好不好用？Finding Vulnerabilities with Claude Code & Codex（Semgrep blog）給了一份冷靜的實證：對 11 個真實 Python web app（&gt;800,000 LoC）跑 Claude Code（Sonnet 4）與 OpenAI Codex（o4-mini）做 security audit，結果：\n\nClaude 找到 46 個真實漏洞、Codex 找到 21 個 — 真的能找到 bug\n但 false positive 率分別 86% 與 82% — 十條警報只兩條是真\n同一份 code 跑三次得到 3 / 6 / 11 個不同 bug — 嚴重 non-deterministic\n\nNon-determinism 的根因在 Context Rot：Chroma Research 對 18 個 SOTA LLM 做擴展版 NIAH（Needle in a Haystack）測試，發現 input 越長 performance 越不穩，即使是百萬 token context window 也一樣 — distractor、coherent narrative、low semantic similarity 都會加劇衰減。所以 LLM 掃大 codebase 時，後段檔案可能根本沒被「真的看到」。\n對照組是 Vulnerability Prompt Analysis with O3 的 success case — Sean Heelan 用嚴格的 system prompt（三階段：code path → conditional analysis → contradiction detection；強制原則「寧可漏報也不誤報」）驅動 OpenAI o3 在 Linux kernel 找出 CVE-2025-37899（一個真實的 use-after-free 漏洞）。差別在哪？Scope 窄（一類漏洞、特定模組）、紀律嚴（強制 step-by-step trace、禁止 hypothetical）、反幻覺（allow「no findings」是合法輸出）。\n歸納：LLM 找 bug 不是 silver bullet，但配對 (a) 鎖定特定 vulnerability class、(b) 多次採樣取聯集、(c) 仍跑傳統 SAST 補 taint tracking 盲區、(d) 把 LLM 警報當「嫌疑名單」而非結論，可以變成有用的補強層。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#monday-lecture1027ai-qa-sast-dast-and-beyond",
+    "href": "weeks/06_ai_testing_security.html#monday-lecture1027ai-qa-sast-dast-and-beyond",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.3 Monday Lecture（10/27）：AI QA, SAST, DAST, and Beyond",
+    "text": "8.3 Monday Lecture（10/27）：AI QA, SAST, DAST, and Beyond\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 開場切入點直接：「軟體錯誤可以毀掉使用者對產品 / 公司的信任、造成巨大金錢成本。當 LLM 在寫你大部分 code 時，需要強而廣的 guardrail 才不會出包。」\n\n既有 threat landscape 速覽 — SQL injection、Cross-site scripting（XSS）、broken authentication、insecure direct object reference、security misconfiguration、sensitive data exposure 六大類。\nVulnerability detection 三角：SAST / DAST / SCA —\n\nSAST（Static Application Security Testing）：白箱、看 binary + source code、SDLC 早期跑（修 bug 最便宜）。Pattern matching scan codebase。可抓 SQL injection、command injection、XSS。工具範例：Bandit、Semgrep、ESLint + extensions。\nDAST（Dynamic Application Security Testing）：黑箱、模擬真實 hacker 攻 running app、SDLC 全程都可跑（false positive 比 SAST 少）。技術：input fuzzing、session token manipulation、config / header testing、brute force rate limit。\nSCA（Software Composition Analysis）：深度分析 OSS package。技術：分析 package metadata、transitive dependency resolution、跟 vulnerability DB 比對、binary / artifact scanning。\n三者 cover 三層：code（SAST）+ runtime（DAST）+ dependency（SCA）。\n\nWhat’s changed: Bad — 新 AI agent attack vector —\n\nPrompt injection：藏 hidden / 誤導指令在 LLM ingest 的內容裡讓它偏離原本行為。Slide 引用 AMP code 案例：用 prompt injection 從 AI agent 提取 system prompt。\nTool misuse：用欺騙 prompt 讓 agent 濫用整合的 tool。引用 embracethered.com 的 AMP escape blog — agent 修改 system configuration 並 escape sandbox。\nCode attacks：利用 agent 的 code execution 能力獲得執行環境的未授權存取。\nIntent breaking：操縱 agent 的 plan，讓 action 偏離原本目的。\nIdentity spoofing：用 compromised authentication 假冒合法 agent。\n\nWhat’s changed: Good — 新 SAST/DAST/SCA 增強技術 —\n\n「Shift left」security 比以前更可及 — LLM 可被嵌入 workflow 抓問題\nAutomated penetration testing\n\nLLM 在 security testing 的限制 —\n\nAI SAST 的 false positive 率高得驚人 — Claude Code / Codex 對某些漏洞類別 50-100% false positive，比傳統 SAST（50+%）還糟\n既有 benchmark 不貼近真實情境，難 evaluate LLM\nNon-deterministic：同 prompt 多跑得不同結果，怎麼確認 catch 完所有 vulnerability？\nContext rot：not all context is created equal；compaction（壓縮 context）會讓資訊變形\n\nOpen question —\n\n怎麼降 vulnerability detection 的 false positive 與 hallucination？\n怎麼 verify LLM 生的 patch 真的安全、不引入 regression？\n怎麼讓 LLM 解釋它為什麼 flag 這個 vulnerability、為什麼 propose 這個 fix？\n衡量 LLM AppSec 表現的對的 benchmark 是什麼？\nLLM 怎麼嵌進 CI/CD 不淹沒 team 的告警雜訊？\nAI 生成的 patch 引入新 vulnerability 時誰要負責？\n\n\nKey takeaway：AI 沒讓 QA / Security 變不需要 — 反而讓它變更重要。SAST + DAST + SCA 的三角依然是基礎，加上對 prompt injection / tool misuse / code attack 三類 AI-era attack vector 的特別防護才完整。LLM 找漏洞能力有但 false positive 高、非確定性、context rot 三個根本問題還沒解 — 把 LLM 警報當「嫌疑名單」處理而非結論。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#friday-lecture1031isaac-evanssemgrep-ceo",
+    "href": "weeks/06_ai_testing_security.html#friday-lecture1031isaac-evanssemgrep-ceo",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.4 Friday Lecture（10/31）：Isaac Evans（Semgrep CEO）",
+    "text": "8.4 Friday Lecture（10/31）：Isaac Evans（Semgrep CEO）\n\nSpeaker: Isaac Evans, CEO of Semgrep\nSlides: 未公開\n\n\nSlides 未公開，依 Isaac 公開訪談 + Semgrep 公開技術文件 + 同期 Semgrep blog（Finding Vulnerabilities with Claude Code）best-effort 重建：\n\nIsaac Evans 是 MIT Lincoln Laboratory cybersecurity researcher 出身，2017 年創立 Semgrep（前身 r2c）— 把學術界的 program analysis 技術做成 developer-friendly 的 SAST 工具。Semgrep 的 unique stance 是「rule-as-code」：每條 security rule 寫成 YAML pattern，跟 grep 一樣好懂但比 grep 強得多（語法樹層級的 pattern matching）。預期演講內容：\n\nSemgrep origin story — 為什麼從 r2c rebrand 成 Semgrep、為什麼選擇 open-source rule registry（任何人能寫 rule、社群共享）這個 distribution model\nStatic analysis 的歷史 — 從 lint（1979 Bell Labs）→ Coverity（commercial SAST 開山）→ FindBugs / SpotBugs（學術界 Java tool）→ CodeQL（GitHub 收購、query language 取向）→ Semgrep（pattern matching + 開源 rule registry）\n為什麼 LLM 不會取代 SAST — 對應 reading 那篇實證：LLM 缺 inter-procedural taint flow 能力、non-deterministic、context rot；rule-based SAST 反而在 injection 類 deterministic 偵測強。兩者是互補不是取代\nAI 怎麼增強 SAST — Semgrep 自己怎麼用 AI：(a) 用 LLM 自動生 rule（看一個 CVE patch 反推可掃同類問題的 rule）、(b) 用 LLM 做 false positive triage（rule 報的警報先讓 LLM 篩一輪）、(c) 用 LLM 自動 suggest fix（不只報 bug 還給 patch suggestion）\nAI Coding 對 Semgrep 的衝擊 — AI 寫的 code 是不是 less secure？實證上是的（Stanford 2023 study 已經證實），所以 vibe coding 浪潮反而擴大 SAST 市場\n企業導入經驗 — Semgrep 服務的客戶（Snowflake、Slack、Figma 等）怎麼把 SAST 整進 dev workflow、怎麼平衡 false positive 與 dev velocity、security team 怎麼跟 AI dev tool 共處\nRoadmap — Supply chain security（SCA + SAST 融合）、prompt injection-aware rule、LLM-aware threat model\n\nKey takeaway：Static analysis 沒被 LLM 殺掉，反而因為 vibe coding 浪潮變得更重要。Semgrep 的 stance 是「rule-based + AI-augmented」混合方法 — rule 給 deterministic、AI 給 contextual reasoning，兩者各取所長。對 vibe coder 的 implication：別以為「找 Claude 幫我 audit」就夠了，必須加上 deterministic SAST（Semgrep 有 free tier）才能蓋住 LLM 的 taint tracking 盲區。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#reading-摘要",
+    "href": "weeks/06_ai_testing_security.html#reading-摘要",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.5 Reading 摘要",
+    "text": "8.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nSAST vs DAST\nSplunk blog\nSAST（白箱、看 source）+ DAST（黑箱、跑 runtime）+ 可加 RASP 形成多層防禦，現代 pipeline 必整合兩者\n\n\nCopilot RCE via Prompt Injection\nembracethered.com\nCVE-2025-53773：prompt injection 騙 Copilot 自寫 .vscode/settings.json 開啟 YOLO mode → 完全 RCE\n\n\nFinding Vulnerabilities with Claude Code & Codex\nSemgrep blog\n11 repo / &gt;800k LoC 實測：找到真 bug 但 86% false positive、non-deterministic，LLM 不能取代 SAST\n\n\nAgentic AI Threats: Identity Spoofing\nPalo Alto Unit 42\nAgent 可被騙去偷 cloud metadata token / 越權讀資料（BOLA），漏洞 framework-agnostic、源於 insecure design\n\n\nOWASP Top Ten\nowasp.org\n十大 web app 風險清單，2021 版以 incidence rate 排序，是 secure coding 的共同詞彙\n\n\nContext Rot\nresearch.trychroma.com\n18 個 SOTA LLM 實證 — context window 越大不等於越可靠，10k token 後 performance 顯著衰減\n\n\nVulnerability Prompt Analysis with O3\ngithub.com/SeanHeelan\n三階段 prompt + 寧可漏報原則，o3 真的找到 CVE-2025-37899（Linux kernel UAF）\n\n\n\n閱讀優先順序：時間有限的話先讀 OWASP Top Ten（建立詞彙）→ SAST vs DAST（工具光譜）→ Copilot RCE（prompt injection 教科書 case）→ Finding Vulnerabilities with Claude Code（LLM 實戰能力 baseline）→ Vulnerability Prompt with O3（怎麼把 LLM 用對）。其他兩篇是延伸 — Agentic AI Threats 適合做 enterprise agent app 的人、Context Rot 是 root-cause 補充。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#assignmentwriting-secure-ai-code",
+    "href": "weeks/06_ai_testing_security.html#assignmentwriting-secure-ai-code",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.6 Assignment：Writing Secure AI Code",
+    "text": "8.6 Assignment：Writing Secure AI Code\n\nSource: github.com/mihail911/modern-software-dev-assignments/blob/master/week6/assignment.md\n任務描述: 對一個 vibe-coded web app（assignment 提供或自帶 side project）做完整 security review：(a) 跑 Semgrep / Snyk 等 SAST tool 並 triage 結果、(b) 對 OWASP Top Ten 每一類盤點 risk、(c) 用 Vulnerability Prompt with O3 的三階段 prompt 範本驅動 Claude 找特定類型漏洞、(d) 模擬 prompt injection attack（在 README 或 comment 藏指令）測試自家 agent 抗性、(e) 寫 fix 並驗證。\n自學者可行性: ⭐⭐⭐ 可做但偏深。需要的工具都有 free tier（Semgrep、Snyk free、OWASP ZAP open source），但 OWASP 詞彙與 web security mental model 對非資工背景讀者有學習曲線。預估 5-8 hr。\n\n\n💡 非資工背景讀者的減量做法：把 (a)（跑 Semgrep）+ (e)（修出來的 critical bug）做完，其他 task 看 reading 理解就夠。最終目標是建立「每次 commit 前要跑哪些 check」的肌肉記憶，不是變成 pen-tester。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/06_ai_testing_security.html#對-vibe-coder-的應用",
+    "href": "weeks/06_ai_testing_security.html#對-vibe-coder-的應用",
+    "title": "8  Week 6：AI Testing and Security",
+    "section": "8.7 對 Vibe Coder 的應用",
+    "text": "8.7 對 Vibe Coder 的應用\nW6 的內容對非資工背景讀者門檻高，但本節不要求你成為 security expert — 目標是建立最小可行的 security hygiene，把高頻、致命的風險擋掉。實戰建議：\n\nAPI key 管理 — 鐵律三條\n\n絕不寫進 source code：用 .env（要加進 .gitignore）、生產環境用 cloud secret manager（Vercel/Railway env var、AWS Secrets Manager）\n公開 repo 第一件事跑 gitleaks 掃 commit history，看有沒有歷史不慎 leak 的 key（醫療類比：每次新工作報到都驗血看有沒有 hidden chronic condition）\nAPI key 一發現外洩立刻 revoke + rotate，別存僥倖。OpenAI / Anthropic 都有 monitoring，1 小時內可能就被人盜刷數百美金\n\nVibe-coded side project 的 minimal viable security check（每次 push 前跑）\n\nSAST：semgrep --config=auto 或 snyk code test（兩者皆 free tier）\nSCA：npm audit / pip-audit，或讓 GitHub Dependabot 自動開 PR\nSecret scan：gitleaks pre-commit hook\nOWASP Top Ten 自查：endpoint 寫完問自己「有沒有 access control？user input 有 sanitize？config secret 有沒有寫 code 裡？」\n\n這四個加起來 5 分鐘以內，是 P3 人上人 等級的最小 viable hygiene\nClaude Code / Cursor / Warp 的 security risk pattern — 別做的事\n\n絕不開 YOLO mode / auto-approve all tools：對應 Copilot RCE 的 attack chain，這是 single point of failure\nclone 別人的 repo 第一件事檢查 .vscode/、.cursor/、.claude/：這些是 agent config，可能藏 prompt injection\n限制 agent 的 file write / shell exec scope：用 Claude Code 的 permissions 設定把可寫範圍鎖在專案資料夾內，別讓它能改 ~/.zshrc 或 /etc/\n對外部 untrusted source 抱「假設裡面有 prompt injection」心態：fetch 來的網頁、PDF、image OCR 都該被視為 hostile input\n\n請 LLM 找 bug 的 4 條紀律（從 Vulnerability Prompt with O3 提煉）\n\nScope 要窄：指定一類漏洞（如 SQL injection）、一個檔案，而非「找所有漏洞」\n強制三階段輸出：code path → conditional analysis → contradiction detection，不要只要結論\n明確說「找不到回 no findings、別亂掰」：寧可漏報不要誤報這條紀律會大幅降 false positive\n跑多次（≥3）取聯集：對應 Context Rot 與 Semgrep 實證 的 non-determinism\n\nAuthentication / Payment 等 critical path 永遠用成熟方案\n\nAuth：Clerk、Auth0、Supabase Auth、NextAuth — 別自己寫 JWT\nPayment：Stripe、Paddle — 別自己處理信用卡資料（PCI-DSS 是合規地獄）\n上傳檔案：用 cloud storage signed URL（S3、GCS），別讓檔案直接過你的 server\n這些東西踩錯一次代價極大（資料外洩、被罰、被盜刷），比花時間自製划算太多倍\n\nClaude Code 的好習慣 — 把 security 寫進 CLAUDE.md\n\n加一段 ## Security Guardrails：禁止把 secret 寫進 code、user input 必須 sanitize、新 endpoint 必加 access control check\n加一段 ## Forbidden Patterns：列出已踩過的雷（例：「絕不用 eval()」「絕不直接拼 SQL」），Claude 每次都會讀\n\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天就在你最 active 的 side project 跑這三條 — (1) npm install -g gitleaks && gitleaks detect（10 秒看有沒有歷史 leak 的 key），(2) 申請 Semgrep free account 把 repo 連上、自動跑一次掃描看 finding，(3) 在 CLAUDE.md 加上 ## Security Guardrails: never put secrets in source code; sanitize all user input; require auth check on every endpoint。30 分鐘建好的這三條 hygiene 在 95% 的情境下就贏過大多數 vibe-coded project。\n\n\n上一週：W5 The Modern Terminal | 下一週：W7 Modern Software Support",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Week 6：AI Testing and Security</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html",
+    "href": "weeks/07_modern_software_support.html",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "",
+    "text": "9.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#學習目標",
+    "href": "weeks/07_modern_software_support.html#學習目標",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "",
+    "text": "辨識 AI code review 在 catch bug、style enforcement、knowledge transfer 三個面向的能力與盲點\n應用 Graphite / CodeRabbit / GitHub Copilot Code Review 設定 PR review 流程\n設計 一個「AI 寫 + AI review + 人類最終 approve」的 PR workflow\n評估 哪些 code review 任務適合全自動 vs 哪些必須留給人類",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#核心概念導讀",
+    "href": "weeks/07_modern_software_support.html#核心概念導讀",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.2 核心概念導讀",
+    "text": "9.2 核心概念導讀\n\n9.2.1 一、Code review 從「品管把關」到「心智模型同步」的歷史轉折\n要看懂為什麼 2026 年大家還在認真討論 code review（明明 AI 都會寫 code 了），你必須先理解 review 在過去 50 年的角色變遷。早期 IBM 1976 年提出的 Fagan inspection（Fagan 形式審查）是一套重型流程，目的單純：在 code ship 出去之前再多一雙眼睛抓 defect（缺陷）。Steve McConnell 在《Code Complete》整理的 industry data 給了這個流程量化背書 — design + code inspection 平均能抓到 55-60% 的 defect，遠高於各種 testing method（25-45%）。Jeff Atwood 2008 年寫的 Code Reviews: Just Do It 把這個論點直接搬上檯面：別爭辯做不做、有做就贏，每一分鐘 review 投資都會 paid back tenfold（十倍奉還）。\n但 review 真正的價值很快超越「抓 bug」。Blake Smith 2015 年 Code Review Essentials 把 review 重新 framing 成 mental model synchronization（心智模型同步） — 「當 Bob 提交 accounting subsystem 的 PR，Amy 在 review 中同步更新她對該 system 的 mental model」。Bug 被擋下來只是 side effect，真正的 ROI 是團隊知識擴散、降低未來修改的 onboarding 成本。GitHub staff engineer Sarah Vessels 在 How to Review Code Effectively 進一步把 review 拉高到「shape the product’s implementation」 — review 不是末端 quality gate，是設計階段的延伸。\n\n💡 譯解：把 code review 當「品管站」是 1980 年代的思維。2020 年代的 framing 是「review = 一場結構化對話」，bug detection、knowledge transfer、architectural alignment 三件事一起發生。理解這個轉變，後面看 AI reviewer 才不會誤以為「AI 會抓 bug 就能取代 review」 — 它取代的只是其中一層。\n\n\n\n9.2.2 二、AI code review 能做什麼、做不到什麼：兩軸四象限框架\n進入 LLM 時代，code review 被拆成兩種勞力：mechanical layer（機械層）跟 alignment layer（對齊層）。Google 2024 年發在 AIware ’24 的論文 AI-Assisted Assessment of Coding Practices 提供了第一份 academic baseline — Google 內部 AutoCommenter 對數萬名 developer 部署，覆蓋 C++ / Java / Python / Go，能涵蓋 68% 的 human reviewer 常引用 best practice，而且其中 66% 是傳統 linter 抓不到的（comment clarity、justified naming exception、context-dependent 慣例）。Comment resolution rate（評論解決率）約 40%，與 human reviewer 的 ~50% 接近。\nGraphite co-founder Tomas Reimers 在 Lessons from Millions of AI Code Reviews 提出更實用的 2x2 quadrant（兩軸四象限）框架：\n\n\n\n\n\n\n\n\n\nLLM 能 reliably catch\nLLM 抓不準\n\n\n\n\nHuman 想收\n✅ 右上：留 comment\n❌ 左上：人類 reviewer 守備\n\n\nHuman 不想收\n❌ 右下：always-correct-but-unwelcome（add test / extract function）\n❌ 左下：別碰\n\n\n\n只有右上象限的 comment 該被 AI 留下。Reimers 點出兩個典型失敗模式：\n\n左上盲區：LLM 抓不到 codebase-specific convention（公司命名慣例、業務 domain 邏輯、住在資深工程師腦中沒寫成文件的 tribal knowledge）\n右下過度發言：LLM 愛留「你應該加 test」「這應該 extract function」這類技術上沒錯但 reviewer 不該無腦留的 comment，留多了 author 直接 ignore 整個 reviewer\n\nGraphite 的 AI Code Review Implementation Best Practices 把這個 insight 翻譯成商業 framework — AI reviewer 應走 human-in-the-loop（人類介入式） 路線，AI 跑 first pass、human 驗證並 approve。signal-to-noise ratio（訊號雜訊比）是首要指標，三個操作槓桿：(1) per-issue-type sensitivity tuning（敏感度調校）、(2) false-positive feedback loop（讓 developer 標 false positive 訓練系統）、(3) priority level（火力集中在 security + obvious bug，nit / style 暫時關掉）。\n\n\n9.2.3 三、為什麼 millions of reviews 教我們的事比任何 paper 都重要\nGraphite 的 Diamond AI reviewer 跑在數百萬個 production PR 上，沉澱出三條關鍵 lesson，是任何 academic benchmark 都看不到的：\n\nMetric 設計決定產品命運：傳統 thumbs-up / thumbs-down 收集率太低（&lt;4% 下票率沒區辨力）。Graphite 改用「action rate」 — comment 是否導致 author 在後續 commit 改 code — 當作 success metric。這個 metric 直接 align 商業價值（comment 沒被 act on = 浪費 reviewer 時間 = 浪費 LLM API call）。\n52% vs 50% parity 的意義：Human reviewer 的 comment 約 50% 帶來 action，Diamond 經過調校到 2025 March 已達 52% — 等同 human baseline。這個數字翻譯成白話：AI reviewer 已經追平人類 reviewer 的 actionability，剩下的是「哪些象限該留給誰」的分工問題，不是「能不能用」的問題。\nFalse positive 比 model size 重要：Google AutoCommenter 與 Graphite Diamond 不約而同得出同一結論 — production 成功的關鍵不是 model quality，是「承認 LLM 會錯、留出 retract 通道」。Google 用 URL suppression（per-rule mute），Graphite 用 false-positive feedback loop。一個 false positive 比例高的 reviewer，再準的部分也會被 developer 一起 ignore。\n\n\n💡 譯解：商用 AI reviewer 像一個「永遠在試用期的新員工」。它技術力到位，但說話會 over-commit、會踩公司潛規則。產品設計的關鍵不是讓它變更聰明，是給它「不知道就閉嘴」的機制。Diamond 的 quadrant 框架本質上是教 LLM 自己 self-censor。\n\n\n\n9.2.4 四、AI 寫 + AI review + 人類 approve 的 PR workflow\n把 W7 所有概念整合起來，2026 年 vibe coder 的標準 PR workflow 應該長這樣：\n1. Author（你 + Claude Code / Cursor）寫 code → 自動 commit\n2. 自己 self-review diff（Vessels 原則）→ 切成 scalpel-like 小 PR（Smith 原則）\n3. 寫 PR description：problem + structural change + testing（Smith 原則）\n4. 開 PR → AI reviewer（Diamond / CodeRabbit）跑 first pass\n5. AI reviewer 留右上象限 comment（mechanical layer：bug / security / style violation）\n6. 你決定哪些是 blocker / nit / false positive，回應或標記\n7. False positive 標 thumbs-down 訓練 reviewer\n8. 自己再過一輪 — 確認 alignment layer（這個改動跟 codebase 整體設計合不合）\n9. 人類最終 approve（在團隊裡是 reviewer / 一人專案就是你自己延後一天再看一次）\n10. Merge\n每一步對應一篇 reading 的核心 insight：1-3 步是 Atwood / Smith 的 review fundamentals；4-7 步是 AutoCommenter / Graphite 的 AI reviewer engineering；8-9 步是 Vessels 強調的 mental model synchronization、AI 永遠取代不了的部分。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#monday-lecture113ai-code-review",
+    "href": "weeks/07_modern_software_support.html#monday-lecture113ai-code-review",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.3 Monday Lecture（11/3）：AI code review",
+    "text": "9.3 Monday Lecture（11/3）：AI code review\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 開場直接給 statistics 撐住論點：code review 是工程師能做的最高槓桿活動之一。\n\nWhy — code review 的硬數據 —\n\nCode review 的 error detection rate 達 55-60%，而各類 testing 是 25-45%\n一份比較有 vs 沒 review 的程式錯誤研究：4.5 → 0.82 errors / 100 lines of code\nAT&T 內部研究：code review 帶來 14% productivity 增加 + 90% defect 減少（Source: Coding Horror）\n\nWhat to catch — Review 該抓什麼：(a) logic & correctness errors、(b) readability & maintainability、(c) performance、(d) security、(e) best practices / codebase 內部 idiom（例：用 service 而非 direct DB lookup、特定 access pattern、命名慣例）。\nReview 的多重 ROI（Blake Smith framing）—\n\n幫 team member 適應 system 演化的 mental model\n確保改動真的解決原問題\n開出設計優缺點的討論\nproduction 前抓 bug\n維持 code style / 組織一致\n\nWhat’s a good review comment — 對比 anti-pattern「This won’t work」與好 comment：「I see your new method matches the existing style in this file, taking [X] parameters. Having that many parameters hurts readability and implies the function is doing too much. What do you think about refactoring this method and the existing ones in a later PR to reduce how many parameters they take?」 — 提供具體細節、引用 specific code / issue、suggest resolution、給 evidence / explanation。\nThe new AI world — 商業 AI reviewer 景觀：Graphite（Friday guest lecture）、Greptile、CodeRabbit、Claude Code / Codex。\nWhat has changed — AI reviewer 的六大優勢（出處 Greptile + Graphite）—\n\nEfficiency：自動化降低 review 時間、提早抓問題\nKnowledge sharing：developer 從 AI suggestion 學 best practice\nConsistency：AI 對所有 PR 套同一標準\nReduced cognitive load：AI 處理 routine check，human 聚焦複雜邏輯\nContinuous improvement：AI system 隨資料量變強\nHolistic understanding：modern AI reviewer 提供 contextual analysis、pattern recognition，比 linter 深得多\n\nLive demo — Graphite example 走實 PR review 流程。\nLimitations —\n\n比 linter 多設定 / setup 成本\nFalse positive\n需要持續訓練 / continuous learning\n抓不到 codebase-specific idiom 與 best practice（最大盲區）\n處理不了複雜 business logic 與 architecture decision（永遠是 human 的領域）\nSecurity change 必須額外謹慎\n常常漏 edge case\nCode review 在 AI coding system 之下比以前更重要 — 你 own merged + shipped 的 code，不能 blame AI\n必須明確告訴 AI 什麼不要 review、codebase 的 pattern / idiom 是什麼\n對 user input、authentication、file operation、network request 要特別 mindful\n\n\nKey takeaway：AI code review 不是替代 human reviewer，是增強 review 紀律。McConnell 55-60% defect detection 的歷史紅利還在，AI 讓「跑 review」的邊際成本趨近於零，但「讀懂 codebase idiom + 評斷 architecture」這條 alignment layer 永遠是 human 的責任。AI 寫得越多，review 越不能省。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#friday-lecture117tomas-reimersgraphite-cpo",
+    "href": "weeks/07_modern_software_support.html#friday-lecture117tomas-reimersgraphite-cpo",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.4 Friday Lecture（11/7）：Tomas Reimers（Graphite CPO）",
+    "text": "9.4 Friday Lecture（11/7）：Tomas Reimers（Graphite CPO）\n\nSpeaker: Tomas Reimers, CPO of Graphite\nSlides: Drive 連結（公開）\n\n\n以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。Tomas 演講題目「The Modern Software Developer: Code Review」，分四段（Hi → Collaborating with humans → Collaborating with AI → Software development in the limit）：\n\n段 0：Graphite 自介 — Graphite 是 AI-powered code review platform，help developer create / review / merge code change。AI agent 能回答 PR 相關問題、fully codebase aware、可主動 propose updates 幫 reviewer 解 comment 與 CI。Trusted by 100,000s+ developer、1,000s+ organization。Production 數據：Shopify 採用 Graphite 後 PR shipped per developer +33%、Asana LoC/eng +21%、Ramp time between PRs merged -74%。\n段 1：Collaborating with humans — Code review 的歷史\n\n三步驟 collaboration：CREATE（developer 提一組 code change，這個 atomic unit 叫 pull request、diff、patch、changelist 或 merge request）→ REVIEW（另一個 developer 給 comment、suggest improvement、approve）→ MERGE（原 developer 把 PR merge 回 codebase）\nAI 讓 code 比以往多 → 也讓需要 review / merge 的 code 比以往多（這是 Graphite 整個產品論點的根基）\nCode review 簡史四階段 —\n\nFagan Inspections（IBM, 1976，Michael Fagan 提出）— 重型形式審查\nEmail patches（Linux kernel 至今仍用）— printed code → emailed patch\nMondrian（Google, 2000s 早期，Guido van Rossum 主導）— 第一個 web UI for review\nOnline tools（Review Board / Gerrit / Critique / Phabricator / GitHub）— review 從工程紀律變成主流 dev workflow\n\n\n段 2：Collaborating with AI — 跟 super-human author 共事\n\nAI 已能抓的不只 typo — Graphite 主動掃 PR 找 bug、把 potential issue post 到 Graphite 與 GitHub 兩邊、out-of-the-box work、fully customizable\n核心問題：有了 AI，human 還需要 review 嗎？ Tomas 答：要，因為 review 的 purpose 排序是 (01) Alignment confirmation → (02) Knowledge diffusion → (03) Proofreading。Bug catching 只是第三順位。\nHuman 怎麼跟 AI 合作？— 兩條路 PLATFORM vs PARTICIPANT\n\nPLATFORM route：AI 較適合做 context gathering、augment human reviewer\nPARTICIPANT route：AI 直接取代 human reviewer\n\nThe limits of AI（today vs tomorrow） — slide 暗示 today 的 AI 邊界明天會被推得更遠\n\n段 3：Software development in the limit — 未來方向\n\nSoftware dev 永遠有兩部分 — Inner loop（聚焦 development）+ Outer loop（聚焦 review & collaboration）\nAI 已經把 inner loop 加速 10× — 那 outer loop 會怎樣？\nThree doors for the next generation software dev —\n\nCYBORG：developer 直接 review change，靠 AI 增強。問題：如果作者不是 author，這還合理嗎？\nEM（engineering manager）：developer 直接管 AI，underwrite architecture 但不細究 technical specifics\nAGENCY：developer 把 AI 當 third-party contractor，underwrite product requirement 但不 own code\n\nGraphite 的產品策略對應 —\n\nAI Review Agent：Graphite Agent 是 AI-powered companion 抓 bug、enforce convention、擋 error / security vulnerability\nStacking：堆疊式 PR git workflow，讓 author 在不被 reviewer 卡的前提下繼續開發\nSmarter CI：predictive CI 只在需要時跑，省 team 時間與錢\nReview experience built for teams：reviewer assignment、merge queue、automation、insight\nMeasure developer productivity：精確衡量 AI coding tool 與 Graphite 給 developer 帶來多少 efficiency gain\n\n\nKey takeaway：Tomas 的核心論點是 AI 不是讓 review 變不需要 — 反而讓 review 變得更重要。Code review 的真正 ROI 一直都在 alignment confirmation 與 knowledge diffusion，bug catching 是 side effect。AI 加速 inner loop 後，outer loop 會在 CYBORG / EM / AGENCY 三條路徑分流，但無論哪條，「human underwrite 什麼」決定 review 的形態。對 vibe coder 的 implication：你 ship 的 code 你負責，AI reviewer 是助力不是替罪羊。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#reading-摘要",
+    "href": "weeks/07_modern_software_support.html#reading-摘要",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.5 Reading 摘要",
+    "text": "9.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nCode Reviews: Just Do It\nCoding Horror（Atwood, 2008）\nReview 是性價比最高的 quality practice，inspection 抓 55-60% defect 遠勝 testing 25-45%，有做就贏\n\n\nHow to Review Code Effectively\nGitHub blog（Vessels）\n三原則：ask questions over demands、separate substance from preference、provide specific examples\n\n\nAI-Assisted Assessment of Coding Practices\narXiv 2405.13565（Google AIware ’24）\nAutoCommenter 覆蓋 68% best practice，66% 是 linter 做不到的，40% resolution rate\n\n\nAI Code Review Implementation Best Practices\nGraphite\nHuman-in-the-loop + sensitivity tuning + false-positive feedback loop = 可用的 AI reviewer\n\n\nCode Review Essentials for Software Teams\nblakesmith.me（2015）\nReview 的核心是 mental model synchronization，scalpel-driven 小 PR + clarifying tone\n\n\nLessons from Millions of AI Code Reviews\nYouTube（Tomas Reimers, Graphite）\n2x2 quadrant：只留「LLM 能 catch × human 想收」象限；action rate 52% 已追平 human\n\n\n\n閱讀優先順序：時間有限的話，先讀 Tomas Reimers YouTube（最具體的 industry insight）→ 再讀 Google AutoCommenter paper（academic baseline）→ 補 Vessels GitHub blog（human-side 原則）。Atwood / Smith 兩篇是經典背景，建立完 mental model 再回頭讀。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#assignmentcode-review-reps",
+    "href": "weeks/07_modern_software_support.html#assignmentcode-review-reps",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.6 Assignment：Code Review Reps",
+    "text": "9.6 Assignment：Code Review Reps\n\nSource: github.com/mihail911/modern-software-dev-assignments/tree/master/week7\n任務描述: 練習 AI code review 的完整 loop — 拿一個有 bug 的 starter repo、用 Cursor / Claude Code 寫 fix、開 PR、跑 Diamond 或 CodeRabbit、評估 AI reviewer 的 comment 品質（用 Reimers 的 quadrant 框架打分）、回應 comment、merge。重點是建立「你能判斷哪些 comment 該收、哪些該 dismiss」的肌肉記憶。\n自學者可行性: ⭐⭐⭐⭐ 完全可做。需 GitHub 帳號 + 一個 AI reviewer service（Graphite 有 free tier、CodeRabbit 個人 plan 約 $15/月、GitHub Copilot Code Review 內含於 Copilot 訂閱）。預估 4-6 hr — 比 W1-W2 assignment 重，因為要實際開 PR 跑完整 loop 而非沙盒練習。\n\n\n💡 沒有付費訂閱的替代方案：(1) GitHub Copilot 學生方案免費，包含 Copilot Code Review；(2) Graphite Diamond 個人 free tier 每月有 review quota；(3) 用 Claude Code 在 local 模擬：自己 commit 後對 Claude 說「你現在是 senior code reviewer，請對這個 diff 留 comment，限 mechanical layer，不要留 architectural 建議」。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/07_modern_software_support.html#對-vibe-coder-的應用",
+    "href": "weeks/07_modern_software_support.html#對-vibe-coder-的應用",
+    "title": "9  Week 7：Modern Software Support",
+    "section": "9.7 對 Vibe Coder 的應用",
+    "text": "9.7 對 Vibe Coder 的應用\nW7 是把 vibe coder 從「寫得出來」升級到「寫得對且維持得住」的關鍵一週。實戰建議：\n\nside project 馬上裝一個 AI reviewer — 推薦順序：GitHub Copilot Code Review（免費學生方案 / 已訂 Copilot 直接內含）→ Graphite Diamond（free tier 夠個人專案用）→ CodeRabbit（功能多但要付費）。裝完先別期待奇蹟，先觀察 false positive 比例兩週\nPR description 永遠寫三段 — 即使一人專案：(a) 這次解決什麼問題、(b) 改了哪幾個 file 跟整體結構變化、(c) 怎麼測（手測 / unit test / 跑哪個 script）。三個月後的自己跟 AI agent 都會感謝你\n學會用 Reimers quadrant 篩 comment — AI reviewer 留 comment 後，先問自己兩問：(a) 它抓的這件事 LLM 真的能可靠判斷嗎？（如果是 codebase-specific convention 直接 dismiss）(b) 我願意收這類 comment 嗎？（如果是「請加 test」這種 always-correct-but-unwelcome，當下 dismiss、之後 batch 處理）\nPR 永遠切 scalpel-like 小 cut — 500 行以上 PR 不論 human 還是 AI reviewer 都會 skim 過去；切成 5 個 100 行 PR 的 review 品質會好 5 倍。Graphite stacked PR 工具就是為此設計\n跟 Claude Code 的對話加一層 review reflex — 每次 Claude 寫完 code，固定問一句「請以 senior code reviewer 角度檢視剛才的改動，列出 3 個你會留 comment 的點，並標記是 blocker / nit / false positive」。這等於把 review 內建進 Claude Code 的 loop，配合 W6 學的 testing 一起，能擋掉大量 bug\ncodebase 的 tribal knowledge 寫進 CLAUDE.md — Reimers 點出 LLM 最大盲區是 codebase-specific convention。把你專案的命名慣例、業務邏輯、奇怪的 quirk 寫進 CLAUDE.md（同 W1 學的），AI reviewer 會自動讀到（如果工具支援），等於把左上象限的盲區補起來\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天就在你 main side project 開一個小 PR（隨便重構一個 function 也好），裝 Graphite Diamond 或 GitHub Copilot Code Review，看 AI reviewer 留什麼 comment，用 Reimers 的 quadrant 對每條 comment 標籤（右上 / 左上 / 右下 / 左下）。你會發現大部分 comment 落在右下（always-correct-but-unwelcome）— 那就是你該調 sensitivity 的訊號。一輪下來 30 分鐘，你對 AI code review 的直覺會完全不一樣。\n\n\n上一週：W6 AI Testing and Security | 下一週：W8 Automated UI and App Building",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Week 7：Modern Software Support</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html",
+    "href": "weeks/08_automated_ui_app_building.html",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "",
+    "text": "10.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#學習目標",
+    "href": "weeks/08_automated_ui_app_building.html#學習目標",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "",
+    "text": "比較 v0 / Lovable / Bolt / Replit Agent / Cursor Composer 在「一句話生 app」的能力差異\n應用 v0 prompt 技巧生成 production-ready React/Next.js component\n設計 一個「prompt → preview → iterate → deploy」的完整 vibe coding workflow\n評估 哪些 app 適合 AI 全自動生成 vs 哪些需要人工架構設計",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#核心概念導讀",
+    "href": "weeks/08_automated_ui_app_building.html#核心概念導讀",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.2 核心概念導讀",
+    "text": "10.2 核心概念導讀\n\n10.2.1 一、UI generation 的演化：從「截圖轉 code」到「一句話生 app」\n過去三年 UI generation 的能力曲線跳了三個世代。第一代（2023, v0 1.0）：Vercel 把 v0 推出時定位是「screenshot → JSX」，你貼一張 Figma 截圖或 mockup，它輸出對應的 React code。可用但有限，只能處理單一 component、設計一複雜就崩。第二代（2024, v0 2.0 + 競品爆發）：從 single-component 變 single-page，從只生 markup 變生帶 state 的互動元件。同時間 Lovable、Bolt、Replit Agent 跳出來，各自切不同 niche — Bolt 強調 in-browser dev environment、Replit Agent 強調全棧 + 部署、Lovable 強調 design-first。第三代（2025, v0 3.0 / Cursor Composer / Claude Artifacts）：跨入「一句話生整個 app」 — 包含 routing、auth、database schema、API route、UI 全套。能力到 production-grade demo level 但離 production-ready 還有距離（multi-tenancy、payment、observability 多半還是要人工接）。\n理解這個演化曲線，重點不是記住每個版本能做什麼，而是看清這條技術曲線的驅動力：(a) LLM model 能力提升（context window 從 8k → 200k → 1M，可以塞整個小型 codebase）；(b) tool ecosystem 成熟（Next.js App Router、shadcn/ui、Tailwind v4 等 AI-friendly 框架同時崛起）；(c) execution sandbox 成熟（WebContainers 讓 LLM 能在瀏覽器裡跑 npm install 並 preview）。三者加乘才催生第三代。（基於既有知識的延伸寫作）\n\n\n10.2.2 二、Design system 與 component library 在 AI 時代的角色重定位\n過去 design system（設計系統）是大公司的奢侈品 — 自己維護一套 token、一套 component、一套 documentation site。AI 時代這個資源結構逆轉：design system 從「成本」變「prompt 槓桿」。當你跟 v0 說「給我一個 dashboard」，它需要某個 default 來生成 — 那個 default 就是它讀過、訓練過、知道怎麼穩定產出的 component library。\n這就是為什麼 shadcn/ui 在 2024-2025 年大爆發。它不是傳統意義上的 component library（不是 npm 包），而是一套 copy-paste-able 的 React component source code，建立在 Radix UI primitives + Tailwind CSS 之上。對 AI 友善的三個關鍵設計：\n\nSource 在你 repo：不是 black-box 套件，每個 component 的 code 全在你 codebase 裡，AI 讀 code 直接知道結構，不用猜 props\nTailwind utility class：所有 styling 是 inline class，AI 改 styling 不用追到外部 CSS 檔\nComposition over configuration：複合元件用 &lt;Dialog&gt;&lt;DialogTrigger /&gt;&lt;DialogContent /&gt;&lt;/Dialog&gt; 結構，AI 對這種 declarative tree 的 reasoning 比 prop-heavy API 強\n\n對應的，Tailwind CSS 也是 AI-native：所有 design decision 直接在 markup 裡，沒有「跳到另一個 .css 檔」的 context-switch 成本。v0、Cursor Composer、Claude Artifacts 預設都跑 Tailwind + shadcn/ui，幾乎是業界共識。（基於既有知識的延伸寫作）\n\n\n10.2.3 三、Prompt-to-app 五大工具的職能差異\n把 2025-2026 主要的「自然語言生 app」工具放在同一張地圖上比較，差異不在「會不會生 code」，在它替你做了多少 infra 決策：\n\n\n\n\n\n\n\n\n\n工具\n設計哲學\n強項\n弱項\n\n\n\n\nv0（Vercel）\nUI-first、generate React/Next.js\n元件品質頂、整合 Vercel 部署一鍵到位、shadcn/ui 原生\n後端要自己接、不適合非 Next.js 棧\n\n\nLovable\nDesign-first、做 SaaS 起手式\n包整套 frontend + Supabase backend、迭代體驗順\n棧鎖定（Supabase + React）、客製度有限\n\n\nBolt（StackBlitz）\nIn-browser full-stack IDE\nWebContainers 跑 Node.js / npm 完全在 browser、瞬間 preview\nBrowser 能跑就能寫，無法做 native / heavy compute\n\n\nReplit Agent\nAll-in-one：寫 + 跑 + 部署\n一站完整、適合 0 設定 prototyping、有 cloud DB\nReplit 平台鎖定、產出搬到別處要重整\n\n\nCursor Composer\nIDE 內 multi-file edit\n直接在你 local repo 操作、跨 file 改動最強、用熟的工具\n沒 preview / 沒 deploy，純 coding 段\n\n\n\n選用直覺：Demo / prototype 趕時間 → Lovable 或 Bolt（一句話到能 share 的 link）；自己長期 side project → Cursor Composer + v0（v0 生 UI、Cursor 改 code、Vercel 部署）；全棧 + 不想碰 infra → Replit Agent。\n第二類差異是「iteration loop 的閉合速度」 — 從你說一句話到看到結果的時間。Bolt / Lovable 在 30 秒內，v0 約 1-2 分鐘，Cursor Composer 看你 repo 大小但通常即時。loop 越快，prompt iteration 的次數越多，最終品質越高。這就是為什麼 v0 / Bolt 把 preview 做進產品本體 — 它們把 iteration loop 內建化。（基於既有知識的延伸寫作）\n\n\n10.2.4 四、為什麼 Vercel 的全棧押注（v0 + AI SDK + AI Gateway）值得單獨理解\nVercel 在這波 prompt-to-app 賽道裡是少數同時做產品（v0）+ infrastructure（Vercel platform）+ developer SDK（AI SDK）+ AI infra（AI Gateway）四層的玩家。理解這個 stack 才看得懂 Gaspar Garcia 演講背後的策略：\n\nv0：自然語言 → React/Next.js component / app（前端 UI 層）\nVercel AI SDK：TypeScript SDK，讓你在自己 app 裡接各家 LLM（OpenAI / Anthropic / Google）的統一介面，提供 streaming、tool use、structured output、generative UI 等高階 abstraction\nAI Gateway：跨 LLM provider 的統一 endpoint + observability + cost control + rate limiting，讓 production app 能在 model 之間 hot-swap\nVercel Platform：edge runtime、serverless function、CDN、preview deployment，是 v0 生成的 app 部署的 default 目的地\n\n這個 stack 的整合點是 edge-first generative UI：v0 生 component → AI SDK 在 edge runtime 串 LLM → AI Gateway 做 multi-provider routing → Vercel 部署。對 vibe coder 的 takeaway：選 Next.js + Vercel 棧的最大紅利不是 framework 本身，是這條完整的 AI-native infrastructure pipeline，每一段都減少你的工程負擔。（基於既有知識的延伸寫作）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#monday-lecture1110end-to-end-apps-with-a-single-prompt",
+    "href": "weeks/08_automated_ui_app_building.html#monday-lecture1110end-to-end-apps-with-a-single-prompt",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.3 Monday Lecture（11/10）：End-to-end apps with a single prompt",
+    "text": "10.3 Monday Lecture（11/10）：End-to-end apps with a single prompt\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 用一句自我吐槽開場：「This is not the vibe coding class — 因為我是 software development purist。…except today」。今天破例專講「prompt-to-app」現象。\n\nWhy — 現代 SaaS 已二十多年聚焦 web app — Salesforce 1999 通常被視為第一個 SaaS 平台。\nThe Old Days — 經典技術棧巡禮 —\n\nLAMP：Linux + Apache + MySQL + PHP（dynamic site / 傳統 web app）\nMERN：MongoDB + Express + React + Node.js（modern interactive SPA，client-side / server-side / database 三層）\nMEVN：MongoDB + Express + Vue + Node.js（用 Vue 替代 React，輕量靈活）\nJAM stack：JavaScript（dynamic 功能）+ APIs（連後端 service）+ Markup（pre-built static HTML）。常見工具 Gatsby、Next.js、Nuxt + headless CMS 像 Contentful、Sanity\nServerless：frontend（React / Vue / Svelte）+ backend（AWS Lambda / Google Cloud Functions）+ DB（DynamoDB / Firebase）\nAWS stack：跨 service combo\n\nTake #1: Visual Low-code / No-code — Wix、Squarespace、Webflow（pre-AI 時代非工程師建站方案）。\nThe new AI world — 第二波生成式 app builder：Lovable、Replit、Vercel v0、Base44、Cursor / Claude Code。\nWhat has changed —\n\n一句 prompt 生出完整 app\n工程師跨職能化（design、product management）\n任何人都能建 app\n比第一代 no-code（Webflow、Wix、Squarespace）更 user-friendly\n\nLive demo: Let’s make an app right now — 用 Bolt 建 frontend + backend，做一個「salsa partner finder」。初次 generation 後再做 iteration：更新 color palette（給三個 hex code：#EF8354 / #660000 / #EFCA08）、改 iconography、改 typography。展示自然語言 iteration 的 fluidity。\nApp builder architecture — WebContainer — Bolt 等工具的核心是 WebContainer：在瀏覽器內跑任意 generated code 的 sandbox（Node.js / npm 在瀏覽器跑），瞬間 preview 不必 deploy。\nApp builder system prompt 解析 — Mihail 引用兩個 外洩 Bolt system prompt：\n\n明確要求 LLM 只用 established / well-known technology / framework（避免 LLM 用偏門 lib）\n用自訂 &lt;boltartifact&gt; / &lt;boltaction&gt; 標籤標示「在 WebContainer 裡該發生什麼動作」（建檔、跑檔等）\n\nLimitations —\n\nEverything is awesome 直到出事就回到原點 — debug 不順時 prompt-driven UI 無法救\nPrompt 是建議不是指令 — 不是每個 user 都懂這個\nSecurity 已經是個問題（過去事件）\n如何避免所有 app 看起來一樣？\n這些 app 真的能撐多複雜？\n\n\nKey takeaway：Prompt-to-app 的工程本質是 LLM × component library × execution sandbox（WebContainer）× system prompt 紀律 的整合。Bolt / Lovable / v0 看起來像魔法，背後是精心設計的 system prompt（強迫用主流 framework）+ 沙盒（瀏覽器內跑 npm）+ 即時 preview。Demo 級別容易、production 級還有距離 — 知道邊界（complex business logic / 真實 auth / payment / 一致 design）在哪，比追新工具更重要。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#friday-lecture1114gaspar-garciavercel-head-of-ai-research",
+    "href": "weeks/08_automated_ui_app_building.html#friday-lecture1114gaspar-garciavercel-head-of-ai-research",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.4 Friday Lecture（11/14）：Gaspar Garcia（Vercel Head of AI Research）",
+    "text": "10.4 Friday Lecture（11/14）：Gaspar Garcia（Vercel Head of AI Research）\n\nSpeaker: Gaspar Garcia, Head of AI Research at Vercel\nSlides: Google Slides（需 Stanford 帳號）\n\n\nSlides 需 Stanford 帳號，依 Vercel 公開資料 + Gaspar Garcia 角色 best-effort 重建：\n\nGarcia 在 Vercel 領導 AI research，這場演講預期會橫跨 v0 / AI SDK / AI Gateway 三條產品線：\n\nv0 的設計哲學 — 為什麼 v0 不只生 code、要做 chat-driven iteration loop？為什麼 default 用 shadcn/ui？v0 V1 → V3 的 product evolution 故事\nGenerative UI 的範式轉移 — 傳統 UI 是「設計師畫 → 工程師實作 → 用戶看」，generative UI 是「LLM 即時 generate component 給每個用戶看」。這不只是 v0 的內部技術，也是 AI SDK 給 developer 的 abstraction（generateUI API、streaming React components）\nVercel AI SDK 的 design decision — 為什麼選 TypeScript first、為什麼 streaming 是 first-class、為什麼 tool use 跟 generative UI 同一套 API。對比 LangChain / OpenAI SDK 的取捨\nAI Gateway 的 production reality — 為什麼大家最終需要 multi-provider abstraction（cost、rate limit、availability、quality drift）。AI Gateway 怎麼解：unified endpoint + observability + caching + fallback chain\nVercel infrastructure 怎麼支撐 vibe coding — Edge runtime、preview deployment、Postgres / KV / Blob storage 三件套怎麼讓 v0 生的 app 能 zero-config 上 production\nWhat’s next — Garcia 應該會給 Vercel 對 generative UI / agent infra 的下一步想法（agent-as-a-service？multi-tenant generative app？）\n\nKey takeaway：v0 不是孤立的「畫 UI 工具」，是 Vercel 整條 AI-native stack 的 entry point。Vibe coder 用 v0 + AI SDK + Vercel 部署的最大紅利是「從 prompt 到 production 的單一供應商整合」，把工程負擔壓到趨近於零。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#reading",
+    "href": "weeks/08_automated_ui_app_building.html#reading",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.5 Reading",
+    "text": "10.5 Reading\n\n本週原 syllabus 沒列 reading list。本講義延伸推薦資源：\n\nv0 by Vercel — Official Docs\nVercel AI SDK Docs\nshadcn/ui — The component library AI loves\nLovable.dev / bolt.new / replit.com/agent（產品比較）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#assignmentmulti-stack-web-app-builds",
+    "href": "weeks/08_automated_ui_app_building.html#assignmentmulti-stack-web-app-builds",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.6 Assignment：Multi-stack Web App Builds",
+    "text": "10.6 Assignment：Multi-stack Web App Builds\n\nSource: github.com/mihail911/modern-software-dev-assignments/tree/master/week8\n任務描述: 用至少三種不同工具（建議 v0 + Lovable + Cursor Composer，或 Bolt + Replit Agent + v0）各自從同一個 prompt 生成同一款小型 web app（例：todo app with auth、blog with markdown editor、minimal SaaS landing page），比較產出的 (a) UI 品質、(b) code 結構乾淨度、(c) 從 prompt 到 deploy 的時間、(d) iteration 第二輪的穩定度。最終寫一份 comparison report，給未來的 vibe coder 同學一份「該用哪個工具」決策指南。\n自學者可行性: ⭐⭐⭐⭐⭐ 完全可做且強烈推薦做。所有工具都有 free tier：v0 個人 free quota、Lovable 試用、Bolt 在 stackblitz.com 直接用、Replit 個人免費、Cursor 14 天試用。預估 6-10 hr — 這是整門課最動手的 assignment 之一，做完你會對 prompt-to-app 工具的真實能力邊界有 first-hand 直覺，而不是 demo 影片裡的感覺。\n\n\n💡 加速 tip：三個工具不要分開三天做，同一天並行做最有效 — 你能 side-by-side 看到同一 prompt 產出三個截然不同的結果，差異最明顯。比如同一個下午開三個瀏覽器分頁，每個 paste 同一段 prompt，等 30 秒看誰先生完、誰生得對。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/08_automated_ui_app_building.html#對-vibe-coder-的應用",
+    "href": "weeks/08_automated_ui_app_building.html#對-vibe-coder-的應用",
+    "title": "10  Week 8：Automated UI and App Building",
+    "section": "10.7 對 Vibe Coder 的應用",
+    "text": "10.7 對 Vibe Coder 的應用\nW8 是把 vibe coder 從「能寫 component」升級到「能一個人 ship 完整 app」的關鍵一週。實戰建議：\n\n建立 v0 + Cursor + Vercel 三件套 workflow — 這是目前最成熟、最便宜（個人 free tier 可走完整 pipeline）、最少 vendor lock-in 的組合。流程：(a) 在 v0 生第一版 UI（用 chat 迭代到滿意）→ (b) 把 v0 產出 export 到本地 repo（v0 有 “Open in Cursor” / “Download Code” 按鈕）→ (c) Cursor Composer 接手做業務邏輯、API 接、跨 file 改動 → (d) git push 自動觸發 Vercel preview deployment → (e) merge 到 main 自動 production deploy\nshadcn/ui 是 default 不要懷疑 — 任何新 React/Next.js 專案開頭直接 npx shadcn-ui@latest init。理由 W8 核心概念已說明：source 在你 repo、Tailwind utility、composition pattern 三件事讓 AI 寫起來最穩。其他 component library（MUI、Chakra、Mantine）對 AI 都沒這麼友善\nPrompt 永遠帶 design system context — 跟 v0 / Cursor 對話時把 design system 寫進 prompt：「使用 shadcn/ui Card / Dialog / Form 元件，配色用 zinc + emerald，圓角 lg，間距 6/8/12 rhythm」。這比寫「做個漂亮的 dashboard」效果差 10 倍。沒 design system 直覺的話先去 shadcn/ui blocks 抓一個現成 layout 當 reference，把 reference 截圖貼進 prompt\nIteration 鐵律：第一版用 v0 / Lovable 做粗、第二版進 Cursor 做細 — Prompt-to-app 工具在 first generation 是天才、second iteration 開始崩（會回頭刪你已經改好的東西）。穩定的 workflow 是 第一版做 dirty draft → export 到 git repo → 之後所有改動在 Cursor 做，把 v0 當「美術初稿生成器」而非「長期 IDE」\n不要在 Replit / Bolt 養大型專案 — 它們是 prototype 殺手 app，不是長期 dev environment。Demo / hackathon / 一日 MVP 用得很爽，但你 side project 想養三個月以上一定要在 git repo + local IDE + 自選 deployment 平台。Vendor lock-in 越早脫離越好\nDesign system prompting 進階技巧 — 把你常用的 design 偏好寫進 CLAUDE.md / .cursorrules / v0 system instructions：「色票限定 zinc + emerald」「字體 Inter」「圓角統一 lg」「動畫用 framer-motion」「icon 用 lucide-react」「不要用 gradient 除非我明說」。每次新 prompt 不必重述，產出一致性會跳一個 level\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天 30 分鐘做這件事 — 開 v0.dev，prompt「Build a clean dashboard with sidebar navigation, top header with user avatar, main area showing 4 stat cards and a data table. Use shadcn/ui, Tailwind, zinc + emerald color scheme, lucide-react icons」。等 1 分鐘看產出。然後點 “Open in Cursor”，把產出拉到本地 repo。再 prompt Cursor「把這個 dashboard 接到 mock data，加一個 dark mode toggle」。最後 vercel deploy 上線。從零到 production URL 不到一小時 — 這就是你 W8 之後常駐的 baseline workflow。\n\n\n上一週：W7 Modern Software Support | 下一週：W9 Agents Post-Deployment",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Week 8：Automated UI and App Building</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html",
+    "href": "weeks/09_agents_post_deployment.html",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "",
+    "text": "11.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#學習目標",
+    "href": "weeks/09_agents_post_deployment.html#學習目標",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "",
+    "text": "解釋 SRE 的核心三角（SLI/SLO/SLA）以及為什麼 observability ≠ monitoring\n辨識 AI agent 的特殊 observability 需求（token usage、tool call latency、hallucination rate、context drift）\n設計 一個 incident response workflow 含 AI auto-triage step\n評估 Resolve.ai / PagerDuty AI / Datadog AI agent 在 on-call 場景的能力差異",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#核心概念導讀",
+    "href": "weeks/09_agents_post_deployment.html#核心概念導讀",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.2 核心概念導讀",
+    "text": "11.2 核心概念導讀\n\n11.2.1 一、SRE 入門：把營運當軟體工程問題解\nW1-W8 講的都是「把 code 寫出來」。但 production system 的真正挑戰不在寫，而在「上線之後」 — 7×24 小時持續運轉、流量會起伏、依賴會壞、客戶會抱怨、半夜會被 page。在這個世界裡，Google 提出的 SRE（Site Reliability Engineering，網站可靠度工程） 是業界共識的解法。SRE 的核心不是「找一群運維」，而是「找軟體工程師來設計營運團隊，把 manual operation 當成 bug 來自動化掉」。\nGoogle SRE Book 列了三個基礎紀律，所有 production system 都適用：\n\nSLI / SLO / SLA（service level indicator / objective / agreement） — SLI 是測量值（如 p99 latency = 187 ms）、SLO 是內部目標（99.9% 請求 &lt; 200 ms）、SLA 是對客戶的合約承諾（達不到要賠錢）。三者依序由內而外、由緊而鬆。\nError budget（錯誤預算） — 既然 100% availability 既不可能也無價值（每加一個 9 成本指數成長），就明訂 SLO（例：99.99%），剩下 0.01% 是「可以拿來冒險的預算」。新功能上線會吃預算，預算用完就停止 release。\n50% rule — 工程師花在 toil（重複瑣事）的時間不得超過一半，另一半必須做工程改善。違反這條 SRE 團隊就會隨流量線性膨脹，跟傳統 sysadmin 一樣。\n\n\n💡 譯解（醫療類比）：SLO 像住院病人的「目標生命徵象」 — 不是要把 BP 維持在 120/80 不准動，是「BP 維持在 100-140/60-90 之間就算 ok」。Error budget 就是「下緣到目標之間的容忍空間」 — 病人 BP 在 105 還是 ok，可以做 challenging 的事（早期 ambulation、調藥），如果預算用光（BP 已經在 100），就先別動。Blame-free postmortem 就像 M&M（morbidity & mortality conference）— 不是要找哪個住院醫師簽錯醫囑，是要找系統性漏洞（為什麼 EHR 沒擋下這個 dose？為什麼交班沒講到 allergy？）。\n\n把 SRE mindset 套到 LLM agent：你的 agent 也會壞 — hallucination、tool call timeout、context overflow、prompt injection。關鍵是先量化什麼叫「ok」（例：hallucination rate &lt; 0.5%、p95 response time &lt; 5 s、tool success rate &gt; 95%），然後用 error budget 管理 release 風險（這個 prompt 改完 hallucination rate 飆到 1%，立刻 rollback）。\n\n\n11.2.2 二、Observability 三柱：logs / metrics / traces\nObservability Basics 釐清一個常被混用的概念：monitoring（監控）只告訴你「什麼壞了」（CPU 高、5xx 多）；observability（可觀測性）要回答「為什麼壞」。在 microservices（微服務）架構下，一個 user request 可能跨 10+ 個 service，光看單一 service 的 metrics 完全不知道哪一段慢。Observability 的三柱各司其職，缺一不可：\n\n\n\n\n\n\n\n\n\n柱\n是什麼\n醫療類比\nLLM agent 場景例\n\n\n\n\nLogs（日誌）\n離散文字事件記錄（誰、何時、做了什麼）\n病歷紀錄 — 每個診間、每次處置的逐筆紀錄\n“User asked X, agent called tool Y, got result Z”\n\n\nMetrics（指標）\n時間序列數值（QPS、p99 latency、error rate）\n生命徵象 — HR / BP / SpO₂ 持續監測\n“average tokens per request”、“tool call success rate”\n\n\nTraces（追蹤）\n一個 request 從進入點到回應的完整路徑\n影像檢查（CT / MRI）— 一次性看全身結構與問題位置\n“user query → LLM call → MCP tool → DB → 第二次 LLM call” 整條路徑\n\n\n\nTrace 由多個 span（區段） 組成，每個 span 是一個工作單位（一次 DB query、一次 RPC call、一次 LLM call），spans 用 parent-child 關係組成階層。關鍵是 context propagation（上下文傳播） — trace ID 必須跨 service 傳遞才能串成完整路徑。OpenTelemetry（OTel） 是業界中立的 instrumentation 標準，所有大廠（Datadog、New Relic、Honeycomb、Grafana）都支援，意味著你 instrument 一次、可以隨時換 vendor。\n\n💡 譯解：你想 debug 一個 LLM agent「怎麼會回這個怪答案」 — 看 logs 像翻一頁頁病歷找線索（耗時、容易漏）、看 metrics 像看 vital sign trend chart（知道某時段惡化但不知為何）、看 traces 像直接拉出那次 request 的「全身 CT」 — 從 user query 進來到 response 出去的每一步、每一步的 input / output / 耗時都看得到。Production agent 沒有 traces 等於 debug 黑箱。\n\n三柱必須相互關聯才有用 — trace ID 要寫進 log line、metric 要帶 trace exemplar，這樣你看到 metric spike 時能一鍵跳到那個時段的 traces，看到 trace 異常時能一鍵看相關 logs。\n\n\n11.2.3 三、AI agent 的特殊 observability 需求\n傳統 observability 三柱足夠看 web service。但 LLM agent 多了幾個維度，傳統工具看不到：\n\nToken usage（token 消耗） — 每個 request 用了多少 input / output token、累計成本多少。沒看會被 OpenAI / Anthropic 帳單嚇到。\nTool call latency（工具呼叫延遲） — Agent 一次任務可能 chain 5-10 個 tool call，每個 tool 的耗時、成功率、failure mode 必須個別 instrument。某個慢 tool 會拖垮整個 agent 的 p95。\nHallucination rate（幻覺率） — 這個最難量化但最重要。常見做法：(a) 對 critical claim 跑 fact-check pipeline、(b) 抽樣人工審核、(c) 用 LLM-as-judge（另一個 model 當審查員）。\nContext drift（上下文漂移） — 長對話 / 多輪 agent loop 中，context window 累積到後期 model 會偏離 system prompt 的指示（俗稱 “agent 走鐘”）。需 instrument 每輪的 prompt 大小、context 中各部分占比。\nTool selection accuracy（工具選擇準確率） — Agent 有 N 個 tool 可用時，它選對了嗎？常見指標：選對率、平均嘗試次數、wrong tool 後恢復率。\n\n\n💡 譯解：傳統 web service 的 observability 像加護病房的 monitor — 量 BP / HR / SpO₂ / EtCO₂ 就大致知道病人狀況。LLM agent 多了「精神狀態」這條軸 — 即使 vital sign 都正常，他可能 confused / disoriented / hallucinating。你需要額外的 GCS（Glasgow Coma Scale）、CAM-ICU（confusion assessment method）那種專門 instrument 才測得到。Hallucination rate 與 context drift 就是 LLM agent 的「精神狀態評估」。\n\n工具上 Langfuse、Helicone、Arize Phoenix 是專做 LLM observability 的開源/商用方案，本質上把 trace 模型擴充支援 LLM call 與 tool call，再加上 token / cost / hallucination eval 維度。\n\n\n11.2.4 四、Multi-agent system 在 SRE：MDT 會議模式\nMulti-Agent Systems for AI-Native Engineering 提出一個關鍵 observation：single agent 在 production debugging 是 sequential bottleneck（序列瓶頸） — 它一次只能調查一個假設，但 production incident 的時間壓力要求並行假設驗證。\n解法是 multi-agent 架構，讓專業 agent 各司其職並行運作。一個典型的 incident response multi-agent system 長這樣：\n\n\n\n\n\n\n\n\nAgent\n專長\n輸出\n\n\n\n\nTrace agent\n追跨 service 的 distributed trace\n「latency spike 出現在 service B 的 DB call」\n\n\nDB agent\n分析 DB performance、slow query\n「過去 10 分鐘有一支 N+1 query」\n\n\nDeployment agent\nreview 最近 CI/CD 部署紀錄\n「30 分鐘前 service B 上了 commit abc123」\n\n\nCode diff agent\n看那個 commit 的 code change\n「abc123 移除了 query 的 index hint」\n\n\nCustomer impact agent\n估算影響範圍\n「過去 10 分鐘有 12,000 user 受影響」\n\n\nCoordinator agent\nmerge 上述發現給結論\n「root cause: abc123 commit 的 query regression，建議 rollback」\n\n\n\n\n💡 譯解（MDT 會議類比）：這個架構就是醫院 MDT（multidisciplinary team）會議的軟體版 — 一個 lung cancer 病人的 case，心臟科評估手術風險、腫瘤科出 chemo 方案、放射科出 RT 計畫、病理科確認 diagnosis、社工評估家庭支持，最後 lead physician（coordinator）綜合所有意見開會 merge 結論。每個專家獨立、並行作業，最後一次 merge — 比一個 generalist 順序問每個專家快得多。Production incident 也是多 domain 問題，multi-agent 並行調查比 single agent sequential 快數倍。\n\n但並行的代價是需要 formal coordination protocol 來避免 race condition 與 deadlock — 這也是 MDT 會議要有 chair 主持、有 agenda、有 timing 規則的原因。把這套作出 production-ready 需要罕見的雙重專業：深度 production domain knowledge + sophisticated AI architecture，缺一邊就會做出「會調查但調查錯方向」的系統。Resolve.ai 的賣點就是兩邊都有。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#monday-lecture1117incident-response-and-devops",
+    "href": "weeks/09_agents_post_deployment.html#monday-lecture1117incident-response-and-devops",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.3 Monday Lecture（11/17）：Incident response and DevOps",
+    "text": "11.3 Monday Lecture（11/17）：Incident response and DevOps\n\nSlides: Google Slides 公開連結\n講者: Mihail Eric\n\n\n以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：\n\nMihail 開場直接給出 framing 數據：「Coding represents just 30% of engineering time。難搞的 70% 是把 code 跑在 production 裡 — 那裡 complexity / tool silo / knowledge gap / interdependency 全 collide」。\n\nThe old world — SRE 的痛點清單 —\n\nOperational monitoring：on-call、troubleshoot、infrastructure management、security\nIncident resolution 需要從多 source / 多 team 拼湊資訊\n維護常常已過時的 runbook\nCloud-native + Kubernetes + 容器化把 data / dependency / complexity 推到新高度\nSRE 因 on-call shift 普遍 burnout\nestimates that downtime and service degradation cost the Global 2000 about $400 billion annually\n\nInfrastructure & DevOps 的核心紀律：Four Golden Signals of monitoring\n\nLatency：分開追蹤 successful 與 failed request（避免 HTTP 500 失敗讓平均失真，慢 error 特別需要關注）\nTraffic：system demand，通常 req/sec、依系統決定（streaming 算 session、DB 算 transaction）\nErrors：失敗率，包含明確（HTTP 500）、隱含（200 OK 但 wrong content）、policy-based（超過 SLA）。需多層 monitoring 抓不同 failure\nSaturation：「系統滿到什麼程度」，追蹤 CPU / memory / I/O。System 通常在 100% 之前就慢，要訂 safe threshold\n加上：monitor production trace\n\n凌晨 3:12 的實境演練 — PagerDuty ping 你 DB query 出現 500 spike，怎麼辦？Mihail 給一份 8 步驟 incident playbook：\n\nAcknowledge & assess：在 PagerDuty acknowledge、確認嚴重度、看 app + DB dashboard、判斷 partial / full outage\nCheck Golden Signals（DB first）：connection 是否爆 / 卡 / 突然掉？P95 latency spike？Slow query？timeout / refused / aborted transaction？CPU / IOPS / lock / memory / replication lag？\nLook for what changed：最近 deploy？DB migration？Config / feature flag 改？autoscaling 事件？— 有 correlation 立刻 rollback / revert\nLocalize failure：所有 query 都壞 vs 特定 query？read 還是 write？primary 還是 replica？單 shard / instance 還是全部？App-side（pool / timeout）還是 DB-side（load / lock）？\nApply fast mitigation：connection issue → restart pod / 降 concurrency；DB saturation → 關 heavy job / throttle traffic / read 路由到 replica；bad slow query → 關該 feature / 開 cached degraded mode；replica lag → read 路由到 primary / 重啟 replica；unhealthy node → 只重啟 replica，primary 要 escalate\nStabilize & monitor：看 500 rate / DB latency / traffic 回正、確認沒 retry storm 與 cascading failure、health check 恢復\nCommunicate：每 10-15 分鐘一次簡短 update（issue → action → status）\nClose out：時間軸、root cause、follow-up（query fix、indexing、scaling、retry tuning、capacity review）\n\nMetrics tracked — MTTR（mean time to repair）、被拉進 incident 的 engineer 數量、對 customer 的 reported SLA。\nThe new AI world — Resolve AI（W9 Friday guest）、Datadog Bits AI Agent、Splunk Observability Assistant。\nAI SRE 的特徵 —\n\n動態維護 knowledge graph\n跨 observability stack 與 cloud 的 agentic system\n即時生成「現在發生什麼」的 narrative、pinpoint likely root cause + 證據、給 prescriptive remediation\nHeavy emphasis on explainability and auditability\n\nWhat has changed — AI 把 organizational / service-level knowledge scale 出來 — 那些 undocumented dependency、brittle legacy service、只會在 high-stakes incident 浮現的 quirk，不再被孤立在某幾個資深 engineer 腦中。\nAI SRE in action 預覽 — observability、working theory、span info、heavily evidence-based、chat 介面做動態查詢。\nLimitations —\n\n能處理 incident 的複雜度有限\n現代 production stack 異質性\n從偵測到實際 remediate code 還很遠（all provider 都先做 root cause analysis 起）\n好的 RCA 需要好的 monitoring「園藝」（gardening）— 工具雜草不除 AI 也救不了你\nSecurity 可能變新 attack vector\n\n\nKey takeaway：SRE 工作流（detect → check golden signals → look for change → localize → mitigate → stabilize → communicate → close out）是個成熟 8 段 playbook。AI agent 不是要重新發明它，是要在前面 5 段大幅縮短時間 — 從凌晨 3:12 page 到 4:00 找到 root cause，從原本的「多 engineer + tool silo + 拼湊資訊」變成「single agent + dynamic knowledge graph + evidence-first」。但 remediation 邊界還在，blast radius 大的動作必須 human authorize。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#friday-lecture1121mayank-agarwal-milind-ganjooresolve",
+    "href": "weeks/09_agents_post_deployment.html#friday-lecture1121mayank-agarwal-milind-ganjooresolve",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.4 Friday Lecture（11/21）：Mayank Agarwal + Milind Ganjoo（Resolve）",
+    "text": "11.4 Friday Lecture（11/21）：Mayank Agarwal + Milind Ganjoo（Resolve）\n\nSpeakers:\n\nMayank Agarwal, Founder & CTO of Resolve AI（OpenTelemetry creator）\nMilind Ganjoo, Member of Technical Staff at Resolve AI（ex-DeepMind Staff MLE）\n\nSlides: Drive 連結（公開）\n\n\n以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。演講題目「Agentic AI for software in production」：\n\n段 1：軟體工程的真實樣貌（不是 idealized）\n軟體工程比想像複雜：跨 systems（code、AI、telemetry、cloud、knowledge、security）、跨 teams（application、infra、networking）、跨 workflows（development、deployment、on-call、cost management、compliance、security vulnerability、documentation）。Software engineer 花 70+% 時間在 grunt work：building context、working across tools、evidence gathering、log queries、coordination、application、documentation、compliance、on-call、optimization、deployment、problem solving — 只有少部分時間在 design decision、trade-off、creative work。\n段 2：On-call engineer 在凌晨 3:04 被 page 後到底發生什麼\n走 timeline：03:04 AM page → 03:20 AM L1 support 接手 → 04:00 AM multiple team escalation（infra / app & product / DB / engineering manager / incident commander）→ 04:45 AM 工程師終於把問題 mitigate → ? AM postmortem。整段過程要靠 runbook、observability、code、infra 拼湊，nearly all manual effort — incident commander 協調人、L1 看 infra、app & product team 看 application、director / comms manager 對外溝通。\n段 3：什麼讓 production 對人類（與 model）來說都很難？\n\n跨多 system / tool 的 data silo — 1000s of service across 100s of team、複雜瞬息的 infra（DB、messaging service…）、低層工具看 log / metric / dashboard / feature flag / CI-CD 各自 query language、access mechanism、operational behavior\n跨 team / 跨 expertise 的協調 — application engineer、platform engineer、SRE、IT ops、security engineer、support engineer 各有專長，但 context 通常 fragmented and undocumented\n直接影響營收與成本 — incident 拖好幾小時或好幾天才解掉、tool 維護成本高、incident regularly 牽涉 20+ engineer、change 難做又會 trigger issue、infrastructure 開支不斷漲、客戶常常先發現問題、只有少數工程師真的懂 production 全貌、新人 onboard 要 3-6 個月、AI 生成的 code 又把問題放大\n\n段 4：AI 要怎麼幫工程師管 production？\nResolve 的 Agent-first approach 結合三件事：(1) understand and operate all your production tools、(2) capture tribal knowledge of your unique system、(3) combine expertise of all your engineers across team。Mayank 把這拆成 3 個設計原則對應到 3 個產品 capability：\n設計原則 1：Production 系統複雜且持續變化 → AI 要深度理解 production - 接到 code、infra、tool、knowledge - 為「你的系統」建模（不是 generic SRE，是你公司的 architecture） - 在 graph 內導航到對的 node 蒐證據 - 像專家一樣操作每個 tool / system - AI 連接 alerts / metric / dashboards / traces / logs / runbooks / change events 等多源訊號\n設計原則 2：Knowledge fragmented or undocumented → AI 要 capture tribal knowledge 並逐次變聰明 - Capture 公司與 team 的知識 - 記得 in-the-loop 給的 feedback / teaching - Retrieve context-specific information\n設計原則 3：調查需要跨 team 專長 → AI 要結合所有 engineer 的專長 - Create investigation plan - 並行 pursue 多個 hypothesis（multi-agent 並行查不同方向） - 持續 refine plan 到 root cause - 讓多人跨 org 邊界協作得到答案\n段 5：Lessons learned building AI for prod\n\n這不只是 model 問題 — production 導航需要大量 domain expertise，這些必須 hard-code 進 architecture，單靠 prompt engineering 蓋不出 production AI\nContext window 有限，production context 是無限的 — 10M log line 不可能塞進任何 context window。Intelligence 是「knowing WHAT to query, WHEN, and HOW to filter」based on production understanding\n跟 tool 工作是 non-trivial 問題 — Raw API 不可用：response 太大、output 雜、為人類設計。必須建 AI system 能 filter noise、回 structured summary、graceful 處理 error、parallel 工作\nEval 跟 product 一樣難 — 建 eval 要重現 production complexity（service、dependency 等），沒 eval 就不能信任 output\n\n段 6：AI is changing software engineering\nMayank 預測「By next year software engineering will look fundamentally different」。Three eras 的 grunt work / creative work 比例： - Models era（純 model API）：grunt work 主導 - Agents era：grunt work 還是大頭，但 creative work 占比上升 - Closed-loop agents era：grunt work 大幅縮減，creative work 占主導\nKey takeaway：Resolve 對 vibe coder 的最大 lesson 不是「怎麼用 AI agent」，是「production AI 為什麼不能靠 prompt engineering 做出來」。它需要 (a) hard-code domain expertise into architecture、(b) 知道何時 / 怎麼 query / filter 而非塞 raw data、(c) 把 messy raw API 包成 AI-friendly tool、(d) eval 跟 product 一樣難建。對未來 AI vertical startup 的 founder 是必看的工程現實 check — production engineering 是 LLM agent 的 killer app，但門檻比一般 chat agent 高一個量級。對自己的 side project，至少先學會這套「接 alert → 檢查 golden signal → 看最近改了什麼 → localize → mitigate」的 8 步驟 playbook，自己當自己的 SRE。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#reading-摘要",
+    "href": "weeks/09_agents_post_deployment.html#reading-摘要",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.5 Reading 摘要",
+    "text": "11.5 Reading 摘要\n\n\n\n篇名\n來源\n一句話重點\n\n\n\n\nIntroduction to SRE\nGoogle SRE Book\nSRE = 把營運當軟體工程問題；error budget 量化 dev/ops 衝突，blame-free postmortem 找系統漏洞\n\n\nObservability Basics\nlast9.io\nObservability 三柱：logs（病歷）+ metrics（生命徵象）+ traces（影像）；context propagation 是關鍵\n\n\nKubernetes Troubleshooting with AI\nresolve.ai\nK8s 三大痛點（alert fatigue、ephemeral context、observability fragmentation）由 AI agent + knowledge graph 解\n\n\nYour New Autonomous Teammate\nresolve.ai\nResolve 產品深度導覽：dynamic knowledge graph + just-in-time runbook + 1 分鐘 root cause + 自動 postmortem\n\n\nMulti-Agent Systems for AI-Native Engineering\nresolve.ai\nSingle agent 是 sequential bottleneck；multi-agent 並行查 root cause 是 AI-native 工程的核心\n\n\nTop 5 Benefits of Agentic AI in On-call\nresolve.ai\n五大好處：消 alert fatigue、活知識、調查一致性、證據式協作、主動找潛在問題\n\n\n\n閱讀優先順序：先讀 Introduction to SRE（建立 mental model）→ Observability Basics（基礎工具觀念）→ Multi-Agent Systems（agent 架構）→ Your New Autonomous Teammate（具體商業案例），時間有限的話前三篇必讀。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#assignment",
+    "href": "weeks/09_agents_post_deployment.html#assignment",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.6 Assignment",
+    "text": "11.6 Assignment\n\n本週原 syllabus 沒列 weekly assignment。建議自學者用 Sentry 或 Better Stack 給自己的 side project 設定 observability 當練習：(1) 開一個帳號（兩家都有 free tier）→ (2) 接到自己的 side project（npm/pip 裝 SDK，5 分鐘）→ (3) 故意製造一個 error 看 dashboard 抓得到嗎 → (4) 設一個 alert（例：error rate &gt; 1%）發到 Discord / email → (5) 觸發後跑一次完整 incident response 流程（看 trace 找 root cause → fix → 寫 postmortem）。預估 2-3 hr，會建立完整 production-ready 的肌肉記憶。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/09_agents_post_deployment.html#對-vibe-coder-的應用",
+    "href": "weeks/09_agents_post_deployment.html#對-vibe-coder-的應用",
+    "title": "11  Week 9：Agents Post-Deployment",
+    "section": "11.7 對 Vibe Coder 的應用",
+    "text": "11.7 對 Vibe Coder 的應用\nW9 是 vibe coder 最容易跳過、但跳過後悔最大的一週。多數人 ship side project 時根本沒 observability，等到出 bug 才發現自己什麼都看不到、只能憑直覺猜。這週的概念套到日常工作流：\n\n第一個 production project 立刻接 Sentry — Sentry 對 vibe coder 是 P1 夯。Free tier 給每月 5K event，足夠 hobby project 用。npm install 後 3 行 code 就接好，自動抓 unhandled exception、含 stack trace、含 source map（看到原 TypeScript 而不是 minified JS）。沒有 Sentry 等於沒儀表板開車\n三選一：Sentry / Better Stack / Vercel Analytics —\n\nSentry 主攻 error tracking + performance traces，all-rounder。最 P1，預設選它\nBetter Stack（原 Logtail + Better Uptime）主攻 log aggregation + uptime monitoring，介面漂亮、SQL-like log query 強。如果你 log 量大選它\nVercel Analytics 只在 deploy 到 Vercel 時用、focus 在 web vitals + page view，是「最低限觀測」。配 Sentry 用不衝突\n\nDay 1 就加 structured logging — 別用 console.log(\"user clicked\")，用 JSON log 含 request ID / user ID / timestamp / event：logger.info({ user_id, action: \"click\", item: \"checkout\" })。Sentry / Better Stack 都會自動 parse JSON log 的 field 變成可篩選的 metadata。改寫 0 成本、回收高得驚人\nLLM app 加 Langfuse / Helicone — 如果你 side project 用了 OpenAI / Anthropic API，標準 observability 看不到 token usage / hallucination。Langfuse 開源、self-host 免費、5 分鐘接 SDK，給你完整的 prompt + response + tool call + cost 紀錄。一個月後回頭看，會發現 80% 的 cost 來自你想不到的 5% request — 沒這個資料無法 optimize\nProduction-ready 的觸發點不是「有用戶」是「你會半夜被 page」 — 多數 vibe project 永遠不會到那個點，所以別過度工程化。只要 (a) error tracking、(b) basic uptime check（Better Stack free tier 給 10 個 monitor），就涵蓋 90% 的 production-ready 需求。Kubernetes、Datadog、PagerDuty 全是 over-engineering — 等到你的 side project 真的有 paying customer 再上\nPostmortem 文化套到自己 side project — 每次 production bug 寫 30 字 postmortem（root cause + fix + lesson）存進 repo 的 POSTMORTEMS.md。半年後看會發現自己一直在重蹈覆轍同類 bug，這個 doc 就是個人版的 dynamic knowledge graph\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天去 sentry.io 開帳號（30 秒）、選你最在意的那個 side project、跟著 5 分鐘 setup wizard 接好 SDK、deploy。下次 bug 不必再從 user 抱怨「我點了沒反應」開始 debug — Sentry 會直接 email 你 stack trace + 出錯時的 user / request context，可能還沒等 user 抱怨就已經修好。這個 ROI 是所有 dev tool 中最高的之一。\n\n\n上一週：W8 Automated UI and App Building | 下一週：W10 What’s Next",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Week 9：Agents Post-Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html",
+    "href": "weeks/10_whats_next.html",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "",
+    "text": "12.1 學習目標\n完成本週後，你應該能：",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#學習目標",
+    "href": "weeks/10_whats_next.html#學習目標",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "",
+    "text": "辨識 software dev role 在 AI 時代的 5 種可能演化路徑（augmentation / specialization / abstraction / replacement / new roles）\n解釋 emerging paradigms（spec-driven dev、formal verification × AI、autonomous repo maintenance）的技術前提\n評估 自己的 skill stack 在未來 5 年的相對價值（哪些 skill 會 commoditize、哪些會更值錢）\n預測 AI dev tool 市場的下一個 winner pattern（platform vs vertical、open vs closed）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#核心概念導讀",
+    "href": "weeks/10_whats_next.html#核心概念導讀",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.2 核心概念導讀",
+    "text": "12.2 核心概念導讀\n\n12.2.1 一、Software Dev Role 的 5 種演化路徑\n「AI 會不會取代軟體工程師？」這個問題問了 3 年，答案從來不是 yes/no — 是 role 會分裂成幾種典型形態。從 W1-W9 的素材抽絲剝繭，可以看到 5 條互不互斥的演化路徑：\n\nAugmentation（增強）— 大多數人會走的路 — 不換工作，把 Claude Code / Cursor / Warp 整合進現有工作流，產出 / 時間提升 30-100%。需要的新 skill：context engineering、agent management（W4）、prompt-driven debugging（W6/W7）。這條路最 boring 但 ROI 最高\nSpecialization（專業化）— 變成「某類 AI tool 的世界級用戶」 — 例：成為 Claude Code subagent / skill 系統的專家、或 v0 prompting 的世界級操作者、或 Vercel AI SDK 的 community contributor。這條路有「先發優勢」但會被後來者追平\nAbstraction Up（抽象上層）— 從 implementer 轉 architect / agent manager — 不再寫 code，全心做 spec design、acceptance criteria、verification 設計、人機分工策略。對應 W3 的 spec-driven 命題與 W4 的 agent manager mindset\nReplacement（取代）— 真實但範圍有限 — 不是取代「軟體工程師」這個 role，是取代「寫 boilerplate / 補測試 / 改格式 / 做 routine refactor」這些 task。受影響最大：junior dev 在 boilerplate-heavy 公司、外包 contract programmer。受影響最小：產品經理、tech lead、staff+ engineer\nNew roles（新角色）— 已經出現 — AI Engineer（W2-W4 的 agent / MCP 操作者）、Forward Deployed Engineer（在客戶端配合 AI 解決方案的工程師）、AI Reliability Engineer（W9 的 AI-native SRE）、Prompt Architect（資深 prompt 設計師）、Eval Engineer（評測 AI system 的專家）\n\n對使用者個人 strategic（醫學生 + RA + vibe coding hobby）的對應：路徑 1 是基本盤（Claude Code 整合進醫學研究 workflow）、路徑 2 可選（成為「醫學 + AI tool」的早期專家）、路徑 5 跨領域（醫學 AI engineer、clinical AI ops 都是 emerging niche）。（基於既有知識的延伸寫作）\n\n\n12.2.2 二、Emerging Paradigms：Spec-driven Dev / Formal Verification × AI / Autonomous Repo Maintenance\nW3 已經提了 spec-driven dev 的概念，W10 把它放進更大的 paradigm shift 圖裡。3 個正在浮現的範式變化值得注意：\n1. Spec-driven Development（規格驅動開發）走向主流 - W3 的 Specs Are the New Source Code 是先驅論文。實際走勢：未來 5 年大公司（Google、Meta）會把 PRD / design doc 轉成可被 agent 直接 implement 的 formal spec - 副作用：PM 跟 designer 的工作會變硬 — 寫得糊的 spec 直接沒結果，逼大家寫得精準 - Vibe coder 對應：把寫 PRD 當 first-class skill 練（不是 nice-to-have）\n2. Formal Verification × AI 的二度興起 - 2010 年代 formal verification 因為手寫太難失敗。2025-2030 年 LLM 把證明重擔自動化，formal methods 在 safety-critical（醫療、金融、自駕、aerospace）領域會大爆發 - W6 的 Vulnerability Prompt Analysis with O3 是早期信號 — LLM 已經能做 formal-ish vulnerability analysis - 對醫療 AI 的長尾影響：FDA 過審 AI 醫材會強制要 formal verification step\n3. Autonomous Open-source Maintenance - 已有早期跡象：Dependabot、Renovate（dependency 自動 upgrade）、CodeRabbit / Diamond（W7 PR review）、Devin（Cognition 的自動 PR 機器人）。下一步：autonomous bug fix、autonomous feature backport、autonomous release management - 風險：低品質 / spam PR 暴增，maintainer 變成「reviewer of reviewers」 - Vibe coder 對應：你的 side project repo 提早設定 AI reviewer + auto upgrade，用得越早越熟\n（基於既有知識的延伸寫作）\n\n\n12.2.3 三、AI Dev Tool 市場的 Winner Pattern\nW2-W9 串連起來看，AI dev tool 市場已經分成 4 個 layer，每層的 winner pattern 不同：\n\n\n\n\n\n\n\n\nLayer\n範例（2026 強者）\nWinner Pattern\n\n\n\n\nFoundation models\nAnthropic（Claude）、OpenAI（GPT）、Google（Gemini）\n寡占 — 訓練成本高、moat 在 model 與 evals\n\n\nCoding agents / IDE\nClaude Code、Cursor、Devin、Warp\n寡占走向碎片化 — 每個 niche（CLI / IDE / autonomous）會有 1-2 強者\n\n\nVertical tools\nGraphite（W7 code review）、Resolve（W9 SRE）、v0（W8 UI）\nVertical SaaS — 每個 vertical 1-2 個專業玩家\n\n\nInfrastructure\nVercel（AI SDK + Gateway）、Cloudflare、Modal\nPlatform-led — 跟 cloud provider 整合越深越強\n\n\n\n幾個跨層 trend： - Vertical 比 horizontal 賺錢 — 一個 code review 公司（Graphite）、一個 on-call 公司（Resolve）、一個 UI 公司（v0）能各自撐 unicorn valuation；做「all-in-one AI dev tool」的反而難變現 - Open source 是漲粉、不是商業模式 — Claude Code / Cursor 都不開源核心，但開放擴充（subagent、skill、extension）；MCP 協定開源（吸引 ecosystem），客戶端產品閉源（保 monetization） - Foundation model 是 commoditizing — Anthropic / OpenAI / Google 三家差距在縮小，wrapper 產品（Cursor、Devin）會越來越用 router 在三家間切換以降本（W6 的 Context Rot 也說明 model 之間差距已經不大）\n對使用者個人決策的 takeaway：別把學習投資押在單一 model（Claude vs GPT 之爭已經 boring），押在跨 model abstraction 層（MCP、Vercel AI SDK、LangChain）跟vertical workflow（你的醫學研究 pipeline、阿摩錯題迴圈、IRB 自動化）— 這兩層的價值不會被 model 變遷洗掉。（基於既有知識的延伸寫作）\n\n\n12.2.4 四、a16z 的 AI Dev Tool 投資 Thesis\nMartin Casado 在 a16z 主導 American Dynamism + Infrastructure / AI 的投資組合。從他公開 essays（“The End of Cloud Computing”、“AI 50” series）和 a16z 對 Cognition（Devin）、Cursor（Anysphere）、各 AI dev tool 公司的投資紀錄，可以推出他的 4 條 thesis：\n\nInfrastructure layer 比 application layer 大 — Cloud computing 的 winner 是 AWS / GCP / Azure 而非 SaaS 應用。同理 AI 時代的 winner 不會是 chatbot 應用，是 Vercel / Cloudflare / Modal 這類 AI infra\nAgentic platform = 下一個 unicorn factory — 不只是「AI 寫 code」，是「AI 自主完成 task 並付費」。Devin（autonomous coding）、Resolve（autonomous on-call）都在這條軸線上\nVertical AI &gt; horizontal AI — 醫療 AI、法律 AI、code review AI、SRE AI 各自會出 unicorn，比通用 chatbot 更穩\nTalent geography 大洗牌 — AI 解放 talent 不必住 SF Bay。a16z 的 American Dynamism 主題押注是「全美都會有 AI startup」。對台灣 / 亞洲：英文良好的 AI engineer 在 remote / async 模式下能直接接美國公司 contract，門檻變低\n\n對使用者長期 career bet 的對應： - 押 vertical AI（醫學 + AI 的交集）而非 generic AI - 押 infra layer 工具（會用 MCP / Vercel AI SDK / observability 三件套）而非單一 wrapper 產品 - 遠端 / 自由 contracting 比 traditional FTE 路線在 AI 時代 ROI 更高\n（基於既有知識的延伸寫作）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#monday-lecture121software-development-in-10-years",
+    "href": "weeks/10_whats_next.html#monday-lecture121software-development-in-10-years",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.3 Monday Lecture（12/1）：Software development in 10 years",
+    "text": "12.3 Monday Lecture（12/1）：Software development in 10 years\n\nSlides: 未公開\n講者: Mihail Eric\n\n\nSlides 未公開，依 lecture title + W1-W9 累積的素材 best-effort 推測：\n\n這節是課程收尾的個人 prediction 演講。預期內容：\n\nRecap：W1-W9 串成一條線 — 從「LLM 是什麼」（W1）到「LLM 在 production 怎麼跑」（W9）的 9 週技術疊加，最後落到「10 年後是什麼樣」\n3 個 ten-year prediction — Mihail 應該會給幾個具體預測（例：「10 年後 80% 的 PR 是 AI 開的」「software engineer 平均薪水降但人數不變」「formal verification 變必修」），每個附 reasoning chain\nWhat stays valuable — 哪些 skill 不會被 commoditize：spec design、agent management、cross-domain knowledge、taste / judgment、organizational influence\nWhat gets cheap — 哪些 skill 會被 AI 接手：boilerplate generation、test coverage、style enforcement、documentation、basic refactoring\n教育與 onboarding 的衝擊 — 沒有 boilerplate 練習，junior dev 怎麼從 zero 上手？大學 CS 教育要怎麼改？\nOpen Q&A — 這類課程末尾的 reflection lecture 通常會留大量時間給學生問問題\n\nKey takeaway：10 年後的軟體工程不是「沒有工程師」，是「工程師的工作 mix 變了」 — 寫 code 比例下降、設計 / 審 / 管理 agent 比例上升。早一年 adapt 比晚一年值很多。（基於既有知識的延伸寫作）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#friday-lecture125martin-casadoa16z-general-partner",
+    "href": "weeks/10_whats_next.html#friday-lecture125martin-casadoa16z-general-partner",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.4 Friday Lecture（12/5）：Martin Casado（a16z General Partner）",
+    "text": "12.4 Friday Lecture（12/5）：Martin Casado（a16z General Partner）\n\nSpeaker: Martin Casado, General Partner at a16z\nSlides: 未公開\n\n\nSlides 未公開，依 Casado 公開 essays + a16z 投資組合 best-effort 重建：\n\nCasado 的研究背景（Lawrence Livermore National Lab、Stanford CS PhD、Nicira 創辦人，後賣給 VMware $1.26B）讓他擅長把工程深度與 VC thesis 串接。預期演講：\n\nCloud → AI 的 historical analogy — 把 2007-2015 的 cloud computing winner pattern 套到 2023-2030 的 AI dev tool。哪些教訓直接適用、哪些不適用\nWhy infrastructure wins — 為什麼 AWS / GCP / Azure 在 cloud 是 winner？為什麼 Casado 認為 AI infra（Vercel / Modal / Replicate / Cloudflare）會是下一波 winner，而非 application 層\nDevin / Cursor / Anysphere 投資 case — a16z 投了 Cognition（Devin）、Anysphere（Cursor）、其他 AI dev tool 公司。每個 case 的 thesis（為什麼這個 team / 這個 timing / 這個市場）\nAgentic AI 的 trillion-dollar opportunity — Agent 不只是工具，是「能自主完成 task 並付費」的 economic actor。這個轉變創造的市場是傳統 SaaS 的 10 倍\nWhat founders should build now — 給 Stanford 學生的建議：哪些 niche 還空著、哪些 problem 真的值得解、什麼樣的 founder background 在這波會贏\na16z 招募 founder 的訊號 — Casado 應該會 implicit 招手 — 這類演講常常是「you should build, talk to me」\n\nKey takeaway：AI 不是泡沫也不是炒作，是 cloud-scale 的 platform shift。這次的 platform 是 agent，winner 是有深度技術 + 工程 craft 的人。對 vibe coder 個人：把現在當成 1995 年（網際網路啟動）或 2007 年（cloud computing 啟動）— 早一年 commit 後面差很多。（基於既有知識的延伸寫作）",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#reading",
+    "href": "weeks/10_whats_next.html#reading",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.5 Reading",
+    "text": "12.5 Reading\n\n本週原 syllabus 沒列 reading list。本講義延伸推薦資源：\n\nMartin Casado on a16z author page — 看他過去 essays，特別是 “The End of Cloud Computing” 與 AI infra 系列\na16z American Dynamism / AI portfolio — 看 Cognition、Cursor、Anysphere 等 AI dev tool 投資\nGartner Hype Cycle for AI 2025 — 對照 emerging paradigm 的 hype vs reality\nStack Overflow Developer Survey 2025 — 看 dev 對 AI tool 的 adoption / sentiment",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#assignment",
+    "href": "weeks/10_whats_next.html#assignment",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.6 Assignment",
+    "text": "12.6 Assignment\n\n本週原 syllabus 沒列 weekly assignment（Final Project 應該已進入 demo 階段）。",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "weeks/10_whats_next.html#對-vibe-coder-的應用",
+    "href": "weeks/10_whats_next.html#對-vibe-coder-的應用",
+    "title": "12  Week 10：What’s Next for AI Software Engineering",
+    "section": "12.7 對 Vibe Coder 的應用",
+    "text": "12.7 對 Vibe Coder 的應用\nW10 不是 actionable week，是 strategic week — 思考「3 年後我要在哪」而不是「今天我做什麼」。給自己的問題：\n\n挑 3-year skill bet — 哪 3 個 skill 你會 deeply 投資 1000+ 小時？建議：(a) context engineering（W3/W4 的 spec / CLAUDE.md / subagent 紀律 — 跨 model 都受用）、(b) vertical workflow design（你的醫學研究 / 阿摩 / IRB 自動化 pipeline — 別人複製不了的領域知識）、(c) agent observability（W9 的 LLM eval / hallucination 監控 — 任何 production AI 都需要的）\n挑 3 件不再學的事 — 隨意：(a) 手寫 boilerplate（讓 v0 / Claude Code 處理）、(b) 追每個新 framework（鎖定 1-2 套深用就好）、(c) 跟 model 比快（你比 LLM 慢但比 LLM 有 taste）\nSide project future-proofing — 你的 vibe coding side project 要做到「3 年後不會被 AI tool 進化淘汰」。原則：(a) 不做純技術 demo（會被新 model 立刻超越），(b) 要做「跟你個人 taste / 領域知識 / niche 結合」的東西，(c) 接 MCP / 走標準 protocol 而非 vendor-locked\nPortfolio 差異化 — 純會用 Cursor / Claude Code 已經不是差異化（人人會）。差異化來自：deep cross-domain（醫學 + AI）、open source contribution（社群影響力）、production-grade product（不是 demo）三個方向選 1-2 個押\nGeographic optionality — Casado 的 American Dynamism thesis 對台灣有解放性影響：英文良好 + 遠端 + AI fluent 的 engineer 能直接接美國 contract / remote FTE。把英文寫作 / 同步溝通練好，是 ROI 最高的 non-technical skill\n時程管理：每年 review 一次 — Tech 變化太快，3-year plan 會過時。建議每年生日或新年做一次「skill bet 復盤」，砍掉不對的 bet、加新興 bet\n\n\n💡 vibe coder 的 Day-1 Quick Win：今天花 30 分鐘做兩件事：(a) 寫一份「2029 年的我長什麼樣」的 1-page note，列 5 個你想擁有的能力 / portfolio item / 影響力 KPI；(b) 反推回今天，列 3 個本週可以做的小事讓你接近那個未來。寫下來，半年後再看一次。這個 exercise 讓 W10 不只是 reading week，而是 strategic week。\n\n\n上一週：W9 Agents Post-Deployment | 總目錄：00_index.md",
+    "crumbs": [
+      "10 週講義",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Week 10：What's Next for AI Software Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html",
+    "href": "readings/_index.html",
+    "title": "13  Reading 摘要總目錄",
+    "section": "",
+    "text": "13.1 統計\nCS146S 的 9 週共 45 篇 reading（W8、W10 原 syllabus 沒列 reading）。每篇 200-400 字繁中摘要，含核心論點 / 關鍵概念 / 對 CS146S 的意義 / 對 vibe coder 的 takeaway / 原文連結。",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#統計",
+    "href": "readings/_index.html#統計",
+    "title": "13  Reading 摘要總目錄",
+    "section": "",
+    "text": "狀態\n篇數\n說明\n\n\n\n\n✅ Complete\n43\n抓到原文後做的繁中摘要\n\n\n🟡 Best-effort\n1\n原文取得受限（access code），用主題脈絡做高層摘要\n\n\n🔴 Failed\n1\n原文無法抓取（X/Twitter 需登入），只放連結 + disclaimer",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#來源類型分布",
+    "href": "readings/_index.html#來源類型分布",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.2 來源類型分布",
+    "text": "13.2 來源類型分布\n\n\n\n\n\n\n\n\n類型\n篇數\n範例\n\n\n\n\nBlog post\n33\nAnthropic, Stytch, Cloudflare, Splunk, OWASP, …\n\n\nGitHub README\n6\nMCP servers, MCP SDK, Awesome Claude Agents, Super Claude, ACE-FCA, O3 prompt\n\n\nYouTube\n3\nKarpathy Deep Dive, Anthropic Prompt Engineering, AI Code Review Lessons\n\n\nPDF\n2\nOpenAI Codex use cases, Anthropic uses Claude Code\n\n\narXiv\n1\nAI-Assisted Assessment of Coding Practices\n\n\nTwitter/X\n1\nHow FAANG Vibe Codes（failed）",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-1introduction-to-coding-llms-and-ai-development",
+    "href": "readings/_index.html#week-1introduction-to-coding-llms-and-ai-development",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.3 Week 1：Introduction to Coding LLMs and AI Development",
+    "text": "13.3 Week 1：Introduction to Coding LLMs and AI Development\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n1\nDeep Dive into LLMs\nYouTube\n🟡 高層摘要\n\n\n2\nPrompt Engineering Overview\nBlog (Google Cloud)\n✅\n\n\n3\nPrompt Engineering Guide\nBlog (promptingguide.ai)\n✅\n\n\n4\nAI Prompt Engineering: A Deep Dive\nYouTube (Anthropic)\n🟡 高層摘要\n\n\n5\nHow OpenAI Uses Codex\nPDF\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-2the-anatomy-of-coding-agents-mcp",
+    "href": "readings/_index.html#week-2the-anatomy-of-coding-agents-mcp",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.4 Week 2：The Anatomy of Coding Agents (MCP)",
+    "text": "13.4 Week 2：The Anatomy of Coding Agents (MCP)\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n6\nMCP Introduction\nBlog (Stytch)\n✅\n\n\n7\nSample MCP Server Implementations\nGitHub\n✅\n\n\n8\nMCP Server Authentication\nBlog (Cloudflare)\n✅\n\n\n9\nMCP Server SDK (TypeScript)\nGitHub\n✅\n\n\n10\nMCP Registry\nBlog\n✅\n\n\n11\nMCP Food-for-Thought\nBlog\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-3the-ai-ide",
+    "href": "readings/_index.html#week-3the-ai-ide",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.5 Week 3：The AI IDE",
+    "text": "13.5 Week 3：The AI IDE\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n12\nSpecs Are the New Source Code\nBlog (Ravi Mehta)\n✅\n\n\n13\nHow Long Contexts Fail\nBlog\n✅\n\n\n14\nDevin: Coding Agents 101\nBlog (Cognition)\n✅\n\n\n15\nGetting AI to Work In Complex Codebases (ACE-FCA)\nGitHub\n✅\n\n\n16\nHow FAANG Vibe Codes\nTwitter/X\n🔴 無法抓取\n\n\n17\nWriting Effective Tools for Agents\nBlog (Anthropic)\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-4coding-agent-patterns-claude-code",
+    "href": "readings/_index.html#week-4coding-agent-patterns-claude-code",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.6 Week 4：Coding Agent Patterns (Claude Code)",
+    "text": "13.6 Week 4：Coding Agent Patterns (Claude Code)\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n18\nHow Anthropic Uses Claude Code\nPDF\n✅\n\n\n19\nClaude Code Best Practices\nBlog (Anthropic)\n✅\n\n\n20\nAwesome Claude Agents\nGitHub\n✅\n\n\n21\nSuper Claude Framework\nGitHub\n✅\n\n\n22\nGood Context, Good Code\nBlog (StockApp)\n🟡 高層摘要\n\n\n23\nPeeking Under the Hood of Claude Code\nMedium\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-5the-modern-terminal-warp",
+    "href": "readings/_index.html#week-5the-modern-terminal-warp",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.7 Week 5：The Modern Terminal (Warp)",
+    "text": "13.7 Week 5：The Modern Terminal (Warp)\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n24\nWarp University\nBlog\n✅\n\n\n25\nWarp vs Claude Code\nBlog\n✅\n\n\n26\nHow Warp Uses Warp to Build Warp\nNotion\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-6ai-testing-and-security",
+    "href": "readings/_index.html#week-6ai-testing-and-security",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.8 Week 6：AI Testing and Security",
+    "text": "13.8 Week 6：AI Testing and Security\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n27\nSAST vs DAST\nBlog (Splunk)\n✅\n\n\n28\nCopilot RCE via Prompt Injection\nBlog\n✅\n\n\n29\nFinding Vulnerabilities Using Claude Code and OpenAI Codex\nBlog (Semgrep)\n✅\n\n\n30\nAgentic AI Threats: Identity Spoofing\nBlog (Palo Alto Unit 42)\n✅\n\n\n31\nOWASP Top Ten\nBlog (OWASP)\n✅\n\n\n32\nContext Rot: Degradation in AI Context Windows\nBlog (Chroma)\n✅\n\n\n33\nVulnerability Prompt Analysis with O3 (CVE-2025-37899)\nGitHub\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-7modern-software-support-ai-code-review",
+    "href": "readings/_index.html#week-7modern-software-support-ai-code-review",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.9 Week 7：Modern Software Support (AI Code Review)",
+    "text": "13.9 Week 7：Modern Software Support (AI Code Review)\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n34\nCode Reviews: Just Do It\nBlog (Coding Horror)\n✅\n\n\n35\nHow to Review Code Effectively (GitHub Staff Engineer)\nBlog (GitHub)\n✅\n\n\n36\nAI-Assisted Assessment of Coding Practices in Modern Code Review\narXiv\n✅\n\n\n37\nAI Code Review Implementation Best Practices\nBlog (Graphite)\n✅\n\n\n38\nCode Review Essentials for Software Teams\nBlog\n✅\n\n\n39\nLessons from millions of AI code reviews\nYouTube (Graphite)\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-8automated-ui-and-app-building",
+    "href": "readings/_index.html#week-8automated-ui-and-app-building",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.10 Week 8：Automated UI and App Building",
+    "text": "13.10 Week 8：Automated UI and App Building\n\n本週原 syllabus 沒列 reading list。延伸推薦資源見 W8 講義。",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-9agents-post-deployment-sre-observability",
+    "href": "readings/_index.html#week-9agents-post-deployment-sre-observability",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.11 Week 9：Agents Post-Deployment (SRE / Observability)",
+    "text": "13.11 Week 9：Agents Post-Deployment (SRE / Observability)\n\n\n\n#\n標題\n來源類型\n狀態\n\n\n\n\n40\nIntroduction to Site Reliability Engineering\nBlog (Google SRE Book)\n✅\n\n\n41\nObservability Basics You Should Know\nBlog (last9.io)\n✅\n\n\n42\nKubernetes Troubleshooting with AI\nBlog (Resolve)\n✅\n\n\n43\nYour New Autonomous Teammate\nBlog (Resolve)\n✅\n\n\n44\nRole of Multi Agent Systems in Making Software Engineers AI-native\nBlog (Resolve)\n✅\n\n\n45\nTop 5 Benefits of Agentic AI in On-call Engineering\nBlog (Resolve)\n✅",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#week-10whats-next-for-ai-software-engineering",
+    "href": "readings/_index.html#week-10whats-next-for-ai-software-engineering",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.12 Week 10：What’s Next for AI Software Engineering",
+    "text": "13.12 Week 10：What’s Next for AI Software Engineering\n\n本週原 syllabus 沒列 reading list。延伸推薦資源見 W10 講義。",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#高優先閱讀清單給時間有限的讀者",
+    "href": "readings/_index.html#高優先閱讀清單給時間有限的讀者",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.13 高優先閱讀清單（給時間有限的讀者）",
+    "text": "13.13 高優先閱讀清單（給時間有限的讀者）\n如果只有時間讀 5-10 篇，建議這份精選：\n\nHow OpenAI Uses Codex — 最 actionable 的 production case study\nMCP Introduction — vibe coder 必須建立的 MCP mental model\nMCP Food-for-Thought — 寫 MCP server 的設計品味\nSpecs Are the New Source Code — 理解 PRD 在 agent 時代的角色\nWriting Effective Tools for Agents — Anthropic 官方的 tool design 心法\nHow Anthropic Uses Claude Code — Anthropic 內部使用真實樣貌\nClaude Code Best Practices — Anthropic 官方 best practice\nHow Long Contexts Fail — 4 種 context failure mode + fix\nLessons from millions of AI code reviews — Graphite Diamond 的 52% action rate 定義 AI reviewer 達成 human parity\nIntroduction to Site Reliability Engineering — Google SRE Book 經典開頭",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "readings/_index.html#延伸主題群",
+    "href": "readings/_index.html#延伸主題群",
+    "title": "13  Reading 摘要總目錄",
+    "section": "13.14 延伸主題群",
+    "text": "13.14 延伸主題群\n把跨週相關 reading 整在一起：\n\nMCP 完整系列（W2 全 6 篇）— 從 protocol 介紹 → server 實作 → auth → registry → 設計反思\nClaude Code 系列（W4 全 6 篇 + W2 #6 MCP servers）— Claude Code 的內部實作、用法、生態系\nAI security 系列（W6 全 7 篇）— 從 SAST/DAST 基礎 → prompt injection 攻擊 → 真實 CVE 案例 → 防禦\nAgent observability 系列（W9 全 6 篇）— 從 SRE 入門 → observability 三柱 → Resolve.ai 的 AI-native incident response\nCode review 系列（W7 全 6 篇）— 從人類 review 哲學 → AI reviewer 實證 → Graphite Diamond",
+    "crumbs": [
+      "Reading 摘要",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Reading 摘要總目錄</span>"
+    ]
+  },
+  {
+    "objectID": "assignments/_index.html",
+    "href": "assignments/_index.html",
+    "title": "14  9 Weekly Assignments — 自學者可行性評估",
+    "section": "",
+    "text": "14.0.1 各週 assignment 摘要\nCS146S 共有 9 個 weekly assignment（W10 沒有，因為到了 final project demo 階段）。所有 assignment 在 github.com/mihail911/modern-software-dev-assignments。\n下表評估每個 assignment 對自學者的可行性（不是 Stanford 學生也能做嗎？需要什麼前置？）。所有 assignment 都連到 GitHub repo。\nW1：LLM Prompting Playground - 時間：2-4 hr ｜ 可行性：⭐⭐⭐⭐⭐ 完全可做 - 前置：OpenAI 或 Anthropic API key\nW2：First Steps in the AI IDE - 時間：3-5 hr ｜ 可行性：⭐⭐⭐⭐⭐ 完全可做 - 前置：Cursor 或 Claude Code 安裝\nW3：Build a Custom MCP Server - 時間：4-8 hr ｜ 可行性：⭐⭐⭐⭐ 完全可做（需 Node/TS 基礎） - 前置：Node.js + TypeScript SDK\nW4：Coding with Claude Code - 時間：4-6 hr ｜ 可行性：⭐⭐⭐⭐⭐ 完全可做 - 前置：Claude Code 訂閱\nW5：Agentic Development with Warp - 時間：3-5 hr ｜ 可行性：⭐⭐⭐⭐⭐ 完全可做 - 前置：Warp 安裝（macOS / Linux / Windows）\nW6：Writing Secure AI Code - 時間：4-6 hr ｜ 可行性：⭐⭐⭐ 可做但偏深 - 前置：Semgrep CLI + 基礎 web security 知識\nW7：Code Review Reps - 時間：3-5 hr ｜ 可行性：⭐⭐⭐⭐ 可做（需 GitHub PR 經驗） - 前置：GitHub account + Graphite 試用\nW8：Multi-stack Web App Builds - 時間：6-12 hr ｜ 可行性：⭐⭐⭐⭐⭐ 完全可做 - 前置：v0 / Lovable / Bolt 任一 + Vercel deploy\nW9：無原始 assignment - 建議自製：用 Sentry / Better Stack / Vercel Analytics 接 side project 當練習，自選 observability tool",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>9 Weekly Assignments — 自學者可行性評估</span>"
+    ]
+  },
+  {
+    "objectID": "assignments/_index.html#推薦做題順序給自學者",
+    "href": "assignments/_index.html#推薦做題順序給自學者",
+    "title": "14  9 Weekly Assignments — 自學者可行性評估",
+    "section": "14.1 推薦做題順序（給自學者）",
+    "text": "14.1 推薦做題順序（給自學者）\n\n14.1.1 短時間（2 週內）讀完課\n做 W1 + W2 + W4 — 涵蓋 LLM 基礎 / agent / Claude Code，CP 值最高。\n\n\n14.1.2 中時間（1 個月）讀完課\n做 W1 + W2 + W3 + W4 + W8 — 多了 MCP server + UI 生成，可以做出可展示的 side project。\n\n\n14.1.3 完整跟課（10 週）\n9 個全做，並用 W1-W9 的工具棧整合到 final project（自選一個你想做的東西，從 prompting → agent → MCP → testing → deploy → observability 全跑一輪）。",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>9 Weekly Assignments — 自學者可行性評估</span>"
+    ]
+  },
+  {
+    "objectID": "assignments/_index.html#final-project-建議",
+    "href": "assignments/_index.html#final-project-建議",
+    "title": "14  9 Weekly Assignments — 自學者可行性評估",
+    "section": "14.2 Final Project 建議",
+    "text": "14.2 Final Project 建議\nCS146S 的 final project 占 80% 評分，但對自學者來說沒有 mentor 指導。建議改成：\n\n挑一個你 vibe coding 想做的 side project（例：個人 dashboard、學習工具、生產力 app）\n用 W1-W8 的工具棧做完整實作：W1 prompt → W2 MCP → W3 PRD → W4 Claude Code → W5 Warp → W6 security check → W7 code review → W8 UI deploy\n公開放上 GitHub + 寫一篇「我用 CS146S 學到的東西做了什麼」blog post，當作學習成果\n\n這比交一份 Stanford 教授不會看的作業更有 ROI。",
+    "crumbs": [
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>9 Weekly Assignments — 自學者可行性評估</span>"
+    ]
+  }
+]

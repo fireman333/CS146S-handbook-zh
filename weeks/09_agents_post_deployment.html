@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Week 9：Agents Post-Deployment – CS146S: The Modern Software Developer</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../weeks/10_whats_next.html" rel="next">
+<link href="../weeks/08_automated_ui_app_building.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-227a0e3f7b96c20c394f3d444a186b44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/09_agents_post_deployment.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CS146S: The Modern Software Developer</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">10 週講義</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/01_intro_to_coding_llms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/02_anatomy_of_coding_agents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Week 2：The Anatomy of Coding Agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/03_the_ai_ide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Week 3：The AI IDE</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/04_coding_agent_patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Week 4：Coding Agent Patterns</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/05_modern_terminal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Week 5：The Modern Terminal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/06_ai_testing_security.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Week 6：AI Testing and Security</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/07_modern_software_support.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Week 7：Modern Software Support</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/08_automated_ui_app_building.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/09_agents_post_deployment.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../weeks/10_whats_next.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reading 摘要</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../readings/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reading 摘要總目錄</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments/_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">9 Weekly Assignments — 自學者可行性評估</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#學習目標" id="toc-學習目標" class="nav-link active" data-scroll-target="#學習目標"><span class="header-section-number">11.1</span> 學習目標</a></li>
+  <li><a href="#核心概念導讀" id="toc-核心概念導讀" class="nav-link" data-scroll-target="#核心概念導讀"><span class="header-section-number">11.2</span> 核心概念導讀</a>
+  <ul class="collapse">
+  <li><a href="#一sre-入門把營運當軟體工程問題解" id="toc-一sre-入門把營運當軟體工程問題解" class="nav-link" data-scroll-target="#一sre-入門把營運當軟體工程問題解"><span class="header-section-number">11.2.1</span> 一、SRE 入門：把營運當軟體工程問題解</a></li>
+  <li><a href="#二observability-三柱logs-metrics-traces" id="toc-二observability-三柱logs-metrics-traces" class="nav-link" data-scroll-target="#二observability-三柱logs-metrics-traces"><span class="header-section-number">11.2.2</span> 二、Observability 三柱：logs / metrics / traces</a></li>
+  <li><a href="#三ai-agent-的特殊-observability-需求" id="toc-三ai-agent-的特殊-observability-需求" class="nav-link" data-scroll-target="#三ai-agent-的特殊-observability-需求"><span class="header-section-number">11.2.3</span> 三、AI agent 的特殊 observability 需求</a></li>
+  <li><a href="#四multi-agent-system-在-sremdt-會議模式" id="toc-四multi-agent-system-在-sremdt-會議模式" class="nav-link" data-scroll-target="#四multi-agent-system-在-sremdt-會議模式"><span class="header-section-number">11.2.4</span> 四、Multi-agent system 在 SRE：MDT 會議模式</a></li>
+  </ul></li>
+  <li><a href="#monday-lecture1117incident-response-and-devops" id="toc-monday-lecture1117incident-response-and-devops" class="nav-link" data-scroll-target="#monday-lecture1117incident-response-and-devops"><span class="header-section-number">11.3</span> Monday Lecture（11/17）：Incident response and DevOps</a></li>
+  <li><a href="#friday-lecture1121mayank-agarwal-milind-ganjooresolve" id="toc-friday-lecture1121mayank-agarwal-milind-ganjooresolve" class="nav-link" data-scroll-target="#friday-lecture1121mayank-agarwal-milind-ganjooresolve"><span class="header-section-number">11.4</span> Friday Lecture（11/21）：Mayank Agarwal + Milind Ganjoo（Resolve）</a></li>
+  <li><a href="#reading-摘要" id="toc-reading-摘要" class="nav-link" data-scroll-target="#reading-摘要"><span class="header-section-number">11.5</span> Reading 摘要</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">11.6</span> Assignment</a></li>
+  <li><a href="#對-vibe-coder-的應用" id="toc-對-vibe-coder-的應用" class="nav-link" data-scroll-target="#對-vibe-coder-的應用"><span class="header-section-number">11.7</span> 對 Vibe Coder 的應用</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../weeks/01_intro_to_coding_llms.html">10 週講義</a></li><li class="breadcrumb-item"><a href="../weeks/09_agents_post_deployment.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Week 9：Agents Post-Deployment</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>本週你會學到什麼</strong>：把 AI agent 推上 production 之後的世界 — observability、incident response、SRE（Site Reliability Engineering）。當你的服務出事，AI agent 怎麼自動 triage、debug、甚至自動修復？Friday 由 Resolve.ai 的 CTO Mayank Agarwal + Technical Staff Milind Ganjoo 開講（Resolve 在做 AI-native on-call）。</p>
+<p>💡 <strong>對非資工背景讀者</strong>：本週很多概念來自 production engineering 世界（Kubernetes、observability、SRE），如果你只做 side project 沒上 production，可以挑「核心概念導讀」+「對 vibe coder 的應用」讀就好。本週會大量用醫療類比（observability ≈ 病歷 + 生命徵象 + 影像、incident response ≈ 急救流程、postmortem ≈ M&amp;M conference、on-call ≈ night float）幫你建立直覺。</p>
+</blockquote>
+<section id="學習目標" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="學習目標"><span class="header-section-number">11.1</span> 學習目標</h2>
+<p>完成本週後，你應該能：</p>
+<ol type="1">
+<li><strong>解釋</strong> SRE 的核心三角（SLI/SLO/SLA）以及為什麼 observability ≠ monitoring</li>
+<li><strong>辨識</strong> AI agent 的特殊 observability 需求（token usage、tool call latency、hallucination rate、context drift）</li>
+<li><strong>設計</strong> 一個 incident response workflow 含 AI auto-triage step</li>
+<li><strong>評估</strong> Resolve.ai / PagerDuty AI / Datadog AI agent 在 on-call 場景的能力差異</li>
+</ol>
+</section>
+<section id="核心概念導讀" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="核心概念導讀"><span class="header-section-number">11.2</span> 核心概念導讀</h2>
+<section id="一sre-入門把營運當軟體工程問題解" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="一sre-入門把營運當軟體工程問題解"><span class="header-section-number">11.2.1</span> 一、SRE 入門：把營運當軟體工程問題解</h3>
+<p>W1-W8 講的都是「把 code 寫出來」。但 production system 的真正挑戰不在寫，而在「上線之後」 — 7×24 小時持續運轉、流量會起伏、依賴會壞、客戶會抱怨、半夜會被 page。在這個世界裡，Google 提出的 <strong>SRE（Site Reliability Engineering，網站可靠度工程）</strong> 是業界共識的解法。SRE 的核心不是「找一群運維」，而是「找軟體工程師來設計營運團隊，把 manual operation 當成 bug 來自動化掉」。</p>
+<p><a href="../readings/w9_introduction_to_sre.md">Google SRE Book</a> 列了三個基礎紀律，所有 production system 都適用：</p>
+<ol type="1">
+<li><strong>SLI / SLO / SLA（service level indicator / objective / agreement）</strong> — SLI 是測量值（如 p99 latency = 187 ms）、SLO 是內部目標（99.9% 請求 &lt; 200 ms）、SLA 是對客戶的合約承諾（達不到要賠錢）。三者依序由內而外、由緊而鬆。</li>
+<li><strong>Error budget（錯誤預算）</strong> — 既然 100% availability 既不可能也無價值（每加一個 9 成本指數成長），就明訂 SLO（例：99.99%），剩下 0.01% 是「可以拿來冒險的預算」。新功能上線會吃預算，預算用完就停止 release。</li>
+<li><strong>50% rule</strong> — 工程師花在 toil（重複瑣事）的時間不得超過一半，另一半必須做工程改善。違反這條 SRE 團隊就會隨流量線性膨脹，跟傳統 sysadmin 一樣。</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解（醫療類比）</strong>：SLO 像住院病人的「目標生命徵象」 — 不是要把 BP 維持在 120/80 不准動，是「BP 維持在 100-140/60-90 之間就算 ok」。Error budget 就是「下緣到目標之間的容忍空間」 — 病人 BP 在 105 還是 ok，可以做 challenging 的事（早期 ambulation、調藥），如果預算用光（BP 已經在 100），就先別動。Blame-free postmortem 就像 M&amp;M（morbidity &amp; mortality conference）— 不是要找哪個住院醫師簽錯醫囑，是要找系統性漏洞（為什麼 EHR 沒擋下這個 dose？為什麼交班沒講到 allergy？）。</p>
+</blockquote>
+<p>把 SRE mindset 套到 LLM agent：你的 agent 也會壞 — hallucination、tool call timeout、context overflow、prompt injection。關鍵是先<strong>量化什麼叫「ok」</strong>（例：hallucination rate &lt; 0.5%、p95 response time &lt; 5 s、tool success rate &gt; 95%），然後用 error budget 管理 release 風險（這個 prompt 改完 hallucination rate 飆到 1%，立刻 rollback）。</p>
+</section>
+<section id="二observability-三柱logs-metrics-traces" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="二observability-三柱logs-metrics-traces"><span class="header-section-number">11.2.2</span> 二、Observability 三柱：logs / metrics / traces</h3>
+<p><a href="../readings/w9_observability_basics.md">Observability Basics</a> 釐清一個常被混用的概念：<strong>monitoring（監控）只告訴你「什麼壞了」</strong>（CPU 高、5xx 多）；<strong>observability（可觀測性）要回答「為什麼壞」</strong>。在 microservices（微服務）架構下，一個 user request 可能跨 10+ 個 service，光看單一 service 的 metrics 完全不知道哪一段慢。Observability 的三柱各司其職，缺一不可：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>柱</th>
+<th>是什麼</th>
+<th>醫療類比</th>
+<th>LLM agent 場景例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Logs（日誌）</strong></td>
+<td>離散文字事件記錄（誰、何時、做了什麼）</td>
+<td>病歷紀錄 — 每個診間、每次處置的逐筆紀錄</td>
+<td>“User asked X, agent called tool Y, got result Z”</td>
+</tr>
+<tr class="even">
+<td><strong>Metrics（指標）</strong></td>
+<td>時間序列數值（QPS、p99 latency、error rate）</td>
+<td>生命徵象 — HR / BP / SpO₂ 持續監測</td>
+<td>“average tokens per request”、“tool call success rate”</td>
+</tr>
+<tr class="odd">
+<td><strong>Traces（追蹤）</strong></td>
+<td>一個 request 從進入點到回應的完整路徑</td>
+<td>影像檢查（CT / MRI）— 一次性看全身結構與問題位置</td>
+<td>“user query → LLM call → MCP tool → DB → 第二次 LLM call” 整條路徑</td>
+</tr>
+</tbody>
+</table>
+<p>Trace 由多個 <strong>span（區段）</strong> 組成，每個 span 是一個工作單位（一次 DB query、一次 RPC call、一次 LLM call），spans 用 parent-child 關係組成階層。關鍵是 <strong>context propagation（上下文傳播）</strong> — trace ID 必須跨 service 傳遞才能串成完整路徑。<strong>OpenTelemetry（OTel）</strong> 是業界中立的 instrumentation 標準，所有大廠（Datadog、New Relic、Honeycomb、Grafana）都支援，意味著你 instrument 一次、可以隨時換 vendor。</p>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：你想 debug 一個 LLM agent「怎麼會回這個怪答案」 — 看 logs 像翻一頁頁病歷找線索（耗時、容易漏）、看 metrics 像看 vital sign trend chart（知道某時段惡化但不知為何）、看 traces 像直接拉出那次 request 的「全身 CT」 — 從 user query 進來到 response 出去的每一步、每一步的 input / output / 耗時都看得到。Production agent 沒有 traces 等於 debug 黑箱。</p>
+</blockquote>
+<p>三柱必須<strong>相互關聯</strong>才有用 — trace ID 要寫進 log line、metric 要帶 trace exemplar，這樣你看到 metric spike 時能一鍵跳到那個時段的 traces，看到 trace 異常時能一鍵看相關 logs。</p>
+</section>
+<section id="三ai-agent-的特殊-observability-需求" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="三ai-agent-的特殊-observability-需求"><span class="header-section-number">11.2.3</span> 三、AI agent 的特殊 observability 需求</h3>
+<p>傳統 observability 三柱足夠看 web service。但 LLM agent 多了幾個維度，傳統工具看不到：</p>
+<ol type="1">
+<li><strong>Token usage（token 消耗）</strong> — 每個 request 用了多少 input / output token、累計成本多少。沒看會被 OpenAI / Anthropic 帳單嚇到。</li>
+<li><strong>Tool call latency（工具呼叫延遲）</strong> — Agent 一次任務可能 chain 5-10 個 tool call，每個 tool 的耗時、成功率、failure mode 必須個別 instrument。某個慢 tool 會拖垮整個 agent 的 p95。</li>
+<li><strong>Hallucination rate（幻覺率）</strong> — 這個最難量化但最重要。常見做法：(a) 對 critical claim 跑 fact-check pipeline、(b) 抽樣人工審核、(c) 用 LLM-as-judge（另一個 model 當審查員）。</li>
+<li><strong>Context drift（上下文漂移）</strong> — 長對話 / 多輪 agent loop 中，context window 累積到後期 model 會偏離 system prompt 的指示（俗稱 “agent 走鐘”）。需 instrument 每輪的 prompt 大小、context 中各部分占比。</li>
+<li><strong>Tool selection accuracy（工具選擇準確率）</strong> — Agent 有 N 個 tool 可用時，它選對了嗎？常見指標：選對率、平均嘗試次數、wrong tool 後恢復率。</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解</strong>：傳統 web service 的 observability 像加護病房的 monitor — 量 BP / HR / SpO₂ / EtCO₂ 就大致知道病人狀況。LLM agent 多了「精神狀態」這條軸 — 即使 vital sign 都正常，他可能 confused / disoriented / hallucinating。你需要額外的 GCS（Glasgow Coma Scale）、CAM-ICU（confusion assessment method）那種專門 instrument 才測得到。Hallucination rate 與 context drift 就是 LLM agent 的「精神狀態評估」。</p>
+</blockquote>
+<p>工具上 <a href="https://langfuse.com/">Langfuse</a>、<a href="https://www.helicone.ai/">Helicone</a>、<a href="https://phoenix.arize.com/">Arize Phoenix</a> 是專做 LLM observability 的開源/商用方案，本質上把 trace 模型擴充支援 LLM call 與 tool call，再加上 token / cost / hallucination eval 維度。</p>
+</section>
+<section id="四multi-agent-system-在-sremdt-會議模式" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="四multi-agent-system-在-sremdt-會議模式"><span class="header-section-number">11.2.4</span> 四、Multi-agent system 在 SRE：MDT 會議模式</h3>
+<p><a href="../readings/w9_multi_agent_systems_ai_native.md">Multi-Agent Systems for AI-Native Engineering</a> 提出一個關鍵 observation：<strong>single agent 在 production debugging 是 sequential bottleneck（序列瓶頸）</strong> — 它一次只能調查一個假設，但 production incident 的時間壓力要求並行假設驗證。</p>
+<p>解法是 multi-agent 架構，讓專業 agent 各司其職並行運作。一個典型的 incident response multi-agent system 長這樣：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 31%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Agent</th>
+<th>專長</th>
+<th>輸出</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Trace agent</strong></td>
+<td>追跨 service 的 distributed trace</td>
+<td>「latency spike 出現在 service B 的 DB call」</td>
+</tr>
+<tr class="even">
+<td><strong>DB agent</strong></td>
+<td>分析 DB performance、slow query</td>
+<td>「過去 10 分鐘有一支 N+1 query」</td>
+</tr>
+<tr class="odd">
+<td><strong>Deployment agent</strong></td>
+<td>review 最近 CI/CD 部署紀錄</td>
+<td>「30 分鐘前 service B 上了 commit abc123」</td>
+</tr>
+<tr class="even">
+<td><strong>Code diff agent</strong></td>
+<td>看那個 commit 的 code change</td>
+<td>「abc123 移除了 query 的 index hint」</td>
+</tr>
+<tr class="odd">
+<td><strong>Customer impact agent</strong></td>
+<td>估算影響範圍</td>
+<td>「過去 10 分鐘有 12,000 user 受影響」</td>
+</tr>
+<tr class="even">
+<td><strong>Coordinator agent</strong></td>
+<td>merge 上述發現給結論</td>
+<td>「root cause: abc123 commit 的 query regression，建議 rollback」</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>💡 <strong>譯解（MDT 會議類比）</strong>：這個架構就是醫院 MDT（multidisciplinary team）會議的軟體版 — 一個 lung cancer 病人的 case，心臟科評估手術風險、腫瘤科出 chemo 方案、放射科出 RT 計畫、病理科確認 diagnosis、社工評估家庭支持，最後 lead physician（coordinator）綜合所有意見開會 merge 結論。每個專家獨立、並行作業，最後一次 merge — 比一個 generalist 順序問每個專家快得多。Production incident 也是多 domain 問題，multi-agent 並行調查比 single agent sequential 快數倍。</p>
+</blockquote>
+<p>但並行的代價是需要 <strong>formal coordination protocol</strong> 來避免 race condition 與 deadlock — 這也是 MDT 會議要有 chair 主持、有 agenda、有 timing 規則的原因。把這套作出 production-ready 需要罕見的雙重專業：深度 production domain knowledge + sophisticated AI architecture，缺一邊就會做出「會調查但調查錯方向」的系統。Resolve.ai 的賣點就是兩邊都有。</p>
+</section>
+</section>
+<section id="monday-lecture1117incident-response-and-devops" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="monday-lecture1117incident-response-and-devops"><span class="header-section-number">11.3</span> Monday Lecture（11/17）：Incident response and DevOps</h2>
+<ul>
+<li><strong>Slides</strong>: <a href="https://docs.google.com/presentation/d/1Mfe-auWAsg9URCujneKnHr0AbO8O-_U4QXBVOlO4qp0/edit?usp=sharing">Google Slides 公開連結</a></li>
+<li><strong>講者</strong>: Mihail Eric</li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Google Slides 公開內容（TXT export）整理的繁中摘要：</p>
+</blockquote>
+<p>Mihail 開場直接給出 framing 數據：「<strong>Coding represents just 30% of engineering time</strong>。難搞的 70% 是把 code 跑在 production 裡 — 那裡 complexity / tool silo / knowledge gap / interdependency 全 collide」。</p>
+<ol type="1">
+<li><strong>The old world — SRE 的痛點清單</strong> —
+<ul>
+<li>Operational monitoring：on-call、troubleshoot、infrastructure management、security</li>
+<li>Incident resolution 需要從多 source / 多 team 拼湊資訊</li>
+<li>維護常常已過時的 runbook</li>
+<li>Cloud-native + Kubernetes + 容器化把 data / dependency / complexity 推到新高度</li>
+<li>SRE 因 on-call shift 普遍 burnout</li>
+<li><strong>estimates that downtime and service degradation cost the Global 2000 about $400 billion annually</strong></li>
+</ul></li>
+<li><strong>Infrastructure &amp; DevOps 的核心紀律：Four Golden Signals of monitoring</strong>
+<ul>
+<li><strong>Latency</strong>：分開追蹤 successful 與 failed request（避免 HTTP 500 失敗讓平均失真，慢 error 特別需要關注）</li>
+<li><strong>Traffic</strong>：system demand，通常 req/sec、依系統決定（streaming 算 session、DB 算 transaction）</li>
+<li><strong>Errors</strong>：失敗率，包含明確（HTTP 500）、隱含（200 OK 但 wrong content）、policy-based（超過 SLA）。需多層 monitoring 抓不同 failure</li>
+<li><strong>Saturation</strong>：「系統滿到什麼程度」，追蹤 CPU / memory / I/O。System 通常在 100% 之前就慢，要訂 safe threshold</li>
+<li>加上：monitor production trace</li>
+</ul></li>
+<li><strong>凌晨 3:12 的實境演練</strong> — PagerDuty ping 你 DB query 出現 500 spike，怎麼辦？Mihail 給一份 8 步驟 incident playbook：
+<ul>
+<li><strong>Acknowledge &amp; assess</strong>：在 PagerDuty acknowledge、確認嚴重度、看 app + DB dashboard、判斷 partial / full outage</li>
+<li><strong>Check Golden Signals（DB first）</strong>：connection 是否爆 / 卡 / 突然掉？P95 latency spike？Slow query？timeout / refused / aborted transaction？CPU / IOPS / lock / memory / replication lag？</li>
+<li><strong>Look for what changed</strong>：最近 deploy？DB migration？Config / feature flag 改？autoscaling 事件？— 有 correlation 立刻 rollback / revert</li>
+<li><strong>Localize failure</strong>：所有 query 都壞 vs 特定 query？read 還是 write？primary 還是 replica？單 shard / instance 還是全部？App-side（pool / timeout）還是 DB-side（load / lock）？</li>
+<li><strong>Apply fast mitigation</strong>：connection issue → restart pod / 降 concurrency；DB saturation → 關 heavy job / throttle traffic / read 路由到 replica；bad slow query → 關該 feature / 開 cached degraded mode；replica lag → read 路由到 primary / 重啟 replica；unhealthy node → 只重啟 replica，primary 要 escalate</li>
+<li><strong>Stabilize &amp; monitor</strong>：看 500 rate / DB latency / traffic 回正、確認沒 retry storm 與 cascading failure、health check 恢復</li>
+<li><strong>Communicate</strong>：每 10-15 分鐘一次簡短 update（issue → action → status）</li>
+<li><strong>Close out</strong>：時間軸、root cause、follow-up（query fix、indexing、scaling、retry tuning、capacity review）</li>
+</ul></li>
+<li><strong>Metrics tracked</strong> — MTTR（mean time to repair）、被拉進 incident 的 engineer 數量、對 customer 的 reported SLA。</li>
+<li><strong>The new AI world</strong> — Resolve AI（W9 Friday guest）、Datadog Bits AI Agent、Splunk Observability Assistant。</li>
+<li><strong>AI SRE 的特徵</strong> —
+<ul>
+<li>動態維護 knowledge graph</li>
+<li>跨 observability stack 與 cloud 的 agentic system</li>
+<li>即時生成「現在發生什麼」的 narrative、pinpoint likely root cause + 證據、給 prescriptive remediation</li>
+<li><strong>Heavy emphasis on explainability and auditability</strong></li>
+</ul></li>
+<li><strong>What has changed</strong> — AI 把 organizational / service-level knowledge <strong>scale 出來</strong> — 那些 undocumented dependency、brittle legacy service、只會在 high-stakes incident 浮現的 quirk，不再被孤立在某幾個資深 engineer 腦中。</li>
+<li><strong>AI SRE in action 預覽</strong> — observability、working theory、span info、heavily evidence-based、chat 介面做動態查詢。</li>
+<li><strong>Limitations</strong> —
+<ul>
+<li>能處理 incident 的複雜度有限</li>
+<li>現代 production stack 異質性</li>
+<li>從偵測到實際 remediate code 還很遠（all provider 都先做 root cause analysis 起）</li>
+<li>好的 RCA 需要好的 monitoring「園藝」（gardening）— 工具雜草不除 AI 也救不了你</li>
+<li>Security 可能變新 attack vector</li>
+</ul></li>
+</ol>
+<p><strong>Key takeaway</strong>：SRE 工作流（detect → check golden signals → look for change → localize → mitigate → stabilize → communicate → close out）是個成熟 8 段 playbook。AI agent 不是要重新發明它，是要在前面 5 段大幅縮短時間 — 從凌晨 3:12 page 到 4:00 找到 root cause，從原本的「<strong>多 engineer + tool silo + 拼湊資訊</strong>」變成「<strong>single agent + dynamic knowledge graph + evidence-first</strong>」。但 remediation 邊界還在，blast radius 大的動作必須 human authorize。</p>
+</section>
+<section id="friday-lecture1121mayank-agarwal-milind-ganjooresolve" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="friday-lecture1121mayank-agarwal-milind-ganjooresolve"><span class="header-section-number">11.4</span> Friday Lecture（11/21）：Mayank Agarwal + Milind Ganjoo（Resolve）</h2>
+<ul>
+<li><strong>Speakers</strong>:
+<ul>
+<li><a href="https://www.linkedin.com/in/mayank-ag/">Mayank Agarwal</a>, Founder &amp; CTO of <a href="https://resolve.ai/">Resolve AI</a>（<strong>OpenTelemetry creator</strong>）</li>
+<li><a href="https://www.linkedin.com/in/mganjoo/">Milind Ganjoo</a>, Member of Technical Staff at Resolve AI（<strong>ex-DeepMind Staff MLE</strong>）</li>
+</ul></li>
+<li><strong>Slides</strong>: <a href="https://drive.google.com/file/d/11WnEbMGc9kny_WBpMN10I8oP8XsiQOnM/view?usp=sharing">Drive 連結（公開）</a></li>
+</ul>
+<blockquote class="blockquote">
+<p>以下基於 Drive PDF 公開內容（pdftotext 抽出）整理的繁中摘要。演講題目「<strong>Agentic AI for software in production</strong>」：</p>
+</blockquote>
+<p><strong>段 1：軟體工程的真實樣貌（不是 idealized）</strong></p>
+<p>軟體工程比想像複雜：跨 systems（code、AI、telemetry、cloud、knowledge、security）、跨 teams（application、infra、networking）、跨 workflows（development、deployment、on-call、cost management、compliance、security vulnerability、documentation）。<strong>Software engineer 花 70+% 時間在 grunt work</strong>：building context、working across tools、evidence gathering、log queries、coordination、application、documentation、compliance、on-call、optimization、deployment、problem solving — 只有少部分時間在 design decision、trade-off、creative work。</p>
+<p><strong>段 2：On-call engineer 在凌晨 3:04 被 page 後到底發生什麼</strong></p>
+<p>走 timeline：03:04 AM page → 03:20 AM L1 support 接手 → 04:00 AM multiple team escalation（infra / app &amp; product / DB / engineering manager / incident commander）→ 04:45 AM 工程師終於把問題 mitigate → ? AM postmortem。整段過程要靠 runbook、observability、code、infra 拼湊，<strong>nearly all manual effort</strong> — incident commander 協調人、L1 看 infra、app &amp; product team 看 application、director / comms manager 對外溝通。</p>
+<p><strong>段 3：什麼讓 production 對人類（與 model）來說都很難？</strong></p>
+<ol type="1">
+<li><strong>跨多 system / tool 的 data silo</strong> — 1000s of service across 100s of team、複雜瞬息的 infra（DB、messaging service…）、低層工具看 log / metric / dashboard / feature flag / CI-CD 各自 query language、access mechanism、operational behavior</li>
+<li><strong>跨 team / 跨 expertise 的協調</strong> — application engineer、platform engineer、SRE、IT ops、security engineer、support engineer 各有專長，但 context 通常 fragmented and undocumented</li>
+<li><strong>直接影響營收與成本</strong> — incident 拖好幾小時或好幾天才解掉、tool 維護成本高、incident regularly 牽涉 20+ engineer、change 難做又會 trigger issue、infrastructure 開支不斷漲、客戶常常先發現問題、只有少數工程師真的懂 production 全貌、新人 onboard 要 3-6 個月、<strong>AI 生成的 code 又把問題放大</strong></li>
+</ol>
+<p><strong>段 4：AI 要怎麼幫工程師管 production？</strong></p>
+<p>Resolve 的 Agent-first approach 結合三件事：(1) understand and operate all your production tools、(2) capture tribal knowledge of your unique system、(3) combine expertise of all your engineers across team。Mayank 把這拆成 3 個設計原則對應到 3 個產品 capability：</p>
+<p><strong>設計原則 1：Production 系統複雜且持續變化</strong> → AI 要深度理解 production - 接到 code、infra、tool、knowledge - 為「你的系統」建模（不是 generic SRE，是你公司的 architecture） - 在 graph 內導航到對的 node 蒐證據 - 像專家一樣操作每個 tool / system - AI 連接 alerts / metric / dashboards / traces / logs / runbooks / change events 等多源訊號</p>
+<p><strong>設計原則 2：Knowledge fragmented or undocumented</strong> → AI 要 capture tribal knowledge 並逐次變聰明 - Capture 公司與 team 的知識 - 記得 in-the-loop 給的 feedback / teaching - Retrieve context-specific information</p>
+<p><strong>設計原則 3：調查需要跨 team 專長</strong> → AI 要結合所有 engineer 的專長 - Create investigation plan - 並行 pursue 多個 hypothesis（multi-agent 並行查不同方向） - 持續 refine plan 到 root cause - 讓多人跨 org 邊界協作得到答案</p>
+<p><strong>段 5：Lessons learned building AI for prod</strong></p>
+<ol type="1">
+<li><strong>這不只是 model 問題</strong> — production 導航需要大量 domain expertise，這些必須 hard-code 進 architecture，<strong>單靠 prompt engineering 蓋不出 production AI</strong></li>
+<li><strong>Context window 有限，production context 是無限的</strong> — 10M log line 不可能塞進任何 context window。Intelligence 是「<strong>knowing WHAT to query, WHEN, and HOW to filter</strong>」based on production understanding</li>
+<li><strong>跟 tool 工作是 non-trivial 問題</strong> — Raw API 不可用：response 太大、output 雜、為人類設計。必須建 AI system 能 filter noise、回 structured summary、graceful 處理 error、parallel 工作</li>
+<li><strong>Eval 跟 product 一樣難</strong> — 建 eval 要重現 production complexity（service、dependency 等），沒 eval 就不能信任 output</li>
+</ol>
+<p><strong>段 6：AI is changing software engineering</strong></p>
+<p>Mayank 預測「By next year software engineering will look fundamentally different」。Three eras 的 grunt work / creative work 比例： - <strong>Models era</strong>（純 model API）：grunt work 主導 - <strong>Agents era</strong>：grunt work 還是大頭，但 creative work 占比上升 - <strong>Closed-loop agents era</strong>：grunt work 大幅縮減，creative work 占主導</p>
+<p><strong>Key takeaway</strong>：Resolve 對 vibe coder 的最大 lesson 不是「<strong>怎麼用 AI agent</strong>」，是「<strong>production AI 為什麼不能靠 prompt engineering 做出來</strong>」。它需要 (a) hard-code domain expertise into architecture、(b) 知道何時 / 怎麼 query / filter 而非塞 raw data、(c) 把 messy raw API 包成 AI-friendly tool、(d) eval 跟 product 一樣難建。對未來 AI vertical startup 的 founder 是必看的工程現實 check — production engineering 是 LLM agent 的 killer app，但門檻比一般 chat agent 高一個量級。對自己的 side project，至少先學會這套「<strong>接 alert → 檢查 golden signal → 看最近改了什麼 → localize → mitigate</strong>」的 8 步驟 playbook，自己當自己的 SRE。</p>
+</section>
+<section id="reading-摘要" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="reading-摘要"><span class="header-section-number">11.5</span> Reading 摘要</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>篇名</th>
+<th>來源</th>
+<th>一句話重點</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../readings/w9_introduction_to_sre.md">Introduction to SRE</a></td>
+<td>Google SRE Book</td>
+<td>SRE = 把營運當軟體工程問題；error budget 量化 dev/ops 衝突，blame-free postmortem 找系統漏洞</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w9_observability_basics.md">Observability Basics</a></td>
+<td>last9.io</td>
+<td>Observability 三柱：logs（病歷）+ metrics（生命徵象）+ traces（影像）；context propagation 是關鍵</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w9_kubernetes_troubleshooting_with_ai.md">Kubernetes Troubleshooting with AI</a></td>
+<td>resolve.ai</td>
+<td>K8s 三大痛點（alert fatigue、ephemeral context、observability fragmentation）由 AI agent + knowledge graph 解</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w9_your_new_autonomous_teammate.md">Your New Autonomous Teammate</a></td>
+<td>resolve.ai</td>
+<td>Resolve 產品深度導覽：dynamic knowledge graph + just-in-time runbook + 1 分鐘 root cause + 自動 postmortem</td>
+</tr>
+<tr class="odd">
+<td><a href="../readings/w9_multi_agent_systems_ai_native.md">Multi-Agent Systems for AI-Native Engineering</a></td>
+<td>resolve.ai</td>
+<td>Single agent 是 sequential bottleneck；multi-agent 並行查 root cause 是 AI-native 工程的核心</td>
+</tr>
+<tr class="even">
+<td><a href="../readings/w9_benefits_of_agentic_ai_in_oncall.md">Top 5 Benefits of Agentic AI in On-call</a></td>
+<td>resolve.ai</td>
+<td>五大好處：消 alert fatigue、活知識、調查一致性、證據式協作、主動找潛在問題</td>
+</tr>
+</tbody>
+</table>
+<p><strong>閱讀優先順序</strong>：先讀 <a href="../readings/w9_introduction_to_sre.md">Introduction to SRE</a>（建立 mental model）→ <a href="../readings/w9_observability_basics.md">Observability Basics</a>（基礎工具觀念）→ <a href="../readings/w9_multi_agent_systems_ai_native.md">Multi-Agent Systems</a>（agent 架構）→ <a href="../readings/w9_your_new_autonomous_teammate.md">Your New Autonomous Teammate</a>（具體商業案例），時間有限的話前三篇必讀。</p>
+</section>
+<section id="assignment" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="assignment"><span class="header-section-number">11.6</span> Assignment</h2>
+<blockquote class="blockquote">
+<p>本週原 syllabus 沒列 weekly assignment。建議自學者用 Sentry 或 Better Stack 給自己的 side project 設定 observability 當練習：(1) 開一個帳號（兩家都有 free tier）→ (2) 接到自己的 side project（npm/pip 裝 SDK，5 分鐘）→ (3) 故意製造一個 error 看 dashboard 抓得到嗎 → (4) 設一個 alert（例：error rate &gt; 1%）發到 Discord / email → (5) 觸發後跑一次完整 incident response 流程（看 trace 找 root cause → fix → 寫 postmortem）。預估 2-3 hr，會建立完整 production-ready 的肌肉記憶。</p>
+</blockquote>
+</section>
+<section id="對-vibe-coder-的應用" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="對-vibe-coder-的應用"><span class="header-section-number">11.7</span> 對 Vibe Coder 的應用</h2>
+<p>W9 是 vibe coder 最容易跳過、但跳過後悔最大的一週。多數人 ship side project 時根本沒 observability，等到出 bug 才發現自己什麼都看不到、只能憑直覺猜。這週的概念套到日常工作流：</p>
+<ol type="1">
+<li><strong>第一個 production project 立刻接 Sentry</strong> — Sentry 對 vibe coder 是 P1 夯。Free tier 給每月 5K event，足夠 hobby project 用。npm install 後 3 行 code 就接好，自動抓 unhandled exception、含 stack trace、含 source map（看到原 TypeScript 而不是 minified JS）。沒有 Sentry 等於沒儀表板開車</li>
+<li><strong>三選一：Sentry / Better Stack / Vercel Analytics</strong> —
+<ul>
+<li><strong>Sentry</strong> 主攻 error tracking + performance traces，all-rounder。最 P1，預設選它</li>
+<li><strong>Better Stack</strong>（原 Logtail + Better Uptime）主攻 log aggregation + uptime monitoring，介面漂亮、SQL-like log query 強。如果你 log 量大選它</li>
+<li><strong>Vercel Analytics</strong> 只在 deploy 到 Vercel 時用、focus 在 web vitals + page view，是「最低限觀測」。配 Sentry 用不衝突</li>
+</ul></li>
+<li><strong>Day 1 就加 structured logging</strong> — 別用 <code>console.log("user clicked")</code>，用 JSON log 含 request ID / user ID / timestamp / event：<code>logger.info({ user_id, action: "click", item: "checkout" })</code>。Sentry / Better Stack 都會自動 parse JSON log 的 field 變成可篩選的 metadata。改寫 0 成本、回收高得驚人</li>
+<li><strong>LLM app 加 Langfuse / Helicone</strong> — 如果你 side project 用了 OpenAI / Anthropic API，標準 observability 看不到 token usage / hallucination。Langfuse 開源、self-host 免費、5 分鐘接 SDK，給你完整的 prompt + response + tool call + cost 紀錄。一個月後回頭看，會發現 80% 的 cost 來自你想不到的 5% request — 沒這個資料無法 optimize</li>
+<li><strong>Production-ready 的觸發點不是「有用戶」是「你會半夜被 page」</strong> — 多數 vibe project 永遠不會到那個點，所以<strong>別過度工程化</strong>。只要 (a) error tracking、(b) basic uptime check（Better Stack free tier 給 10 個 monitor），就涵蓋 90% 的 production-ready 需求。Kubernetes、Datadog、PagerDuty 全是 over-engineering — 等到你的 side project 真的有 paying customer 再上</li>
+<li><strong>Postmortem 文化套到自己 side project</strong> — 每次 production bug 寫 30 字 postmortem（root cause + fix + lesson）存進 repo 的 <code>POSTMORTEMS.md</code>。半年後看會發現自己一直在重蹈覆轍同類 bug，這個 doc 就是個人版的 dynamic knowledge graph</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <strong>vibe coder 的 Day-1 Quick Win</strong>：今天去 <a href="https://sentry.io">sentry.io</a> 開帳號（30 秒）、選你最在意的那個 side project、跟著 5 分鐘 setup wizard 接好 SDK、deploy。下次 bug 不必再從 user 抱怨「我點了沒反應」開始 debug — Sentry 會直接 email 你 stack trace + 出錯時的 user / request context，可能還沒等 user 抱怨就已經修好。這個 ROI 是所有 dev tool 中最高的之一。</p>
+</blockquote>
+<hr>
+<p><strong>上一週</strong>：<a href="../weeks/08_automated_ui_app_building.html">W8 Automated UI and App Building</a> | <strong>下一週</strong>：<a href="../weeks/10_whats_next.html">W10 What’s Next</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../weeks/08_automated_ui_app_building.html" class="pagination-link" aria-label="Week 8：Automated UI and App Building">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Week 8：Automated UI and App Building</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../weeks/10_whats_next.html" class="pagination-link" aria-label="Week 10：What's Next for AI Software Engineering">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Week 10：What’s Next for AI Software Engineering</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

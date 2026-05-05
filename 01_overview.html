@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="繁中譯解：康瑋麟（WLK）">
-<meta name="dcterms.date" content="2026-05-02">
 
-<title>CS146S: The Modern Software Developer</title>
+<title>2&nbsp; 課程簡介與自學路線圖 – CS146S: The Modern Software Developer</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,7 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_overview.html" rel="next">
+<link href="./weeks/01_intro_to_coding_llms.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -86,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_overview.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -113,13 +112,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_overview.html" class="sidebar-item-text sidebar-link">
+  <a href="./01_overview.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span></a>
   </div>
 </li>
@@ -222,35 +221,48 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#為什麼這門課值得念" id="toc-為什麼這門課值得念" class="nav-link active" data-scroll-target="#為什麼這門課值得念"><span class="header-section-number">2.1</span> 為什麼這門課值得念</a></li>
+  <li><a href="#為什麼非資工背景也能念" id="toc-為什麼非資工背景也能念" class="nav-link" data-scroll-target="#為什麼非資工背景也能念"><span class="header-section-number">2.2</span> 為什麼非資工背景也能念</a></li>
+  <li><a href="#課程資訊完整" id="toc-課程資訊完整" class="nav-link" data-scroll-target="#課程資訊完整"><span class="header-section-number">2.3</span> 課程資訊（完整）</a>
+  <ul class="collapse">
+  <li><a href="#修課負擔" id="toc-修課負擔" class="nav-link" data-scroll-target="#修課負擔"><span class="header-section-number">2.3.1</span> 修課負擔</a></li>
+  <li><a href="#評分組成" id="toc-評分組成" class="nav-link" data-scroll-target="#評分組成"><span class="header-section-number">2.3.2</span> 評分組成</a></li>
+  <li><a href="#旁聽政策" id="toc-旁聽政策" class="nav-link" data-scroll-target="#旁聽政策"><span class="header-section-number">2.3.3</span> 旁聽政策</a></li>
+  </ul></li>
+  <li><a href="#三條自學路線從-00_index.md-重點展開" id="toc-三條自學路線從-00_index.md-重點展開" class="nav-link" data-scroll-target="#三條自學路線從-00_index.md-重點展開"><span class="header-section-number">2.4</span> 三條自學路線（從 00_index.md 重點展開）</a>
+  <ul class="collapse">
+  <li><a href="#track-a-vibe-coder-速成路線" id="toc-track-a-vibe-coder-速成路線" class="nav-link" data-scroll-target="#track-a-vibe-coder-速成路線"><span class="header-section-number">2.4.1</span> Track A — Vibe Coder 速成路線</a></li>
+  <li><a href="#track-b-完整軟體工程路線" id="toc-track-b-完整軟體工程路線" class="nav-link" data-scroll-target="#track-b-完整軟體工程路線"><span class="header-section-number">2.4.2</span> Track B — 完整軟體工程路線</a></li>
+  <li><a href="#track-c-tech-lead-pm-視角" id="toc-track-c-tech-lead-pm-視角" class="nav-link" data-scroll-target="#track-c-tech-lead-pm-視角"><span class="header-section-number">2.4.3</span> Track C — Tech Lead / PM 視角</a></li>
+  </ul></li>
+  <li><a href="#學習資源" id="toc-學習資源" class="nav-link" data-scroll-target="#學習資源"><span class="header-section-number">2.5</span> 學習資源</a>
+  <ul class="collapse">
+  <li><a href="#必備工具免費可開始" id="toc-必備工具免費可開始" class="nav-link" data-scroll-target="#必備工具免費可開始"><span class="header-section-number">2.5.1</span> 必備工具（免費可開始）</a></li>
+  <li><a href="#學習成本最低的兩篇-prereq" id="toc-學習成本最低的兩篇-prereq" class="nav-link" data-scroll-target="#學習成本最低的兩篇-prereq"><span class="header-section-number">2.5.2</span> 學習成本最低的兩篇 prereq</a></li>
+  </ul></li>
+  <li><a href="#本講義的譯解原則" id="toc-本講義的譯解原則" class="nav-link" data-scroll-target="#本講義的譯解原則"><span class="header-section-number">2.6</span> 本講義的譯解原則</a></li>
+  <li><a href="#講義產出限制-已知-caveat" id="toc-講義產出限制-已知-caveat" class="nav-link" data-scroll-target="#講義產出限制-已知-caveat"><span class="header-section-number">2.7</span> 講義產出限制 / 已知 caveat</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">CS146S: The Modern Software Developer</h1>
-<p class="subtitle lead">Stanford CS Fall 2025 — 繁中講義 + 50 篇 Reading 摘要</p>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>繁中譯解：康瑋麟（WLK） </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2026-05-02</p>
-    </div>
-  </div>
   
     
   </div>
@@ -260,11 +272,178 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>這是一份 Stanford 計算機科學系 Fall 2025 開設的全新課程 <strong>CS146S《The Modern Software Developer》</strong> 的繁中講義。原版課程主軸是 AI-assisted coding（LLM 基礎、coding agents、Model Context Protocol、AI IDE、Claude Code、Warp、AI testing/security、code review、app building、observability、未來趨勢），素材公開在 <a href="https://themodernsoftware.dev">themodernsoftware.dev</a>。</p>
-<p>本講義將 10 週課程內容、50+ 篇 reading、9 個 weekly assignment 全部消化成繁中，並補上對非資工背景讀者的譯解，以及對 vibe coder（業餘 AI-assisted coding 使用者）的應用建議。</p>
-<p>詳見 <a href="00_index.md">00_index.md</a> 與 <a href="./01_overview.html">01_overview.md</a>。</p>
+<section id="為什麼這門課值得念" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="為什麼這門課值得念"><span class="header-section-number">2.1</span> 為什麼這門課值得念</h2>
+<p>CS146S《The Modern Software Developer》是 Stanford CS 在 Fall 2025 全新開的課，由 Mihail Eric（<a href="https://github.com/mihail911">mihail911</a> — ex-Amazon AGI、ex-Goodlight）主講。它的特殊性在於：</p>
+<ol type="1">
+<li><strong>內容極度當前</strong>：講義連結 2025 年才出現的工具（Claude Code、Warp、Devin、Vercel v0、Resolve.ai），industry guest speaker 都是這些公司的創辦人或核心成員。</li>
+<li><strong>聚焦「人 + AI 協作」的實作層</strong>：不是純 ML 理論，而是「身為一個軟體工程師，要怎麼用 AI 工具更快做出正確的東西」。</li>
+<li><strong>Final project 占 80%</strong>：強迫實作。沒寫過東西、只看課的話會看不出價值。</li>
+</ol>
+</section>
+<section id="為什麼非資工背景也能念" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="為什麼非資工背景也能念"><span class="header-section-number">2.2</span> 為什麼非資工背景也能念</h2>
+<p>雖然 prerequisite 寫 CS111 + CS221/229 recommended，但實際上：</p>
+<ul>
+<li>大半週次的 lecture 內容是<strong>工具使用與工作流</strong>（W1 prompt、W2 MCP、W3 IDE setup、W4 agent management、W5 terminal、W7 code review、W8 UI building），不需要深 ML 背景。</li>
+<li>真正需要 ML 知識的只有 W1 後半（“What is an LLM actually”）和 W6 vulnerability detection 的 prompt injection 攻擊面，本講義對這兩塊都會加倍譯解。</li>
+<li>W2/W3 的 agent + context engineering 是 vibe coder 的核心日常，不是學術內容。</li>
+</ul>
+<p><strong>對非資工背景讀者的建議</strong>：W1 LLM 基礎讀完即可，不必鑽 transformer architecture；把時間花在 W2-W4 的 agent + IDE + Claude Code 實作練習上，這是 ROI 最高的部分。</p>
+<hr>
+</section>
+<section id="課程資訊完整" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="課程資訊完整"><span class="header-section-number">2.3</span> 課程資訊（完整）</h2>
+<section id="修課負擔" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="修課負擔"><span class="header-section-number">2.3.1</span> 修課負擔</h3>
+<ul>
+<li>每週 10-12 hrs：含 lecture（3 hrs）、assignment（4-6 hrs）、reading（2-3 hrs）</li>
+<li>Final project 不計入週負擔，是學期末額外時間。</li>
+</ul>
+</section>
+<section id="評分組成" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="評分組成"><span class="header-section-number">2.3.2</span> 評分組成</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>項目</th>
+<th>占比</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Final Project</td>
+<td>80%</td>
+<td>學期末個人專案，展示 modern dev practices</td>
+</tr>
+<tr class="even">
+<td>Weekly Assignments</td>
+<td>15%</td>
+<td>9 個 hands-on 練習，多半是用 Claude Code / Cursor / MCP / Warp 實作</td>
+</tr>
+<tr class="odd">
+<td>Class Participation</td>
+<td>5%</td>
+<td>Stanford 課堂出席與討論</td>
+</tr>
+</tbody>
+</table>
+<p>對自學者來說，weekly assignments 才是訓練的核心。Final project 沒有 peer / mentor 互相 review 的話，建議用「對應 vibe coding 副業 side project」當練習。</p>
+</section>
+<section id="旁聽政策" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="旁聽政策"><span class="header-section-number">2.3.3</span> 旁聽政策</h3>
+<blockquote class="blockquote">
+<p>“We’re open to auditing requests by Stanford students and staff. You will be able to attend all the lectures, but we won’t be able to grade your homework or give advice on final projects.”</p>
+</blockquote>
+<p>非 Stanford 學生不能旁聽現場課，但 syllabus / slides / reading 都公開在 themodernsoftware.dev。本講義就是基於公開資源做的繁中化版本。</p>
+<hr>
+</section>
+</section>
+<section id="三條自學路線從-00_index.md-重點展開" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="三條自學路線從-00_index.md-重點展開"><span class="header-section-number">2.4</span> 三條自學路線（從 <a href="00_index.md">00_index.md</a> 重點展開）</h2>
+<section id="track-a-vibe-coder-速成路線" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="track-a-vibe-coder-速成路線"><span class="header-section-number">2.4.1</span> Track A — Vibe Coder 速成路線</h3>
+<p><strong>目標</strong>：1-2 週讀完，能用 Claude Code 從零做出一個 side project。</p>
+<pre><code>W1（LLM 基礎 + prompting）
+  → W2（agents + MCP，挑出 MCP 部分動手做）
+    → W3（AI IDE + context engineering，學 PRD 寫法）
+      → W4（Claude Code 高階用法，Boris Cherny 的 agent manager 概念）
+        → W8（UI/app building，學 v0 / Vercel）
+          → 動手做 final project</code></pre>
+<p><strong>跳過</strong>：W5 terminal（除非你已經在用 Warp）、W6 security（advanced）、W7 code review（團隊用）、W9 observability（production 用）、W10 trends。</p>
+</section>
+<section id="track-b-完整軟體工程路線" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="track-b-完整軟體工程路線"><span class="header-section-number">2.4.2</span> Track B — 完整軟體工程路線</h3>
+<p><strong>目標</strong>：跟 Stanford 學生同步進度（10 週），全 syllabus 走完。</p>
+<p>每週流程： 1. 讀本講義的週 .md（30 min） 2. 讀該週 readings 至少 2 篇（90 min） 3. 嘗試該週 assignment（90-180 min） 4. 看 Mon lecture slides 對照（30 min） 5. Fri guest speaker 看 industry context（30 min）</p>
+</section>
+<section id="track-c-tech-lead-pm-視角" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="track-c-tech-lead-pm-視角"><span class="header-section-number">2.4.3</span> Track C — Tech Lead / PM 視角</h3>
+<p><strong>目標</strong>：理解 AI-assisted coding 對團隊、流程、產品的衝擊，不寫 code。</p>
+<pre><code>W1（LLM 基礎，理解能力邊界）
+  → W4（agent autonomy levels，理解人機分工）
+    → W6（security，理解風險）
+      → W7（code review，理解品控變革）
+        → W9（observability，理解 production 風險）
+          → W10（industry trends，預測未來 5 年）</code></pre>
+<hr>
+</section>
+</section>
+<section id="學習資源" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="學習資源"><span class="header-section-number">2.5</span> 學習資源</h2>
+<section id="必備工具免費可開始" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="必備工具免費可開始"><span class="header-section-number">2.5.1</span> 必備工具（免費可開始）</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>工具</th>
+<th>用途</th>
+<th>免費額度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://claude.com/claude-code">Claude Code</a></td>
+<td>AI coding agent CLI</td>
+<td>免費 plan 有限額</td>
+</tr>
+<tr class="even">
+<td><a href="https://cursor.sh/">Cursor</a></td>
+<td>AI IDE</td>
+<td>14 天 free trial</td>
+</tr>
+<tr class="odd">
+<td><a href="https://www.warp.dev/">Warp</a></td>
+<td>AI terminal</td>
+<td>個人免費</td>
+</tr>
+<tr class="even">
+<td><a href="https://v0.dev/">Vercel v0</a></td>
+<td>UI 生成</td>
+<td>免費額度</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="學習成本最低的兩篇-prereq" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="學習成本最低的兩篇-prereq"><span class="header-section-number">2.5.2</span> 學習成本最低的兩篇 prereq</h3>
+<ul>
+<li>Andrej Karpathy <a href="https://www.youtube.com/watch?v=7xTGNNLPyMI">Deep Dive into LLMs</a> — 3.5 hr 影片，看完就懂 W1 後半的所有概念</li>
+<li><a href="https://www.promptingguide.ai/techniques">Prompt Engineering Guide</a> — 30 min 讀完，覆蓋 W1 的 prompt 技巧</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="本講義的譯解原則" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="本講義的譯解原則"><span class="header-section-number">2.6</span> 本講義的譯解原則</h2>
+<ol type="1">
+<li><strong>技術名詞</strong>：<code>English（中文）</code> 首次出現，後續用 English。例：Model Context Protocol（模型上下文協定，MCP），後續用 MCP。</li>
+<li><strong>產品名稱</strong>：只用英文。例：Claude Code、Cursor、Warp、Semgrep、Graphite。</li>
+<li><strong>縮寫</strong>：<code>縮寫（全稱）</code> 首次出現。例：MCP（Model Context Protocol）、PRD（Product Requirements Document）。</li>
+<li><strong>不需翻譯的通用詞</strong>：直接使用。例：CLI、IDE、API、SDK、CI/CD。</li>
+<li><strong>對非資工背景讀者的譯解</strong>：在概念第一次出現時，用「💡 譯解」block 補一句白話。</li>
+</ol>
+<p>例： &gt; <strong>MCP（Model Context Protocol）</strong> 是 Anthropic 提出的開放協定，讓 AI agent 能用標準化方式呼叫外部工具與資料源。 &gt; &gt; 💡 <strong>譯解</strong>：可以想成 USB-C 之於充電線——以前每個工具廠都有自己的接頭，MCP 讓 AI 可以一個統一接口接所有外部工具（Slack、GitHub、Google Drive 等）。</p>
+<hr>
+</section>
+<section id="講義產出限制-已知-caveat" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="講義產出限制-已知-caveat"><span class="header-section-number">2.7</span> 講義產出限制 / 已知 caveat</h2>
+<ul>
+<li><strong>Google Slides 大多需登入</strong> → Mon lecture 內容是基於 topics + speaker context 做的 best-effort 重建，不是逐字 transcript。</li>
+<li><strong>Friday industry guest speaker 部分內容無 source</strong> → 只能依 speaker bio + 公司產品做高層摘要。</li>
+<li><strong>W8 與 W10 沒有 reading list</strong> → 內容偏延伸思考 + 工具介紹，會明確標註「我的延伸」。</li>
+<li><strong>W6 與 W9 對非資工背景偏深</strong> → 加倍譯解，但仍假設讀者理解基本 web / 系統概念。</li>
+</ul>
+<p>如發現摘要內容與原文有出入，請以原文為準（每篇摘要均含原文連結）。</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -669,10 +848,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="前言">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_overview.html" class="pagination-link" aria-label="課程簡介與自學路線圖">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">課程簡介與自學路線圖</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./weeks/01_intro_to_coding_llms.html" class="pagination-link" aria-label="Week 1：Introduction to Coding LLMs and AI Development">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Week 1：Introduction to Coding LLMs and AI Development</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
