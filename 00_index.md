@@ -26,7 +26,7 @@ source: "https://themodernsoftware.dev"
 | 評分 | Final Project 80% / Weekly Assignments 15% / Class Participation 5% |
 | 上課模式 | 每週 Mon = 主講課程 + Fri = industry guest speaker |
 
-詳見 [01_overview.md](01_overview.md)。
+詳見 [01_overview.md](01_overview.html)。
 
 ---
 
@@ -34,16 +34,16 @@ source: "https://themodernsoftware.dev"
 
 | Week | 主題 | Mon Lecture | Fri Guest Speaker | 連結 |
 |------|------|-------------|-------------------|------|
-| W1 | Introduction to Coding LLMs and AI Development | Introduction and how an LLM is made | Power prompting for LLMs | [weeks/01](weeks/01_intro_to_coding_llms.md) |
-| W2 | The Anatomy of Coding Agents | Building a coding agent from scratch | Building a custom MCP server | [weeks/02](weeks/02_anatomy_of_coding_agents.md) |
-| W3 | The AI IDE | From first prompt to optimal IDE setup | Silas Alberti（Cognition / Devin） | [weeks/03](weeks/03_the_ai_ide.md) |
-| W4 | Coding Agent Patterns | How to be an agent manager | Boris Cherny（Claude Code creator） | [weeks/04](weeks/04_coding_agent_patterns.md) |
-| W5 | The Modern Terminal | How to Build a Breakout AI Developer Product | Zach Lloyd（Warp CEO） | [weeks/05](weeks/05_modern_terminal.md) |
-| W6 | AI Testing and Security | AI QA, SAST, DAST, and Beyond | Isaac Evans（Semgrep CEO） | [weeks/06](weeks/06_ai_testing_security.md) |
-| W7 | Modern Software Support | AI code review | Tomas Reimers（Graphite CPO） | [weeks/07](weeks/07_modern_software_support.md) |
-| W8 | Automated UI and App Building | End-to-end apps with a single prompt | Gaspar Garcia（Vercel） | [weeks/08](weeks/08_automated_ui_app_building.md) |
-| W9 | Agents Post-Deployment | Incident response and DevOps | Mayank Agarwal + Milind Ganjoo（Resolve） | [weeks/09](weeks/09_agents_post_deployment.md) |
-| W10 | What's Next for AI Software Engineering | Software development in 10 years | Martin Casado（a16z） | [weeks/10](weeks/10_whats_next.md) |
+| W1 | Introduction to Coding LLMs and AI Development | Introduction and how an LLM is made | Power prompting for LLMs | [weeks/01](weeks/01_intro_to_coding_llms.html) |
+| W2 | The Anatomy of Coding Agents | Building a coding agent from scratch | Building a custom MCP server | [weeks/02](weeks/02_anatomy_of_coding_agents.html) |
+| W3 | The AI IDE | From first prompt to optimal IDE setup | Silas Alberti（Cognition / Devin） | [weeks/03](weeks/03_the_ai_ide.html) |
+| W4 | Coding Agent Patterns | How to be an agent manager | Boris Cherny（Claude Code creator） | [weeks/04](weeks/04_coding_agent_patterns.html) |
+| W5 | The Modern Terminal | How to Build a Breakout AI Developer Product | Zach Lloyd（Warp CEO） | [weeks/05](weeks/05_modern_terminal.html) |
+| W6 | AI Testing and Security | AI QA, SAST, DAST, and Beyond | Isaac Evans（Semgrep CEO） | [weeks/06](weeks/06_ai_testing_security.html) |
+| W7 | Modern Software Support | AI code review | Tomas Reimers（Graphite CPO） | [weeks/07](weeks/07_modern_software_support.html) |
+| W8 | Automated UI and App Building | End-to-end apps with a single prompt | Gaspar Garcia（Vercel） | [weeks/08](weeks/08_automated_ui_app_building.html) |
+| W9 | Agents Post-Deployment | Incident response and DevOps | Mayank Agarwal + Milind Ganjoo（Resolve） | [weeks/09](weeks/09_agents_post_deployment.html) |
+| W10 | What's Next for AI Software Engineering | Software development in 10 years | Martin Casado（a16z） | [weeks/10](weeks/10_whats_next.html) |
 
 ---
 
@@ -68,10 +68,10 @@ source: "https://themodernsoftware.dev"
 
 ## 子目錄索引
 
-- 課程簡介與學習建議：[01_overview.md](01_overview.md)
+- 課程簡介與學習建議：[01_overview.md](01_overview.html)
 - 10 週講義：[weeks/](weeks/)
-- 50+ 篇 reading 摘要：[readings/_index.md](readings/_index.md)
-- 9 個 weekly assignment + 自學者可行性評估：[assignments/_index.md](assignments/_index.md)
+- 50+ 篇 reading 摘要：[readings/_index.md](readings/_index.html)
+- 9 個 weekly assignment + 自學者可行性評估：[assignments/_index.md](assignments/_index.html)
 - PDF 印製版：[pdf/CS146S_handbook_zh.pdf](pdf/CS146S_handbook_zh.pdf)（Stage 6 完成後產生）
 
 ---

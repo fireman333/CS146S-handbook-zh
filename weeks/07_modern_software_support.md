@@ -31,17 +31,17 @@ status: complete
 
 ### 一、Code review 從「品管把關」到「心智模型同步」的歷史轉折
 
-要看懂為什麼 2026 年大家還在認真討論 code review（明明 AI 都會寫 code 了），你必須先理解 review 在過去 50 年的角色變遷。早期 IBM 1976 年提出的 Fagan inspection（Fagan 形式審查）是一套重型流程，目的單純：在 code ship 出去之前再多一雙眼睛抓 defect（缺陷）。Steve McConnell 在《Code Complete》整理的 industry data 給了這個流程量化背書 — design + code inspection 平均能抓到 55-60% 的 defect，遠高於各種 testing method（25-45%）。Jeff Atwood 2008 年寫的 [Code Reviews: Just Do It](../readings/w7_code_reviews_just_do_it.md) 把這個論點直接搬上檯面：別爭辯做不做、有做就贏，每一分鐘 review 投資都會 paid back tenfold（十倍奉還）。
+要看懂為什麼 2026 年大家還在認真討論 code review（明明 AI 都會寫 code 了），你必須先理解 review 在過去 50 年的角色變遷。早期 IBM 1976 年提出的 Fagan inspection（Fagan 形式審查）是一套重型流程，目的單純：在 code ship 出去之前再多一雙眼睛抓 defect（缺陷）。Steve McConnell 在《Code Complete》整理的 industry data 給了這個流程量化背書 — design + code inspection 平均能抓到 55-60% 的 defect，遠高於各種 testing method（25-45%）。Jeff Atwood 2008 年寫的 [Code Reviews: Just Do It](../readings/w7_code_reviews_just_do_it.html) 把這個論點直接搬上檯面：別爭辯做不做、有做就贏，每一分鐘 review 投資都會 paid back tenfold（十倍奉還）。
 
-但 review 真正的價值很快超越「抓 bug」。Blake Smith 2015 年 [Code Review Essentials](../readings/w7_code_review_essentials_for_software_teams.md) 把 review 重新 framing 成 **mental model synchronization（心智模型同步）** — 「當 Bob 提交 accounting subsystem 的 PR，Amy 在 review 中同步更新她對該 system 的 mental model」。Bug 被擋下來只是 side effect，真正的 ROI 是團隊知識擴散、降低未來修改的 onboarding 成本。GitHub staff engineer Sarah Vessels 在 [How to Review Code Effectively](../readings/w7_how_to_review_code_effectively.md) 進一步把 review 拉高到「shape the product's implementation」 — review 不是末端 quality gate，是設計階段的延伸。
+但 review 真正的價值很快超越「抓 bug」。Blake Smith 2015 年 [Code Review Essentials](../readings/w7_code_review_essentials_for_software_teams.html) 把 review 重新 framing 成 **mental model synchronization（心智模型同步）** — 「當 Bob 提交 accounting subsystem 的 PR，Amy 在 review 中同步更新她對該 system 的 mental model」。Bug 被擋下來只是 side effect，真正的 ROI 是團隊知識擴散、降低未來修改的 onboarding 成本。GitHub staff engineer Sarah Vessels 在 [How to Review Code Effectively](../readings/w7_how_to_review_code_effectively.html) 進一步把 review 拉高到「shape the product's implementation」 — review 不是末端 quality gate，是設計階段的延伸。
 
 > 💡 **譯解**：把 code review 當「品管站」是 1980 年代的思維。2020 年代的 framing 是「review = 一場結構化對話」，bug detection、knowledge transfer、architectural alignment 三件事一起發生。理解這個轉變，後面看 AI reviewer 才不會誤以為「AI 會抓 bug 就能取代 review」 — 它取代的只是其中一層。
 
 ### 二、AI code review 能做什麼、做不到什麼：兩軸四象限框架
 
-進入 LLM 時代，code review 被拆成兩種勞力：mechanical layer（機械層）跟 alignment layer（對齊層）。Google 2024 年發在 AIware '24 的論文 [AI-Assisted Assessment of Coding Practices](../readings/w7_ai_assisted_assessment_coding_practices.md) 提供了第一份 academic baseline — Google 內部 AutoCommenter 對數萬名 developer 部署，覆蓋 C++ / Java / Python / Go，能涵蓋 **68% 的 human reviewer 常引用 best practice**，而且其中 **66% 是傳統 linter 抓不到的**（comment clarity、justified naming exception、context-dependent 慣例）。Comment resolution rate（評論解決率）約 40%，與 human reviewer 的 ~50% 接近。
+進入 LLM 時代，code review 被拆成兩種勞力：mechanical layer（機械層）跟 alignment layer（對齊層）。Google 2024 年發在 AIware '24 的論文 [AI-Assisted Assessment of Coding Practices](../readings/w7_ai_assisted_assessment_coding_practices.html) 提供了第一份 academic baseline — Google 內部 AutoCommenter 對數萬名 developer 部署，覆蓋 C++ / Java / Python / Go，能涵蓋 **68% 的 human reviewer 常引用 best practice**，而且其中 **66% 是傳統 linter 抓不到的**（comment clarity、justified naming exception、context-dependent 慣例）。Comment resolution rate（評論解決率）約 40%，與 human reviewer 的 ~50% 接近。
 
-Graphite co-founder Tomas Reimers 在 [Lessons from Millions of AI Code Reviews](../readings/w7_lessons_from_millions_of_ai_code_reviews.md) 提出更實用的 **2x2 quadrant（兩軸四象限）框架**：
+Graphite co-founder Tomas Reimers 在 [Lessons from Millions of AI Code Reviews](../readings/w7_lessons_from_millions_of_ai_code_reviews.html) 提出更實用的 **2x2 quadrant（兩軸四象限）框架**：
 
 | | LLM 能 reliably catch | LLM 抓不準 |
 |---|---|---|
@@ -53,7 +53,7 @@ Graphite co-founder Tomas Reimers 在 [Lessons from Millions of AI Code Reviews]
 - **左上盲區**：LLM 抓不到 codebase-specific convention（公司命名慣例、業務 domain 邏輯、住在資深工程師腦中沒寫成文件的 tribal knowledge）
 - **右下過度發言**：LLM 愛留「你應該加 test」「這應該 extract function」這類技術上沒錯但 reviewer 不該無腦留的 comment，留多了 author 直接 ignore 整個 reviewer
 
-Graphite 的 [AI Code Review Implementation Best Practices](../readings/w7_ai_code_review_implementation_best_practices.md) 把這個 insight 翻譯成商業 framework — AI reviewer 應走 **human-in-the-loop（人類介入式）** 路線，AI 跑 first pass、human 驗證並 approve。signal-to-noise ratio（訊號雜訊比）是首要指標，三個操作槓桿：(1) per-issue-type sensitivity tuning（敏感度調校）、(2) false-positive feedback loop（讓 developer 標 false positive 訓練系統）、(3) priority level（火力集中在 security + obvious bug，nit / style 暫時關掉）。
+Graphite 的 [AI Code Review Implementation Best Practices](../readings/w7_ai_code_review_implementation_best_practices.html) 把這個 insight 翻譯成商業 framework — AI reviewer 應走 **human-in-the-loop（人類介入式）** 路線，AI 跑 first pass、human 驗證並 approve。signal-to-noise ratio（訊號雜訊比）是首要指標，三個操作槓桿：(1) per-issue-type sensitivity tuning（敏感度調校）、(2) false-positive feedback loop（讓 developer 標 false positive 訓練系統）、(3) priority level（火力集中在 security + obvious bug，nit / style 暫時關掉）。
 
 ### 三、為什麼 millions of reviews 教我們的事比任何 paper 都重要
 
@@ -179,14 +179,14 @@ Mihail 開場直接給 statistics 撐住論點：**code review 是工程師能�
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [Code Reviews: Just Do It](../readings/w7_code_reviews_just_do_it.md) | Coding Horror（Atwood, 2008） | Review 是性價比最高的 quality practice，inspection 抓 55-60% defect 遠勝 testing 25-45%，有做就贏 |
-| [How to Review Code Effectively](../readings/w7_how_to_review_code_effectively.md) | GitHub blog（Vessels） | 三原則：ask questions over demands、separate substance from preference、provide specific examples |
-| [AI-Assisted Assessment of Coding Practices](../readings/w7_ai_assisted_assessment_coding_practices.md) | arXiv 2405.13565（Google AIware '24） | AutoCommenter 覆蓋 68% best practice，66% 是 linter 做不到的，40% resolution rate |
-| [AI Code Review Implementation Best Practices](../readings/w7_ai_code_review_implementation_best_practices.md) | Graphite | Human-in-the-loop + sensitivity tuning + false-positive feedback loop = 可用的 AI reviewer |
-| [Code Review Essentials for Software Teams](../readings/w7_code_review_essentials_for_software_teams.md) | blakesmith.me（2015） | Review 的核心是 mental model synchronization，scalpel-driven 小 PR + clarifying tone |
-| [Lessons from Millions of AI Code Reviews](../readings/w7_lessons_from_millions_of_ai_code_reviews.md) | YouTube（Tomas Reimers, Graphite） | 2x2 quadrant：只留「LLM 能 catch × human 想收」象限；action rate 52% 已追平 human |
+| [Code Reviews: Just Do It](../readings/w7_code_reviews_just_do_it.html) | Coding Horror（Atwood, 2008） | Review 是性價比最高的 quality practice，inspection 抓 55-60% defect 遠勝 testing 25-45%，有做就贏 |
+| [How to Review Code Effectively](../readings/w7_how_to_review_code_effectively.html) | GitHub blog（Vessels） | 三原則：ask questions over demands、separate substance from preference、provide specific examples |
+| [AI-Assisted Assessment of Coding Practices](../readings/w7_ai_assisted_assessment_coding_practices.html) | arXiv 2405.13565（Google AIware '24） | AutoCommenter 覆蓋 68% best practice，66% 是 linter 做不到的，40% resolution rate |
+| [AI Code Review Implementation Best Practices](../readings/w7_ai_code_review_implementation_best_practices.html) | Graphite | Human-in-the-loop + sensitivity tuning + false-positive feedback loop = 可用的 AI reviewer |
+| [Code Review Essentials for Software Teams](../readings/w7_code_review_essentials_for_software_teams.html) | blakesmith.me（2015） | Review 的核心是 mental model synchronization，scalpel-driven 小 PR + clarifying tone |
+| [Lessons from Millions of AI Code Reviews](../readings/w7_lessons_from_millions_of_ai_code_reviews.html) | YouTube（Tomas Reimers, Graphite） | 2x2 quadrant：只留「LLM 能 catch × human 想收」象限；action rate 52% 已追平 human |
 
-**閱讀優先順序**：時間有限的話，先讀 [Tomas Reimers YouTube](../readings/w7_lessons_from_millions_of_ai_code_reviews.md)（最具體的 industry insight）→ 再讀 [Google AutoCommenter paper](../readings/w7_ai_assisted_assessment_coding_practices.md)（academic baseline）→ 補 [Vessels GitHub blog](../readings/w7_how_to_review_code_effectively.md)（human-side 原則）。Atwood / Smith 兩篇是經典背景，建立完 mental model 再回頭讀。
+**閱讀優先順序**：時間有限的話，先讀 [Tomas Reimers YouTube](../readings/w7_lessons_from_millions_of_ai_code_reviews.html)（最具體的 industry insight）→ 再讀 [Google AutoCommenter paper](../readings/w7_ai_assisted_assessment_coding_practices.html)（academic baseline）→ 補 [Vessels GitHub blog](../readings/w7_how_to_review_code_effectively.html)（human-side 原則）。Atwood / Smith 兩篇是經典背景，建立完 mental model 再回頭讀。
 
 ## Assignment：Code Review Reps
 
@@ -216,4 +216,4 @@ W7 是把 vibe coder 從「寫得出來」升級到「**寫得對且維持得住
 
 ---
 
-**上一週**：[W6 AI Testing and Security](06_ai_testing_security.md) | **下一週**：[W8 Automated UI and App Building](08_automated_ui_app_building.md)
+**上一週**：[W6 AI Testing and Security](06_ai_testing_security.html) | **下一週**：[W8 Automated UI and App Building](08_automated_ui_app_building.html)

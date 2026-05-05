@@ -29,7 +29,7 @@ status: complete
 
 要看懂這門課後續九週講的所有工具（Claude Code、Cursor、Devin、Warp），你必須先理解 LLM 不是黑盒子，它是一條三段式生產線的產物：
 
-1. **Pre-training（預訓練）** — 把整個網際網路 scale 的文本（Common Crawl、Wikipedia、書籍、GitHub code、論壇）餵進 transformer 做 next-token prediction。產出的 base model 本質上是「網路文件補全器」 — 給它一段開頭，它會猜下一個 token、再下一個、再下一個。Karpathy 在 [Deep Dive into LLMs](../readings/w1_deep_dive_into_llms.md) 裡把 base model 比喻成「整個網路的有損壓縮」。
+1. **Pre-training（預訓練）** — 把整個網際網路 scale 的文本（Common Crawl、Wikipedia、書籍、GitHub code、論壇）餵進 transformer 做 next-token prediction。產出的 base model 本質上是「網路文件補全器」 — 給它一段開頭，它會猜下一個 token、再下一個、再下一個。Karpathy 在 [Deep Dive into LLMs](../readings/w1_deep_dive_into_llms.html) 裡把 base model 比喻成「整個網路的有損壓縮」。
 2. **Post-training（後訓練）— Supervised Fine-Tuning（SFT，監督式微調）** — 用人工標註的對話資料（人問什麼、helpful assistant 應該怎麼回）對 base model 做 fine-tune，把「網路補全器」轉成「會對話的 assistant」。
 3. **RLHF（Reinforcement Learning from Human Feedback，人類回饋強化學習）** — 用人類偏好訓練一個 reward model，再用 PPO / DPO 之類演算法把 LLM 的回答品質拉上來。這階段決定了 LLM「願不願意拒絕請求」「會不會諂媚」「邏輯是否一致」。
 
@@ -43,16 +43,16 @@ status: complete
 
 ### 二、Prompt Engineering 是「給 contractor 的 brief」
 
-[Anthropic 的圓桌討論](../readings/w1_ai_prompt_engineering_deep_dive.md) 裡有個比喻最精準：寫 prompt 像「請一個聰明但完全不認識你公司的 contractor 做一件事」。好 prompt 的本質不是奇技淫巧，是清楚的技術寫作。
+[Anthropic 的圓桌討論](../readings/w1_ai_prompt_engineering_deep_dive.html) 裡有個比喻最精準：寫 prompt 像「請一個聰明但完全不認識你公司的 contractor 做一件事」。好 prompt 的本質不是奇技淫巧，是清楚的技術寫作。
 
-[Google Cloud 的 prompt engineering overview](../readings/w1_prompt_engineering_overview.md) 把這件事拆成可操作的四要素：
+[Google Cloud 的 prompt engineering overview](../readings/w1_prompt_engineering_overview.html) 把這件事拆成可操作的四要素：
 
 1. **Format（格式）** — 自然語言問句 vs 結構化指令 vs JSON schema，依任務選
 2. **Context and examples（情境與範例）** — 提供任務背景與 1-3 個 input-output pair（few-shot）
 3. **Fine-tuning（微調 prompt）** — 看 model 失敗 case 反推 prompt 該補什麼
 4. **Multi-turn conversations（多輪對話）** — 設計能維持 context 的對話流程
 
-[Prompt Engineering Guide](../readings/w1_prompt_engineering_guide.md) 列了 18 種主流技巧，分四層：
+[Prompt Engineering Guide](../readings/w1_prompt_engineering_guide.html) 列了 18 種主流技巧，分四層：
 
 | 層級 | 技巧 | 何時用 |
 |------|------|--------|
@@ -65,7 +65,7 @@ status: complete
 
 ### 三、Coding LLM 的真實工業使用樣貌
 
-OpenAI 自家的 [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.md) 是這週最重要的 case study。它不是 demo 也不是 marketing，是 OpenAI 內部 6 個團隊（Security、Product Engineering、Frontend、API、Infrastructure、Performance）每天怎麼用 Codex 的真實使用報告。歸納出 7 個高 ROI use case：
+OpenAI 自家的 [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.html) 是這週最重要的 case study。它不是 demo 也不是 marketing，是 OpenAI 內部 6 個團隊（Security、Product Engineering、Frontend、API、Infrastructure、Performance）每天怎麼用 Codex 的真實使用報告。歸納出 7 個高 ROI use case：
 
 1. **Code understanding** — 摸熟陌生 repo、追資料流、on-call incident triage
 2. **Refactoring & migrations** — 跨多檔案的一致性改動（callback → async/await）
@@ -130,13 +130,13 @@ Mihail 借用 Karpathy 的觀點開場：**prompting 是 programming language �
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [Deep Dive into LLMs](../readings/w1_deep_dive_into_llms.md) | Karpathy YouTube 3.5hr | LLM = pre-training + post-training + RLHF 三段生產線，所有 weirdness 都從這裡推 |
-| [Prompt Engineering Overview](../readings/w1_prompt_engineering_overview.md) | Google Cloud | Prompt 設計四要素 + 5 種 prompt 類型（zero/one/few/multi-shot, CoT） |
-| [Prompt Engineering Guide](../readings/w1_prompt_engineering_guide.md) | promptingguide.ai | 18 種 prompting 技巧 catalog，分基礎 / 推理 / 工具 / meta 四層 |
-| [AI Prompt Engineering: A Deep Dive](../readings/w1_ai_prompt_engineering_deep_dive.md) | Anthropic 圓桌 | 寫 prompt = 給聰明 contractor 的清楚 brief，不是奇技淫巧 |
-| [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.md) | OpenAI 內部 PDF | 7 個 production use case + 5 條 best practice，最該讀的一篇 |
+| [Deep Dive into LLMs](../readings/w1_deep_dive_into_llms.html) | Karpathy YouTube 3.5hr | LLM = pre-training + post-training + RLHF 三段生產線，所有 weirdness 都從這裡推 |
+| [Prompt Engineering Overview](../readings/w1_prompt_engineering_overview.html) | Google Cloud | Prompt 設計四要素 + 5 種 prompt 類型（zero/one/few/multi-shot, CoT） |
+| [Prompt Engineering Guide](../readings/w1_prompt_engineering_guide.html) | promptingguide.ai | 18 種 prompting 技巧 catalog，分基礎 / 推理 / 工具 / meta 四層 |
+| [AI Prompt Engineering: A Deep Dive](../readings/w1_ai_prompt_engineering_deep_dive.html) | Anthropic 圓桌 | 寫 prompt = 給聰明 contractor 的清楚 brief，不是奇技淫巧 |
+| [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.html) | OpenAI 內部 PDF | 7 個 production use case + 5 條 best practice，最該讀的一篇 |
 
-**閱讀優先順序**：時間有限的話，先讀 [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.md)（最 actionable）→ 再讀 [Anthropic deep dive](../readings/w1_ai_prompt_engineering_deep_dive.md)（業界視角）→ 有時間補 Karpathy YouTube（基礎理論）。
+**閱讀優先順序**：時間有限的話，先讀 [How OpenAI Uses Codex](../readings/w1_how_openai_uses_codex.html)（最 actionable）→ 再讀 [Anthropic deep dive](../readings/w1_ai_prompt_engineering_deep_dive.html)（業界視角）→ 有時間補 Karpathy YouTube（基礎理論）。
 
 ## Assignment：LLM Prompting Playground
 
@@ -160,4 +160,4 @@ Mihail 借用 Karpathy 的觀點開場：**prompting 是 programming language �
 
 ---
 
-**上一週**：（無 — 本週是第 1 週） | **下一週**：[W2 The Anatomy of Coding Agents](02_anatomy_of_coding_agents.md)
+**上一週**：（無 — 本週是第 1 週） | **下一週**：[W2 The Anatomy of Coding Agents](02_anatomy_of_coding_agents.html)

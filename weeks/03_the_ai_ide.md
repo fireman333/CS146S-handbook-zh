@@ -32,7 +32,7 @@ status: complete
 
 ### 一、Context Engineering 的三大課題：Selection、Compression、Decay
 
-W2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude Code 寫過 non-trivial 任務，就會遇到一個 W2 沒講的瓶頸 — **context window 不是越大越好**。Drew Breunig 在 [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.md) 把這件事拆成 4 種具體的 failure mode：
+W2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude Code 寫過 non-trivial 任務，就會遇到一個 W2 沒講的瓶頸 — **context window 不是越大越好**。Drew Breunig 在 [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.html) 把這件事拆成 4 種具體的 failure mode：
 
 1. **Context poisoning（脈絡中毒）** — Hallucination 一旦寫進對話 context 就會被反覆 self-reference，agent 朝不可能的目標前進。Gemini 玩 Pokémon 的著名 case：模型某輪生成「我已經拿到 X 道館徽章」（其實沒有），之後幾百輪 reasoning 都基於這個錯誤前提。
 2. **Context distraction（脈絡分心）** — Context 過長時模型會偏向「重複歷史 action」而非用 train 出來的 reasoning 重新規劃。小模型 ~32k token 後開始崩、大模型 ~100k 後也會。
@@ -47,13 +47,13 @@ W2 把 agent 拆成「LLM + tool + while loop」，但只要你實際用 Claude 
 | **Compression（壓縮）** | Context 用到 60% 後怎麼濃縮？ | `/compact` summary、subagent isolation、phase-boundary checkpoint |
 | **Decay（衰減）** | 長 session 怎麼防 drift？ | `<system-reminder>` 重述目標、`/clear` 重啟、phase-spec re-anchor |
 
-humanlayer 團隊在 [Getting AI to Work In Complex Codebases](../readings/w3_getting_ai_to_work_in_complex_codebases.md) 直接喊出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「**context window 的內容是你影響 output 品質的唯一槓桿**」。Agent 是 stateless function — 同樣的 context window 給同樣的 model 永遠產出同樣品質。所以使用者最高槓桿的工作就是 curate 那個 window。
+humanlayer 團隊在 [Getting AI to Work In Complex Codebases](../readings/w3_getting_ai_to_work_in_complex_codebases.html) 直接喊出 ACE-FCA（Advanced Context Engineering for Coding Agents）的核心命題：「**context window 的內容是你影響 output 品質的唯一槓桿**」。Agent 是 stateless function — 同樣的 context window 給同樣的 model 永遠產出同樣品質。所以使用者最高槓桿的工作就是 curate 那個 window。
 
 > 💡 **譯解**：context engineering 跟臨床問診同構。問診（context selection）漏問就鑑別診斷漏；問診冗長（context bloat）就抓不到重點；前後病史矛盾（context clash）就推不出結論。Claude Code 寫不好 code 時，先檢查的不是 prompt 措辭，是「我有沒有給它對的 file」。
 
 ### 二、Specs Are the New Source Code — 工作流的反轉
 
-W1/W2 還在「prompt 怎麼寫」的層級。Week 3 把視角拉高一階：**當 AI 把 implementation 從週縮到分鐘，瓶頸從「會不會寫 code」變成「能不能描述清楚需求」**。Ravi Mehta 在 [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.md) 借 Sean Grove 的話：傳統世界是 source code（人讀）→ binary（機器讀），AI 時代等於「把 source 撕碎，反而謹慎 version control 那個 binary」 — 因為 code 只是 intent 的 **lossy projection（有損投射）**，spec 才是完整需求。
+W1/W2 還在「prompt 怎麼寫」的層級。Week 3 把視角拉高一階：**當 AI 把 implementation 從週縮到分鐘，瓶頸從「會不會寫 code」變成「能不能描述清楚需求」**。Ravi Mehta 在 [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.html) 借 Sean Grove 的話：傳統世界是 source code（人讀）→ binary（機器讀），AI 時代等於「把 source 撕碎，反而謹慎 version control 那個 binary」 — 因為 code 只是 intent 的 **lossy projection（有損投射）**，spec 才是完整需求。
 
 Workflow 的反轉是這週的核心命題：
 
@@ -68,7 +68,7 @@ Workflow 的反轉是這週的核心命題：
 
 ### 三、IDE Integration 的演化：從 autocomplete 到 manager mode
 
-[Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.md) 把開發者 AI tool 的演化分成四代，每一代的 IDE integration 都不同：
+[Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.html) 把開發者 AI tool 的演化分成四代，每一代的 IDE integration 都不同：
 
 | 世代 | 時期 | 代表 | IDE 整合方式 |
 |------|------|------|------------|
@@ -93,7 +93,7 @@ Friday lecture 由 Cognition 的 Silas Alberti 開講，這節的張力預設是
 
 Devin 強調 **architecture-first prompting**（講 *how* 不只 *what*）、**defensive prompting**（預先告訴 agent 哪些坑）、**feedback loop quality**（type / test / lint signal）。但作者明確降溫：對大型任務 expect **~80%** 時間節省，不是完全自動化。這個誠實的 ratio 是工業界共識。
 
-[Writing Effective Tools for Agents](../readings/w3_writing_effective_tools_for_agents.md)（Anthropic engineering blog）則提供 tool design 的深度原則 — strategic selection（少而精）、meaningful naming（namespace prefix）、contextual response（semantic name 取代 UUID）、token-efficient implementation、descriptive specifications（像跟新進員工解釋）。這些 principle 是 Devin / Claude Code / Cursor 共通的 agent infrastructure layer。
+[Writing Effective Tools for Agents](../readings/w3_writing_effective_tools_for_agents.html)（Anthropic engineering blog）則提供 tool design 的深度原則 — strategic selection（少而精）、meaningful naming（namespace prefix）、contextual response（semantic name 取代 UUID）、token-efficient implementation、descriptive specifications（像跟新進員工解釋）。這些 principle 是 Devin / Claude Code / Cursor 共通的 agent infrastructure layer。
 
 ## Monday Lecture（10/6）：From first prompt to optimal IDE setup
 
@@ -158,19 +158,19 @@ Silas 把 AI coding tool 演化分成三世代，每一代的「效率提升」�
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.md) | Ravi Mehta blog | Code 是 intent 的 lossy projection，spec 才是 AI 時代的 single source of truth |
-| [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.md) | dbreunig.com | 1M context ≠ 更好答案，4 種 failure mode（poisoning / distraction / confusion / clash）都會搞爛 agent |
-| [Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.md) | devin.ai | Coding agent ≠ autocomplete / copilot / chatbot，是 end-to-end 的不同物種，工程師變 manager |
-| [Getting AI to Work In Complex Codebases (ACE-FCA)](../readings/w3_getting_ai_to_work_in_complex_codebases.md) | github.com/humanlayer | Research → Plan → Implement 三段式 + frequent intentional compaction，brownfield codebase 工業級配方 |
-| [How FAANG Vibe Codes](../readings/w3_how_faang_vibe_codes.md) | X / Twitter | 原文需登入 X，best-effort 推測：個人 vibe coding workflow 在大型 codebase 不能照搬 |
-| [Writing Effective Tools for Agents](../readings/w3_writing_effective_tools_for_agents.md) | Anthropic engineering | Tool 不是 API — 少而精、namespace 命名、semantic output、actionable error，evaluation-driven 迭代 |
+| [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.html) | Ravi Mehta blog | Code 是 intent 的 lossy projection，spec 才是 AI 時代的 single source of truth |
+| [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.html) | dbreunig.com | 1M context ≠ 更好答案，4 種 failure mode（poisoning / distraction / confusion / clash）都會搞爛 agent |
+| [Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.html) | devin.ai | Coding agent ≠ autocomplete / copilot / chatbot，是 end-to-end 的不同物種，工程師變 manager |
+| [Getting AI to Work In Complex Codebases (ACE-FCA)](../readings/w3_getting_ai_to_work_in_complex_codebases.html) | github.com/humanlayer | Research → Plan → Implement 三段式 + frequent intentional compaction，brownfield codebase 工業級配方 |
+| [How FAANG Vibe Codes](../readings/w3_how_faang_vibe_codes.html) | X / Twitter | 原文需登入 X，best-effort 推測：個人 vibe coding workflow 在大型 codebase 不能照搬 |
+| [Writing Effective Tools for Agents](../readings/w3_writing_effective_tools_for_agents.html) | Anthropic engineering | Tool 不是 API — 少而精、namespace 命名、semantic output、actionable error，evaluation-driven 迭代 |
 
-**閱讀優先順序**：時間有限的話，先讀 [ACE-FCA](../readings/w3_getting_ai_to_work_in_complex_codebases.md)（最 actionable，三段式 workflow 直接套用）→ [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.md)（理解 failure mode 才知道為什麼三段式有效）→ [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.md)（mindset 翻轉）→ [Writing Effective Tools](../readings/w3_writing_effective_tools_for_agents.md)（自己寫 MCP / skill 時必讀）。
+**閱讀優先順序**：時間有限的話，先讀 [ACE-FCA](../readings/w3_getting_ai_to_work_in_complex_codebases.html)（最 actionable，三段式 workflow 直接套用）→ [How Long Contexts Fail](../readings/w3_how_long_contexts_fail.html)（理解 failure mode 才知道為什麼三段式有效）→ [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.html)（mindset 翻轉）→ [Writing Effective Tools](../readings/w3_writing_effective_tools_for_agents.html)（自己寫 MCP / skill 時必讀）。
 
 ## Assignment：Build a Custom MCP Server
 
 - **Source**: [github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md](https://github.com/mihail911/modern-software-dev-assignments/blob/master/week3/assignment.md)
-- **任務描述**: 用 W2 學的 MCP SDK 實作一個 production-grade MCP server，把外部資料源（資料庫 / API / 檔案系統 / SaaS 工具）包成 Claude Desktop / Cursor 可直接呼叫的 tool。重點是套用 [Writing Effective Tools](../readings/w3_writing_effective_tools_for_agents.md) 的設計原則：strategic tool consolidation（不要把每個 endpoint 都 wrap 成 tool）、semantic output、descriptive specifications、actionable error message。建議的 server 主題：你日常會查的 API（個人筆記、研究資料庫、健保碼、PubMed、Google Calendar），或把 W2 的 MCP server 升級成 production 品質。
+- **任務描述**: 用 W2 學的 MCP SDK 實作一個 production-grade MCP server，把外部資料源（資料庫 / API / 檔案系統 / SaaS 工具）包成 Claude Desktop / Cursor 可直接呼叫的 tool。重點是套用 [Writing Effective Tools](../readings/w3_writing_effective_tools_for_agents.html) 的設計原則：strategic tool consolidation（不要把每個 endpoint 都 wrap 成 tool）、semantic output、descriptive specifications、actionable error message。建議的 server 主題：你日常會查的 API（個人筆記、研究資料庫、健保碼、PubMed、Google Calendar），或把 W2 的 MCP server 升級成 production 品質。
 - **自學者可行性**: ⭐⭐⭐⭐ 完全可做但比 W2 進階。需要 W2 的 MCP 基礎、能寫 TypeScript 或 Python、有想包的外部資料源（自己的 PubMed query / Obsidian vault / 個人 API key）。預估 4-8 hr，含寫 code + 在 Claude Desktop 實測迭代。
 
 > 💡 **沒有外部資料源也能做**：用 SQLite + 假資料 dump 模擬資料庫，重點是練 tool consolidation 與 description 寫法 — design quality 不需要真實資料才能證明。
@@ -190,4 +190,4 @@ W3 是 vibe coder 從「會用 Claude Code」升級到「能規模化用 Claude 
 
 ---
 
-**上一週**：[W2 The Anatomy of Coding Agents](02_anatomy_of_coding_agents.md) | **下一週**：[W4 Coding Agent Patterns](04_coding_agent_patterns.md)
+**上一週**：[W2 The Anatomy of Coding Agents](02_anatomy_of_coding_agents.html) | **下一週**：[W4 Coding Agent Patterns](04_coding_agent_patterns.html)

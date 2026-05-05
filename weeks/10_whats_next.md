@@ -48,13 +48,13 @@ status: complete
 W3 已經提了 spec-driven dev 的概念，W10 把它放進更大的 paradigm shift 圖裡。3 個正在浮現的範式變化值得注意：
 
 **1. Spec-driven Development（規格驅動開發）走向主流**
-- W3 的 [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.md) 是先驅論文。實際走勢：未來 5 年大公司（Google、Meta）會把 PRD / design doc 轉成可被 agent 直接 implement 的 formal spec
+- W3 的 [Specs Are the New Source Code](../readings/w3_specs_are_the_new_source_code.html) 是先驅論文。實際走勢：未來 5 年大公司（Google、Meta）會把 PRD / design doc 轉成可被 agent 直接 implement 的 formal spec
 - 副作用：PM 跟 designer 的工作會變硬 — 寫得糊的 spec 直接沒結果，逼大家寫得精準
 - Vibe coder 對應：把寫 PRD 當 first-class skill 練（不是 nice-to-have）
 
 **2. Formal Verification × AI 的二度興起**
 - 2010 年代 formal verification 因為手寫太難失敗。2025-2030 年 LLM 把證明重擔自動化，formal methods 在 safety-critical（醫療、金融、自駕、aerospace）領域會大爆發
-- W6 的 [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md) 是早期信號 — LLM 已經能做 formal-ish vulnerability analysis
+- W6 的 [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html) 是早期信號 — LLM 已經能做 formal-ish vulnerability analysis
 - 對醫療 AI 的長尾影響：FDA 過審 AI 醫材會強制要 formal verification step
 
 **3. Autonomous Open-source Maintenance**
@@ -162,4 +162,4 @@ W10 不是 actionable week，是 strategic week — 思考「3 年後我要在�
 
 ---
 
-**上一週**：[W9 Agents Post-Deployment](09_agents_post_deployment.md) | **總目錄**：[00_index.md](../00_index.md)
+**上一週**：[W9 Agents Post-Deployment](09_agents_post_deployment.html) | **總目錄**：[00_index.md](../00_index.html)

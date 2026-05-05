@@ -35,7 +35,7 @@ status: complete
 
 W1-W8 講的都是「把 code 寫出來」。但 production system 的真正挑戰不在寫，而在「上線之後」 — 7×24 小時持續運轉、流量會起伏、依賴會壞、客戶會抱怨、半夜會被 page。在這個世界裡，Google 提出的 **SRE（Site Reliability Engineering，網站可靠度工程）** 是業界共識的解法。SRE 的核心不是「找一群運維」，而是「找軟體工程師來設計營運團隊，把 manual operation 當成 bug 來自動化掉」。
 
-[Google SRE Book](../readings/w9_introduction_to_sre.md) 列了三個基礎紀律，所有 production system 都適用：
+[Google SRE Book](../readings/w9_introduction_to_sre.html) 列了三個基礎紀律，所有 production system 都適用：
 
 1. **SLI / SLO / SLA（service level indicator / objective / agreement）** — SLI 是測量值（如 p99 latency = 187 ms）、SLO 是內部目標（99.9% 請求 < 200 ms）、SLA 是對客戶的合約承諾（達不到要賠錢）。三者依序由內而外、由緊而鬆。
 2. **Error budget（錯誤預算）** — 既然 100% availability 既不可能也無價值（每加一個 9 成本指數成長），就明訂 SLO（例：99.99%），剩下 0.01% 是「可以拿來冒險的預算」。新功能上線會吃預算，預算用完就停止 release。
@@ -47,7 +47,7 @@ W1-W8 講的都是「把 code 寫出來」。但 production system 的真正挑�
 
 ### 二、Observability 三柱：logs / metrics / traces
 
-[Observability Basics](../readings/w9_observability_basics.md) 釐清一個常被混用的概念：**monitoring（監控）只告訴你「什麼壞了」**（CPU 高、5xx 多）；**observability（可觀測性）要回答「為什麼壞」**。在 microservices（微服務）架構下，一個 user request 可能跨 10+ 個 service，光看單一 service 的 metrics 完全不知道哪一段慢。Observability 的三柱各司其職，缺一不可：
+[Observability Basics](../readings/w9_observability_basics.html) 釐清一個常被混用的概念：**monitoring（監控）只告訴你「什麼壞了」**（CPU 高、5xx 多）；**observability（可觀測性）要回答「為什麼壞」**。在 microservices（微服務）架構下，一個 user request 可能跨 10+ 個 service，光看單一 service 的 metrics 完全不知道哪一段慢。Observability 的三柱各司其職，缺一不可：
 
 | 柱 | 是什麼 | 醫療類比 | LLM agent 場景例 |
 |----|--------|---------|------------------|
@@ -77,7 +77,7 @@ Trace 由多個 **span（區段）** 組成，每個 span 是一個工作單位�
 
 ### 四、Multi-agent system 在 SRE：MDT 會議模式
 
-[Multi-Agent Systems for AI-Native Engineering](../readings/w9_multi_agent_systems_ai_native.md) 提出一個關鍵 observation：**single agent 在 production debugging 是 sequential bottleneck（序列瓶頸）** — 它一次只能調查一個假設，但 production incident 的時間壓力要求並行假設驗證。
+[Multi-Agent Systems for AI-Native Engineering](../readings/w9_multi_agent_systems_ai_native.html) 提出一個關鍵 observation：**single agent 在 production debugging 是 sequential bottleneck（序列瓶頸）** — 它一次只能調查一個假設，但 production incident 的時間壓力要求並行假設驗證。
 
 解法是 multi-agent 架構，讓專業 agent 各司其職並行運作。一個典型的 incident response multi-agent system 長這樣：
 
@@ -208,14 +208,14 @@ Mayank 預測「By next year software engineering will look fundamentally differ
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [Introduction to SRE](../readings/w9_introduction_to_sre.md) | Google SRE Book | SRE = 把營運當軟體工程問題；error budget 量化 dev/ops 衝突，blame-free postmortem 找系統漏洞 |
-| [Observability Basics](../readings/w9_observability_basics.md) | last9.io | Observability 三柱：logs（病歷）+ metrics（生命徵象）+ traces（影像）；context propagation 是關鍵 |
-| [Kubernetes Troubleshooting with AI](../readings/w9_kubernetes_troubleshooting_with_ai.md) | resolve.ai | K8s 三大痛點（alert fatigue、ephemeral context、observability fragmentation）由 AI agent + knowledge graph 解 |
-| [Your New Autonomous Teammate](../readings/w9_your_new_autonomous_teammate.md) | resolve.ai | Resolve 產品深度導覽：dynamic knowledge graph + just-in-time runbook + 1 分鐘 root cause + 自動 postmortem |
-| [Multi-Agent Systems for AI-Native Engineering](../readings/w9_multi_agent_systems_ai_native.md) | resolve.ai | Single agent 是 sequential bottleneck；multi-agent 並行查 root cause 是 AI-native 工程的核心 |
-| [Top 5 Benefits of Agentic AI in On-call](../readings/w9_benefits_of_agentic_ai_in_oncall.md) | resolve.ai | 五大好處：消 alert fatigue、活知識、調查一致性、證據式協作、主動找潛在問題 |
+| [Introduction to SRE](../readings/w9_introduction_to_sre.html) | Google SRE Book | SRE = 把營運當軟體工程問題；error budget 量化 dev/ops 衝突，blame-free postmortem 找系統漏洞 |
+| [Observability Basics](../readings/w9_observability_basics.html) | last9.io | Observability 三柱：logs（病歷）+ metrics（生命徵象）+ traces（影像）；context propagation 是關鍵 |
+| [Kubernetes Troubleshooting with AI](../readings/w9_kubernetes_troubleshooting_with_ai.html) | resolve.ai | K8s 三大痛點（alert fatigue、ephemeral context、observability fragmentation）由 AI agent + knowledge graph 解 |
+| [Your New Autonomous Teammate](../readings/w9_your_new_autonomous_teammate.html) | resolve.ai | Resolve 產品深度導覽：dynamic knowledge graph + just-in-time runbook + 1 分鐘 root cause + 自動 postmortem |
+| [Multi-Agent Systems for AI-Native Engineering](../readings/w9_multi_agent_systems_ai_native.html) | resolve.ai | Single agent 是 sequential bottleneck；multi-agent 並行查 root cause 是 AI-native 工程的核心 |
+| [Top 5 Benefits of Agentic AI in On-call](../readings/w9_benefits_of_agentic_ai_in_oncall.html) | resolve.ai | 五大好處：消 alert fatigue、活知識、調查一致性、證據式協作、主動找潛在問題 |
 
-**閱讀優先順序**：先讀 [Introduction to SRE](../readings/w9_introduction_to_sre.md)（建立 mental model）→ [Observability Basics](../readings/w9_observability_basics.md)（基礎工具觀念）→ [Multi-Agent Systems](../readings/w9_multi_agent_systems_ai_native.md)（agent 架構）→ [Your New Autonomous Teammate](../readings/w9_your_new_autonomous_teammate.md)（具體商業案例），時間有限的話前三篇必讀。
+**閱讀優先順序**：先讀 [Introduction to SRE](../readings/w9_introduction_to_sre.html)（建立 mental model）→ [Observability Basics](../readings/w9_observability_basics.html)（基礎工具觀念）→ [Multi-Agent Systems](../readings/w9_multi_agent_systems_ai_native.html)（agent 架構）→ [Your New Autonomous Teammate](../readings/w9_your_new_autonomous_teammate.html)（具體商業案例），時間有限的話前三篇必讀。
 
 ## Assignment
 
@@ -239,4 +239,4 @@ W9 是 vibe coder 最容易跳過、但跳過後悔最大的一週。多數人 s
 
 ---
 
-**上一週**：[W8 Automated UI and App Building](08_automated_ui_app_building.md) | **下一週**：[W10 What's Next](10_whats_next.md)
+**上一週**：[W8 Automated UI and App Building](08_automated_ui_app_building.html) | **下一週**：[W10 What's Next](10_whats_next.html)

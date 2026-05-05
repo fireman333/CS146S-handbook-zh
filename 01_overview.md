@@ -45,7 +45,7 @@ CS146S《The Modern Software Developer》是 Stanford CS 在 Fall 2025 全新開
 
 ---
 
-## 三條自學路線（從 [00_index.md](00_index.md) 重點展開）
+## 三條自學路線（從 [00_index.md](00_index.html) 重點展開）
 
 ### Track A — Vibe Coder 速成路線
 

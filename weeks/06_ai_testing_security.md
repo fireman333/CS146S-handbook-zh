@@ -39,13 +39,13 @@ W1-W5 教你怎麼用 LLM 把開發速度拉到 10x，這週要回頭算帳：**
 2. **User input 直接拼 SQL / shell / HTML** — Vibe coding 一句「做個搜尋 page」生出的 code 99% 沒做 input sanitization，給點機會就是 SQL injection（注入式攻擊）/ XSS（cross-site scripting，跨站腳本攻擊）/ command injection
 3. **Authentication 自己寫** — 真正該用 Auth0、Clerk、Supabase Auth 之類成熟方案，但 vibe coder 常被 LLM 忽悠寫個自製 JWT（JSON Web Token）系統，sign / verify 做錯就是直接登入別人帳號
 4. **Dependency 來路不明** — `npm install something-vibe-good` 之前沒人 audit，惡意 package 偷 env var、安裝 backdoor 是常態
-5. **Agent 的全自動 approve mode** — Claude Code / Cursor / Warp 都有「all tool calls auto-approve」選項，打開 = 把 shell 鑰匙交給可被 prompt injection 劫持的 LLM（見下方 [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.md) 案例）
+5. **Agent 的全自動 approve mode** — Claude Code / Cursor / Warp 都有「all tool calls auto-approve」選項，打開 = 把 shell 鑰匙交給可被 prompt injection 劫持的 LLM（見下方 [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.html) 案例）
 
 > 💡 **譯解（醫療類比）**：Vibe coding 的 security 風險就像「治療速度太快、沒做完整 history taking」 — 你救了當下的 acute 症狀（功能 work 了），但漏掉的 underlying disease（漏洞）會在後面爆掉。SAST 對應預防醫學的全套 lab work（驗血、尿液、影像 — 看靜態指標），DAST 對應 stress test（運動心電圖、心導管 — 對運作中的系統打壓力測試），prompt injection 對應社交工程詐騙（騙病人本人說出密碼、騙醫護越權給藥）。
 
 ### 二、SAST、DAST、SCA — 漏洞檢測的三角
 
-[SAST vs DAST](../readings/w6_sast_vs_dast.md) 把 application security testing 拆成兩種互補典範。實務上要再加上 SCA（Software Composition Analysis，軟體成分分析），合稱檢測三角：
+[SAST vs DAST](../readings/w6_sast_vs_dast.html) 把 application security testing 拆成兩種互補典範。實務上要再加上 SCA（Software Composition Analysis，軟體成分分析），合稱檢測三角：
 
 | 工具類別 | 看什麼 | 何時跑 | 醫療類比 | 實務工具 |
 |---------|-------|-------|---------|---------|
@@ -58,29 +58,29 @@ W1-W5 教你怎麼用 LLM 把開發速度拉到 10x，這週要回頭算帳：**
 - **DAST 貼近真實攻擊但發現晚** — 等 app 跑起來才能掃，bug 修復成本高（醫療類比：到 ER 時 acute MI 已經發作，治療成本比預防高 100 倍）
 - **SCA 是 prerequisite** — 你寫得再安全，npm 套件帶後門也沒救（醫療類比：自己生活作息再好，吃到污染食品照樣中毒）
 
-[OWASP Top Ten](../readings/w6_owasp_top_ten.md) 是這個檢測三角的「分類字典」 — A01 Broken Access Control、A03 Injection、A05 Security Misconfiguration 是 vibe coder 最常踩的三類，每寫一個 endpoint 自問「這條對 Top Ten 哪幾項有曝險？」是基本紀律。
+[OWASP Top Ten](../readings/w6_owasp_top_ten.html) 是這個檢測三角的「分類字典」 — A01 Broken Access Control、A03 Injection、A05 Security Misconfiguration 是 vibe coder 最常踩的三類，每寫一個 endpoint 自問「這條對 Top Ten 哪幾項有曝險？」是基本紀律。
 
 ### 三、Prompt Injection — Coding Agent 時代的全新攻擊面
 
 傳統 web app 的攻擊面 OWASP 列在 Top Ten 裡，但 **prompt injection（提示詞注入）是 LLM 時代才出現的新類別**。原理：把惡意指令藏在 LLM 會 ingest 的內容（code comment、GitHub issue、web page、PDF、image OCR），讓它覆蓋原本的 system instruction。
 
-[Copilot RCE via Prompt Injection](../readings/w6_copilot_rce_via_prompt_injection.md) 是這類攻擊的教科書級案例。研究員 Johann Rehberger 發現 **CVE-2025-53773**（CVE = 全球漏洞身份證編號）：攻擊鏈為 (1) malicious instruction 藏進 source code 或 GitHub issue → (2) Copilot 讀進 context → (3) injection 指示 Copilot 自行寫入 `.vscode/settings.json` 開啟 `chat.tools.autoApprove: true`（YOLO mode）→ (4) 從此 Copilot 任何 shell command 都不再向 user 確認 → (5) 達成 **RCE（Remote Code Execution，遠端任意程式執行）**。
+[Copilot RCE via Prompt Injection](../readings/w6_copilot_rce_via_prompt_injection.html) 是這類攻擊的教科書級案例。研究員 Johann Rehberger 發現 **CVE-2025-53773**（CVE = 全球漏洞身份證編號）：攻擊鏈為 (1) malicious instruction 藏進 source code 或 GitHub issue → (2) Copilot 讀進 context → (3) injection 指示 Copilot 自行寫入 `.vscode/settings.json` 開啟 `chat.tools.autoApprove: true`（YOLO mode）→ (4) 從此 Copilot 任何 shell command 都不再向 user 確認 → (5) 達成 **RCE（Remote Code Execution，遠端任意程式執行）**。
 
 > 💡 **譯解（醫療類比）**：Prompt injection 像「social engineering 詐騙打電話到護理站、聲稱是主治醫師、指示護士改某病人的醫囑」— 系統本身（電話、HIS）沒漏洞，但 trust boundary 設計錯了：你不能把「會講人話的東西」自動當成有權限的人。Coding agent 的 prompt injection 之所以致命，是因為它能把「文字攻擊」轉成「真的執行 shell command」，從詐騙電話升級為直接動手簽醫囑單。
 
-[Agentic AI Threats](../readings/w6_agentic_ai_threats_identity_spoofing.md) 把這個攻擊面再往前推：agentic AI 操作 enterprise infra（GCP、AWS、internal API）會被劫持去偷 service account token（cloud metadata service 的 `169.254.169.254` IP 是經典攻擊目標），或藉 BOLA（Broken Object Level Authorization，物件層級授權失敗）越權讀其他 user 資料。Defense 必須是 layered：prompt hardening + sandbox + tool input sanitization + runtime filtering，沒有單一 mitigation 夠用。
+[Agentic AI Threats](../readings/w6_agentic_ai_threats_identity_spoofing.html) 把這個攻擊面再往前推：agentic AI 操作 enterprise infra（GCP、AWS、internal API）會被劫持去偷 service account token（cloud metadata service 的 `169.254.169.254` IP 是經典攻擊目標），或藉 BOLA（Broken Object Level Authorization，物件層級授權失敗）越權讀其他 user 資料。Defense 必須是 layered：prompt hardening + sandbox + tool input sanitization + runtime filtering，沒有單一 mitigation 夠用。
 
 ### 四、AI-generated Test 與 AI Find Vulnerabilities — 實證告訴我們什麼
 
-LLM 不只是攻擊面，它也是新工具。但這個工具好不好用？[Finding Vulnerabilities with Claude Code & Codex](../readings/w6_finding_vulnerabilities_claude_codex.md)（Semgrep blog）給了一份冷靜的實證：對 11 個真實 Python web app（>800,000 LoC）跑 Claude Code（Sonnet 4）與 OpenAI Codex（o4-mini）做 security audit，結果：
+LLM 不只是攻擊面，它也是新工具。但這個工具好不好用？[Finding Vulnerabilities with Claude Code & Codex](../readings/w6_finding_vulnerabilities_claude_codex.html)（Semgrep blog）給了一份冷靜的實證：對 11 個真實 Python web app（>800,000 LoC）跑 Claude Code（Sonnet 4）與 OpenAI Codex（o4-mini）做 security audit，結果：
 
 - Claude 找到 46 個真實漏洞、Codex 找到 21 個 — **真的能找到 bug**
 - 但 false positive 率分別 **86% 與 82%** — 十條警報只兩條是真
 - 同一份 code 跑三次得到 3 / 6 / 11 個不同 bug — **嚴重 non-deterministic**
 
-Non-determinism 的根因在 [Context Rot](../readings/w6_context_rot.md)：Chroma Research 對 18 個 SOTA LLM 做擴展版 NIAH（Needle in a Haystack）測試，發現 input 越長 performance 越不穩，即使是百萬 token context window 也一樣 — distractor、coherent narrative、low semantic similarity 都會加劇衰減。所以 LLM 掃大 codebase 時，後段檔案可能根本沒被「真的看到」。
+Non-determinism 的根因在 [Context Rot](../readings/w6_context_rot.html)：Chroma Research 對 18 個 SOTA LLM 做擴展版 NIAH（Needle in a Haystack）測試，發現 input 越長 performance 越不穩，即使是百萬 token context window 也一樣 — distractor、coherent narrative、low semantic similarity 都會加劇衰減。所以 LLM 掃大 codebase 時，後段檔案可能根本沒被「真的看到」。
 
-對照組是 [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md) 的 success case — Sean Heelan 用嚴格的 system prompt（三階段：code path → conditional analysis → contradiction detection；強制原則「**寧可漏報也不誤報**」）驅動 OpenAI o3 在 Linux kernel 找出 **CVE-2025-37899**（一個真實的 use-after-free 漏洞）。差別在哪？**Scope 窄**（一類漏洞、特定模組）、**紀律嚴**（強制 step-by-step trace、禁止 hypothetical）、**反幻覺**（allow「no findings」是合法輸出）。
+對照組是 [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html) 的 success case — Sean Heelan 用嚴格的 system prompt（三階段：code path → conditional analysis → contradiction detection；強制原則「**寧可漏報也不誤報**」）驅動 OpenAI o3 在 Linux kernel 找出 **CVE-2025-37899**（一個真實的 use-after-free 漏洞）。差別在哪？**Scope 窄**（一類漏洞、特定模組）、**紀律嚴**（強制 step-by-step trace、禁止 hypothetical）、**反幻覺**（allow「no findings」是合法輸出）。
 
 歸納：LLM 找 bug 不是 silver bullet，但配對 (a) 鎖定特定 vulnerability class、(b) 多次採樣取聯集、(c) 仍跑傳統 SAST 補 taint tracking 盲區、(d) 把 LLM 警報當「嫌疑名單」而非結論，可以變成有用的補強層。
 
@@ -128,7 +128,7 @@ Mihail 開場切入點直接：「軟體錯誤可以毀掉使用者對產品 / �
 - **Speaker**: [Isaac Evans](https://www.linkedin.com/in/isaacevans/), CEO of [Semgrep](https://semgrep.dev/)
 - **Slides**: 未公開
 
-> Slides 未公開，依 Isaac 公開訪談 + Semgrep 公開技術文件 + 同期 Semgrep blog（[Finding Vulnerabilities with Claude Code](../readings/w6_finding_vulnerabilities_claude_codex.md)）best-effort 重建：
+> Slides 未公開，依 Isaac 公開訪談 + Semgrep 公開技術文件 + 同期 Semgrep blog（[Finding Vulnerabilities with Claude Code](../readings/w6_finding_vulnerabilities_claude_codex.html)）best-effort 重建：
 
 Isaac Evans 是 MIT Lincoln Laboratory cybersecurity researcher 出身，2017 年創立 Semgrep（前身 r2c）— 把學術界的 program analysis 技術做成 developer-friendly 的 SAST 工具。Semgrep 的 unique stance 是「rule-as-code」：每條 security rule 寫成 YAML pattern，跟 grep 一樣好懂但比 grep 強得多（語法樹層級的 pattern matching）。預期演講內容：
 
@@ -146,20 +146,20 @@ Isaac Evans 是 MIT Lincoln Laboratory cybersecurity researcher 出身，2017 �
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [SAST vs DAST](../readings/w6_sast_vs_dast.md) | Splunk blog | SAST（白箱、看 source）+ DAST（黑箱、跑 runtime）+ 可加 RASP 形成多層防禦，現代 pipeline 必整合兩者 |
-| [Copilot RCE via Prompt Injection](../readings/w6_copilot_rce_via_prompt_injection.md) | embracethered.com | CVE-2025-53773：prompt injection 騙 Copilot 自寫 `.vscode/settings.json` 開啟 YOLO mode → 完全 RCE |
-| [Finding Vulnerabilities with Claude Code & Codex](../readings/w6_finding_vulnerabilities_claude_codex.md) | Semgrep blog | 11 repo / >800k LoC 實測：找到真 bug 但 86% false positive、non-deterministic，LLM 不能取代 SAST |
-| [Agentic AI Threats: Identity Spoofing](../readings/w6_agentic_ai_threats_identity_spoofing.md) | Palo Alto Unit 42 | Agent 可被騙去偷 cloud metadata token / 越權讀資料（BOLA），漏洞 framework-agnostic、源於 insecure design |
-| [OWASP Top Ten](../readings/w6_owasp_top_ten.md) | owasp.org | 十大 web app 風險清單，2021 版以 incidence rate 排序，是 secure coding 的共同詞彙 |
-| [Context Rot](../readings/w6_context_rot.md) | research.trychroma.com | 18 個 SOTA LLM 實證 — context window 越大不等於越可靠，10k token 後 performance 顯著衰減 |
-| [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md) | github.com/SeanHeelan | 三階段 prompt + 寧可漏報原則，o3 真的找到 CVE-2025-37899（Linux kernel UAF） |
+| [SAST vs DAST](../readings/w6_sast_vs_dast.html) | Splunk blog | SAST（白箱、看 source）+ DAST（黑箱、跑 runtime）+ 可加 RASP 形成多層防禦，現代 pipeline 必整合兩者 |
+| [Copilot RCE via Prompt Injection](../readings/w6_copilot_rce_via_prompt_injection.html) | embracethered.com | CVE-2025-53773：prompt injection 騙 Copilot 自寫 `.vscode/settings.json` 開啟 YOLO mode → 完全 RCE |
+| [Finding Vulnerabilities with Claude Code & Codex](../readings/w6_finding_vulnerabilities_claude_codex.html) | Semgrep blog | 11 repo / >800k LoC 實測：找到真 bug 但 86% false positive、non-deterministic，LLM 不能取代 SAST |
+| [Agentic AI Threats: Identity Spoofing](../readings/w6_agentic_ai_threats_identity_spoofing.html) | Palo Alto Unit 42 | Agent 可被騙去偷 cloud metadata token / 越權讀資料（BOLA），漏洞 framework-agnostic、源於 insecure design |
+| [OWASP Top Ten](../readings/w6_owasp_top_ten.html) | owasp.org | 十大 web app 風險清單，2021 版以 incidence rate 排序，是 secure coding 的共同詞彙 |
+| [Context Rot](../readings/w6_context_rot.html) | research.trychroma.com | 18 個 SOTA LLM 實證 — context window 越大不等於越可靠，10k token 後 performance 顯著衰減 |
+| [Vulnerability Prompt Analysis with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html) | github.com/SeanHeelan | 三階段 prompt + 寧可漏報原則，o3 真的找到 CVE-2025-37899（Linux kernel UAF） |
 
-**閱讀優先順序**：時間有限的話先讀 [OWASP Top Ten](../readings/w6_owasp_top_ten.md)（建立詞彙）→ [SAST vs DAST](../readings/w6_sast_vs_dast.md)（工具光譜）→ [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.md)（prompt injection 教科書 case）→ [Finding Vulnerabilities with Claude Code](../readings/w6_finding_vulnerabilities_claude_codex.md)（LLM 實戰能力 baseline）→ [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md)（怎麼把 LLM 用對）。其他兩篇是延伸 — [Agentic AI Threats](../readings/w6_agentic_ai_threats_identity_spoofing.md) 適合做 enterprise agent app 的人、[Context Rot](../readings/w6_context_rot.md) 是 root-cause 補充。
+**閱讀優先順序**：時間有限的話先讀 [OWASP Top Ten](../readings/w6_owasp_top_ten.html)（建立詞彙）→ [SAST vs DAST](../readings/w6_sast_vs_dast.html)（工具光譜）→ [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.html)（prompt injection 教科書 case）→ [Finding Vulnerabilities with Claude Code](../readings/w6_finding_vulnerabilities_claude_codex.html)（LLM 實戰能力 baseline）→ [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html)（怎麼把 LLM 用對）。其他兩篇是延伸 — [Agentic AI Threats](../readings/w6_agentic_ai_threats_identity_spoofing.html) 適合做 enterprise agent app 的人、[Context Rot](../readings/w6_context_rot.html) 是 root-cause 補充。
 
 ## Assignment：Writing Secure AI Code
 
 - **Source**: [github.com/mihail911/modern-software-dev-assignments/blob/master/week6/assignment.md](https://github.com/mihail911/modern-software-dev-assignments/blob/master/week6/assignment.md)
-- **任務描述**: 對一個 vibe-coded web app（assignment 提供或自帶 side project）做完整 security review：(a) 跑 Semgrep / Snyk 等 SAST tool 並 triage 結果、(b) 對 OWASP Top Ten 每一類盤點 risk、(c) 用 [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md) 的三階段 prompt 範本驅動 Claude 找特定類型漏洞、(d) 模擬 prompt injection attack（在 README 或 comment 藏指令）測試自家 agent 抗性、(e) 寫 fix 並驗證。
+- **任務描述**: 對一個 vibe-coded web app（assignment 提供或自帶 side project）做完整 security review：(a) 跑 Semgrep / Snyk 等 SAST tool 並 triage 結果、(b) 對 OWASP Top Ten 每一類盤點 risk、(c) 用 [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html) 的三階段 prompt 範本驅動 Claude 找特定類型漏洞、(d) 模擬 prompt injection attack（在 README 或 comment 藏指令）測試自家 agent 抗性、(e) 寫 fix 並驗證。
 - **自學者可行性**: ⭐⭐⭐ 可做但偏深。需要的工具都有 free tier（Semgrep、Snyk free、OWASP ZAP open source），但 OWASP 詞彙與 web security mental model 對非資工背景讀者有學習曲線。預估 5-8 hr。
 
 > 💡 **非資工背景讀者的減量做法**：把 (a)（跑 Semgrep）+ (e)（修出來的 critical bug）做完，其他 task 看 reading 理解就夠。最終目標是建立「每次 commit 前要跑哪些 check」的肌肉記憶，不是變成 pen-tester。
@@ -182,16 +182,16 @@ W6 的內容對非資工背景讀者門檻高，但本節不要求你成為 secu
    這四個加起來 5 分鐘以內，是 P3 人上人 等級的最小 viable hygiene
 
 3. **Claude Code / Cursor / Warp 的 security risk pattern — 別做的事**
-   - **絕不開 YOLO mode / auto-approve all tools**：對應 [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.md) 的 attack chain，這是 single point of failure
+   - **絕不開 YOLO mode / auto-approve all tools**：對應 [Copilot RCE](../readings/w6_copilot_rce_via_prompt_injection.html) 的 attack chain，這是 single point of failure
    - **clone 別人的 repo 第一件事檢查 `.vscode/`、`.cursor/`、`.claude/`**：這些是 agent config，可能藏 prompt injection
    - **限制 agent 的 file write / shell exec scope**：用 Claude Code 的 `permissions` 設定把可寫範圍鎖在專案資料夾內，別讓它能改 `~/.zshrc` 或 `/etc/`
    - **對外部 untrusted source 抱「假設裡面有 prompt injection」心態**：fetch 來的網頁、PDF、image OCR 都該被視為 hostile input
 
-4. **請 LLM 找 bug 的 4 條紀律**（從 [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.md) 提煉）
+4. **請 LLM 找 bug 的 4 條紀律**（從 [Vulnerability Prompt with O3](../readings/w6_vulnerability_prompt_analysis_with_o3.html) 提煉）
    - **Scope 要窄**：指定一類漏洞（如 SQL injection）、一個檔案，而非「找所有漏洞」
    - **強制三階段輸出**：code path → conditional analysis → contradiction detection，不要只要結論
    - **明確說「找不到回 no findings、別亂掰」**：寧可漏報不要誤報這條紀律會大幅降 false positive
-   - **跑多次（≥3）取聯集**：對應 [Context Rot](../readings/w6_context_rot.md) 與 [Semgrep 實證](../readings/w6_finding_vulnerabilities_claude_codex.md) 的 non-determinism
+   - **跑多次（≥3）取聯集**：對應 [Context Rot](../readings/w6_context_rot.html) 與 [Semgrep 實證](../readings/w6_finding_vulnerabilities_claude_codex.html) 的 non-determinism
 
 5. **Authentication / Payment 等 critical path 永遠用成熟方案**
    - Auth：Clerk、Auth0、Supabase Auth、NextAuth — 別自己寫 JWT
@@ -207,4 +207,4 @@ W6 的內容對非資工背景讀者門檻高，但本節不要求你成為 secu
 
 ---
 
-**上一週**：[W5 The Modern Terminal](05_modern_terminal.md) | **下一週**：[W7 Modern Software Support](07_modern_software_support.md)
+**上一週**：[W5 The Modern Terminal](05_modern_terminal.html) | **下一週**：[W7 Modern Software Support](07_modern_software_support.html)

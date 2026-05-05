@@ -30,15 +30,62 @@ book:
     - part: "Reading 摘要"
       chapters:
         - readings/_index.md
+        - readings/w1_deep_dive_into_llms.md
+        - readings/w1_prompt_engineering_overview.md
+        - readings/w1_prompt_engineering_guide.md
+        - readings/w1_ai_prompt_engineering_deep_dive.md
+        - readings/w1_how_openai_uses_codex.md
+        - readings/w2_mcp_introduction.md
+        - readings/w2_mcp_sample_servers.md
+        - readings/w2_mcp_server_auth.md
+        - readings/w2_mcp_server_sdk.md
+        - readings/w2_mcp_registry.md
+        - readings/w2_mcp_food_for_thought.md
+        - readings/w3_specs_are_the_new_source_code.md
+        - readings/w3_how_long_contexts_fail.md
+        - readings/w3_devin_coding_agents_101.md
+        - readings/w3_getting_ai_to_work_in_complex_codebases.md
+        - readings/w3_how_faang_vibe_codes.md
+        - readings/w3_writing_effective_tools_for_agents.md
+        - readings/w4_how_anthropic_uses_claude_code.md
+        - readings/w4_claude_best_practices.md
+        - readings/w4_awesome_claude_agents.md
+        - readings/w4_super_claude.md
+        - readings/w4_good_context_good_code.md
+        - readings/w4_peeking_under_the_hood_of_claude_code.md
+        - readings/w5_warp_university.md
+        - readings/w5_warp_vs_claude_code.md
+        - readings/w5_how_warp_uses_warp_to_build_warp.md
+        - readings/w6_sast_vs_dast.md
+        - readings/w6_copilot_rce_via_prompt_injection.md
+        - readings/w6_finding_vulnerabilities_claude_codex.md
+        - readings/w6_agentic_ai_threats_identity_spoofing.md
+        - readings/w6_owasp_top_ten.md
+        - readings/w6_context_rot.md
+        - readings/w6_vulnerability_prompt_analysis_with_o3.md
+        - readings/w7_code_reviews_just_do_it.md
+        - readings/w7_how_to_review_code_effectively.md
+        - readings/w7_ai_assisted_assessment_coding_practices.md
+        - readings/w7_ai_code_review_implementation_best_practices.md
+        - readings/w7_code_review_essentials_for_software_teams.md
+        - readings/w7_lessons_from_millions_of_ai_code_reviews.md
+        - readings/w9_introduction_to_sre.md
+        - readings/w9_observability_basics.md
+        - readings/w9_kubernetes_troubleshooting_with_ai.md
+        - readings/w9_your_new_autonomous_teammate.md
+        - readings/w9_multi_agent_systems_ai_native.md
+        - readings/w9_benefits_of_agentic_ai_in_oncall.md
     - assignments/_index.md
 
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
     toc-depth: 3
     code-fold: false
     code-line-numbers: true
+    code-overflow: wrap
     mainfont: "PingFang TC, Helvetica Neue, sans-serif"
     monofont: "JetBrains Mono, Menlo, monospace"
   typst:

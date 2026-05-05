@@ -6,4 +6,4 @@ title: "前言"
 
 本講義將 10 週課程內容、50+ 篇 reading、9 個 weekly assignment 全部消化成繁中，並補上對非資工背景讀者的譯解，以及對 vibe coder（業餘 AI-assisted coding 使用者）的應用建議。
 
-詳見 [00_index.md](00_index.md) 與 [01_overview.md](01_overview.md)。
+詳見 [00_index.md](00_index.html) 與 [01_overview.md](01_overview.html)。

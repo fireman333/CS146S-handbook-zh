@@ -43,11 +43,11 @@ W3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copil
 
 關鍵 insight：**autonomy 不是越高越好** — 反而要依任務類型動態調整。Exploratory（不知道答案、需要 user judgment）→ L2/L3；scoped 且有 verification（type / test / lint 全綠就算對）→ L4/L5。Claude Code 的 default 在 L3（每 destructive command 問），auto mode 把它推到 L4，背後是 classifier 自動審 risky operation。Devin 的 default 是 L5。Cursor agent mode 是 L4。
 
-從 [Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.md) 來的 80% rule 在這裡發揮：**對大型任務 expect ~80% 時間節省**，剩下 20% 是 you-as-manager 的 review / re-direct 成本，跟 autonomy level 無關。Level 拉得再高也省不掉這 20%。
+從 [Devin: Coding Agents 101](../readings/w3_devin_coding_agents_101.html) 來的 80% rule 在這裡發揮：**對大型任務 expect ~80% 時間節省**，剩下 20% 是 you-as-manager 的 review / re-direct 成本，跟 autonomy level 無關。Level 拉得再高也省不掉這 20%。
 
 ### 二、Anthropic 自己怎麼用 Claude Code
 
-[How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.md) 是這週最 grounded 的 reading — 不是 marketing pitch，是 Anthropic 內部 10 個團隊的真實使用報告。共通 pattern 有三個：
+[How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.html) 是這週最 grounded 的 reading — 不是 marketing pitch，是 Anthropic 內部 10 個團隊的真實使用報告。共通 pattern 有三個：
 
 1. **非技術人員大量使用** — finance、legal、growth marketing、product design 都是 power user。**他們的工作流是「用 plain text 描述流程 → 餵給 Claude Code 自動執行」**。Legal 團隊用它生成法規 mapping、growth marketing 用它跑 cohort analysis、design 用它把 Figma spec 翻成 production code
 2. **Screenshot-driven debugging** — Kubernetes pod IP 耗盡、Google Cloud UI 導覽都靠截圖 + 自然語言描述就能 diagnose。這不是 demo，是 on-call engineer 真實 workflow
@@ -57,7 +57,7 @@ W3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copil
 
 ### 三、Claude Code 的 4 種擴充 primitive：CLAUDE.md / Skill / Subagent / Hook
 
-[Claude Best Practices](../readings/w4_claude_best_practices.md) 把 Claude Code 的擴充機制整理成 4 種 primitive，每個解決不同層級的問題。理解這個分工是用好 Claude Code 的關鍵：
+[Claude Best Practices](../readings/w4_claude_best_practices.html) 把 Claude Code 的擴充機制整理成 4 種 primitive，每個解決不同層級的問題。理解這個分工是用好 Claude Code 的關鍵：
 
 | Primitive | 何時 load | 解決什麼問題 | 用途範例 |
 |-----------|----------|-------------|---------|
@@ -68,7 +68,7 @@ W3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copil
 
 重要原則 — **「必須每次發生」走 hook，不是 CLAUDE.md**。CLAUDE.md 是 prompt 給 model 看，model 偶爾會忽略；hook 是 deterministic script，harness 強制執行。「想做但不確定」走 skill / subagent，按需 load 不污染主 context。
 
-[Peeking Under the Hood of Claude Code](../readings/w4_peeking_under_the_hood_of_claude_code.md) 用 LiteLLM proxy 攔截 Claude Code 真實送出的 API call，逆向工程出 4 個 internal pattern：(1) **context front-loading** session 開頭主動濃縮對話 / 判斷主題切換、(2) **`<system-reminder>` tag** 散布在多層 prompt 抵抗 long-context drift、(3) **prompt-based safety** 用專門 prompt 偵測 command injection 而非 hardcoded rule、(4) **conditional sub-agent reminder** 預設不注入 reminder 保持 focus、行為偏離才注入。**結論**：Claude Code 的成功不是 model 優勢，是系統化的 context scaffolding。
+[Peeking Under the Hood of Claude Code](../readings/w4_peeking_under_the_hood_of_claude_code.html) 用 LiteLLM proxy 攔截 Claude Code 真實送出的 API call，逆向工程出 4 個 internal pattern：(1) **context front-loading** session 開頭主動濃縮對話 / 判斷主題切換、(2) **`<system-reminder>` tag** 散布在多層 prompt 抵抗 long-context drift、(3) **prompt-based safety** 用專門 prompt 偵測 command injection 而非 hardcoded rule、(4) **conditional sub-agent reminder** 預設不注入 reminder 保持 focus、行為偏離才注入。**結論**：Claude Code 的成功不是 model 優勢，是系統化的 context scaffolding。
 
 > 💡 **譯解**：Claude Code 的「魔法」其實全是 prompt engineering 紀律 — 每個 session 開頭都把目標壓成 50 字 title、每個 tool result 都包進 system reminder、每個 subagent 都隔離 context。這意味著你在自己的 long workflow 上也能模仿 — 在關鍵步驟前手動重述目標，比期待 model 自己記得可靠。
 
@@ -76,13 +76,13 @@ W3 用 Devin 的 4 代分類描述了「世代」演化（autocomplete → copil
 
 社群已經沉澱出兩種主流的 Claude Code 擴充路線。
 
-**路線 1：Specialized agent zoo**（[Awesome Claude Agents](../readings/w4_awesome_claude_agents.md)） — 把 24 個 specialized subagent 分四層編成「虛擬開發團隊」：(1) Orchestrators 3 個（Tech Lead、Project Analyst、Team Configurator）做路由、(2) Framework Specialists 13 個（Laravel、Django、Rails、React、Vue 各自的 backend / API / ORM 三組）、(3) Universal Experts 4 個跨棧、(4) Core Team 4 個（code reviewer、performance optimizer、documentation specialist、code archaeologist）做 QA。內建 auto-configurator 偵測 stack 自動派 specialist。命題是「specialized expertise + division of labor 勝過 solo Claude」。
+**路線 1：Specialized agent zoo**（[Awesome Claude Agents](../readings/w4_awesome_claude_agents.html)） — 把 24 個 specialized subagent 分四層編成「虛擬開發團隊」：(1) Orchestrators 3 個（Tech Lead、Project Analyst、Team Configurator）做路由、(2) Framework Specialists 13 個（Laravel、Django、Rails、React、Vue 各自的 backend / API / ORM 三組）、(3) Universal Experts 4 個跨棧、(4) Core Team 4 個（code reviewer、performance optimizer、documentation specialist、code archaeologist）做 QA。內建 auto-configurator 偵測 stack 自動派 specialist。命題是「specialized expertise + division of labor 勝過 solo Claude」。
 
-**路線 2：Meta-framework**（[SuperClaude](../readings/w4_super_claude.md)） — 不是換 agent，是在 Claude Code 上層疊加 30 個 slash command + 20 個 specialized agent + 7 個 behavioral mode + 8 個 MCP server。Behavioral mode 是 SuperClaude 最獨到的概念 — 不是 agent 也不是 command，是「整段對話的操作脈絡」（Brainstorming Mode 讓所有後續回應變成 Q&A 探索風格、Token-Efficiency Mode 強制簡短）。設計哲學強調「framework footprint 要小，把 context window 留給 project code」。
+**路線 2：Meta-framework**（[SuperClaude](../readings/w4_super_claude.html)） — 不是換 agent，是在 Claude Code 上層疊加 30 個 slash command + 20 個 specialized agent + 7 個 behavioral mode + 8 個 MCP server。Behavioral mode 是 SuperClaude 最獨到的概念 — 不是 agent 也不是 command，是「整段對話的操作脈絡」（Brainstorming Mode 讓所有後續回應變成 Q&A 探索風格、Token-Efficiency Mode 強制簡短）。設計哲學強調「framework footprint 要小，把 context window 留給 project code」。
 
 兩條路線的 trade-off：specialized agent zoo 邊界清楚但 maintenance 成本高（24 個 agent 要維護）；meta-framework 整合度高但 lock-in 強（會跟你既有 CLAUDE.md / skill 衝突）。
 
-[Good Context Good Code](../readings/w4_good_context_good_code.md)（標題即論點） — agent 寫不好 code，瓶頸不在 model 而在 context 品質。**寫不好時先別罵 model 也別重寫 prompt — 先問三個問題**：(a) 我有給它 reference file 嗎？(b) 我有給它 verification（test / expected output）嗎？(c) CLAUDE.md / skill 裡有沒有相關 domain knowledge？三個都做了還錯，再考慮其他原因。這跟臨床 history-taking 同構：問診（context）做不好，鑑別診斷（output）一定不會準。
+[Good Context Good Code](../readings/w4_good_context_good_code.html)（標題即論點） — agent 寫不好 code，瓶頸不在 model 而在 context 品質。**寫不好時先別罵 model 也別重寫 prompt — 先問三個問題**：(a) 我有給它 reference file 嗎？(b) 我有給它 verification（test / expected output）嗎？(c) CLAUDE.md / skill 裡有沒有相關 domain knowledge？三個都做了還錯，再考慮其他原因。這跟臨床 history-taking 同構：問診（context）做不好，鑑別診斷（output）一定不會準。
 
 ## Monday Lecture（10/13）：How to be an agent manager
 
@@ -163,14 +163,14 @@ Mihail 用一張軟體團隊演化簡史鋪 mindset shift：solo developer（196
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.md) | Anthropic PDF | 內部 10 個團隊（含 legal、design、growth marketing）都用 Claude Code，是 team multiplier 不是 coding assistant |
-| [Claude Code Best Practices](../readings/w4_claude_best_practices.md) | Anthropic engineering | 4 種 primitive（CLAUDE.md / Skill / Subagent / Hook）+ Explore→Plan→Implement→Commit 工作流 |
-| [Awesome Claude Agents](../readings/w4_awesome_claude_agents.md) | github.com/vijaythecoder | 24 個 specialized subagent 編成「虛擬開發團隊」(orchestrator + specialist + universal + core team) |
-| [SuperClaude Framework](../readings/w4_super_claude.md) | github.com/SuperClaude-Org | Meta-framework：30 command + 20 agent + 7 mode + 8 MCP 疊加在 Claude Code 上層 |
-| [Good Context, Good Code](../readings/w4_good_context_good_code.md) | Stock app blog | Code quality ∝ context quality；agent 寫不好先檢查 context，不是 prompt 措辭 |
-| [Peeking Under the Hood of Claude Code](../readings/w4_peeking_under_the_hood_of_claude_code.md) | OutsightAI Medium | LiteLLM 攔截逆向工程出 4 個 pattern（front-loading / `<system-reminder>` / prompt-based safety / conditional sub-agent） |
+| [How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.html) | Anthropic PDF | 內部 10 個團隊（含 legal、design、growth marketing）都用 Claude Code，是 team multiplier 不是 coding assistant |
+| [Claude Code Best Practices](../readings/w4_claude_best_practices.html) | Anthropic engineering | 4 種 primitive（CLAUDE.md / Skill / Subagent / Hook）+ Explore→Plan→Implement→Commit 工作流 |
+| [Awesome Claude Agents](../readings/w4_awesome_claude_agents.html) | github.com/vijaythecoder | 24 個 specialized subagent 編成「虛擬開發團隊」(orchestrator + specialist + universal + core team) |
+| [SuperClaude Framework](../readings/w4_super_claude.html) | github.com/SuperClaude-Org | Meta-framework：30 command + 20 agent + 7 mode + 8 MCP 疊加在 Claude Code 上層 |
+| [Good Context, Good Code](../readings/w4_good_context_good_code.html) | Stock app blog | Code quality ∝ context quality；agent 寫不好先檢查 context，不是 prompt 措辭 |
+| [Peeking Under the Hood of Claude Code](../readings/w4_peeking_under_the_hood_of_claude_code.html) | OutsightAI Medium | LiteLLM 攔截逆向工程出 4 個 pattern（front-loading / `<system-reminder>` / prompt-based safety / conditional sub-agent） |
 
-**閱讀優先順序**：先讀 [How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.md)（看真實使用樣貌建立期待）→ [Claude Code Best Practices](../readings/w4_claude_best_practices.md)（4 primitive 是核心教科書）→ [Peeking Under the Hood](../readings/w4_peeking_under_the_hood_of_claude_code.md)（理解設計哲學）→ [Good Context, Good Code](../readings/w4_good_context_good_code.md)（debug mindset）→ [Awesome Agents](../readings/w4_awesome_claude_agents.md) / [SuperClaude](../readings/w4_super_claude.md) 兩個 community framework 看興趣選讀。
+**閱讀優先順序**：先讀 [How Anthropic Uses Claude Code](../readings/w4_how_anthropic_uses_claude_code.html)（看真實使用樣貌建立期待）→ [Claude Code Best Practices](../readings/w4_claude_best_practices.html)（4 primitive 是核心教科書）→ [Peeking Under the Hood](../readings/w4_peeking_under_the_hood_of_claude_code.html)（理解設計哲學）→ [Good Context, Good Code](../readings/w4_good_context_good_code.html)（debug mindset）→ [Awesome Agents](../readings/w4_awesome_claude_agents.html) / [SuperClaude](../readings/w4_super_claude.html) 兩個 community framework 看興趣選讀。
 
 ## Assignment：Coding with Claude Code
 
@@ -189,7 +189,7 @@ W4 是 vibe coder 整個 10 週課程裡 **ROI 最高**的一週 — 把 Claude 
 3. **Subagent 處理 expensive 探索** — 主對話開始爆 context 前就派 subagent。三個 typical use case：(a) 探索陌生 codebase（`code-archaeologist` 風格 agent）、(b) 跨 repo grep + summarize、(c) long literature search。主對話只接 subagent 的 summary，乾淨太多
 4. **Hook 處理「必須每次發生」的事** — 不要把「commit 前要跑 lint」寫進 CLAUDE.md（model 會忘），寫成 PreToolUse hook 強制執行。常見 hook：(a) auto git commit after Edit、(b) lint after Write、(c) block dangerous command（`rm -rf` / `git push --force` / `DROP TABLE`）、(d) auto-format on save。Hook 是 deterministic，永遠會跑
 5. **Skill 系統 = domain knowledge as plugin** — 比 CLAUDE.md 更進階的 reuse 機制。你已經有的 `clinical-scores` / `openevidence` / `kaplan-meier` 都是 skill 範例：trigger 詞觸發、按需 load、不污染預設 context。寫 skill 的甜蜜點：(a) 跨 project 重複用、(b) 有明確 trigger、(c) 需要 domain knowledge 才寫得對
-6. **Community framework 選擇性引入，不要無腦 install** — [SuperClaude](../readings/w4_super_claude.md) / [Awesome Agents](../readings/w4_awesome_claude_agents.md) 有 inspiration 價值但會跟你既有 CLAUDE.md / skill 衝突。建議：抄 1-2 個你會真的用的 agent / command 進自己的 `.claude/`，不要 full install
+6. **Community framework 選擇性引入，不要無腦 install** — [SuperClaude](../readings/w4_super_claude.html) / [Awesome Agents](../readings/w4_awesome_claude_agents.html) 有 inspiration 價值但會跟你既有 CLAUDE.md / skill 衝突。建議：抄 1-2 個你會真的用的 agent / command 進自己的 `.claude/`，不要 full install
 
 **Vibe coder 進階一級的徵兆**：當你發現自己花在「寫 spec + plan + 設 verification」的時間 > 「打 prompt」的時間 — 你已經是 agent manager 不是 pair programmer 了。這個 ratio 翻轉是 W4 想灌輸的核心 mindset shift。
 
@@ -197,4 +197,4 @@ W4 是 vibe coder 整個 10 週課程裡 **ROI 最高**的一週 — 把 Claude 
 
 ---
 
-**上一週**：[W3 The AI IDE](03_the_ai_ide.md) | **下一週**：[W5 The Modern Terminal](05_modern_terminal.md)
+**上一週**：[W3 The AI IDE](03_the_ai_ide.html) | **下一週**：[W5 The Modern Terminal](05_modern_terminal.html)

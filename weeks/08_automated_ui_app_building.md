@@ -166,4 +166,4 @@ W8 是把 vibe coder 從「能寫 component」升級到「**能一個人 ship �
 
 ---
 
-**上一週**：[W7 Modern Software Support](07_modern_software_support.md) | **下一週**：[W9 Agents Post-Deployment](09_agents_post_deployment.md)
+**上一週**：[W7 Modern Software Support](07_modern_software_support.html) | **下一週**：[W9 Agents Post-Deployment](09_agents_post_deployment.html)

@@ -40,7 +40,7 @@ status: complete
 
 ### 二、AI Terminal 的四個價值主張
 
-[Warp University](../readings/w5_warp_university.md) 把 Warp 自我定位從「modern terminal」升級為 **Agentic Development Environment（代理式開發環境，ADE）**。對使用者來說，AI terminal 比傳統 terminal 多出四個 affordance：
+[Warp University](../readings/w5_warp_university.html) 把 Warp 自我定位從「modern terminal」升級為 **Agentic Development Environment（代理式開發環境，ADE）**。對使用者來說，AI terminal 比傳統 terminal 多出四個 affordance：
 
 | 維度 | 傳統 terminal | AI terminal（Warp 為例） |
 |------|--------------|------------------------|
@@ -51,7 +51,7 @@ status: complete
 
 關鍵概念是 **block-based terminal** — 每條 `command + output` 是一個 first-class object，不再是 line buffer 裡的一坨 text。這個 mental model 變化的影響極大：你能對單一 block 做「重跑」「分享」「丟給 agent 解釋」「轉成 workflow 模板」等動作，這些在傳統 terminal 裡需要先把輸出複製出來、貼進別處才能做。
 
-[Warp University](../readings/w5_warp_university.md) 還提出 **Warp（local terminal）+ Oz（cloud agent orchestration）** 的雙產品架構：local agent 是 interactive、人在 loop 裡審 diff；cloud agent 是 background、被 webhook / cron 觸發、可大規模並行（PR review、issue triage、dependency update）。兩端共用同一個 agent core 與 **Warp Drive**（rules / prompts / env var / workflow 的 persistent context layer），所以「雲端開工、local 接手」是 seamless 的。
+[Warp University](../readings/w5_warp_university.html) 還提出 **Warp（local terminal）+ Oz（cloud agent orchestration）** 的雙產品架構：local agent 是 interactive、人在 loop 裡審 diff；cloud agent 是 background、被 webhook / cron 觸發、可大規模並行（PR review、issue triage、dependency update）。兩端共用同一個 agent core 與 **Warp Drive**（rules / prompts / env var / workflow 的 persistent context layer），所以「雲端開工、local 接手」是 seamless 的。
 
 ### 三、CLI Agent vs IDE Agent — 設計取捨
 
@@ -66,11 +66,11 @@ W3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、C
 | **長 task** | 中等（chat panel 易斷） | 強（CLI 天生 async） | 強（cloud agent 可背景跑） |
 | **Multi-file refactor** | 強（diff view 內建） | 中（需 review CLI diff） | 強（內建 code review panel） |
 
-[Warp vs Claude Code](../readings/w5_warp_vs_claude_code.md) 文中講得很直白：Warp 不把 Claude Code 當對手而是當 first-class CLI agent host — 你可以在 Warp 裡跑 `claude`，自動拿到 rich input editor、agent notification、inline code review、vertical tabs 等 IDE 級 affordance。或者你也可以直接用 Warp 內建的 Agent Mode（`⌘+Enter`）。最關鍵的 migration 提示：**把 `CLAUDE.md` 改名為 `AGENTS.md` 或 `WARP.md` 放專案 root，Warp 會自動讀取，不必重寫**。
+[Warp vs Claude Code](../readings/w5_warp_vs_claude_code.html) 文中講得很直白：Warp 不把 Claude Code 當對手而是當 first-class CLI agent host — 你可以在 Warp 裡跑 `claude`，自動拿到 rich input editor、agent notification、inline code review、vertical tabs 等 IDE 級 affordance。或者你也可以直接用 Warp 內建的 Agent Mode（`⌘+Enter`）。最關鍵的 migration 提示：**把 `CLAUDE.md` 改名為 `AGENTS.md` 或 `WARP.md` 放專案 root，Warp 會自動讀取，不必重寫**。
 
 ### 四、為什麼 Vibe Coder 該認真考慮換 Terminal
 
-[How Warp Uses Warp to Build Warp](../readings/w5_how_warp_uses_warp_to_build_warp.md) 揭露 Warp 公司內部的 **Coding Mandate** — 每個 coding task 都從在 Warp 裡 prompt 起手，連續卡關 10 分鐘才能 fallback 到別的工具。這條規則對個人開發者太嚴格，但精神對非資工背景的 vibe coder 反而更重要：
+[How Warp Uses Warp to Build Warp](../readings/w5_how_warp_uses_warp_to_build_warp.html) 揭露 Warp 公司內部的 **Coding Mandate** — 每個 coding task 都從在 Warp 裡 prompt 起手，連續卡關 10 分鐘才能 fallback 到別的工具。這條規則對個人開發者太嚴格，但精神對非資工背景的 vibe coder 反而更重要：
 
 1. **Prompt-first 強迫你想清楚需求** — 用 natural language 描述「我要的是什麼」比直接寫 code 更容易發現需求模糊
 2. **Block 化讓你能回頭審視** — 不再是滾動的 line buffer，每個操作都是可被 review、re-run、share 的物件
@@ -132,11 +132,11 @@ W3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、C
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [Warp University](../readings/w5_warp_university.md) | warp.dev | Warp = 「Agentic Development Environment」= local terminal + cloud agent platform（Oz）+ Warp Drive 跨端 context |
-| [Warp vs Claude Code](../readings/w5_warp_vs_claude_code.md) | warp.dev/university | Warp 與 Claude Code 不是競品而是 stack 兩層，把 `CLAUDE.md` rename 成 `AGENTS.md` 即可零成本遷移 |
-| [How Warp Uses Warp to Build Warp](../readings/w5_how_warp_uses_warp_to_build_warp.md) | notion.warp.dev | Warp 內部 Coding Mandate：每個 task 從 prompt 起手、卡 10 分鐘要回報、bug 一律先變 eval 不直接 patch |
+| [Warp University](../readings/w5_warp_university.html) | warp.dev | Warp = 「Agentic Development Environment」= local terminal + cloud agent platform（Oz）+ Warp Drive 跨端 context |
+| [Warp vs Claude Code](../readings/w5_warp_vs_claude_code.html) | warp.dev/university | Warp 與 Claude Code 不是競品而是 stack 兩層，把 `CLAUDE.md` rename 成 `AGENTS.md` 即可零成本遷移 |
+| [How Warp Uses Warp to Build Warp](../readings/w5_how_warp_uses_warp_to_build_warp.html) | notion.warp.dev | Warp 內部 Coding Mandate：每個 task 從 prompt 起手、卡 10 分鐘要回報、bug 一律先變 eval 不直接 patch |
 
-**閱讀優先順序**：先讀 [Warp University](../readings/w5_warp_university.md) 建立 ADE 心智模型 → 再讀 [Warp vs Claude Code](../readings/w5_warp_vs_claude_code.md) 看 Warp 與 Claude Code 怎麼共存 → 最後 [How Warp Uses Warp](../readings/w5_how_warp_uses_warp_to_build_warp.md) 看 dogfooding 紀律 — 三篇加起來不到 30 分鐘但能拿到完整圖像。
+**閱讀優先順序**：先讀 [Warp University](../readings/w5_warp_university.html) 建立 ADE 心智模型 → 再讀 [Warp vs Claude Code](../readings/w5_warp_vs_claude_code.html) 看 Warp 與 Claude Code 怎麼共存 → 最後 [How Warp Uses Warp](../readings/w5_how_warp_uses_warp_to_build_warp.html) 看 dogfooding 紀律 — 三篇加起來不到 30 分鐘但能拿到完整圖像。
 
 ## Assignment：Agentic Development with Warp
 
@@ -161,4 +161,4 @@ W3 講 IDE agent（Cursor、Continue.dev），W4 講 CLI agent（Claude Code、C
 
 ---
 
-**上一週**：[W4 Coding Agent Patterns](04_coding_agent_patterns.md) | **下一週**：[W6 AI Testing and Security](06_ai_testing_security.md)
+**上一週**：[W4 Coding Agent Patterns](04_coding_agent_patterns.html) | **下一週**：[W6 AI Testing and Security](06_ai_testing_security.html)

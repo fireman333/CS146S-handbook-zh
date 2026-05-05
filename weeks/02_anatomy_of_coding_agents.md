@@ -63,7 +63,7 @@ Tool use 是 agent 的「手腳」。在 LLM API 層面，function calling 的 p
 關鍵設計細節：
 - **Tool description 是給 LLM 看的 prompt** — 寫得越清楚，model 越會在對的時機 call
 - **Parameter schema 用 JSON Schema / Zod / Pydantic** — 強制 model 產生可被 parse 的結構化參數
-- **Tool result 的格式直接影響下一輪推理** — Reilly Wood 在 [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.md) 裡實測「同樣資訊用 CSV 比 JSON 省一半 token」
+- **Tool result 的格式直接影響下一輪推理** — Reilly Wood 在 [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.html) 裡實測「同樣資訊用 CSV 比 JSON 省一半 token」
 - **Error handling** — Tool 失敗時要回 model「可恢復的錯誤訊息」，不要只 throw exception
 
 ### 三、MCP — 為什麼要再發明一個協定
@@ -72,7 +72,7 @@ Function calling 的 protocol 各家不同（OpenAI 的 `tools` schema、Anthrop
 
 > 💡 **譯解**：MCP 之於 LLM tools，就像 USB-C 之於充電線。以前每個工具廠都有自己的接頭（OpenAI plugin / Cursor extension / Claude artifact），MCP 讓你用一個統一接口接所有外部工具（Slack、GitHub、Google Drive、你自己的資料庫）。
 
-[Stytch 的 MCP Introduction](../readings/w2_mcp_introduction.md) 把 MCP 拆成三類 capability：
+[Stytch 的 MCP Introduction](../readings/w2_mcp_introduction.html) 把 MCP 拆成三類 capability：
 
 | Capability | 用途 | 範例 |
 |-----------|------|------|
@@ -80,13 +80,13 @@ Function calling 的 protocol 各家不同（OpenAI 的 `tools` schema、Anthrop
 | **Resources** | 模型可讀取的 context 資料 | 檔案內容、DB 紀錄、API 回傳 |
 | **Prompts** | 預先定義的任務模板 | "/code-review"、"/explain-this" |
 
-底層用 **JSON-RPC 2.0** 做 message format，**transport** 分 local（stdio）和 remote（HTTP/SSE）兩種。Local stdio transport 開發成本最低，原型階段不必處理 OAuth；要做 multi-user 服務再上 [Cloudflare Workers + OAuth](../readings/w2_mcp_server_auth.md)。
+底層用 **JSON-RPC 2.0** 做 message format，**transport** 分 local（stdio）和 remote（HTTP/SSE）兩種。Local stdio transport 開發成本最低，原型階段不必處理 OAuth；要做 multi-user 服務再上 [Cloudflare Workers + OAuth](../readings/w2_mcp_server_auth.html)。
 
-[MCP Registry](../readings/w2_mcp_registry.md)（2025 年 9 月推出）解決「server 找不到、寫的人沒地方掛」的問題，採 federation-friendly 設計（中央 registry + sub-registry 共存），不做 app store 壟斷。
+[MCP Registry](../readings/w2_mcp_registry.html)（2025 年 9 月推出）解決「server 找不到、寫的人沒地方掛」的問題，採 federation-friendly 設計（中央 registry + sub-registry 共存），不做 app store 壟斷。
 
 ### 四、寫 MCP server 的兩個核心 trap
 
-[MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.md) 給了非常實際的反思：別把 OpenAPI spec 機械式包成 MCP tool。理由：
+[MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.html) 給了非常實際的反思：別把 OpenAPI spec 機械式包成 MCP tool。理由：
 
 1. **Tool proliferation（工具擴增）** — Tool 數量在 128 之前就會明顯惡化 agent 的選 tool 準確率
 2. **Context 浪費** — API 回的 wide record 含一堆用不到的 field、JSON 重複 key 名稱浪費 token
@@ -147,14 +147,14 @@ Lecture 收尾揭露 Claude Code 的「secret sauce」（Mihail 對外公開觀�
 
 | 篇名 | 來源 | 一句話重點 |
 |------|------|-----------|
-| [MCP Introduction](../readings/w2_mcp_introduction.md) | Stytch | MCP = AI 應用與外部系統之間的 universal adapter，client-server + JSON-RPC 架構 |
-| [Sample MCP Server Implementations](../readings/w2_mcp_sample_servers.md) | GitHub | 官方 reference servers（filesystem、GitHub、Slack、Postgres 等），抄來改最快 |
-| [MCP Server Authentication](../readings/w2_mcp_server_auth.md) | Cloudflare | OAuth 2.0 加在 remote MCP server，hobby → production 必經之路 |
-| [MCP Server SDK](../readings/w2_mcp_server_sdk.md) | GitHub | TypeScript SDK README，寫 server 的 starting point |
-| [MCP Registry](../readings/w2_mcp_registry.md) | blog.modelcontextprotocol.io | 官方中央目錄 + federation-friendly sub-registry 設計 |
-| [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.md) | reillywood.com | 別把 OpenAPI 機械式包成 MCP，要為 agent 重新設計 tool |
+| [MCP Introduction](../readings/w2_mcp_introduction.html) | Stytch | MCP = AI 應用與外部系統之間的 universal adapter，client-server + JSON-RPC 架構 |
+| [Sample MCP Server Implementations](../readings/w2_mcp_sample_servers.html) | GitHub | 官方 reference servers（filesystem、GitHub、Slack、Postgres 等），抄來改最快 |
+| [MCP Server Authentication](../readings/w2_mcp_server_auth.html) | Cloudflare | OAuth 2.0 加在 remote MCP server，hobby → production 必經之路 |
+| [MCP Server SDK](../readings/w2_mcp_server_sdk.html) | GitHub | TypeScript SDK README，寫 server 的 starting point |
+| [MCP Registry](../readings/w2_mcp_registry.html) | blog.modelcontextprotocol.io | 官方中央目錄 + federation-friendly sub-registry 設計 |
+| [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.html) | reillywood.com | 別把 OpenAPI 機械式包成 MCP，要為 agent 重新設計 tool |
 
-**閱讀優先順序**：先 [MCP Introduction](../readings/w2_mcp_introduction.md)（建立 mental model）→ [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.md)（設計品味）→ [MCP Server SDK](../readings/w2_mcp_server_sdk.md)（動手）→ 其他依需求補。
+**閱讀優先順序**：先 [MCP Introduction](../readings/w2_mcp_introduction.html)（建立 mental model）→ [MCP Food-for-Thought](../readings/w2_mcp_food_for_thought.html)（設計品味）→ [MCP Server SDK](../readings/w2_mcp_server_sdk.html)（動手）→ 其他依需求補。
 
 ## Assignment：First Steps in the AI IDE
 
@@ -170,11 +170,11 @@ W2 是 vibe coder 應該重投入時間的一週 — 學會寫 MCP server 之後
 2. **Tool description 比 implementation 重要** — Description 是給 LLM 讀的 prompt，寫得清楚 model 才會在對的時機 call。例：別寫 `"description": "Query database"`，要寫 `"description": "Search the user's Obsidian vault for notes by keyword. Use this when user asks about their personal notes, journals, or saved knowledge. Returns markdown content with file paths."`
 3. **永遠加 `fields` / `limit` 參數** — 別讓 tool 一次回 1000 筆，給 caller 自選 page size。對 token 經濟學至關重要
 4. **Local stdio 先做，OAuth 之後再說** — 90% 的 vibe coding use case 是個人用，stdio transport 配 Claude Desktop 就夠。要開放給朋友再上 Cloudflare Workers + OAuth
-5. **善用 [Sample servers](../readings/w2_mcp_sample_servers.md)** — 官方 repo 有 filesystem、GitHub、Slack、Postgres 等 reference 實作，抄一份來改是最快路徑
-6. **裝完 server 第一件事去 [Registry](../readings/w2_mcp_registry.md) 提交** — 免費、無審核延遲，別人能在 Claude Desktop 內搜到你的 server
+5. **善用 [Sample servers](../readings/w2_mcp_sample_servers.html)** — 官方 repo 有 filesystem、GitHub、Slack、Postgres 等 reference 實作，抄一份來改是最快路徑
+6. **裝完 server 第一件事去 [Registry](../readings/w2_mcp_registry.html) 提交** — 免費、無審核延遲，別人能在 Claude Desktop 內搜到你的 server
 
 > 💡 **vibe coder 的 Day-1 Quick Win**：今天裝 Claude Desktop，從 [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) 挑一個你會用到的 server（filesystem、GitHub、brave-search 都好），改 `~/Library/Application Support/Claude/claude_desktop_config.json` 加進去，重啟 Claude Desktop，立刻就有外部能力。再來才是寫自己的 server。
 
 ---
 
-**上一週**：[W1 Introduction](01_intro_to_coding_llms.md) | **下一週**：[W3 The AI IDE](03_the_ai_ide.md)
+**上一週**：[W1 Introduction](01_intro_to_coding_llms.html) | **下一週**：[W3 The AI IDE](03_the_ai_ide.html)
