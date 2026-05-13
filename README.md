@@ -81,7 +81,7 @@ gh release create v$(date +%F) --notes "PDF refresh $(date +%F)" pdf/CS146S_hand
 │   └── src/components/         # TrackPicker / WeekIndex / ReadingTable / SiteFooter
 ├── .github/workflows/deploy.yml # Astro → GitHub Pages auto-deploy
 ├── _quarto.yml                 # Quarto book config（PDF pipeline）
-└── _quarto_index.qmd           # 原 index.qmd 改名（騰出 index slug 給 Astro）
+└── index.qmd                   # Quarto book home page (.qmd ≠ .mdx, 跟 Astro index.mdx 共存)
 ```
 
 ## 已知限制

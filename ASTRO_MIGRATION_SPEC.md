@@ -302,7 +302,7 @@ export default defineConfig({
 
 **位置**：`site/src/content/docs/index.mdx`（不是 repo root 的 mdx）。Slug = root，Starlight 直接路由到 `/CS146S-handbook-zh/`。
 
-**處理 index.qmd 衝突**：把 `index.qmd` rename 成 `_quarto_index.qmd`，同時更新 `_quarto.yml` 內 chapters[] 第一項指向新名稱（Quarto pipeline 仍可出 PDF）。
+**處理 index.qmd**：保留原 `index.qmd`（Quarto book 強制要 home page 叫 `index.md`/`index.qmd`）。Astro 用 `index.mdx`、Quarto 用 `index.qmd`，**副檔名不同**所以 glob loader pattern `index.{md,mdx}` 不會吃 `.qmd` — 兩者可共存於 repo root。**踩過的雷**：曾經把 `index.qmd` rename 成 `_quarto_index.qmd` 結果 `quarto render` 報「Book contents must include a home page (e.g. index.md)」。Quarto book 強制檔名規則不能繞。
 
 把 `00_index.md` 內容轉成 `template: splash` 的 mdx，加 `TrackPicker.astro` + `WeekIndex.astro`：
 
@@ -464,7 +464,7 @@ cd site && npm run build       # 應該成功生 60+ 頁 HTML（10 weeks + 46 re
 npm run preview                 # 本機看 http://localhost:4321/CS146S-handbook-zh/
                                 # 確認：sidebar 分組 / 三 track 卡 / 10 週卡 / footer 授權聲明
 cd ..
-git add site/ scripts/ .github/ .gitignore README.md _quarto.yml _quarto_index.qmd
+git add site/ scripts/ .github/ .gitignore README.md _quarto.yml index.qmd index.mdx tracks/
 git commit -m "Add Astro Starlight site (dual-mode with Quarto for PDF, PDF via GH Release)"
 git push
 # 進 GitHub repo Settings → Pages → Source: GitHub Actions（若還沒設）
@@ -491,8 +491,8 @@ git push
 - `weeks/*.md` — 可能需要 frontmatter 補齊（migration script idempotent，安全）
 - `readings/*.md` — 同上
 - `00_index.md` — 內容遷進 `site/src/content/docs/index.mdx`（grill F2）；原檔可留作 Quarto 來源或 git rm
-- `index.qmd` → rename 成 `_quarto_index.qmd`（grill F2 — 騰出 `index` slug 給 Astro homepage）。`_quarto.yml` 對應改 chapters[] 第一項。
-- `_quarto.yml` — 保留並更新（Quarto PDF pipeline 還在用，但首章來源改 `_quarto_index.qmd`）
+- `index.qmd` → **保留不動**（Quarto book 強制 home page 叫 `index.md`/`index.qmd`，不能 rename — 踩雷紀錄見 §關鍵設計決策）。Astro 用 `index.mdx`、Quarto 用 `index.qmd`、副檔名不同所以共存於 repo root。
+- `_quarto.yml` — 保留並加 `output-file: CS146S_handbook_zh`，讓 PDF 直接以該名輸出（不用手動 cp）
 - `.gitignore` — 加 Astro 規則
 - `README.md` — dual-mode 說明（PDF 改 GitHub Release 流程，grill F3）
 
@@ -545,7 +545,7 @@ git push
 1. **既有線上 URL 不會自動 redirect** — Quarto 原本路徑可能是 `/01_overview.html`，Astro 是 `/01_overview/`。GitHub Pages 改用 Actions deploy 後舊 Quarto build artefact 會被覆蓋。若有人 bookmark 舊 URL → 失效。**對策**：在 `00_index.mdx` 加說明 + 在 README 附舊 URL → 新 URL 對照表（如必要）。
 2. **Glob loader pattern 跨多目錄** — 確認 `pattern: '{weeks,readings,assignments,01_overview,00_index}.{md,mdx}'` 真的 match 到。Astro 6 glob loader 對 brace expansion 支援要驗證。**對策**：若 brace expansion 不 work，分多個 collections 或用 multiple glob loaders。
 3. **Reading 數量 46 篇 → sidebar 太長** — Starlight sidebar collapsed group 預設行為要對。**對策**：每個 week 內 reading group 設 `collapsed: true`，預設只展開「10 週講義」group。
-4. ~~`00_index.mdx` 用 `index` slug 衝突~~ **已決議（grill F2）**：首頁 mdx 命名為 `index.mdx` 放 `site/src/content/docs/`，原 `index.qmd` 改名 `_quarto_index.qmd`，`_quarto.yml` 對應更新。
+4. ~~`00_index.mdx` 用 `index` slug 衝突~~ **已決議（grill F2 + 實做修正 2026-05-13）**：首頁 mdx 命名為 `index.mdx` 放 **repo root**（不是 `site/src/content/docs/` — glob loader base 在 repo root，docs/index.mdx 不被 match）；Quarto `index.qmd` **保留不動**（副檔名不同所以共存）。曾經 rename 過 `index.qmd → _quarto_index.qmd` 導致 `quarto render` 報「Book contents must include a home page (e.g. index.md)」— Quarto book 強制檔名規則。
 5. **Quarto `.quarto/` 編譯 cache 不該被 Astro 讀** — gitignore 應已 ignored、但 glob loader 設定要排除（pattern 不要 match `**/*.quarto*`）。
 6. **跨 domain CLAUDE.md import** — 既有 `.claude/` 資料夾若有 project memory，遷移後仍能用；確認 `~/claude_domain/reading/` 的 domain-level CLAUDE.md（若有）跟 Astro setup 不衝突。
 

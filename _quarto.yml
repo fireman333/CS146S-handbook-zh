@@ -5,6 +5,7 @@ project:
 book:
   title: "CS146S: The Modern Software Developer"
   subtitle: "Stanford CS Fall 2025 — 繁中講義 + 50 篇 Reading 摘要"
+  output-file: "CS146S_handbook_zh"
   author: "繁中譯解：WLK"
   date: "2026-05-02"
   date-format: "YYYY-MM-DD"
@@ -13,7 +14,7 @@ book:
   repo-url: ""
   cover-image: ""
   chapters:
-    - _quarto_index.qmd
+    - index.qmd
     - 01_overview.md
     - part: "10 週講義"
       chapters:
