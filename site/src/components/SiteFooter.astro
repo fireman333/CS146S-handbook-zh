@@ -1,0 +1,39 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default><slot /></Default>
+
+<footer class="site-attribution">
+  <p>
+    © 2025–2026 WLK 繁中譯解。本講義以
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+    授權。
+  </p>
+  <p>
+    原版課程內容 © Stanford / Mihail Eric / industry speakers，非官方獨立翻譯，請以原版
+    <a href="https://themodernsoftware.dev" target="_blank" rel="noopener">themodernsoftware.dev</a>
+    為準。
+  </p>
+  <p>
+    <a href="https://github.com/fireman333/CS146S-handbook-zh" target="_blank" rel="noopener">GitHub repo</a>
+  </p>
+</footer>
+
+<style>
+  .site-attribution {
+    border-top: 1px solid var(--sl-color-hairline);
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+    line-height: 1.6;
+    text-align: center;
+  }
+  .site-attribution p {
+    margin: 0.25rem 0;
+  }
+  .site-attribution a {
+    color: var(--sl-color-text-accent);
+  }
+</style>

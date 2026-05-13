@@ -1,0 +1,57 @@
+---
+title: Track A — Vibe Coder 速成
+description: 用 AI 把點子做成 app 的最短路徑。5 週、10 hr，跳過進階主題、聚焦能 ship 的最少必要知識。
+template: doc
+---
+
+## 適合誰
+
+- 想用 Claude Code / Cursor / Devin 快點寫出能跑的 demo 或 MVP
+- 不想卡基礎理論 / IDE 配置 / CI/CD / SRE 細節
+- 個人專案、學生作業、週末 hackathon、業餘 side project
+- 已會基本 git / terminal，會寫一點 Python 或 JS
+
+## 學習路徑
+
+W1 → W2 → W3 → W4 → W8（**5 週、估 10 hr**）
+
+| 週 | 主題 | 為什麼必看 | 時數 |
+|---|---|---|---|
+| **W1** | Coding LLM 與 AI 開發入門 | LLM 是什麼、prompt 為什麼有效 — 一切的基礎 | 1.5 hr |
+| **W2** | Coding Agent 的解剖學 | Agent / tool use / MCP — 知道 Claude Code 內部怎麼運作才會用 | 2 hr |
+| **W3** | AI 整合開發環境（guest: Silas Alberti / Cognition / Devin） | IDE-agent 整合、PRD for agents — Cursor / Devin 的設計理念 | 2 hr |
+| **W4** | Coding Agent 工作模式（guest: Boris Cherny / Anthropic / Claude Code） | autonomy levels / human-agent 協作 — Claude Code 怎麼用最有效 | 2 hr |
+| **W8** | 自動化 UI 與 App 生成（guest: Gaspar Garcia / Vercel） | Vercel v0 / Lovable / Bolt — 一行 prompt 出 UI 的工具鏈 | 2.5 hr |
+
+## 為什麼跳過 W5/W6/W7/W9/W10
+
+- **W5 現代終端機** — Warp / Wave terminal 是好東西、但 vibe coding 階段 Claude Code CLI 已夠用；除非你卡在 shell 自動化才回頭看
+- **W6 AI 測試與資安** — demo 階段沒 prod 流量、testing 跟 security 屬於「ship 之後再優化」議題
+- **W7 現代軟體支援工具** — Graphite code review / 智慧文件生成是 team 規模才需要的工具，single-developer 用不到
+- **W9 Agent 上線之後** — observability / oncall 是 prod 階段議題，demo 沒上線無感
+- **W10 AI 軟體工程的未來** — Martin Casado 的 a16z 視角值得讀，但對「現在就要 ship 一個 demo」沒直接幫助
+
+## 完成後你會有
+
+- 1 個能 ship 的小 app（Claude Code 或 Cursor 寫的、Vercel 部署的）
+- 掌握 prompt → code → 部署的 vibe loop
+- 知道 MCP / sub-agent / slash command 是什麼、能組出自己的 Claude Code 工作流
+- 能 follow [`/r/ClaudeCode`](https://www.reddit.com/r/ClaudeCode/) 跟 Anthropic Engineering Blog 的最新討論
+
+## 推薦先看的 Friday Guest Speaker
+
+如果只能看一場 guest lecture，看 **W4 Boris Cherny / Anthropic / Claude Code** — 他是 Claude Code 的 creator，講 agent autonomy + workflow design 對 vibe coder 最有實作 takeaway。
+
+第二推薦 **W8 Gaspar Garcia / Vercel** — 看 Vercel 怎麼用 AI 生 UI，對快速 ship MVP 直接相關。
+
+## 之後想繼續？
+
+- 想學 testing / security → 加看 **W6**
+- 想學 prod 部署 / oncall → 加看 **W9**
+- 想完整體系 → 跳到 [Track B 完整軟體工程](../b/)
+
+---
+
+## 開始
+
+[從 W01 開始 →](../../weeks/01_intro_to_coding_llms/)

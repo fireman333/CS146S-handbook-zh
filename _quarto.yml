@@ -13,7 +13,7 @@ book:
   repo-url: ""
   cover-image: ""
   chapters:
-    - index.qmd
+    - _quarto_index.qmd
     - 01_overview.md
     - part: "10 週講義"
       chapters:

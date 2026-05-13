@@ -1,0 +1,21 @@
+@import 'katex/dist/katex.min.css';
+
+:root {
+  --sl-font:
+    "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-has-toc] body {
+  font-family: var(--sl-font);
+}
+
+article {
+  line-height: 1.75;
+}
+
+article h1,
+article h2,
+article h3 {
+  line-height: 1.4;
+}

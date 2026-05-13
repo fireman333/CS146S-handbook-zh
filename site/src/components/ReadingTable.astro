@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('docs');
+const readings = all
+  .filter((e) => e.id.startsWith('readings/') && !e.id.endsWith('_index'))
+  .map((e) => {
+    const m = e.id.match(/readings\/w(\d+)_/);
+    return {
+      id: e.id,
+      slug: e.id,
+      week: e.data.week ?? (m ? parseInt(m[1], 10) : 0),
+      title: e.data.title || e.id,
+      source_url: e.data.source_url || e.data.original_url || '',
+      source_type: e.data.source_type || '',
+      status: e.data.status || '',
+    };
+  })
+  .sort((a, b) => a.week - b.week || a.id.localeCompare(b.id));
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const statusBadge: Record<string, string> = {
+  complete: '✅',
+  'best-effort': '🟡',
+  failed: '🔴',
+  draft: '✏️',
+};
+---
+
+<section class="reading-table-wrap">
+  <p class="reading-count">共 {readings.length} 篇 reading · 按週分組</p>
+  <table class="reading-table">
+    <thead>
+      <tr>
+        <th class="col-week">週次</th>
+        <th class="col-title">標題</th>
+        <th class="col-source">原文</th>
+        <th class="col-status">狀態</th>
+      </tr>
+    </thead>
+    <tbody>
+      {readings.map((r) => (
+        <tr>
+          <td class="col-week"><span class="w-badge">W{String(r.week).padStart(2, '0')}</span></td>
+          <td class="col-title">
+            <a href={`${base}/${r.slug}/`}>{r.title}</a>
+          </td>
+          <td class="col-source">
+            {r.source_url ? (
+              <a href={r.source_url} target="_blank" rel="noopener">
+                {r.source_type || '原文'} ↗
+              </a>
+            ) : (
+              <span class="muted">—</span>
+            )}
+          </td>
+          <td class="col-status">{statusBadge[r.status] || r.status || ''}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</section>
+
+<style>
+  .reading-table-wrap {
+    margin: 1.5rem 0 3rem;
+    overflow-x: auto;
+  }
+  .reading-count {
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+    margin-bottom: 0.75rem;
+  }
+  .reading-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--sl-text-sm);
+  }
+  .reading-table th,
+  .reading-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    vertical-align: top;
+  }
+  .reading-table thead th {
+    background: var(--sl-color-bg-nav);
+    font-weight: 700;
+  }
+  .col-week { width: 6rem; }
+  .col-source { width: 8rem; }
+  .col-status { width: 5rem; text-align: center; }
+  .w-badge {
+    font-weight: 700;
+    color: var(--sl-color-text-accent);
+  }
+  .reading-table a {
+    color: var(--sl-color-text-accent);
+    text-decoration: none;
+  }
+  .reading-table a:hover {
+    text-decoration: underline;
+  }
+  .muted { color: var(--sl-color-gray-4); }
+</style>

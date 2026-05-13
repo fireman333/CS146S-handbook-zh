@@ -1,0 +1,139 @@
+---
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('docs');
+const weeks = all
+  .filter((e) => e.id.startsWith('weeks/'))
+  .map((e) => ({
+    id: e.id,
+    slug: e.id,
+    week: e.data.week ?? 0,
+    title: e.data.title_zh || e.data.title || e.id,
+    title_en: e.data.title || '',
+    topics: e.data.topics || [],
+    dates: e.data.dates || [],
+    status: e.data.status || '',
+  }))
+  .sort((a, b) => a.week - b.week);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const statusLabel: Record<string, string> = {
+  complete: '完整',
+  draft: '草稿',
+  pending: '待寫',
+};
+---
+
+<section class="week-index">
+  <div class="week-grid">
+    {weeks.map((w) => (
+      <a class="week-card" href={`${base}/${w.slug}/`}>
+        <header class="week-card-head">
+          <span class="week-badge">W{String(w.week).padStart(2, '0')}</span>
+          {w.status && (
+            <span class={`week-status status-${w.status}`}>{statusLabel[w.status] || w.status}</span>
+          )}
+        </header>
+        <h3 class="week-title">{w.title}</h3>
+        {w.title_en && <p class="week-title-en">{w.title_en.replace(/^Week \d+：?/, '')}</p>}
+        {w.topics.length > 0 && (
+          <ul class="week-topics">
+            {w.topics.slice(0, 3).map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+        )}
+        {w.dates.length > 0 && (
+          <p class="week-dates">{w.dates.join(' · ')}</p>
+        )}
+        <span class="week-cta">閱讀講義 →</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .week-index {
+    margin: 1.5rem 0 3rem;
+  }
+  .week-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+  .week-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 10px;
+    background: var(--sl-color-bg-nav);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .week-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    border-color: var(--sl-color-text-accent);
+  }
+  .week-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .week-badge {
+    font-weight: 700;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-text-accent);
+  }
+  .week-status {
+    font-size: var(--sl-text-xs);
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-1);
+  }
+  .status-complete { background: #d1f1d8; color: #1b5e20; }
+  .status-draft { background: #fff4d6; color: #8a5a00; }
+  .status-pending { background: #f1d1d1; color: #8a1a1a; }
+  .week-title {
+    margin: 0.25rem 0 0;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+  .week-title-en {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+    font-style: italic;
+  }
+  .week-topics {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .week-topics li {
+    font-size: var(--sl-text-xs);
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-2);
+  }
+  .week-dates {
+    margin: 0;
+    font-size: var(--sl-text-xs);
+    color: var(--sl-color-gray-3);
+  }
+  .week-cta {
+    margin-top: auto;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+  }
+</style>

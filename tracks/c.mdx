@@ -1,0 +1,62 @@
+---
+title: Track C — Tech Lead / PM 視角
+description: 帶團隊用 AI 的關鍵章節。6 週、12 hr，聚焦工具評估、流程設計、組織導入、產業趨勢。
+template: doc
+---
+
+## 適合誰
+
+- Tech Lead / Engineering Manager / Staff Engineer — 不寫 prod code 但要規劃團隊 AI 工具導入
+- Product Manager — 跟 engineering team 一起決定 AI feature 怎麼做
+- Engineering Director / VP — 評估 AI 工具導入 ROI、設計 code review / oncall 流程
+- 投資人 / 創業者 — 想理解 AI software 產業 landscape
+
+## 學習路徑
+
+W1 → W4 → W6 → W7 → W9 → W10（**6 週、估 12 hr**）
+
+| 週 | 主題 | 為什麼這條 Track 必看 | 時數 |
+|---|---|---|---|
+| **W1** | Coding LLM 與 AI 開發入門 | LLM 基礎共通語言 — 跟工程師對話的最低門檻 | 2 hr |
+| **W4** | Coding Agent 工作模式（guest: Boris Cherny / Anthropic / Claude Code） | autonomy levels — 你要決定團隊 agent 給多少權限 | 2 hr |
+| **W6** | AI 測試與資安（guest: Isaac Evans / Semgrep） | AI 寫的 code 安全死角 — 你的 risk register 必加項目 | 2 hr |
+| **W7** | 現代軟體支援工具（guest: Tomas Reimers / Graphite） | AI code review 怎麼設計流程 — code review SOP 要重新寫 | 2 hr |
+| **W9** | Agent 上線之後（guest: Mayank Agarwal + Milind Ganjoo / Resolve） | AI agent 上 prod 後的 monitoring / incident response — oncall 流程設計 | 2 hr |
+| **W10** | AI 軟體工程的未來（guest: Martin Casado / a16z） | 產業 trends + 投資人視角 — 對齊 3-5 年戰略 | 2 hr |
+
+## 為什麼跳過 W2/W3/W5/W8
+
+- **W2 Coding Agent 的解剖學** — agent 內部 architecture / MCP 是 implementation 細節，管理者知道「agent 有 tool use」抽象層即可
+- **W3 AI 整合開發環境** — 個別工具選擇（Cursor vs Devin vs Claude Code），等團隊試完再看你比較適合，不影響你決策
+- **W5 現代終端機** — Warp / Wave 是個人工具偏好，無 team-level policy 必要
+- **W8 自動化 UI 與 App 生成** — Vercel v0 / Lovable 是 designer / PM 的快速 prototype 工具，但 production 仍走正規工程流程，導入 risk 較低
+
+跳過不代表不重要 — 是「Tech Lead 的時間排序」考量。團隊內若有 staff engineer 想深入這 4 週，你可以放心授權給他。
+
+## 完成後你會有
+
+- 能設計 AI 工具導入 roadmap（pilot → expand → standardize 三階段）
+- 能寫 secure vibe coding policy（W6 takeaway）
+- 能改 code review SOP 接 AI 工具（W7 takeaway）
+- 能設計 AI agent oncall 流程（W9 takeaway）
+- 對齊 a16z / Anthropic / Cognition 等 frontier teams 的 mental model
+- 能跟 CEO / board 解釋「為什麼 AI engineering 是 strategic priority」
+
+## 推薦先看的 Friday Guest Speaker
+
+3 場最有 leadership takeaway：
+1. **W4 Boris Cherny / Claude Code** — autonomy level framework，直接影響團隊 agent governance
+2. **W7 Tomas Reimers / Graphite** — code review tool 怎麼跟 agent 整合，team workflow design 案例
+3. **W10 Martin Casado / a16z** — VC 視角看 AI engineering 產業 landscape，對齊戰略決策
+
+## 跟 individual contributor track 的差異
+
+如果你以前寫過 code、想 hands-on 試 vibe coding，建議**加修 W3** 體驗 Cursor / Devin，再回 Track C 看 W4。
+
+如果團隊內已有 staff engineer 走過 [Track B 完整軟體工程](../b/)，你可以靠他補你 Track C 沒涵蓋的細節。
+
+---
+
+## 開始
+
+[從 W01 開始 →](../../weeks/01_intro_to_coding_llms/)

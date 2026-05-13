@@ -27,35 +27,61 @@
 
 ## 怎麼用
 
-### 線上閱讀
-從 [00_index.md](00_index.md) 開始，依興趣選讀路線：
+### 線上閱讀（Astro Starlight 站，2026 起）
+
+👉 **https://fireman333.github.io/CS146S-handbook-zh/**
+
+- 全文搜尋（Pagefind + CJK segmenter，支援中英混搜「prompt engineering」+「上下文工程」）
+- 三條學習路徑導覽（splash hero + Track A/B/C 卡片）
+- 行動裝置友善（responsive sidebar / 卡片牆）
+- 自動部署（push `.md` 進 `weeks/` 或 `readings/` → 2 分鐘內網站更新）
+
+依興趣選讀路線：
 - **Track A — Vibe Coder 速成**：W1 → W2 → W3 → W4 → W8（最短路徑）
 - **Track B — 完整軟體工程**：W1 → W10 依序
 - **Track C — Tech Lead / PM 視角**：W1 → W4 → W6 → W7 → W9 → W10
 
-### 渲染 PDF
+### 下載 PDF 印製版（Quarto + Typst 出書版）
+
+從網站首頁點「下載 PDF」（指向 GitHub Releases 最新版），或直接到 [releases](https://github.com/fireman333/CS146S-handbook-zh/releases) 頁挑版本。
+
+### 自己渲染並發布新 PDF
+
 ```bash
 # 確認已裝 Quarto 1.5+
 quarto --version
 
-# 渲染整本（HTML + PDF）
+# 本機渲染（產出 pdf/CS146S_handbook_zh.pdf，local-only、gitignored）
 quarto render
 
-# PDF 會在 pdf/ 目錄
-open pdf/CS146S_handbook_zh.pdf
+# 發布到 GitHub Release
+gh release create v$(date +%F) --notes "PDF refresh $(date +%F)" pdf/CS146S_handbook_zh.pdf
+# 或覆寫既有 release 的 PDF：
+# gh release upload <tag> pdf/CS146S_handbook_zh.pdf --clobber
 ```
+
+### 加新 reading / week
+
+直接丟新 `.md` 到 `weeks/` 或 `readings/`，push 到 `main`，GitHub Actions 自動 build + 部署。PDF 版本需要手動 `quarto render` 後 release。
 
 ## 結構
 
 ```
 .
-├── 00_index.md           # 總目錄 + 三條學習路徑
-├── 01_overview.md        # 課程簡介 + 自學建議
-├── weeks/                # 10 週講義
-├── readings/             # 50+ 篇 reading 中文摘要
-├── assignments/          # 9 個 assignment 評估
-├── pdf/                  # render 產出
-└── _quarto.yml           # Quarto book config
+├── 00_index.md                 # 總目錄（Quarto 用；Astro 站改讀 index.mdx）
+├── 01_overview.md              # 課程簡介 + 自學建議（兩邊共用）
+├── index.mdx                   # Astro splash homepage（含 TrackPicker + WeekIndex）
+├── weeks/                      # 10 週講義（Astro + Quarto 共用 source of truth）
+├── readings/                   # 46 篇 reading 中文摘要
+├── assignments/                # 9 個 assignment 評估
+├── pdf/                        # Quarto render 產出（gitignored、走 GitHub Release）
+├── site/                       # Astro Starlight app
+│   ├── astro.config.mjs        # site/base/sidebar generator
+│   ├── src/content.config.ts   # 單一 docs collection + brace glob pattern
+│   └── src/components/         # TrackPicker / WeekIndex / ReadingTable / SiteFooter
+├── .github/workflows/deploy.yml # Astro → GitHub Pages auto-deploy
+├── _quarto.yml                 # Quarto book config（PDF pipeline）
+└── _quarto_index.qmd           # 原 index.qmd 改名（騰出 index slug 給 Astro）
 ```
 
 ## 已知限制

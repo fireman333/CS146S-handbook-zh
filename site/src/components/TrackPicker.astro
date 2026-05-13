@@ -1,0 +1,160 @@
+---
+const tracks = [
+  {
+    id: 'A',
+    title: 'Vibe Coder 速成',
+    tagline: '用 AI 把點子做成 app 的最短路徑',
+    summary:
+      '想快點用 Claude Code / Cursor 寫出能跑的東西、不卡基礎理論。從 LLM 基礎 → coding agent → IDE → agent pattern → UI 自動化。',
+    weeks: [1, 2, 3, 4, 8],
+    cta: '看 Track A 介紹',
+    href: 'tracks/a/',
+  },
+  {
+    id: 'B',
+    title: '完整軟體工程',
+    tagline: '10 週按序、紮實打底',
+    summary:
+      '想完整理解 AI-era 軟體工程全貌：模型、agent、IDE、terminal、testing、code review、deploy、SRE、未來方向。',
+    weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    cta: '看 Track B 介紹',
+    href: 'tracks/b/',
+  },
+  {
+    id: 'C',
+    title: 'Tech Lead / PM 視角',
+    tagline: '帶團隊用 AI 的關鍵章節',
+    summary:
+      '不寫 prod code 但要規劃 AI 工具導入、評估安全與測試風險、設計 code review 流程、部署後 oncall。',
+    weeks: [1, 4, 6, 7, 9, 10],
+    cta: '看 Track C 介紹',
+    href: 'tracks/c/',
+  },
+];
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="tracks">
+  <h2 class="tracks-heading">三條學習路徑</h2>
+  <p class="tracks-sub">挑一條最像你目的的路徑，照路徑順序讀。中途想跳就跳，sidebar 永遠在。</p>
+  <div class="tracks-grid">
+    {tracks.map((t) => (
+      <article class={`track track-${t.id}`}>
+        <header>
+          <span class="track-badge">Track {t.id}</span>
+          <h3>{t.title}</h3>
+          <p class="track-tagline">{t.tagline}</p>
+        </header>
+        <p class="track-summary">{t.summary}</p>
+        <footer class="track-footer">
+          <ul class="track-weeks">
+            {t.weeks.map((w) => (
+              <li class="track-week-chip">W{String(w).padStart(2, '0')}</li>
+            ))}
+          </ul>
+          <a class="track-cta" href={`${base}/${t.href}`}>{t.cta} →</a>
+        </footer>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tracks {
+    margin: 2.5rem 0 3rem;
+  }
+  .tracks-heading {
+    font-size: var(--sl-text-h3);
+    margin-bottom: 0.25rem;
+  }
+  .tracks-sub {
+    color: var(--sl-color-gray-3);
+    margin-bottom: 1.5rem;
+  }
+  .tracks-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  @media (max-width: 860px) {
+    .tracks-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .tracks-grid > .track {
+    margin: 0 !important;
+  }
+  .track {
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 0.75rem;
+    background: var(--sl-color-bg-nav);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    height: 100%;
+  }
+  .track:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+  .track-A { border-top: 4px solid #8C1515; }
+  .track-B { border-top: 4px solid #1f4e79; }
+  .track-C { border-top: 4px solid #5a3786; }
+  .track-badge {
+    display: inline-block;
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--sl-color-text-accent);
+    text-transform: uppercase;
+  }
+  .track h3 {
+    margin: 0.25rem 0 0.25rem;
+    font-size: 1.25rem;
+  }
+  .track-tagline {
+    margin: 0;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+  }
+  .track-summary {
+    margin: 0;
+    line-height: 1.6;
+  }
+  .track-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+  .track-weeks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 4rem;
+    align-content: center;
+  }
+  .track-week-chip {
+    font-size: var(--sl-text-xs);
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-1);
+  }
+  .track-cta {
+    align-self: flex-start;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--sl-color-text-accent);
+  }
+  .track-cta:hover {
+    text-decoration: underline;
+  }
+</style>

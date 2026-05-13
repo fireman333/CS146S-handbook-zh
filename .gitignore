@@ -2,9 +2,20 @@
 .quarto/
 _freeze/
 _site/
+/.quarto/
+**/*.quarto_ipynb
 
-# Don't commit Quarto render output to main; gh-pages branch carries the built site
+# PDF artefacts — built locally via `quarto render`, distributed via GitHub Releases
 pdf/**
+
+# Astro
+site/node_modules/
+site/dist/
+site/.astro/
+site/.vite/
+
+# Claude Code worktrees / scratch
+.claude/
 
 # OS / editor
 .DS_Store
@@ -21,5 +32,7 @@ pdf/**
 *.tex
 *.synctex.gz
 
-/.quarto/
-**/*.quarto_ipynb
+# Backups
+weeks.bak*/
+readings.bak*/
+*.bak
